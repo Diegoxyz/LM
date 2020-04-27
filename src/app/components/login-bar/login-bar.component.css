@@ -1,0 +1,19 @@
+
+.cart-menu {
+    background-color: #414141;
+    color: #fff;
+    position: fixed;
+    z-index: 1030;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.navbar_bg {
+    font-size: 18px;
+}
+
+img.img-logo-horizontal {
+    width: 18rem;
+    width: 10vw;
+}

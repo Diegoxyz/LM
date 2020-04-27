@@ -1,0 +1,11 @@
+.content {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+}
+
+
+a {
+    color: #dc3545;
+    text-decoration: none;
+    background-color: transparent;
+}

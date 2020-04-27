@@ -1,0 +1,55 @@
+<app-login-bar></app-login-bar>  <!--<app-bar></app-bar>-->
+<div class="content content-page">
+    <div class="container">
+        <div class="row align-items-center justify-content-center">
+            <div class="w-100"></div>
+            <div class="col-6">
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                <label for="email" i18n="Email address|The email used to log in">Email</label>
+                <input type="email" class="form-control" id="email" formControlName="email" aria-describedby="emailHelp" placeholder="Enter email" required>
+                <div *ngIf="email.invalid && (email.dirty || email.touched)"
+                        class="alert alert-danger">
+                    <div *ngIf="email.errors.required">
+                        <span i18n="Email address|Error message">Email is required.</span>
+                    </div>
+                </div>
+                </div>
+                <div class="form-group">
+                <label for="password" i18n>Password</label>
+                <input type="password" class="form-control" id="password" formControlName="password" placeholder="Password" required>
+                <div *ngIf="password.invalid && (password.dirty || password.touched)"
+                        class="alert alert-danger">
+
+                    <div *ngIf="password.errors.required">
+                        <ng-container i18n>Password is required.</ng-container>
+                    </div>
+                </div>
+                </div>
+                <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Submit</button>
+            </form>
+            </div>
+            <div class="w-100"></div>
+        </div>
+        <div class="row align-items-center justify-content-end">
+            <div class="col-4">
+                <a routerLink="/register">Register</a>
+            </div>
+        </div>
+        <div class="row align-items-center justify-content-end">
+            <div class="col-4">
+                <a routerLink="/lost-credentials">Lost credentials?</a>
+            </div>
+        </div>
+        <div class="row align-items-center justify-content-center">
+            <div class="col-4">
+                <button (click)="queries()">Queries</button>
+            </div>
+        </div>
+        <div class="row align-items-center justify-content-center">
+            <div class="col-4">
+                <button (click)="airportQueries()">Airport Queries</button>
+            </div>
+        </div>
+    </div>
+</div>

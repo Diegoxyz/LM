@@ -1,0 +1,48 @@
+.navbar_bg {
+    background-color: #414141;
+    color: #fff;
+    font-family: "Trade Gothic LT ProCn";
+    font-size: 18px;
+}
+
+img.img-logo-horizontal {
+    width: 18rem;
+    width: 10vw;
+}
+
+navbar-menu {
+    background-color: #414141;
+    color: #fff;
+    position: fixed;
+    z-index: 1030;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.row_carousel{
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100vw;
+  }
+
+ul.nav li a {
+    color: white;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+.cart-menu {
+    background-color: #414141;
+    color: #fff;
+    position: fixed;
+    z-index: 1030;
+    top: 0;
+    left: 0;
+    right: 0;
+}
