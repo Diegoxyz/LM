@@ -31,8 +31,12 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.queries();
-    this.router.navigate(['/home']);
+    if (this.email && this.password) {
+      console.log(this.email.value + '-' + this.password.value);
+      this.loginService.login(this.email.value,this.password.value);
+      this.queries();
+      this.router.navigate(['/home']);
+    }
   }
 
   public queries(): void {

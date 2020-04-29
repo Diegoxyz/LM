@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CustomValidators } from './custom-validators';
 
 @Component({
   selector: 'app-register',
@@ -15,24 +16,24 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.registrationForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', Validators.required],
-      password1: ['', Validators.required],
-      password2: ['', Validators.required],
-      address: ['', Validators.required],
-      city: ['', Validators.required],
-      state: ['', Validators.required],
-      zip: ['', Validators.required],
-    });
+      username: ['', Validators.required],
+      email: [null, Validators.compose([
+        Validators.email,
+        Validators.required])
+      ],
+      password1: [null, Validators.compose([Validators.required])],
+      password2: [null, Validators.compose([Validators.required])],
+    },
+    
+    {
+      // check whether our password and confirm password match
+      validator: CustomValidators.passwordMatchValidator
+    }
+    );
   }
 
-  get firstName() {
-    return this.registrationForm.get('firstName');
-  }
-
-  get lastName() {
-    return this.registrationForm.get('lastName');
+  get username() {
+    return this.registrationForm.get('username');
   }
 
   get email() {
@@ -45,22 +46,6 @@ export class RegisterComponent implements OnInit {
 
   get password2() {
     return this.registrationForm.get('password2');
-  }
-
-  get address() {
-    return this.registrationForm.get('address');
-  }
-
-  get city() {
-    return this.registrationForm.get('city');
-  }
-
-  get state() {
-    return this.registrationForm.get('state');
-  }
-
-  get zip() {
-    return this.registrationForm.get('zip');
   }
 
   onSubmit(): void {

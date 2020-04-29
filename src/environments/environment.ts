@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  destination: "/destinations/LM_KAN/"
+  destination_ZSD_SP_SRV: "/destinations/ZSD_SP_SRV/",
+  destination_LM_KAN: "/destinations/LM_KAN"
 };
 
 /*

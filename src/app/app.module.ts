@@ -11,17 +11,16 @@ import { LostCredentialsComponent } from './components/lost-credentials/lost-cre
 import { ODataModule, ODataSettings } from 'angular-odata';
 import { throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-import { SapODataSettings } from './models/MonitorDataSet/sapodatasettings';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginBarComponent } from './components/login-bar/login-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { environment } from '../environments/environment';
 
 export function oDataSettingsFactory() {
-  return new SapODataSettings({
+  return new ODataSettings({
     //baseUrl: "https://services.odata.org/V4/TripPinServiceRW/",
     // baseUrl: "http://192.168.0.83:8000/sap/opu/odata/sap/ZKAN_APP_SRV/MonitorDataSet/?$format=json",
-    baseUrl: environment.destination,
+    baseUrl: environment.destination_ZSD_SP_SRV,
     metadataUrl: "?$format=json",
     errorHandler: (error: HttpErrorResponse) => {
       return throwError(error);

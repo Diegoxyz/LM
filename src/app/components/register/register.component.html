@@ -1,81 +1,70 @@
 <app-login-bar></app-login-bar>
-<!--<app-bar></app-bar>-->
 <div class="row align-items-center justify-content-center">
     <div class="w-100"></div>
-    <div class="col-4 mb-4">
+    <div class="col-6 mb-4">
         <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
-            <div class="form-row">
-                <div class="col-md-6 mb-3">
-                    <label for="firstName">First name</label>
-                    <input type="text" class="form-control" id="firstName" formControlName="firstName"
-                        placeholder="First name" value="Mark" required>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="lastName">Last name</label>
-                    <input type="text" class="form-control" id="lastName" formControlName="lastName"
-                        placeholder="Last name" value="Otto" required>
-                </div>
 
-            </div>
             <div class="form-row">
                 <div class="col-md-12 mb-3">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" formControlName="email" placeholder="Email"
-                        aria-describedby="inputGroupPrepend" required>
+                    <label for="userName" i18n="Username|The name used to log in">Username</label>
+                    <input type="text" class="form-control" id="username" formControlName="username" placeholder="Username" value="Mark" required>
+                    <div *ngIf="username.invalid && (username.dirty || username.touched)" class="alert alert-danger">
+                        <div *ngIf="username.errors.required">
+                            <span i18n="Username|Error message">Username is required.</span>
+                        </div>
+                    </div>
+                
                 </div>
             </div>
+
             <div class="form-row">
                 <div class="col-md-12 mb-3">
-                    <label for="password1">Password</label>
-                    <input type="password" class="form-control" id="password1" formControlName="password1"
-                        placeholder="Password" aria-describedby="inputGroupPrepend" required>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="col-md-12 mb-3">
-                    <label for="password2">Confirm password</label>
-                    <input type="password" class="form-control" id="password2" formControlName="password2"
-                        placeholder="Confirm password" aria-describedby="inputGroupPrepend" required>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="col-md-12 mb-3">
-                    <label for="address">Address</label>
-                    <input type="text" class="form-control" id="address" formControlName="address" placeholder="Address"
-                        required>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="city">City</label>
-                    <input type="text" class="form-control" id="city" formControlName="city" placeholder="City"
-                        required>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <label for="state">State</label>
-                    <input type="text" class="form-control" id="state" formControlName="state" placeholder="State"
-                        required>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <label for="zip">Zip</label>
-                    <input type="text" class="form-control" id="zip" formControlName="zip" placeholder="Zip" required>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-                    <label class="form-check-label" for="invalidCheck">
-                        Agree to terms and conditions
-                    </label>
-                    <div class="invalid-feedback">
-                        You must agree before submitting.
+                    <label for="email" i18n="Email address|The email used to log in">Email</label>
+                    <input type="email" class="form-control" id="email" formControlName="email"
+                        aria-describedby="emailHelp" placeholder="Enter email" required>
+                    <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+                        <div *ngIf="email.errors.required">
+                            <span i18n="Email address|Error message">Email is required.</span>
+                        </div>
+                        <div *ngIf="registrationForm.controls['email'].hasError('email')">
+                            <span i18n="Email address|Error message">Email invalid format.</span>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="row align-items-center justify-content-end">
-                <button class="btn btn-primary" type="submit">Submit form</button>
+
+            <div class="form-row">
+                <div class="col-md-12 mb-3">
+                    <label for="password1" i18n>Password</label>
+                    <input type="password" class="form-control" id="password1" formControlName="password1"
+                        placeholder="Password" required>
+                    <div *ngIf="password1.invalid && (password1.dirty || password1.touched)" class="alert alert-danger">
+                        <div *ngIf="password1.errors.required">
+                            <ng-container i18n>Password is required.</ng-container>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <div class="form-row">
+                <div class="col-md-12 mb-3">
+                    <label for="password2" i18n>Confirm password</label>
+                    <input type="password" class="form-control" id="password2" formControlName="password2" placeholder="Password" required>
+  
+                    <div *ngIf="password2.invalid && (password2.dirty || password2.touched)" class="alert alert-danger">
+                        <div *ngIf="password2.errors.required">
+                            <ng-container i18n>Confirm password is required.</ng-container>
+                        </div>
+                    </div>
+                    
+                    <div  *ngIf="registrationForm.controls['password2'].hasError('NoPassswordMatch')" class="alert alert-danger">
+                        <ng-container i18n>Password do not match.</ng-container>
+                      </div>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" [disabled]="!registrationForm.valid">Submit form</button>
         </form>
 
     </div>
-
-
 </div>
