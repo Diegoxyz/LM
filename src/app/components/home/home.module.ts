@@ -1,0 +1,34 @@
+import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { MainComponent } from './main.component';
+import { HomeRoutingModule } from './home-routing.module';
+import { BarComponent } from './bar/bar.component';
+import { MenuComponent } from './menu/menu.component';
+import { RouterModule } from '@angular/router';
+import { LayoutComponent } from './layout.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { ProductCardComponent } from './product-card/product-card.component';
+import { CatalogueComponent } from './catalogue.component';
+import {NgbModule, NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
+
+@NgModule({
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        HomeRoutingModule,
+        RouterModule,
+        NgbModule,
+        NgxPaginationModule,
+        NgbDropdownModule
+    ],
+    declarations: [
+        MainComponent,
+        BarComponent,
+        MenuComponent,
+        LayoutComponent,
+        ProductCardComponent,
+        CatalogueComponent
+    ]
+})
+export class HomeModule { }

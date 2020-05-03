@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { LoginService } from 'src/app/services/login-service.service';
-
+import { AccountService } from 'src/app/services/account.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -11,11 +11,18 @@ import { LoginService } from 'src/app/services/login-service.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private router: Router, private loginService: LoginService) { }
+  loginError = false;
+  returnUrl: string;
+
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private accountService: AccountService) { }
 
   public loginForm: FormGroup;
 
   ngOnInit(): void {
+    if (this.accountService.userValue) {
+      this.router.navigate(['/home']);
+    }
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
     this.loginForm = this.fb.group({
       email: ['', Validators.required],
       password: ['', Validators.required],
@@ -31,18 +38,27 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
+    // stop here if form is invalid
+    if (this.loginForm.invalid) {
+      return;
+    }
     if (this.email && this.password) {
       console.log(this.email.value + '-' + this.password.value);
-      this.loginService.login(this.email.value,this.password.value);
-      this.queries();
-      this.router.navigate(['/home']);
+      this.accountService.login(this.email.value,this.password.value).pipe(first()).subscribe(
+        data => {
+          if (data === null) {
+            this.loginError = true;
+          }
+          this.router.navigate([this.returnUrl]);
+        },
+        error => {
+          this.loginError = true;
+        }
+      );
+      // this.router.navigate(['/home']);
+      // redirect to home if already logged in
+      
     }
   }
 
-  public queries(): void {
-    this.loginService.queries().subscribe(q => console.log(q));
-  }
-
-  public airportQueries(): void {
-  }
 }

@@ -10,7 +10,7 @@ img.img-logo-horizontal {
     width: 10vw;
 }
 
-navbar-menu {
+.navbar-menu {
     background-color: #414141;
     color: #fff;
     position: fixed;
@@ -77,3 +77,6 @@ input:focus {
     color: #fff;
 }
 
+.black-logo-bg {
+    background-color: #fff;
+}

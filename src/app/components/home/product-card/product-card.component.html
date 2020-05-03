@@ -1,0 +1,17 @@
+<div class="align-items-center justify-content-center rounded">
+    <div class="container">
+        <div class="card align-items-center justify-content-center" style="width: 18rem;">
+            <ng-template #tipContent style="background-color: antiquewhite;">
+                <div >
+                    <p>{{ item.description }}</p>
+                    <p>{{ item.maxQuantity }}</p>
+                    <p>{{ item.minQuantity }}</p>
+                </div></ng-template>
+            <img class="img-fluid card-img-top" src="assets/img/items/Item1.PNG" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260" [ngbTooltip]="tipContent" tooltipClass="my-custom-class">
+            <div class="card-body">
+                <h6 class="card-title">{{ item.code }}</h6>
+                <p class="card-text">&euro;{{ item.price }}</p>
+            </div>
+        </div>
+    </div>
+</div>

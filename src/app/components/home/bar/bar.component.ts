@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AccountService } from 'src/app/services/account.service';
 
 @Component({
   selector: 'app-bar',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private accountService : AccountService) { }
 
   ngOnInit(): void {
   }
 
+  public logout() {
+    this.accountService.logout();
+  }
 }
