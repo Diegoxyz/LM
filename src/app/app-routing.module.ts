@@ -11,7 +11,6 @@ const routes: Routes = [
   { path: '', component: LoginComponent, canActivate: [AuthGuard]},
   { path: 'account', loadChildren: accountModule },
   { path: 'home', loadChildren: homeModule, canActivate: [AuthGuard]},
-  { path: 'catalogue', loadChildren: homeModule, canActivate: [AuthGuard]},
   { path: '**', redirectTo: '' }
 ];
 
