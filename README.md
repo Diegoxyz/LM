@@ -48,6 +48,9 @@ Modifiche fatte dopo user management:
 - Ho aggiunto un pulsante logout (che secondo me sarà meglio mostrare come icona) per testare il logout.
 L'utente e relativo token è salvato nel localStorage, qui andrà salvate anche le eventuali preferenze dell'utente
 
+- Ho aggiunto anche file layout: questi file servono per introdurre modifiche (ad esempio la barra in alto) a tutte le pagine che saranno chiamate.
+Ad esempio, nel directory home c'è un file layout che introduce la barra che poi sarà visualizzata anche in catalogue etc.
+
 Problemi aperti:
 	
 	1) Traduzioni (internalization / locales): Il cliente vuole fare traduzioni in real time, ovvero l'utente sceglie la lingua
@@ -65,7 +68,12 @@ Problemi aperti:
 		
 	4) Ho provato ad usare la dropdown suggerita qui: https://ng-bootstrap.github.io/#/components/dropdown/examples
 		ma non mi funziona, che significa che invece di essere mostrata "chiusa" e cliccabile viene mostrata aperta con tutti i campi uno di fianco all'altro
-	
+
+Migliorie:
+
+Migliorare l'aspetto della paginazione
+Mi piacere evitare di ricaricare la pagina dopo che l'utente clicca su catalogue etc.
+
 Comandi:
 npm start per farlo partire in locale
 ng build --prod per creare la versione da installare in SAP, versione produzione
