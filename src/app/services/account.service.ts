@@ -91,6 +91,7 @@ export class AccountService {
             this.userSubject.next(user);
             return user;
         }));*/
+    return this.user;
   }
   public logout():void{
     // TODO
