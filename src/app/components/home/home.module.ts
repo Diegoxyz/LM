@@ -11,6 +11,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ProductCardComponent } from './product-card/product-card.component';
 import { CatalogueComponent } from './catalogue.component';
 import {NgbModule, NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
+import { BoardsComponent } from './boards.component';
 
 @NgModule({
     imports: [
@@ -28,7 +29,8 @@ import {NgbModule, NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
         MenuComponent,
         LayoutComponent,
         ProductCardComponent,
-        CatalogueComponent
+        CatalogueComponent,
+        BoardsComponent
     ]
 })
 export class HomeModule { }
