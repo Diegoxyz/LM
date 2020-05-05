@@ -19,7 +19,10 @@ Odata:
 
 Localization (punto aperto, vedi sotto):
 	ng add @angular/localize
-	
+
+Angular Material (dropdown) : ng add @angular/material,
+io nell'installazione ho scelto custom css ma i loro sono migliori.
+
 Modifiche fatte dopo user management:
 
 - Aggiunta classe AuthGuard per verificare se l'utente è loggato
