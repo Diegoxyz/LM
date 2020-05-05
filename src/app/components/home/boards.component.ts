@@ -10,7 +10,8 @@ styleUrls: ['./boards.component.css']
 export class BoardsComponent implements OnInit {
 
     groups : Group[] = []; 
-
+    selected: Group;
+    
     constructor(private productsService: ProductsService,
         private fb : FormBuilder
     ) {

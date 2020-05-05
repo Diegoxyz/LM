@@ -11,6 +11,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { environment } from '../environments/environment';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 export function oDataSettingsFactory() {
   return new ODataSettings({
@@ -34,7 +35,8 @@ export function oDataSettingsFactory() {
     AppRoutingModule,
     ODataModule,
     ReactiveFormsModule,
-    NgbModule
+    NgbModule,
+    NoopAnimationsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
