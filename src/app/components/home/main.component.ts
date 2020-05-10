@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Product } from 'src/app/models/item';
 import { ProductsService } from 'src/app/services/products.service';
 
@@ -28,6 +28,7 @@ export class MainComponent implements OnInit {
       screenReaderPageLabel: 'page',
       screenReaderCurrentLabel: `You're on page`
   };
+  
   constructor(private productService: ProductsService) { }
 
   ngOnInit(): void {
@@ -43,7 +44,6 @@ export class MainComponent implements OnInit {
   }
 
   onPageChange(event){
-    console.log(event);
     this.config.currentPage = event;
   }
 

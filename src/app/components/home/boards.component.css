@@ -1,0 +1,8 @@
+#combo_products{
+    display: flex;
+    flex-direction: column;
+ }
+
+ #combo_products> * {
+    width: 100%;
+ }

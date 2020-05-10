@@ -15,6 +15,10 @@ import { BoardsComponent } from './boards.component';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { ProductCardCatalogueComponent } from './product-card-catalogue/product-card-catalogue.component';
+import { NgxPopper } from 'angular-popper';
+import { OrdersComponent } from './orders.component';
+
 
 @NgModule({
     imports: [
@@ -27,7 +31,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
         NgbDropdownModule,
         MatInputModule,
         MatSelectModule,
-        MatFormFieldModule
+        MatFormFieldModule,
+        NgxPopper
     ],
     declarations: [
         MainComponent,
@@ -36,7 +41,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
         LayoutComponent,
         ProductCardComponent,
         CatalogueComponent,
-        BoardsComponent
+        BoardsComponent,
+        ProductCardCatalogueComponent,
+        OrdersComponent
     ]
 })
 export class HomeModule { }

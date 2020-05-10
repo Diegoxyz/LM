@@ -2,3 +2,41 @@
     padding-top: 10px;
     padding-bottom: 10px
 }
+
+a {
+    color: #414141;
+    text-decoration: none;
+    background-color: transparent;
+    text-transform: uppercase;
+
+}
+.menu-class {
+    padding-top: 50px;
+}
+
+.show-on-hover:hover > ul.dropdown-menu {
+    display: block;    
+}
+
+
+.text-uppercase {
+    text-transform: uppercase;
+}
+
+/* visualizzazione in tabella degli item per le dropdown*/
+.dropdown{position:static}
+.menu-product .dropdown a{color:#261a17}
+.menu-product .dropdown .dropdown-toggle{border:1px solid #a1a1a1;background:#fff !important;border-radius:3px}
+.menu-product .dropdown .dropdown-toggle:hover,.menu-product .dropdown .dropdown-toggle:active,.menu-product .dropdown .dropdown-toggle.active{background:#fff !important;border:1px solid #a1a1a1}
+.menu-product .dropdown .dropdown-menu{width:100%;padding:0px 20px;border-radius:0px;border:0px solid #f0f3f7;background-color:transparent;-webkit-box-shadow:none;box-shadow:none;color:#261a17;font-size:12px;top:auto}
+.menu-product .dropdown .dropdown-menu a{padding:5px 7px;display:block;background-color:rgba(193,193,193,.15);margin-bottom:2px;color:#261a17;-webkit-transition:all 250ms ease-in-out;-moz-transition:all 250ms ease-in-out;-o-transition:all 250ms ease-in-out;transition:all 250ms ease-in-out}
+.menu-product .dropdown .dropdown-menu a:hover,.menu-product .dropdown .dropdown-menu a:active,.menu-product .dropdown .dropdown-menu a:focus{background-color:#fff}
+.menu-product .dropdown .dropdown-menu a.main-category{margin-top:0px;font-weight:600;padding:8px 8px;background-color:#cdcac9}
+.menu-product .dropdown .dropdown-menu a.main-category.active{background-color:#fff}
+
+.dropdown-menu-row{margin:0px;padding:13px;background-color:#fff;border:1px solid #ccc;border:1px solid rgba(0,0,0,.15);border-radius:0px;-webkit-box-shadow:0 6px 12px rgba(0,0,0,.175);box-shadow:0 6px 12px rgba(0,0,0,.175)}
+.dropdown-menu-col{padding:0px 1px 0px 1px}
+.dropdown-menu-col .sub-category{padding-left:10px}
+.dropdown-menu-col .sub-category:hover{display:block}
+.dropdown-menu-col .sub-category a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dropdown-menu-col:hover .sub-category{display:block}

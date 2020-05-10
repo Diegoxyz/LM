@@ -61,18 +61,29 @@
     color: #fff;
     font-size: 12px;
     border-radius: 0px;
+  } 
+
+.hoverWrapper:hover #hoverShow1 {
+  display: block;
+  }
+  
+  .hoverWrapper #hoverShow1 {
+  display: none;
+  position: absolute;
+  background-color: transparent;
+  width: 125px;
+  height: 25px;
+  left: 100px;
+  top: 215px;
   }
 
-  .hoverWrapper:hover #hoverShow1 {
-    display: block;
-    }
-    
-    .hoverWrapper #hoverShow1 {
-    display: none;
-    position: absolute;
-    background-color: transparent;
-    width: 125px;
-    height: 25px;
-    left: 100px;
-    top: 260px;
-    }
+  #rcorners1 {
+    border-radius: 100px;
+    background-color: #dc3545;
+    color: #FFFFFF;
+    padding-top: 15px; 
+    padding-left: 18px; 
+    width: 44px;
+    height: 44px;
+    margin-left: 185px;
+  }

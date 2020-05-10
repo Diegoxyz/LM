@@ -6,6 +6,7 @@ import { User } from '../models/user';
 import { ODataServiceFactory } from 'angular-odata';
 import { LoginSet } from '../models/OData/LoginSet/loginset.entity';
 import { environment } from 'src/environments/environment';
+import { CartService } from './cart.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class AccountService {
   public user: Observable<User>;
 
   constructor(private factory: ODataServiceFactory, private router: Router,
-    private http: HttpClient) { 
+    private http: HttpClient, private cartService : CartService) { 
       this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
       this.user = this.userSubject.asObservable();
   }
@@ -99,6 +100,8 @@ export class AccountService {
     localStorage.removeItem('user');
     this.userSubject.next(null);
     this.router.navigate(['/account/login']);
+
+    this.cartService.emptyCart();
   }
 
   public get userValue(): User {

@@ -1,0 +1,14 @@
+#combo_products{
+    display: flex;
+    flex-direction: column;
+ }
+
+ #combo_products> * {
+    width: 100%;
+ }
+
+/*  .mat-form-field-infix {
+   padding: 15px;
+   border-top: 1.84375em solid transparent;
+}
+ */

@@ -1,7 +1,7 @@
 <div class="cart-menu" >
     <div class="container" style="background-color: #414141;">
-        <div class="navbar-menu navbar_bg">
-            <div class="container pb-1 pt-1">
+        <div class="navbar-menu navbar_bg row align-items-center justify-content-between">
+            <div class="container pb-1 pt-2">
                 <!--mod pad -->
                 <div class="row align-items-center justify-content-between">
                     <div class="w-100 spacer-20 spacer-md-0"></div>
@@ -36,13 +36,16 @@
                                         class="menu-item menu-item-type-post_type menu-item-object-page nav-item text-center">
                                         <a class="nav-link" href="/cart">CART</a>
                                     </li>
-
+                                    <li class="menu-item menu-item-type-post_type menu-item-object-page nav-item text-center">
+                                        <p id="rcorners1">{{ cartQuantity }}</p>
+                                    </li>
                                     <li
                                         class="menu-item menu-item-type-custom menu-item-object-custom nav-item text-center">
                                         <a class="nav-link" href="http://global.lamarzocco.com/en/">GLOBAL WEBSITE</a>
                                     </li>
                                     <li><button type="button" (click)="logout()">Logout</button></li>
                                 </ul>
+                
                             </div>
                         </div>
                         <!-- FINE -->
@@ -53,11 +56,24 @@
     </div>
 </div>
 
-<div>
+
+<div class="header-menu">
+    <div class="header-menu-logo">
+        <div class="container text-center">
+            <a href="https://store.lamarzocco.com">
+                <img src="https://store.lamarzocco.com/wp-content/themes/store2019/_common/images/logo-store.png" alt="" class="img-logo-store img-fluid" data-rjs="2">
+            </a>
+        </div>
+    </div>
+</div>
+
+<app-menu></app-menu>
+
+ <div>
     <div class="row align-items-center">
         <div class="col-12">
             <div id="demo" class="carousel slide" data-ride="carousel">
-                <!-- The slideshow -->
+                
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <img src="assets/img/carousel/carousel1.PNG" alt="Image 1">
@@ -73,7 +89,8 @@
         </div>
     </div>
 </div>
-<div class="black-logo-bg align-items-center justify-content-between">
+
+<!-- <div class="black-logo-bg align-items-center justify-content-between">
     <div class="row align-items-center justify-content-center">
         <div class="w-100 spacer-20 spacer-md-0"></div>
         <div class="col-6 col-md-auto">
@@ -82,4 +99,4 @@
             </a>
         </div>
     </div>
-</div>
+</div> -->

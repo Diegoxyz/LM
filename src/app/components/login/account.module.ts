@@ -7,12 +7,14 @@ import { LoginComponent } from './login.component';
 import { RegisterComponent } from './register.component';
 import { LayoutComponent } from './layout.component';
 import { LoginBarComponent } from './login-bar/login-bar.component';
+import { NgxPopper } from 'angular-popper';
 
 @NgModule({
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        AccountRoutingModule
+        AccountRoutingModule,
+        NgxPopper
     ],
     declarations: [
         LoginComponent,

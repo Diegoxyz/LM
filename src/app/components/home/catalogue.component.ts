@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ProductsService } from 'src/app/services/products.service';
 import { Group, Product } from 'src/app/models/item';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({selector: 'app-catalogue',
 templateUrl: './catalogue.component.html',
 styleUrls: ['./catalogue.component.css']
 })
-export class CatalogueComponent implements OnInit {
+export class CatalogueComponent implements OnInit, OnDestroy {
 
-    groups : Group[] = []; 
-    selected: Group;
+    groupId: string;
 
     items : Product[] =[];
   
@@ -32,16 +32,29 @@ export class CatalogueComponent implements OnInit {
         screenReaderCurrentLabel: `You're on page`
     };
 
+    private sub: any;
+
     constructor(private productsService: ProductsService,
-        private fb : FormBuilder
+        private fb : FormBuilder,
+        private route: ActivatedRoute
     ) {
         
     }
 
     ngOnInit() {
-        this.groups = this.productsService.getAllGroups();
-        this.items = this.productsService.getAllProducts();
+        
+        this.sub = this.route.params.subscribe(params => {
+            this.groupId = params['groupId']; 
+           // add the loading of all the items for a group
+           this.items = this.productsService.getAllProducts();
+         });
+        
+        
     }
+
+    ngOnDestroy() {
+        this.sub.unsubscribe();
+      }
     
     get page(){
         return this.config.currentPage;
@@ -52,7 +65,6 @@ export class CatalogueComponent implements OnInit {
     }
 
     onPageChange(event){
-    console.log(event);
-    this.config.currentPage = event;
+        this.config.currentPage = event;
     }
 }

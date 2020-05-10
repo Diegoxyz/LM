@@ -4,6 +4,7 @@ import { MainComponent } from './main.component';
 import { LayoutComponent } from './layout.component';
 import { CatalogueComponent } from './catalogue.component';
 import { BoardsComponent } from './boards.component';
+import { OrdersComponent } from './orders.component';
 
 
 const routes: Routes = [
@@ -12,8 +13,9 @@ const routes: Routes = [
         children: [
             { path: '', component: MainComponent },
             { path: 'home', component: MainComponent },
-            { path: 'catalogue', component: CatalogueComponent },
-            { path: 'boards', component: BoardsComponent }
+            { path: 'catalogue/:groupId', component: CatalogueComponent },
+            { path: 'boards', component: BoardsComponent },
+            { path: 'orders', component: OrdersComponent }
         ]
     }
 ];
