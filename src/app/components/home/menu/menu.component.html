@@ -1,88 +1,37 @@
-<div id="menu_categories" class="align-items-center justify-content-center border-bottom border-dark">
-    <div class="container">
-        <div class="menu-class">
-            <div class="row align-items-center justify-content-between">
-                <div class="col-3 col-md-auto">
-                    &nbsp;
-                </div>
-
-
-                <div class="col-2 col-md-auto">
-                    <div class="btn-group show-on-hover">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            Catalogue
-                        </button>
-
-                        <ul class="dropdown-menu" role="menu">
-                            <li *ngFor="let group of groups" [value]="group.code">
-                                <a href="#">{{group.description}}</a>
-                            </li>
-                        </ul>
-
+<div class="align-items-center">
+    <ul>
+        <li>
+            <div class="dropdown">
+                <a class="dropdown-toggle"
+                    role="button" aria-expanded="true" aria-haspopup="true" 
+                    href="#" data-toggle="dropdown"> catalog 
+                    <span class="caret"></span>
+                </a>
+    
+                <div class="dropdown-menu">
+                    <div class="container">
+                        <div class="row dropdown-menu-row">
+                            <div class="col-md-6 dropdown-menu-col" *ngFor="let group of groups">
+                                <a 
+                                    class="dropdown-item"
+                                    [routerLink]="['catalogue', group.code]">
+                                    {{ group.description }}
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <div class="dropdown">
-                    <button type="button" 
-                            class="btn btn-primary dropdown-toggle" 
-                            data-toggle="dropdown">
-                        TEST APERTURA DDW
-                    </button>
-                    <div class="dropdown-menu">
-                        <!--<div *ngFor="let group of groups">
-                            <a class="dropdown-item" (click)="openCatalogue(group)">{{group.description}}</a>
-                        </div>-->
-                        <a *ngFor="let group of groups"
-                            class="dropdown-item"
-                            [routerLink]="['catalogue', group.code]">
-                            {{ group.description }}
-                        </a>
-                    </div>
-                  </div>
-
-
-                  <angular-popper>
-                    <div class="target-block border border-primary">
-                      Target
-                    </div>
-                    <div content>Popper content</div>
-                  </angular-popper>                  
-
-                <div class="col-2 col-md-auto">
-                    <a class="nav-link" href="./home/boards">Tavole</a>
-                </div>
-
-                <div class="col-2 col-md-auto">
-                    <a class="nav-link" href="./home/orders">Orders</a>
-                </div>
-                <div class="col-3 col-md-auto">
-                    &nbsp;
                 </div>
             </div>
-        </div>
-    </div> 
-
-
-
-<!-- <div class="menu-product-menu-container"><ul id="menu-product-menu" class="nav justify-content-center flex-column flex-md-row flex-nowrap"><li id="menu-item-6149" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat current-menu-item menu-item-has-children nav-item text-center active dropdown"><a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="https://store.lamarzocco.com/product-category/apparel/">Apparel</a>
-    <ul class="sub-menu dropdown-menu dropdown-menu-right" x-placement="bottom" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(61px, 47px, 0px);">
-        <li id="menu-item-6150" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat nav-item text-center"><a class="nav-link" href="https://store.lamarzocco.com/product-category/apparel/t-shirts/">T-Shirts</a></li>
-        <li id="menu-item-6151" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat nav-item text-center"><a class="nav-link" href="https://store.lamarzocco.com/product-category/apparel/sweaters-hoodies/">Sweaters/Hoodies</a></li>
-        <li id="menu-item-6152" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat nav-item text-center"><a class="nav-link" href="https://store.lamarzocco.com/product-category/apparel/jackets/">Jackets</a></li>
-        <li id="menu-item-6153" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat nav-item text-center"><a class="nav-link" href="https://store.lamarzocco.com/product-category/apparel/accessories/">Accessories</a></li>
-        <li id="menu-item-6154" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat nav-item text-center"><a class="nav-link" href="https://store.lamarzocco.com/product-category/apparel/barista-apparel/">Barista Apparel</a></li>
+        </li>      
+        <li>
+            <div style="padding-left: 70px;">
+                <a  href="./home/boards">Tavole</a>
+            </div>
+        </li>
+        <li>
+            <div style="padding-left: 70px;">
+                <a href="./home/orders">Orders</a>
+            </div>
+        </li>
     </ul>
-    </li>
-    <li id="menu-item-6155" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children nav-item text-center dropdown"><a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="https://store.lamarzocco.com/product-category/barista-gear/">Barista gear</a>
-     </li>
-    <li id="menu-item-6159" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children nav-item text-center dropdown"><a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="https://store.lamarzocco.com/product-category/custom-parts/">Custom Parts</a>
-    </li>
-    <li id="menu-item-6164" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children nav-item text-center dropdown"><a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="https://store.lamarzocco.com/product-category/collectibles/">Collectibles</a>
-
-    </li>
-    <li id="menu-item-6168" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children nav-item text-center dropdown"><a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="https://store.lamarzocco.com/product-category/cups/">Cups</a>
-
-    </li>
-    <li id="menu-item-6172" class="lion-ico menu-item menu-item-type-taxonomy menu-item-object-product_cat nav-item text-center"><a class="nav-link" href="https://store.lamarzocco.com/product-category/specials/">Specials</a></li>
-    </ul>
-</div> -->
+</div>

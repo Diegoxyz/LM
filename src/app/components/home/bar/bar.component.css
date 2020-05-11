@@ -22,11 +22,9 @@ img.img-logo-horizontal {
 }
 
 .row_carousel{
-    position: absolute;
-    left: 0;
-    right: 0;
-    width: 100vw;
+    overflow: hidden;
   }
+
 
 ul.nav li a {
     color: white;
