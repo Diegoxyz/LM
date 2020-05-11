@@ -29,7 +29,7 @@ a {
 /* mostra menu su una unica riga */
 ul {
     list-style-type: none;
-    margin-left: 36%;
+    margin-left: 38%;
     overflow: visible;
     background-color: #ffffff;
     width: 60%;
@@ -50,5 +50,5 @@ ul {
   }*/
   
   li a:hover {
-    background-color: #111111;
+    background-color: rgba(193, 193, 193, 0.15);
   }

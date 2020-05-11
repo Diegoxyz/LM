@@ -96,3 +96,21 @@ input:focus {
     width: 20px;
     height: 20px;  
   }
+
+.display-menu {
+    display: block;
+}
+
+.hide-menu {
+    display: block;
+    background-color: red;
+}
+
+.cart-menu2 {
+    background-color: #ffffff;
+    position: fixed;
+    z-index: 1030;
+    top: 50px;
+    left: 0;
+    right: 0;
+}
