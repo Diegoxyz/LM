@@ -14,6 +14,7 @@ const routes: Routes = [
             { path: '', component: MainComponent },
             { path: 'home', component: MainComponent },
             { path: 'catalogue/:groupId', component: CatalogueComponent },
+            { path: 'boards/:machineId', component: BoardsComponent },
             { path: 'boards', component: BoardsComponent },
             { path: 'orders', component: OrdersComponent }
         ]

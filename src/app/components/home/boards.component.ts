@@ -1,60 +1,70 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProductsService } from 'src/app/services/products.service';
-import { Group, Product} from 'src/app/models/item';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { Group, Product, Item} from 'src/app/models/item';
+import { ActivatedRoute } from '@angular/router';
+import { faWindowClose, faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 @Component({selector: 'app-boards',
 templateUrl: './boards.component.html',
 styleUrls: ['./boards.component.css']
 })
-export class BoardsComponent implements OnInit {
+export class BoardsComponent implements OnInit,OnDestroy {
+
+    machineId?: string;
 
     groups : Group[] = []; 
-    selected: Group;
     
     items : Product[] =[];
-  
-    config = {
-        itemsPerPage: 9,
-        currentPage: 1,
-        totalItems: this.items.length
-    };
+    
+    machines : Item[] = [];
 
-    public maxSize: number = 9;
-    public directionLinks: boolean = true;
-    public autoHide: boolean = false;
-    public responsive: boolean = true;
-    public labels: any = {
-        previousLabel: '<--',
-        nextLabel: '-->',
-        screenReaderPaginationLabel: 'Pagination',
-        screenReaderPageLabel: 'page',
-        screenReaderCurrentLabel: `You're on page`
-    };
+    prospectives :string[];
+
+    prospective: string;
+
+    faWindowClose = faWindowClose;
+
+    faCoffee = faCoffee;
+
+    private sub: any;
 
     constructor(private productsService: ProductsService,
-        private fb : FormBuilder
+        private route: ActivatedRoute
     ) {
        /*  this.groups = this.productsService.getAllGroups(); */
     }
 
     ngOnInit() {
-        this.groups = this.productsService.getAllGroups();
-        this.items = this.productsService.getAllProducts();
+
+        this.sub = this.route.queryParams.subscribe(params => {
+            this.machineId = params['machineId']; 
+           // add the loading of all the "prospectives" for a specific machine
+           this.prospectives = Array(23).fill(0).map((x, i) => (
+            `Prospettiva${i + 1}`
+            ));
+
+         });
+
+        
+        this.machines = this.productsService.getAllMachines();
     }
 
-    
-    get page(){
-        return this.config.currentPage;
-      }
-    
-    get pageSize(){
-    return this.config.itemsPerPage;
+    ngOnDestroy() {
+        this.sub.unsubscribe();
     }
 
-    onPageChange(event){
-    console.log(event);
-    this.config.currentPage = event;
+    openProspective() {
+        this.machines = [];
+        this.prospective = "prospetive";
     }
 
+    closeProspective() {
+        this.prospective = undefined;
+    }
+
+    goToMachine() {
+        this.machineId = undefined;
+        this.prospectives = undefined;
+        this.machines = this.productsService.getAllMachines();
+    }
 }

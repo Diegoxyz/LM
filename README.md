@@ -20,8 +20,7 @@ Odata:
 Localization (punto aperto, vedi sotto):
 	ng add @angular/localize
 
-Angular Material (dropdown) : ng add @angular/material,
-io nell'installazione ho scelto custom css ma i loro sono migliori.
+Font Awesome: ng add @fortawesome/angular-fontawesome@0.6.1 
 
 Modifiche fatte dopo user management:
 

@@ -18,6 +18,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ProductCardCatalogueComponent } from './product-card-catalogue/product-card-catalogue.component';
 import { NgxPopper } from 'angular-popper';
 import { OrdersComponent } from './orders.component';
+import { MachineCardComponent } from './board-machine-card/machine-card.component';
+import { ProspectiveCardComponent } from './prospective-card/prospective-card.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -32,7 +35,8 @@ import { OrdersComponent } from './orders.component';
         MatInputModule,
         MatSelectModule,
         MatFormFieldModule,
-        NgxPopper
+        NgxPopper,
+        FontAwesomeModule
     ],
     declarations: [
         MainComponent,
@@ -43,7 +47,9 @@ import { OrdersComponent } from './orders.component';
         CatalogueComponent,
         BoardsComponent,
         ProductCardCatalogueComponent,
-        OrdersComponent
+        OrdersComponent,
+        MachineCardComponent,
+        ProspectiveCardComponent
     ]
 })
 export class HomeModule { }

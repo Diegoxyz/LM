@@ -1,45 +1,47 @@
-<div class="align-items-center justify-content-center">
-	<div class="container">
-        <div class="row align-items-center justify-content-center">
-            <div class="col-md-auto">
-                <div *ngIf="!selected">Please choose a value</div>
+<div *ngIf="prospective !== undefined">
+    <div>
+        <div class="row">
+            <div class="col-2">    
+                <fa-icon [icon]="faWindowClose" [styles]="{'color': 'red'}" (click)="closeProspective()" size="7x"></fa-icon>
             </div>
-
-            <div class="col-md-auto">
-                <mat-form-field>
-                    <mat-label>Gruppi Merce</mat-label>
-                    <mat-select [(value)]="selected">
-                        <mat-option *ngFor="let group of groups" [value]="group.code">
-                            {{group.description}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
+            <div class="col-10">
+                <app-prospetive-card></app-prospetive-card>
             </div>
         </div>
-
-        
-        <div class="row align-items-center justify-content-center" *ngIf="selected">
-            <div *ngFor="let item of items | paginate: config" class="col-4 col-md-auto h-100" >
-                <div class="inner">
-                    <app-product-card [item]="item"></app-product-card>
+    </div>
+</div>
+<div *ngIf="prospectives !== undefined">
+    <div *ngIf="prospectives.length === 0">
+        No element found
+    </div>
+    <div *ngIf="prospectives.length != 0" class="align-items-center justify-content-center">
+        <div class="container">
+            <div *ngIf="prospective === undefined">
+                <div class="row">
+                    <div class="col">    
+                        <fa-icon [icon]="faWindowClose" [styles]="{'color': 'red'}" (click)="goToMachine()" size="7x"></fa-icon>
+                    </div>
+                    <div class="col-11">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+            <div class="row align-items-center justify-content-center">
+                <div *ngFor="let prospective of prospectives" class="col-4 col-md-auto h-100">
+                    <input type="image" (click)="openProspective()" src="assets/img/coffeeMachines/Prospettiva.PNG">
                 </div>
             </div>
         </div>
-
-        <div class="row align-items-center justify-content-center spacer" style="margin-top: 20" *ngIf="selected">
-            <div class="w-100"></div>
-            <div class="col-4 col-md-auto h-100">
-                <pagination-controls 
-                     [maxSize]="maxSize"
-                     [directionLinks]="directionLinks"
-                     [autoHide]="autoHide"
-                     [responsive]="responsive"
-                     [previousLabel]="labels.previousLabel"
-                     [nextLabel]="labels.nextLabel"
-                     [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
-                     [screenReaderPageLabel]="labels.screenReaderPageLabel"
-                     [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
-                     (pageChange)="onPageChange($event)"></pagination-controls>
+    </div>
+</div>
+{{ machineId }}
+<div *ngIf="machineId === undefined ">
+    <div class="align-items-center justify-content-center">
+        <div class="container">
+            <div class="row align-items-center justify-content-center" *ngIf="machines.length > 0">
+                <div *ngFor="let m of machines" class="col-4 col-md-auto h-100">
+                    <app-machine-card [item]="m"></app-machine-card>
+                </div>
             </div>
         </div>
     </div>
