@@ -38,10 +38,15 @@ export class BoardsComponent implements OnInit,OnDestroy {
 
         this.sub = this.route.queryParams.subscribe(params => {
             this.machineId = params['machineId']; 
-           // add the loading of all the "prospectives" for a specific machine
-           this.prospectives = Array(23).fill(0).map((x, i) => (
-            `Prospettiva${i + 1}`
-            ));
+            if (this.machineId) {
+                // add the loading of all the "prospectives" for a specific machine
+                this.prospectives = Array(23).fill(0).map((x, i) => (
+                    `Prospettiva${i + 1}`
+                    ));
+            } else {
+                this.prospectives = undefined;
+            }
+           
 
          });
 
@@ -56,6 +61,9 @@ export class BoardsComponent implements OnInit,OnDestroy {
     openProspective() {
         this.machines = [];
         this.prospective = "prospetive";
+        this.prospectives = Array(23).fill(0).map((x, i) => (
+            `Prospettiva${i + 1}`
+            ));
     }
 
     closeProspective() {

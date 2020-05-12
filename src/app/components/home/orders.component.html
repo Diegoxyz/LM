@@ -1,7 +1,11 @@
 <div class="align-items-center justify-content-center">
 	<div class="container">
-        <div *ngIf="totalQuantity === 0">
-            <span>No item</span>
+        <div *ngIf="totalQuantity == 0">
+            <div class="row align-items-center justify-content-center" style="margin-top: 20">
+                <div  class="col-4 col-md-auto h-100" >
+                    <h1>No item</h1>
+                </div>
+            </div>
         </div>
         <div *ngIf="totalQuantity != 0">
             <div *ngFor="let item of items | paginate: config" class="row align-items-center justify-content-center" style="margin-top: 20">

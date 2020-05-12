@@ -1,30 +1,35 @@
-<div class="align-items-center justify-content-center rounded">
+<div class="align-items-center justify-content-center rcorners1">
     <div class="container">
         <div class="card align-items-center justify-content-center" style="width: 18rem;">
-            <ng-template #tipContent style="background-color: antiquewhite;">
-                <div >
-                    <p>{{ item.description }}</p>
-                    <p>{{ item.maxQuantity }}</p>
-                    <p>{{ item.minQuantity }}</p>
-                </div></ng-template>
-            <img class="img-fluid card-img-top" src="assets/img/items/Item1.PNG" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260" [ngbTooltip]="tipContent" tooltipClass="my-custom-class">
+
+            <img class="img-fluid card-img-top" src="assets/img/items/Item1.PNG" sizes="(max-width: 260px) 100vw, 260px">
             <div class="hoverWrapper">
                 <div class="card-body">
-                    <h6 class="card-title">{{ item.code }}</h6>
-                    <p class="card-text">&euro;{{ item.price }}</p>
-                    <div id="hoverShow1">
-                        <div class="row row justify-content-between">
-                            <div class="product-add">
-                                <button class="add-product" (click)="addProduct(item)">
-                                  ADD TO CART
-                                </button>
-                              </div>
-                        </div>
-                    </div>
+                    <ul id="productDetail">
+                        <li><p class="card-text spaced">Code {{ item.code }}</p></li>
+                        <li><p class="card-text">Description {{ item.description }}</p></li>
+                        <li><p class="card-text">Price {{ item.price }}&euro;</p></li>
+                        <li><p *ngIf="item.maxQuantity">maxQuantity{{ item.maxQuantity }}</p></li>
+                        <li><p *ngIf="item.minQuantity">minQuantity{{ item.minQuantity }}</p></li>
+                        <li><input type="number"
+                            #selectedQuantity
+                            class="input-number input-number-adaptive" 
+                            step="1" min="0" max="" 
+                            name="" value="{{ quantity }}" title="Quantity" size="2" 
+                            pattern="[0-9]*" 
+                            inputmode="numeric" aria-labelledby=""
+                            style="width: 50%"
+                        >  <fa-icon [icon]="faShoppingCart" [styles]="{'color': 'red'}" (click)="addProduct(item)"></fa-icon></li>
+                    </ul>
+                    
+                    
+                   
+                    
+                    
+                    
+                    
                 </div>
             </div>
-            
-
         </div>
     </div>
 </div>
