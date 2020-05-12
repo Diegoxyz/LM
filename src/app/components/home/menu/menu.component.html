@@ -1,4 +1,4 @@
-<div id="pippo" class="align-items-center" style="background-color: tomato;">
+<div id="barra" class="align-items-center">
     <ul>
         <li>
             <div class="dropdown">
@@ -25,13 +25,16 @@
         </li>      
         <li>
             <div style="padding-left: 70px;">
-                <a  href="./home/boards">Tavole</a>
+                <a  [routerLink]="['boards']">Boards</a>
             </div>
         </li>
         <li>
             <div style="padding-left: 70px;">
-                <a href="./home/orders">Orders</a>
+                <a [routerLink]="['orders']">Orders</a>
             </div>
         </li>
     </ul>
 </div>
+<div id="barra" class="align-items-center">
+    <ul>
+        <li>catalogue</li>
