@@ -1,48 +1,59 @@
-<app-login-bar></app-login-bar>  <!--<app-bar></app-bar>-->
-<div class="content content-page">
+<div class="content" style="margin-bottom: 5%;">
     <div class="container">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="row align-items-center justify-content-center">
+            <div class="w-100"></div>
+            <div class="col-6">
+                <a href="#">
+                    <img src="assets/img/logo/globo-leone.png" alt="logo" class="img-logo-horizontal">
+                </a>
+            </div>
+            <div class="w-100"></div>
+        </div>
         <div *ngIf="loginError" class="alert alert-danger">
             <span i18n="Username non valid|Error message">loginError</span>
         </div>
         <div class="row align-items-center justify-content-center">
             <div class="w-100"></div>
-            <div class="col-6">
-                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="col-7">
+                
                 <div class="form-group">
-                <label for="email" i18n="Email address|The email used to log in">Email</label>
-                <input type="email" class="form-control" id="email" formControlName="email" aria-describedby="emailHelp" placeholder="Enter email" required>
-                <div *ngIf="email.invalid && (email.dirty || email.touched)"
-                        class="alert alert-danger">
-                    <div *ngIf="email.errors.required">
-                        <span i18n="Email address|Error message">Email is required.</span>
+                    <label for="email" i18n="Email address|The email used to log in">Email</label>
+                    <input type="email" class="form-control" id="email" formControlName="email" aria-describedby="emailHelp" placeholder="Enter email" required>
+                    <div *ngIf="email.invalid && (email.dirty || email.touched)"
+                            class="alert alert-danger">
+                        <div *ngIf="email.errors.required">
+                            <span i18n="Email address|Error message">Email is required.</span>
+                        </div>
                     </div>
                 </div>
-                </div>
                 <div class="form-group">
-                <label for="password" i18n>Password</label>
-                <input type="password" class="form-control" id="password" formControlName="password" placeholder="Password" required>
-                <div *ngIf="password.invalid && (password.dirty || password.touched)"
-                        class="alert alert-danger">
+                    <label for="password" i18n>Password</label>
+                    <input type="password" class="form-control" id="password" formControlName="password" placeholder="Password" required>
+                    <div *ngIf="password.invalid && (password.dirty || password.touched)"
+                            class="alert alert-danger">
 
-                    <div *ngIf="password.errors.required">
-                        <ng-container i18n>Password is required.</ng-container>
+                        <div *ngIf="password.errors.required">
+                            <ng-container i18n>Password is required.</ng-container>
+                        </div>
                     </div>
                 </div>
-                </div>
-                <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Submit</button>
-            </form>
+                
+            
             </div>
             <div class="w-100"></div>
         </div>
-        <div class="row align-items-center justify-content-end">
-            <div class="col-4">
-                <a routerLink="../register">Register</a>
+        <div class="row">
+            <div class="w-100"></div>
+            <div class="col-2">&nbsp;</div>
+            <div class="col-2"><div style="padding-left: 30%;"><button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Submit</button></div></div>
+            <div class="col-4">&nbsp;</div>
+            <div class="col-2">
+                <div><a routerLink="../register">Register</a></div>
+                <div><a routerLink="../lostCredentials">Lost credentials</a></div>
             </div>
+            <div class="w-100"></div>
         </div>
-        <div class="row align-items-center justify-content-end">
-            <div class="col-4">
-                <a routerLink="../lostCredentials">Lost credentials?</a>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
