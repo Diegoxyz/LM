@@ -4,27 +4,32 @@
         <div id="mButton" style="cursor: pointer;">
             <!-- onclick="locatiom.href='link'" -->
             <div [routerLink]="['catalogue']">
-                <img id="img-menu" alt="Catalog" src="assets/img/menu/gruppo.png">
-            </div>
-            <div class="button-description">
-                <P>Catalog</P>
+                <!-- <img id="img-menu" alt="Catalog" src="assets/img/menu/gruppo.png"> -->
+                <div><fa-icon [icon]="faBookOpen" 
+                [styles]="{'color': 'dc3545'}" size="2x"></fa-icon></div>
+                <div class="button-description">
+                    <p>Catalog</p>
+                </div>
             </div>
         </div>
         
         <div id="mButton" style="cursor: pointer;">
             <div [routerLink]="['boards']">
-                <img id="img-menu" alt="BOARDS" src="assets/img/menu/gruppo.png">
+                <div><fa-icon [icon]="faDraftingCompass" 
+                    [styles]="{'color': 'dc3545'}" size="2x"></fa-icon></div>
                 <div class="button-description">
-                    <P>Boards</P>
+                        <p>Boards</p>
                 </div>
             </div>
         </div>
 
         <div id="mButton" style="cursor: pointer;">
-            <div [routerLink]="['boards']">
-                <img id="img-menu" alt="ORDERS" src="assets/img/menu/gruppo.png">
+            <div [routerLink]="['orders']">
+                <div><fa-icon [icon]="faClipboardCheck" 
+                    [styles]="{'color': 'dc3545'}" size="2x">
+                </fa-icon></div>
                 <div class="button-description">
-                    <P>Orders</P>
+                    <p>Orders</p>
                 </div>
             </div>
         </div>

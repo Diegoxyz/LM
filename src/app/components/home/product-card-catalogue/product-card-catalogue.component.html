@@ -45,14 +45,23 @@
                     </div>
 
                     <div class="row align-items-center no-gutters justify-content-between">
-                        <div class="col-md-auto">
-                            <p class="card-text">Price &euro;</p>
+                        <div class="col-md-5">
+                            <h6 class="card-text">Price &euro;</h6>
                         </div>
-                        <div id="card-title-id"class="col-md-auto">
-                            <p> {{ item.price }}</p>
+                        <div class="col-md-7">
+                            <h6 id="card-title-id" class="card-title">{{ item.price }}</h6>
                         </div>
                     </div>
-
+                    <div class="row align-items-center no-gutters justify-content-between">
+                        <div class="col-md-5">
+                            <h6 class="card-text">Stock</h6>
+                        </div>
+                        <div class="col-md-7">
+                            <h6 id="card-title-id" class="card-title"><fa-icon *ngIf="item.stock" [icon]="faCircle" 
+                                [styles]="{'color': 'green'}"></fa-icon><fa-icon *ngIf="!item.stock" [icon]="faCircle" 
+                                [styles]="{'color': 'red'}"></fa-icon></h6>
+                        </div>
+                    </div>
                     <div class="quantity">
                         <div class="row align-items-center no-gutters">
                             <div class="col-md-auto">
@@ -60,19 +69,12 @@
                                     -
                                 </button>
                             </div>
-
-
-
-                          
-
                             <div class="col-md-auto">
                                 <input id="modify_qty" type="number" #selectedQuantity
-                                    (keyup.enter)="onKey(selectedQuantity.value)"
                                     class="input-number input-number-adaptive" step="1" min="0" max="" name=""
                                     value="{{ quantity }}" title="Quantity" size="2" pattern="[0-9]*"
                                     inputmode="numeric" aria-labelledby="">
                             </div>
-                            
                             <div class="col-md-auto">
                                 <button class="add-product" (click)="addProduct()">
                                     +
@@ -80,7 +82,7 @@
                             </div>
 
                             <div class="col-md-auto">
-                                <div style="padding-left: 290%;">
+                                <div style="padding-left: 120%;">
                                     <fa-icon [icon]="faShoppingCart" 
                                         [styles]="{'color': 'dc3545'}" (click)="addProduct()" size="2x">
                                     </fa-icon>

@@ -11,12 +11,14 @@ export class Item {
 
 export class Product extends Item {
     price: number;
+    stock: boolean;
     maxQuantity?: number;
     minQuantity?: number;
 
-    constructor(code: string, description: string, price: number, maxQuantity? : number, minQuantity?: number) {
+    constructor(code: string, description: string, price: number, stock: boolean, maxQuantity? : number, minQuantity?: number) {
         super(code, description);
         this.price = price;
+        this.stock = stock;
         this.maxQuantity = maxQuantity;
         this.minQuantity = minQuantity;
     }

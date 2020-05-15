@@ -4,6 +4,7 @@ import { ProductsService } from 'src/app/services/products.service';
 import { Group, Product } from 'src/app/models/item';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { faBookOpen, faClipboardCheck,faDraftingCompass, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-menu',
@@ -22,6 +23,10 @@ export class MenuComponent implements OnInit {
  selected: Group;
 
  items : Product[] =[];
+
+ faBookOpen = faBookOpen;
+ faClipboardCheck = faClipboardCheck;
+ faDraftingCompass = faDraftingCompass;
 
  constructor(private productsService: ProductsService,
   private fb : FormBuilder,

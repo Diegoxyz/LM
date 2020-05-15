@@ -9,6 +9,9 @@
                         <li><p class="card-text spaced">Code {{ item.code }}</p></li>
                         <li><p class="card-text">Description {{ item.description }}</p></li>
                         <li><p class="card-text">Price {{ item.price }}&euro;</p></li>
+                        <li><p class="card-text">Stock <fa-icon *ngIf="item.stock" [icon]="faCircle" 
+                            [styles]="{'color': 'green'}"></fa-icon><fa-icon *ngIf="!item.stock" [icon]="faCircle" 
+                            [styles]="{'color': 'red'}"></fa-icon></p></li>
                         <li><p *ngIf="item.maxQuantity">maxQuantity{{ item.maxQuantity }}</p></li>
                         <li><p *ngIf="item.minQuantity">minQuantity{{ item.minQuantity }}</p></li>
                         <li>

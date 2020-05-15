@@ -66,13 +66,18 @@ ul {
     width: 40%;
     height: 40%;
     background-position: center;
-  /*   border: 2px solid green; */
     margin-top: 1%;
 } 
 
-#mButton:hover{ 
-  border: 2px solid red;
+#mButton {
+  border: 1px solid #ffffff;
+  margin: 2%;
 }
+
+#mButton:hover{ 
+  border: 1px solid #dc3545;
+}
+
 
 .button-description{
   color: black;

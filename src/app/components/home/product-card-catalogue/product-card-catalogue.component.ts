@@ -3,7 +3,7 @@ import { Product } from 'src/app/models/item';
 import { Order } from '@app/models/order';
 import { ManageProducts } from '../services/manage-products.service';
 import { CartService } from '@app/services/cart.service';
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingCart, faCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({selector: 'app-product-catalogue-card',
 templateUrl: './product-card-catalogue.component.html',
@@ -15,6 +15,8 @@ export class ProductCardCatalogueComponent implements OnInit {
     quantity: number = 0; 
     quantityError : boolean = false;
     faShoppingCart=faShoppingCart;
+    faCircle=faCircle;
+    
     constructor(private manageProducts: ManageProducts, private cartService : CartService) {
     }
     

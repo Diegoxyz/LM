@@ -10,14 +10,14 @@ export class ProductsService {
 
   getAllProducts() : Product[] {
     const items : Product[] = Array(150).fill(0).map((x, i) => (
-      new Product(`Code ${i + 1}`,`Product ${i + 1}`,(i * 10))
+      new Product(`Code ${i + 1}`,`Product ${i + 1}`, (i * 10), (i%2 === 0))
       ));
     return items;
   }
 
   getAllGroups(): Group[] {
     const items : Group[] = Array(23).fill(0).map((x, i) => (
-      new Product(`Group${i + 1}`,`Gr${i + 1}`,(i * 10))
+      new Product(`Group${i + 1}`,`Gr${i + 1}`,(i * 10), (i%2 === 0))
       ));
     return items;
   }

@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Product } from 'src/app/models/item';
 import { ManageProducts } from '../services/manage-products.service';
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingCart, faCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({selector: 'app-product-card',
 templateUrl: './product-card.component.html',
@@ -14,7 +14,8 @@ export class ProductCardComponent {
     faShoppingCart=faShoppingCart;
     quantity : number = 0;
     selectedQuantity : number = 0;
-
+    faCircle=faCircle;
+    
     constructor(private manageProducts: ManageProducts) {
         //TODO We will load the image by odata, but for mock application let's use a fix one
     }
