@@ -11,23 +11,21 @@
                         <li><p class="card-text">Price {{ item.price }}&euro;</p></li>
                         <li><p *ngIf="item.maxQuantity">maxQuantity{{ item.maxQuantity }}</p></li>
                         <li><p *ngIf="item.minQuantity">minQuantity{{ item.minQuantity }}</p></li>
-                        <li><input type="number"
+                        <li>
+                            <input type="number"
                             #selectedQuantity
                             class="input-number input-number-adaptive" 
                             step="1" min="0" max="" 
                             name="" value="{{ quantity }}" title="Quantity" size="2" 
                             pattern="[0-9]*" 
                             inputmode="numeric" aria-labelledby=""
-                            style="width: 50%"
-                        >  <fa-icon [icon]="faShoppingCart" [styles]="{'color': 'red'}" (click)="addProduct(item)"></fa-icon></li>
+                            style="width: 50%">  
+                            
+                            <fa-icon [icon]="faShoppingCart" 
+                                [styles]="{'color': 'red'}" (click)="addProduct(item)">
+                            </fa-icon>
+                        </li>
                     </ul>
-                    
-                    
-                   
-                    
-                    
-                    
-                    
                 </div>
             </div>
         </div>

@@ -1,40 +1,33 @@
-<div id="barra" class="align-items-center">
-    <ul>
-        <li>
-            <div class="dropdown">
-                <a class="dropdown-toggle"
-                    role="button" aria-expanded="true" aria-haspopup="true" 
-                    href="#" data-toggle="dropdown"> catalog 
-                    <span class="caret"></span>
-                </a>
-    
-                <div class="dropdown-menu">
-                    <div class="container">
-                        <div class="row dropdown-menu-row">
-                            <div class="col-md-6 dropdown-menu-col" *ngFor="let group of groups">
-                                <a 
-                                    class="dropdown-item"
-                                    [routerLink]="['catalogue', group.code]">
-                                    {{ group.description }}
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+<div id="barra" class="">
+    <div class="flex-container">
+
+        <div id="mButton" style="cursor: pointer;">
+            <!-- onclick="locatiom.href='link'" -->
+            <div [routerLink]="['catalog']">
+                <img id="img-menu" alt="Catalog" src="assets/img/menu/gruppo.png">
+            </div>
+            <div class="button-description">
+                <P>Catalog</P>
+            </div>
+        </div>
+        
+        <div id="mButton" style="cursor: pointer;">
+            <div [routerLink]="['boards']">
+                <img id="img-menu" alt="BOARDS" src="assets/img/menu/gruppo.png">
+                <div class="button-description">
+                    <P>Boards</P>
                 </div>
             </div>
-        </li>      
-        <li>
-            <div style="padding-left: 70px;">
-                <a  [routerLink]="['boards']">Boards</a>
+        </div>
+
+        <div id="mButton" style="cursor: pointer;">
+            <div [routerLink]="['boards']">
+                <img id="img-menu" alt="ORDERS" src="assets/img/menu/gruppo.png">
+                <div class="button-description">
+                    <P>Orders</P>
+                </div>
             </div>
-        </li>
-        <li>
-            <div style="padding-left: 70px;">
-                <a [routerLink]="['orders']">Orders</a>
-            </div>
-        </li>
-    </ul>
-</div>
-<div id="barra" class="align-items-center">
-    <ul>
-        <li>catalogue</li>
+        </div>
+
+    </div>
+</div>    

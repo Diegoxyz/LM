@@ -1,0 +1,105 @@
+.menu-class {
+    padding-top: 10px;
+    padding-bottom: 10px
+}
+
+a {
+    color: #414141;
+    text-decoration: none;
+    background-color: transparent;
+    text-transform: uppercase;
+
+}
+.menu-class {
+    padding-top: 50px;
+}
+
+.show-on-hover:hover > ul.dropdown-menu {
+    display: block;    
+}
+
+
+.text-uppercase {
+    text-transform: uppercase;
+}
+
+/* visualizzazione in tabella degli item per le dropdown*/
+.dropdown-menu-col{padding:0px 0px 0px 0px}
+.dropdown-item{padding:10px 10px 10px 10px}
+/* mostra menu su una unica riga */
+ul {
+    list-style-type: none;
+    margin-left: 38%;
+    overflow: visible;
+    background-color: #ffffff;
+    width: 60%;
+    padding: 0;
+  }
+ 
+  li {
+    float: left;
+    margin: auto;
+  }
+  
+  /*li a {
+    display: block;
+    color: red;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+  }*/
+  
+  li a:hover {
+    background-color: rgba(193, 193, 193, 0.15);
+  }
+
+
+  /* .icon-button {
+    width: 120px;
+    height: 50px;
+    background-image: "src/assets/img/menu/gruppo.png";
+    background-repeat: no-repeat;
+    background-position: center center;
+  } */
+
+  #img-menu {
+    width: 40%;
+    height: 40%;
+    background-position: center;
+  /*   border: 2px solid green; */
+    margin-top: 1%;
+} 
+
+#mButton:hover{ 
+  border: 2px solid red;
+}
+
+.button-description{
+  color: black;
+ /*  border: 2px solid blue; */
+}
+
+  p {
+    margin-top: 0.1rem;
+    margin-bottom: 0;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: center;
+  border: 2px solid yellow;
+ 
+}
+
+.flex-container > div {
+  margin: 1%;
+  text-align: center;
+/*   border: 2px solid magenta; */
+  max-width: 10%;
+  }
+
+
+
+
+
+

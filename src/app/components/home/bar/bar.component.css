@@ -1,10 +1,10 @@
-.navbar_bg {
+/* .navbar_bg {
     background-color: #414141;
     color: #fff;
     font-family: "Trade Gothic LT ProCn";
     font-size: 18px;
     height: 55.87px;
-}
+} */
 
 img.img-logo-horizontal {
     width: 18rem;
@@ -91,11 +91,11 @@ input:focus {
     height: 20px;  
   }
 
-.display-menu {
+/* .display-menu {
     display: block;
-}
+} */
 
-.hide-menu {
+/* .hide-menu {
     display: block;
     background-color: red;
 }
@@ -107,4 +107,5 @@ input:focus {
     top: 50px;
     left: 0;
     right: 0;
-}
+} */
+
