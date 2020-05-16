@@ -3,11 +3,11 @@ import { AccountService } from 'src/app/services/account.service';
 import { Customer } from '@app/models/customer';
 import { Cart } from '@app/models/cart';
 import { User } from '@app/models/user';
-import { Product } from '@app/models/item';
-import { Order } from '@app/models/order';
 import { ManageProducts } from '../services/manage-products.service';
 import { HandledProduct } from '../services/handled-product';
 import { CartService } from '@app/services/cart.service';
+import { MyAccountComponent } from '../my-account/my-account.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-bar',
@@ -18,9 +18,10 @@ export class BarComponent implements OnInit {
 
   customer: Customer;
   cart : Cart;
+  bsModalRef: BsModalRef;
 
   constructor(private accountService : AccountService, private manageProducts : ManageProducts, 
-    private cartService : CartService) { }
+    private cartService : CartService, private modalService: BsModalService) { }
 
   ngOnInit(): void {
     
@@ -40,10 +41,6 @@ export class BarComponent implements OnInit {
     })
   }
 
-  public logout() {
-    this.accountService.logout();
-  }
-
   public get cartQuantity() : number {
     if (this.cart && this.cart.orders) {
       return this.cart.orders.length;
@@ -51,4 +48,7 @@ export class BarComponent implements OnInit {
     return 0;
   }
 
+  public openMyAccount() {
+    this.bsModalRef = this.modalService.show(MyAccountComponent, { ignoreBackdropClick: true });
+  }
 }

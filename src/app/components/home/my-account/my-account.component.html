@@ -1,0 +1,44 @@
+<div class="modal-body">
+<div class="container-fluid px-0">
+    <div class="row">
+        <div class="col-12">
+            <ul class="justify-content-center justify-content-md-end">
+                <li class="col d-lg-block">
+                    <div class="row align-items-center justify-content-between">
+                        <h6 *ngIf="language === 'english'">Name</h6><h6 *ngIf="language === 'italian'">Nome</h6><h6>La Marzocco</h6>
+                    </div>
+                </li>
+                <li class="col d-none d-lg-block">
+                    <div class="row align-items-center justify-content-between">
+                        <h6 *ngIf="language === 'english'">Business Name</h6><h6 *ngIf="language === 'italian'">Ragione Sociale</h6><h6>...</h6>
+                    </div>
+                </li>
+                <li class="col d-none d-lg-block">
+                    <div class="row align-items-center justify-content-between">
+                        <h6 *ngIf="language === 'english'">Address</h6><h6 *ngIf="language === 'italian'">Indirizzo</h6><h6>Via Milano</h6>
+                    </div>
+                </li>
+                <li class="col d-none d-lg-block">
+                    <div class="row align-items-center justify-content-between">
+                        <h6 *ngIf="language === 'english'">Choose your language</h6><h6 *ngIf="language === 'italian'">Scegli la lingua</h6>
+                        <h6><label for="image-click"><img *ngIf="language === 'italian'" src="assets/img/menu/italy.png" alt="language - italian">
+                            <img *ngIf="language === 'english'" src="assets/img/menu/uk.png" alt="language - english"></label>
+                            <button id="image-click" 
+                                (click)="changeLanguage()" 
+                                class="visuallyhidden">
+                                Click to change the language
+                            </button>
+</h6>
+                    </div>
+                </li>
+                <li class="col d-none d-lg-block">
+                    <div class="row align-items-center justify-content-between">
+                        <button type="button" (click)="cancel()" style="background-color: #ffffff;">Cancel</button>
+                        <button type="button" (click)="logout()" style="background-color: #dc3545;">Logout</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>

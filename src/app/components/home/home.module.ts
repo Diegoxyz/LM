@@ -21,7 +21,8 @@ import { OrdersComponent } from './orders.component';
 import { MachineCardComponent } from './board-machine-card/machine-card.component';
 import { ProspectiveCardComponent } from './prospective-card/prospective-card.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
+import { MyAccountComponent } from './my-account/my-account.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
     imports: [
@@ -36,7 +37,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
         MatSelectModule,
         MatFormFieldModule,
         NgxPopper,
-        FontAwesomeModule
+        FontAwesomeModule,
+        ModalModule.forRoot()
     ],
     declarations: [
         MainComponent,
@@ -49,7 +51,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
         ProductCardCatalogueComponent,
         OrdersComponent,
         MachineCardComponent,
-        ProspectiveCardComponent
+        ProspectiveCardComponent,
+        MyAccountComponent
     ]
 })
 export class HomeModule { }

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { User } from '../models/user';
+import { User, Language } from '../models/user';
 import { ODataServiceFactory } from 'angular-odata';
 import { LoginSet } from '../models/OData/LoginSet/loginset.entity';
 import { environment } from 'src/environments/environment';
@@ -16,7 +15,7 @@ export class AccountService {
   private userSubject: BehaviorSubject<User>;
   public user: Observable<User>;
 
-  constructor(private factory: ODataServiceFactory, private router: Router,
+  constructor(private factory: ODataServiceFactory,
     private http: HttpClient, private cartService : CartService) { 
       this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
       this.user = this.userSubject.asObservable();
@@ -99,7 +98,6 @@ export class AccountService {
     // remove user from local storage and set current user to null
     localStorage.removeItem('user');
     this.userSubject.next(null);
-    this.router.navigate(['/account/login']);
 
     this.cartService.emptyCart();
   }
@@ -108,4 +106,16 @@ export class AccountService {
     return this.userSubject.value;
   }
 
+  public get userLanguage(): string {
+    let currentLanguage = localStorage.getItem("language");
+    if (currentLanguage === undefined || currentLanguage === null) {
+      currentLanguage = "english";
+      localStorage.setItem('currentLanguage', 'english');
+    }
+    return currentLanguage;
+  }
+
+  public setUserLanguage(language : string) {
+    localStorage.setItem('currentLanguage', language);
+  }
 }

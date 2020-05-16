@@ -3,7 +3,7 @@
         <div class="row align-items-center justify-content-between">
             <div class="w-100 spacer-20 spacer-md-0 d-md-none"></div>
             <div class="col-12 col-md-auto">
-                <a href="#">
+                <a routerLink="/home">
                     <img src="assets/img/logo/globo-leone-white.png" alt="" class="img-logo-horizontal">
                 </a>
             </div>
@@ -24,19 +24,19 @@
                                     </li>
                                     <li
                                         class="menu-item menu-item-type-post_type menu-item-object-page nav-item text-center">
-                                        <a class="nav-link" href="/customer_account">MY ACCOUNT</a>
+                                        <a class="nav-link" (click)="openMyAccount()">MY ACCOUNT</a>
                                     </li>
 
 
                                     <li
                                         class="menu-item menu-item-type-post_type menu-item-object-page nav-item text-center">
-                                        <a class="nav-link" href="/wishlist">WISHLIST</a>
+                                        <a class="nav-link" routerLink="/wishlist">WISHLIST</a>
                                     </li>
 
 
                                     <li
                                         class="menu-item menu-item-type-post_type menu-item-object-page nav-item text-center">
-                                        <a class="nav-link" href="/cart">CART</a>
+                                        <a class="nav-link" routerLink="/cart">CART</a>
                                     </li>
                                     <li
                                         class="menu-item menu-item-type-post_type menu-item-object-page nav-item text-center">
@@ -47,7 +47,6 @@
                                         class="menu-item menu-item-type-custom menu-item-object-custom nav-item text-center">
                                         &nbsp;
                                     </li>
-                                    <li><button type="button" (click)="logout()">Logout</button></li>
                                 </ul>
                             </div>
                         </div>
