@@ -1,21 +1,5 @@
-<div class="align-items-center justify-content-center">
-    <div class="container">
-        <div class="row align-items-center justify-content-center" *ngIf="items.length > 0">
-            <div *ngFor="let item of items | paginate: config" class="col-4 col-md-auto h-100">
-                <app-product-catalogue-card [item]="item"></app-product-catalogue-card>
-            </div>
-        </div>
-        
-        <div class="row align-items-center justify-content-center spacer" style="margin-top: 20" *ngIf="items.length > 0">
-            <div class="w-100"></div>
-            <div class="col-4 col-md-auto h-100">
-                <pagination-controls [maxSize]="maxSize" [directionLinks]="directionLinks" [autoHide]="autoHide"
-                    [responsive]="responsive" [previousLabel]="labels.previousLabel" [nextLabel]="labels.nextLabel"
-                    [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
-                    [screenReaderPageLabel]="labels.screenReaderPageLabel"
-                    [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel" (pageChange)="onPageChange($event)">
-                </pagination-controls>
-            </div>
-        </div>
-    </div>
-</div>
+<ul class="flex-container">
+    <li *ngFor="let item of items" class="flex-item">
+        <app-product-catalogue-card [item]="item"></app-product-catalogue-card>
+    </li>
+</ul>

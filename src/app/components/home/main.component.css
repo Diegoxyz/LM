@@ -18,3 +18,26 @@ ul {
     display: flex;
     justify-content: space-between;
   }
+
+  .flex-container {
+    /* We first create a flex layout context */
+    display: flex;
+  
+    /* Then we define the flow direction 
+       and if we allow the items to wrap 
+     * Remember this is the same as:
+     * flex-direction: row;
+     * flex-wrap: wrap;
+     */
+    flex-flow: row wrap;
+  
+    /* Then we define how is distributed the remaining space */
+    justify-content: space-around;
+  }
+
+  .flex-item {
+    background: #ffffff;
+    padding: 5px;
+    margin-top: 10px;
+    text-align: center;
+  }

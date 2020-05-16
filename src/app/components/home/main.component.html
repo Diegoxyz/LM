@@ -1,4 +1,4 @@
-<div id="parent-row-menu">
+<div id="parent-row-menu" style="margin-top: 1%">
     <div id="demo" class="carousel slide" data-ride="carousel"> 
         <div class="carousel-inner">
             <div class="carousel-item active">
@@ -12,12 +12,9 @@
             </div>
         </div>
     </div>
-    <div class="spacer" style="margin-bottom: 20"></div>
 </div>
-<div>
-	<div class="container">
-        <div *ngFor="let item of items" >
-            <app-product-card [item]="item"></app-product-card>
-        </div>
-	</div>
-</div>
+<ul class="flex-container">
+    <li *ngFor="let item of items" class="flex-item">
+        <app-product-card [item]="item"></app-product-card>
+    </li>
+</ul>
