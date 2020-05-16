@@ -22,6 +22,9 @@ Localization (punto aperto, vedi sotto):
 
 Font Awesome: ng add @fortawesome/angular-fontawesome@0.6.1 
 
+ngx-bootstrap for modals:
+npm install ngx-bootstrap --save
+
 Modifiche fatte dopo user management:
 
 - Aggiunta classe AuthGuard per verificare se l'utente è loggato
