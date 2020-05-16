@@ -6,6 +6,9 @@ Angular 9
 Layout:
 	ng add @ng-bootstrap/ng-bootstrap
 
+Per usare flexbox invece di tabelle qui c'è una guida utile: https://css-tricks.com/snippets/css/a-guide-to-flexbox/.
+Permette di mostrare oggetti su linee e colonne diverse invece di usare tabelle
+
 Paginazione:
 	ngx-pagination: npm install ngx-pagination --save
 Link utile: https://www.freakyjolly.com/angular-pagination-example-using-ngx-pagination/
