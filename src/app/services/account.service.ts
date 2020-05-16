@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { User, Language } from '../models/user';
+import { User } from '../models/user';
 import { ODataServiceFactory } from 'angular-odata';
 import { LoginSet } from '../models/OData/LoginSet/loginset.entity';
 import { environment } from 'src/environments/environment';
