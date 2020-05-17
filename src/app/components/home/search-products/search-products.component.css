@@ -1,7 +1,3 @@
-.spareParts {
-    padding-top: 20%;
-}
-
 .flex-container {
     /* We first create a flex layout context */
     display: flex;
@@ -12,26 +8,15 @@
      * flex-direction: row;
      * flex-wrap: wrap;
      */
-    flex-flow: row wrap;
+    flex-flow: column wrap;
   
     /* Then we define how is distributed the remaining space */
     justify-content: space-around;
   }
-
+ 
   .flex-item {
     background: #ffffff;
-    margin-top: 5%;
+    padding: 2%;
+    margin-top: 2%;
     text-align: center;
   }
-
-  .app-modal-window .modal-dialog {
-    width: 500px;
-  }
-
-  div.scroll { 
-    background-color: #ffffff; 
-    height: 95%;
-    overflow-y: auto; 
-    overflow-x: auto; 
-    text-align:justify; 
-} 

@@ -23,6 +23,8 @@ import { ProspectiveCardComponent } from './prospective-card/prospective-card.co
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MyAccountComponent } from './my-account/my-account.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { SwitchButtonComponent } from './switch-button/switch-button.component';
+import { SearchProductsComponent } from './search-products/search-products.component';
 
 @NgModule({
     imports: [
@@ -52,7 +54,9 @@ import { ModalModule } from 'ngx-bootstrap/modal';
         OrdersComponent,
         MachineCardComponent,
         ProspectiveCardComponent,
-        MyAccountComponent
+        MyAccountComponent,
+        SwitchButtonComponent,
+        SearchProductsComponent
     ]
 })
 export class HomeModule { }

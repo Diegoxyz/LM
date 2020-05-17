@@ -1,0 +1,26 @@
+<button
+  *ngIf="value"
+  type="button"
+  [ngClass]="classToggle"
+  class="btn btn-secondary btn-toggle active"
+  data-toggle="button"
+  aria-pressed="true"
+  autocomplete="off"
+  (click)="onChangeValue()"
+  [disabled]="disabled"
+>
+  <div class="handle"></div>
+</button>
+<button
+  *ngIf="!value"
+  type="button"
+  [ngClass]="classToggle"
+  class="btn btn-secondary btn-toggle"
+  data-toggle="button"
+  aria-pressed="false"
+  autocomplete="off"
+  (click)="onChangeValue()"
+  [disabled]="disabled"
+>
+  <div class="handle"></div>
+</button>

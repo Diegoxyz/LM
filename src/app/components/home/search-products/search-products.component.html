@@ -1,0 +1,23 @@
+<div class="flex-container">
+    <div class="flex-item">
+        <input type="search" id="productName" placeholder="Search product name">
+        <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Choose category</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+              <button ngbDropdownItem>Category 1</button>
+              <button ngbDropdownItem>Category 2</button>
+              <button ngbDropdownItem>Category 3</button>
+            </div>
+          </div>
+    </div>
+    <div class="flex-item">
+        <label class="form-label">
+            Only selected
+        </label>
+        <app-switch-button
+            class="ml-auto"
+            [value]="searchOnlySelected"
+            (changeValue)="changeOnlySelected($event)"
+        ></app-switch-button>
+    </div>
+</div>
