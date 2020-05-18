@@ -26,7 +26,7 @@ export class MachineCardComponent implements OnInit {
     public openProspectives() {
         if (this.item) {
             // we will load the item's prospectives
-            this.bsModalRef = this.modalService.show(ProspectiveCardComponent, { ignoreBackdropClick: true });
+            this.bsModalRef = this.modalService.show(ProspectiveCardComponent, { ignoreBackdropClick: true, class: 'modal-lg' });
         }
     }
 }
