@@ -27,6 +27,7 @@ a {
 .dropdown-menu-col{padding:0px 0px 0px 0px}
 .dropdown-item{padding:10px 10px 10px 10px}
 /* mostra menu su una unica riga */
+
 ul {
     list-style-type: none;
     margin-left: 38%;
@@ -36,7 +37,7 @@ ul {
     padding: 0;
   }
  
-  li {
+   li {
     float: left;
     margin: auto;
   }
@@ -49,7 +50,7 @@ ul {
     text-decoration: none;
   }*/
   
-  li a:hover {
+   li a:hover {
     background-color: rgba(193, 193, 193, 0.15);
   }
 
@@ -81,7 +82,6 @@ ul {
 
 .button-description{
   color: black;
- /*  border: 2px solid blue; */
 }
 
   p {
@@ -91,17 +91,17 @@ ul {
 
 .flex-container {
   display: flex;
-  justify-content: center; 
+  justify-content: center;
+  text-align: center;
 }
 
-.flex-container > div {
+
+/* .flex-container > div {
   margin: 1%;
   text-align: center;
-/*   border: 2px solid magenta; */
   max-width: 10%;
   }
-
-
+ */
 
 
 

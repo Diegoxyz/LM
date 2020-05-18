@@ -3,6 +3,7 @@ footer .footer-widget {
     background-color: #414141;
     color: #fff;
     font-size: 1.4rem;
+    display: block;
 }
 
 
