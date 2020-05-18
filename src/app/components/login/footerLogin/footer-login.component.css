@@ -1,0 +1,44 @@
+
+footer .footer-widget {
+    background-color: #414141;
+    color: #fff;
+    font-size: 1.4rem;
+    display: block;
+}
+
+
+.widget_text{
+    font-size: 12.6px;
+    font-stretch: 75%;
+    font-weight: 400;
+    line-height: 18.9px;
+  }
+
+
+h3.widget_title {
+    font-size: 20.16px;
+    margin-bottom: 4.5px;
+    line-height: 24px;
+}
+
+
+p{
+    font-size: 12.6px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.entry_content{
+    font-size: 12.6px;
+    font-stretch: 75%;
+    font-weight: 400;
+    line-height: 18.9px;
+}
+
+footer .footer-widget a {
+    color: inherit;
+}
+
+.svg-inline--fa.fa-w-14 {
+    width: 19.6875px;
+}

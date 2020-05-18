@@ -7,7 +7,6 @@ import { ODataModule, ODataSettings } from 'angular-odata';
 import { throwError } from 'rxjs';
 import { HttpErrorResponse, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FooterComponent } from './components/footer/footer.component';
 import { environment } from '../environments/environment';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -27,8 +26,7 @@ export function oDataSettingsFactory() {
 
 @NgModule({
   declarations: [
-    AppComponent,
-    FooterComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
