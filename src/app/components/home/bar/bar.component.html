@@ -1,60 +1,37 @@
 <div id="nav-menu" class="cart-menu">
-    <div class="container" style="background-color: #414141;">
-        <div class="row align-items-center justify-content-between">
-            <div class="w-100 spacer-20 spacer-md-0 d-md-none"></div>
-            <div class="col-12 col-md-auto">
-                <a routerLink="/home">
-                    <img src="assets/img/logo/globo-leone-white.png" alt="" class="img-logo-horizontal">
-                </a>
-            </div>
-
-            <div class="col-12 col-md">
-                <div class="row justify-content-end align-items-center">
-                    <div class="col-4 col-lg-3 d-none d-lg-block">
-                        <div class="search"></div>
-                    </div>
-                    <div class="col-12 col-lg-9 col-xl-8">
-                        <div class="cart-nav">
-                            <div class="menu-cart-menu-container">
-                                <ul class="nav justify-content-center justify-content-md-end">
-
-                                    <li class="col d-none d-lg-block">
-                                        <input class="form-control mr-sm-2 search" type="search" placeholder="Search"
-                                            aria-label="Search">
-                                    </li>
-                                    <li
-                                        class="menu-item menu-item-type-post_type menu-item-object-page nav-item text-center">
-                                        <a class="nav-link" (click)="openMyAccount()">MY ACCOUNT</a>
-                                    </li>
-
-
-                                    <li
-                                        class="menu-item menu-item-type-post_type menu-item-object-page nav-item text-center">
-                                        <a class="nav-link" routerLink="/wishlist">WISHLIST</a>
-                                    </li>
-
-
-                                    <li
-                                        class="menu-item menu-item-type-post_type menu-item-object-page nav-item text-center">
-                                        <a class="nav-link" routerLink="/cart">CART</a>
-                                    </li>
-                                    <li
-                                        class="menu-item menu-item-type-post_type menu-item-object-page nav-item text-center">
-                                        <p id="rcorners1">{{ cartQuantity }}</p>
-                                    </li>
-
-                                    <li
-                                        class="menu-item menu-item-type-custom menu-item-object-custom nav-item text-center">
-                                        &nbsp;
-                                    </li>
-                                </ul>
-                            </div>
+    <div >
+        <div class="row" style="background-color: #414141;">
+            <div class="col-12">
+                <ul class="nav">
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page nav-item text-center" style="padding-left: 10%;">
+                        <div class="logo-horizontal">
+                            <a routerLink="/home">
+                                <img src="assets/img/logo/globo-leone-white.png" alt="" class="img-logo-horizontal img-fluid" data-rjs="2">
+                            </a>
                         </div>
-                    </div>
-                </div>
+                    </li>
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page nav-item text-center" style="padding-left: 5%;">
+                        <div><input class="form-control mr-sm-2 search" type="search" placeholder="SEARCH"
+                            aria-label="SEARCH"></div>
+                    </li>
+                    <li
+                        class="menu-item menu-item-type-post_type menu-item-object-page nav-item text-center" style="padding-left: 8%;">
+                        <a class="nav-link" (click)="openMyAccount()">MY ACCOUNT</a>
+                    </li>
+                    <li
+                        class="menu-item menu-item-type-post_type menu-item-object-page nav-item text-center" style="padding-left: 8%;">
+                        <a class="nav-link" routerLink="/wishlist">WISHLIST</a>
+                    </li>
+                    <li
+                        class="menu-item menu-item-type-post_type menu-item-object-page nav-item text-center" style="padding-left: 8%;">
+                        <a class="nav-link" routerLink="/cart">CART</a>
+                    </li>
+                    <li
+                        class="menu-item menu-item-type-post_type menu-item-object-page nav-item text-center">
+                        <p id="rcorners1">{{ cartQuantity }}</p>
+                    </li>
+                </ul>
             </div>
-
-
         </div>
     </div>
     <div class="row" style="background-color: #ffffff;">
@@ -63,3 +40,5 @@
         </div>
     </div>
 </div>
+
+
