@@ -1,31 +1,35 @@
 <div id="nav-menu" class="cart-menu">
-    <div >
+    <div class="container">
         <div class="row" style="background-color: #414141;">
             <div class="col-12">
                 <ul class="nav">
-                    <li class="menu-item menu-item-type-post_type menu-item-object-page nav-item text-center" style="padding-left: 10%;">
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page nav-item text-center">
                         <div class="logo-horizontal">
-                            <a (click)="goHome()">
+                            <a routerLink="/home">
                                 <img src="assets/img/logo/globo-leone-white.png" alt="" class="img-logo-horizontal img-fluid" data-rjs="2">
                             </a>
                         </div>
                     </li>
-                    <li class="menu-item menu-item-type-post_type menu-item-object-page nav-item text-center" style="padding-left: 5%;">
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page nav-item text-center" style="margin-left: 8%; margin-right: 10%;">
                         <div><input class="form-control mr-sm-2 search" type="search" placeholder="SEARCH"
                             aria-label="SEARCH"></div>
                     </li>
+
                     <li
-                        class="menu-item menu-item-type-post_type menu-item-object-page nav-item text-center" style="padding-left: 8%;">
+                        class="menu-item menu-item-type-post_type menu-item-object-page nav-item text-center" style="margin-left: 4%; margin-right: 4%;">
                         <a class="nav-link" (click)="openMyAccount()">MY ACCOUNT</a>
                     </li>
+
                     <li
-                        class="menu-item menu-item-type-post_type menu-item-object-page nav-item text-center" style="padding-left: 8%;">
+                        class="menu-item menu-item-type-post_type menu-item-object-page nav-item text-center" style="margin-left: 4%; margin-right: 4%;">
                         <a class="nav-link" routerLink="/wishlist">WISHLIST</a>
                     </li>
+
                     <li
-                        class="menu-item menu-item-type-post_type menu-item-object-page nav-item text-center" style="padding-left: 8%;">
+                        class="menu-item menu-item-type-post_type menu-item-object-page nav-item text-center" style="margin-left: 4%;">
                         <a class="nav-link" routerLink="/cart">CART</a>
                     </li>
+                    
                     <li
                         class="menu-item menu-item-type-post_type menu-item-object-page nav-item text-center">
                         <p id="rcorners1">{{ cartQuantity }}</p>

@@ -1,19 +1,15 @@
-/* .navbar_bg {
-    background-color: #414141;
-    color: #fff;
-    font-family: "Trade Gothic LT ProCn";
-    font-size: 18px;
-    height: 55.87px;
-} */
-
-.container{
+/* .container{
     padding-left: 5%;
     padding-right: 5%;
-}
+} */
 
 
-#nav-link{
-    padding-right: 30px;
+.nav-link{
+/*     padding-right: 30px; */
+    text-transform: uppercase;
+    padding-top: 0.7rem;
+    font-family: "Trade Gothic LT ProCn";
+    font-size: 1.2em;
 }
 
 #nav-link-cart{
@@ -21,27 +17,23 @@
 }
 
 img.img-logo-horizontal {
-    width: 5rem;
+    width: 4.3rem;
 }
 
 .img-fluid {
     max-width: 100%;
     height: auto;
 }
+
 img {
     vertical-align: middle;
     border-style: none;
 }
 
-
-.cart-nav{
-    margin-top: 0.6rem;
-    margin-bottom: 0.5rem;
+.nav{
+    margin-top: 0.5rem;
+    margin-bottom: 0.6rem;
 }
-
-/* #menu-cart{
-    padding-right: 50px;
-} */
 
 .navbar-menu {
     background-color: #414141;
@@ -110,10 +102,6 @@ input:focus {
     padding-top: 6.2em;
 }
 
-/* .img-logo-store {
-     width:215.99px;
-     height: 149.375px;
-}  */
 
 #rcorners1 {
     border-radius: 20px;
@@ -127,9 +115,3 @@ input:focus {
 #mButton:hover{ 
     border: 1px solid #dc3545;
 }
-
-/* a:hover {
-    border: 1px solid #dc3545;
-}
- */
-
