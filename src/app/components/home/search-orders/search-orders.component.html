@@ -1,0 +1,31 @@
+<div class="flex-container search-categories-container">
+    <div class="flex-item">
+        <div class="row">
+            <div class="col">
+              <mat-form-field>
+                  <input type="text" matInput [matAutocomplete]="auto">
+              </mat-form-field>
+              <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let group of groupsNames" [value]="group">{{group}}</mat-option>
+                </mat-autocomplete>
+            </div>
+        </div>
+    </div>
+    <div class="flex-item">
+        <div style="padding-left: 35%;">
+            <div class="row">
+                <div class="col">
+                    <label class="form-label">
+                        Only selected
+                    </label>
+                    <app-switch-button
+                        class="ml-auto"
+                        [value]="searchOnlySelected"
+                        (changeValue)="changeOnlySelected($event)"
+                    ></app-switch-button>
+                </div>
+                <div class="col">&nbsp;</div>
+            </div>
+        </div>
+    </div>
+</div>

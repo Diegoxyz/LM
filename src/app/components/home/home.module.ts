@@ -27,6 +27,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { SwitchButtonComponent } from './switch-button/switch-button.component';
 import { SearchProductsComponent } from './search-products/search-products.component';
 import { FooterComponent } from './footer/footer.component';
+import { OrderProductComponent } from './order-product/order-product.component';
+import { SearchOrdersComponent } from './search-orders/search-orders.component';
 
 @NgModule({
     imports: [
@@ -60,7 +62,9 @@ import { FooterComponent } from './footer/footer.component';
         MyAccountComponent,
         SwitchButtonComponent,
         SearchProductsComponent,
-        FooterComponent
+        FooterComponent,
+        OrderProductComponent,
+        SearchOrdersComponent
     ]
 })
 export class HomeModule { }

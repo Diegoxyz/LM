@@ -1,0 +1,70 @@
+ul {
+    list-style-type: none;
+    display: inline;
+ }
+
+ .flex-container {
+    /* We first create a flex layout context */
+    display: flex;
+  
+    /* Then we define the flow direction 
+       and if we allow the items to wrap 
+     * Remember this is the same as:
+     * flex-direction: row;
+     * flex-wrap: wrap;
+     */
+    flex-flow: column wrap;
+  
+    /* Then we define how is distributed the remaining space */
+    justify-content: space-around;
+    margin-top: 5%;
+  }
+
+  /* Medium screens */
+  @media all and (max-width: 800px) {
+    .flex-container {
+      /* When on medium sized screens, we center it by evenly distributing empty space around items */
+      justify-content: space-around;
+    }
+  }
+  
+  /* Small screens */
+  @media all and (max-width: 500px) {
+    .flex-container {
+      /* On small screens, we are no longer using row direction but column */
+      flex-direction: column;
+    }
+  }
+ 
+.flex-item {
+    padding: 5px;
+    text-align: center;
+    min-width: 33.33%;
+    border: 1px solid #ffffff;
+  }
+
+.code_column {
+    min-width: 10%;
+}
+
+.description_column {
+    min-width: 30%;
+}
+
+.quantity_column {
+    min-width: 10%;
+}
+
+.list-orders {
+    background-color: lightgrey;
+    font-weight: 300;
+}
+
+.headers-list-orders {
+    background-color: #d8d6d6;
+    
+}
+
+#order:hover {
+  border: 1px solid #dc3545;
+}

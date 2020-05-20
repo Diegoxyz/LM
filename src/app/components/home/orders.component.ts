@@ -6,6 +6,10 @@ import { Order } from '@app/models/order';
 import { User } from '@app/models/user';
 import { Customer } from '@app/models/customer';
 import { AccountService } from '@app/services/account.service';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { ProductCardCatalogueComponent } from './product-card-catalogue/product-card-catalogue.component';
+import { Product } from '@app/models/item';
+import { OrderProductComponent } from './order-product/order-product.component';
 
 @Component({
     selector: 'app-orders',
@@ -37,8 +41,9 @@ import { AccountService } from '@app/services/account.service';
         screenReaderPageLabel: 'page',
         screenReaderCurrentLabel: `You're on page`
     };
+    bsModalRef: BsModalRef;
     
-    constructor(private accountService : AccountService, private cartService : CartService) { }
+    constructor(private accountService : AccountService, private cartService : CartService, private modalService: BsModalService) { }
 
     ngOnInit(): void {
 
@@ -50,14 +55,15 @@ import { AccountService } from '@app/services/account.service';
       };
       
       // it must be loaded from BE
-      this.cart = this.cartService.getCart();
+      /*this.cart = this.cartService.getCart();
       if (this.cart === undefined || this.cart === null ) {
         const orders : Order[] = [];
         this.cart = {
           customer : customer,
           orders : orders
         };
-      }
+      }*/
+      this.cart = this.cartService.loadMockCart();
 
       this.items = this.cart.orders;
       this.totalQuantity = this.items.length;
@@ -72,7 +78,16 @@ import { AccountService } from '@app/services/account.service';
     }
   
     onPageChange(event){
-      console.log(event);
       this.config.currentPage = event;
+    }
+
+    openProduct(item: Product) {
+      const initialState = {
+        item: item,
+        title: 'Product',
+        closeBtnName: 'Close',
+        ignoreBackdropClick: true
+      };
+      this.bsModalRef = this.modalService.show(OrderProductComponent, { initialState });
     }
   }

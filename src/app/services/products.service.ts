@@ -28,4 +28,11 @@ export class ProductsService {
       ));
     return items;
   }
+
+  getAllOrders() : Product[] {
+    const items : Product[] = Array(20).fill(0).map((x, i) => (
+      new Product(`Code ${i + 1}`,`Product ${i + 1}`, (i * 10), (i%2 === 0))
+      ));
+    return items;
+  }
 }

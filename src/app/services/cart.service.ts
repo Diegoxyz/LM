@@ -59,4 +59,24 @@ import { Customer } from '@app/models/customer';
       public emptyCart() {
         localStorage.removeItem(this.cartId);
       }
+
+      public loadMockCart(customer? : Customer) : Cart {
+        let cart : Cart = null;
+        const orders : Order[] = [];
+        const items : Product[] = Array(20).fill(0).map((x, i) => (
+          new Product(`Code ${i + 1}`,`Product ${i + 1}`, (i * 10), (i%2 === 0))
+          ));
+        items.forEach(i => {
+          const order : Order = new Order;
+          order.product = i;
+          order.quantity = 1;
+          orders.push(order);
+        })
+        cart = {
+          customer : customer,
+          orders : orders
+        };
+        localStorage.setItem(this.cartId, JSON.stringify(cart));
+        return cart;
+      }
   }

@@ -1,0 +1,37 @@
+.flex-container {
+    /* We first create a flex layout context */
+    display: flex;
+  
+    /* Then we define the flow direction 
+       and if we allow the items to wrap 
+     * Remember this is the same as:
+     * flex-direction: row;
+     * flex-wrap: wrap;
+     */
+    flex-flow: column wrap;
+  
+    /* Then we define how is distributed the remaining space */
+    justify-content: space-around;
+  }
+ 
+  .flex-item {
+    padding: 2%;
+    margin-top: 2%;
+    text-align: center;
+  }
+
+ul {
+    list-style-type: none;
+    display: inline;
+ }
+
+.search-categories-container {
+  background-color: lightgrey;
+  width: 70%;
+  margin-left: 15%;
+}
+
+.selected-category {
+  border: 1px solid lightblue;
+  background-color: lightgrey;
+}

@@ -1,40 +1,37 @@
-<div class="align-items-center justify-content-center">
-	<div class="container">
-        <div *ngIf="totalQuantity == 0">
-            <div class="row align-items-center justify-content-center" style="margin-top: 20">
-                <div  class="col-4 col-md-auto h-100" >
-                    <h1>No item</h1>
-                </div>
+<div *ngIf="totalQuantity == 0">
+    <div class="row align-items-center justify-content-center" style="margin-top: 20%">
+        <div  class="col-4 col-md-auto h-100" >
+            <h1>No item</h1>
+        </div>
+    </div>
+</div>
+        
+<div *ngIf="totalQuantity != 0">
+    <div>test<app-search-orders></app-search-orders></div>
+    <div class="flex-container align-items-center">
+        <div class="row flex-item headers-list-orders">
+            <div  class="col-4 h-100 code_column" >
+                <span>CODE</span>
+            </div>
+            <div  class="col-4 h-100 description_column" >
+                <span>DESCRIPTION</span>
+            </div>
+            <div  class="col-4 h-100 quantity_column" >
+                <span>QUANTITY</span>
             </div>
         </div>
-        <div *ngIf="totalQuantity != 0">
-            <div *ngFor="let item of items | paginate: config" class="row align-items-center justify-content-center" style="margin-top: 20">
-                <div  class="col-4 col-md-auto h-100" >
-                    {{ item.product.code}}
-                </div>
-                <div  class="col-4 col-md-auto h-100" >
-                    {{ item.product.description}}
-                </div>
-                <div  class="col-4 col-md-auto h-100" >
-                    {{ item.quantity}}
-                </div>
+        <div id="order" *ngFor="let item of items" class="row flex-item list-orders" (click)="openProduct(item)">
+            <div  class="col-4 code_column" >
+                <!--<a (click)="openProduct()">{{ item.product.code}}</a>-->
+                <span>{{ item.product.code}}</span>
             </div>
-            <div class="row align-items-center justify-content-center spacer" style="margin-top: 20">
-                <div class="w-100"></div>
-                <div class="col-4 col-md-auto h-100">
-                    <pagination-controls 
-                        [maxSize]="maxSize"
-                        [directionLinks]="directionLinks"
-                        [autoHide]="autoHide"
-                        [responsive]="responsive"
-                        [previousLabel]="labels.previousLabel"
-                        [nextLabel]="labels.nextLabel"
-                        [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
-                        [screenReaderPageLabel]="labels.screenReaderPageLabel"
-                        [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
-                        (pageChange)="onPageChange($event)"></pagination-controls>
-                </div>
+            <div  class="col-4 description_column" >
+                <span>{{ item.product.description}}</span>
+            </div>
+            <div  class="col-4 quantity_column" >
+                <span>{{ item.quantity}}</span>
             </div>
         </div>
     </div>
+    
 </div>
