@@ -15,23 +15,55 @@
     flex-flow: row wrap;
   
     /* Then we define how is distributed the remaining space */
-    justify-content: space-around;
+    justify-content: flex-start;
   }
 
   .flex-item {
     background: #ffffff;
-    margin-top: 5%;
-    text-align: center;
-  }
-
-  .app-modal-window .modal-dialog {
-    width: 500px;
+    margin: 0px;
   }
 
   div.scroll { 
     background-color: #ffffff; 
-    height: 95%;
     overflow-y: auto; 
-    overflow-x: auto; 
-    text-align:justify; 
-} 
+    overflow-x: hidden; 
+    text-align:justify;
+}
+
+.prospective-card {
+  padding-left: 10%;
+  margin-left: 0%;
+}
+
+.board-image {
+  width:55%;
+  margin-right: 0%;
+}
+
+.board-panel {
+  width:45%;
+  padding: 0%;
+  margin: 0%;
+  margin-top: 5%;
+}
+
+.element-number-container {
+  text-align: center;
+}
+
+.blue-square {
+  background-color: #0074D9;
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+}
+
+.button-close-container {
+  padding-left: 35%;
+}
+.button-inner-class {
+  display: inline-block;
+}
+.button-close-class {
+  background-color: #dc3545;
+}

@@ -5,6 +5,7 @@ import { LayoutComponent } from './layout.component';
 import { CatalogueComponent } from './catalogue.component';
 import { BoardsComponent } from './boards.component';
 import { OrdersComponent } from './orders.component';
+import { ProspectiveCardComponent } from './prospective-card/prospective-card.component';
 
 
 const routes: Routes = [
@@ -15,7 +16,8 @@ const routes: Routes = [
             { path: 'home', component: MainComponent },
             { path: 'catalogue/:groupId', component: CatalogueComponent },
             { path: 'catalogue', component: CatalogueComponent },
-            { path: 'boards/:machineId', component: BoardsComponent },
+           /* { path: 'boards/:machineId', component: BoardsComponent }, */
+            { path: 'prospective', component: ProspectiveCardComponent },
             { path: 'boards', component: BoardsComponent },
             { path: 'orders', component: OrdersComponent }
         ]

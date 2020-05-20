@@ -1,8 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ManageProducts } from '../services/manage-products.service';
-import { Item } from '@app/models/item';
 import { Router } from '@angular/router';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
 @Component({selector: 'app-prospetive-card',
 templateUrl: './prospective-card.component.html',
@@ -11,12 +9,13 @@ styleUrls: ['./prospective-card.component.css']
 export class ProspectiveCardComponent implements OnInit {
 
     @Input()
-    item : Item;
+    itemCode : string;
 
     quantity : number = 0;
     selectedQuantity : number = 0;
+    faShoppingCart=faShoppingCart;
 
-    constructor(public bsModalRef: BsModalRef) {
+    constructor(private router: Router) {
     }
     
     ngOnInit(): void {
@@ -24,12 +23,21 @@ export class ProspectiveCardComponent implements OnInit {
     }
 
     public close() {
-        this.bsModalRef.hide();
+        // this.bsModalRef.hide();
+        this.router.navigate(['./home/boards']);
     }
 
     onKey(quantity: number) {
         if (quantity >= 0) {
             this.quantity = quantity;
+        } else {
+            this.quantity = 0;
+        }
+    }
+
+    addProduct() {
+        if (this.quantity >= 0) {
+            this.quantity = this.quantity + 1;
         } else {
             this.quantity = 0;
         }
