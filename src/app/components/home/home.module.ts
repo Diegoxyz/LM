@@ -15,6 +15,7 @@ import { BoardsComponent } from './boards.component';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ProductCardCatalogueComponent } from './product-card-catalogue/product-card-catalogue.component';
 import { NgxPopper } from 'angular-popper';
 import { OrdersComponent } from './orders.component';
@@ -41,6 +42,7 @@ import { FooterComponent } from './footer/footer.component';
         MatFormFieldModule,
         NgxPopper,
         FontAwesomeModule,
+        MatAutocompleteModule,
         ModalModule.forRoot()
     ],
     declarations: [

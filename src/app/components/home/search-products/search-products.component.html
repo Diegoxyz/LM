@@ -1,23 +1,56 @@
-<div class="flex-container">
+<div class="flex-container search-categories-container">
     <div class="flex-item">
-        <input type="search" id="productName" placeholder="Search product name">
-        <div ngbDropdown class="d-inline-block">
-            <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Choose category</button>
-            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-              <button ngbDropdownItem>Category 1</button>
-              <button ngbDropdownItem>Category 2</button>
-              <button ngbDropdownItem>Category 3</button>
+        <div>
+            <div class="row">
+              <div class="col">
+                <mat-form-field>
+                    <input type="text" matInput [matAutocomplete]="auto">
+                </mat-form-field>
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let group of groupsNames" [value]="group">{{group}}</mat-option>
+                  </mat-autocomplete>
+              </div>
+              <div class="col">
+              <div ngbDropdown #myDrop="ngbDropdown" [autoClose]="false">
+                <button id="dropdownCategories" ngbDropdownToggle ngbDropdownAnchor (focus)="myDrop.open()">Choose categories</button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <ul>
+                        <li>
+                            <div class="row">
+                                <div class="col-4"><button ngbDropdownItem (click)="setCategory1()" [class.selected-category]="category1">Category 1</button></div>
+                                <div class="col-4"><button ngbDropdownItem (click)="setCategory2()" [class.selected-category]="category2">Category 2</button></div>
+                                <div class="col-4"><button ngbDropdownItem (click)="setCategory3()" [class.selected-category]="category3">Category 3</button></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <div class="col-4"><button ngbDropdownItem (click)="setCategory4()" [class.selected-category]="category4">Category 4</button></div>
+                                <div class="col-4"><button ngbDropdownItem (click)="setCategory5()" [class.selected-category]="category5">Category 5</button></div>
+                                <div class="col-4"><button ngbDropdownItem (click)="setCategory6()" [class.selected-category]="category6">Category 6</button></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+              </div>
             </div>
-          </div>
+            </div>
+        </div>
     </div>
     <div class="flex-item">
-        <label class="form-label">
-            Only selected
-        </label>
-        <app-switch-button
-            class="ml-auto"
-            [value]="searchOnlySelected"
-            (changeValue)="changeOnlySelected($event)"
-        ></app-switch-button>
+        <div style="padding-left: 35%;">
+            <div class="row">
+                <div class="col">
+                    <label class="form-label">
+                        Only selected
+                    </label>
+                    <app-switch-button
+                        class="ml-auto"
+                        [value]="searchOnlySelected"
+                        (changeValue)="changeOnlySelected($event)"
+                    ></app-switch-button>
+                </div>
+                <div class="col">&nbsp;</div>
+            </div>
+        </div>
     </div>
 </div>

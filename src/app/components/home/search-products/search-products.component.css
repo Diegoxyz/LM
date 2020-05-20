@@ -15,8 +15,23 @@
   }
  
   .flex-item {
-    background: #ffffff;
     padding: 2%;
     margin-top: 2%;
     text-align: center;
   }
+
+ul {
+    list-style-type: none;
+    display: inline;
+ }
+
+.search-categories-container {
+  background-color: lightgrey;
+  width: 70%;
+  margin-left: 15%;
+}
+
+.selected-category {
+  border: 1px solid lightblue;
+  background-color: lightgrey;
+}
