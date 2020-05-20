@@ -8,6 +8,8 @@ import { HandledProduct } from '../services/handled-product';
 import { CartService } from '@app/services/cart.service';
 import { MyAccountComponent } from '../my-account/my-account.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { Router } from '@angular/router';
+import { ChangePage } from '../services/change-page.service';
 
 @Component({
   selector: 'app-bar',
@@ -21,7 +23,7 @@ export class BarComponent implements OnInit {
   bsModalRef: BsModalRef;
 
   constructor(private accountService : AccountService, private manageProducts : ManageProducts, 
-    private cartService : CartService, private modalService: BsModalService) { }
+    private cartService : CartService, private modalService: BsModalService,private router: Router, private changePage: ChangePage) { }
 
   ngOnInit(): void {
     
@@ -38,7 +40,7 @@ export class BarComponent implements OnInit {
 
     this.manageProducts.manageProducts$.subscribe((h : HandledProduct) => {
         this.cart = this.cartService.addAnOrder(h.product, h.quantity);
-    })
+    });
   }
 
   public get cartQuantity() : number {
@@ -50,5 +52,10 @@ export class BarComponent implements OnInit {
 
   public openMyAccount() {
     this.bsModalRef = this.modalService.show(MyAccountComponent, { ignoreBackdropClick: true });
+  }
+
+  public goHome() {
+    this.changePage.goToPage(0);
+    this.router.navigate(['./home']);
   }
 }

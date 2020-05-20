@@ -87,6 +87,9 @@ ul {
   border: 1px solid #dc3545;
 }
 
+.selected-page {
+  background-color: #d8d6d6;
+}
 
 .button-description{
   color: black;

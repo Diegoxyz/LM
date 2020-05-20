@@ -1,10 +1,8 @@
 <div id="barra" class="">
     <div class="flex-container">
 
-        <div id="mButton" style="cursor: pointer;">
-            <!-- onclick="locatiom.href='link'" -->
-            <div [routerLink]="['catalogue']">
-                <!-- <img id="img-menu" alt="Catalog" src="assets/img/menu/gruppo.png"> -->
+        <div id="mButton" [class.selected-page]="currentPage === 1" (click)="goToCatalogue()">
+            <div>
                 <div><fa-icon [icon]="faBookOpen" 
                 [styles]="{'color': 'dc3545'}" size="2x"></fa-icon></div>
                 <div class="button-description">
@@ -13,8 +11,8 @@
             </div>
         </div>
         
-        <div id="mButton" style="cursor: pointer;">
-            <div [routerLink]="['boards']">
+        <div id="mButton" [class.selected-page]="currentPage === 2" (click)="goToBoards()">
+            <div>
                 <div><fa-icon [icon]="faDraftingCompass" 
                     [styles]="{'color': 'dc3545'}" size="2x"></fa-icon></div>
                 <div class="button-description">
@@ -23,8 +21,8 @@
             </div>
         </div>
 
-        <div id="mButton" style="cursor: pointer;">
-            <div [routerLink]="['orders']">
+        <div id="mButton" [class.selected-page]="currentPage === 3" (click)="goToOrders()">
+            <div>
                 <div><fa-icon [icon]="faClipboardCheck" 
                     [styles]="{'color': 'dc3545'}" size="2x">
                 </fa-icon></div>
