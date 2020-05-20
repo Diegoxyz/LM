@@ -23,47 +23,55 @@
     margin: 0px;
   }
 
+  .prospective-card {
+    padding-left: 10%;
+    margin-left: 0%;
+  }
+
+  .board-image {
+    width:55%;
+    margin-right: 0%;
+  }
+
+  .board-panel {
+    max-width:60%;
+    padding: 0%;
+    padding-left: 5%;
+    margin: 0%;
+    margin-top: 5%;
+  }
+
   div.scroll { 
     background-color: #ffffff; 
-    overflow-y: auto; 
+    overflow-y: scroll; 
     overflow-x: hidden; 
     text-align:justify;
-}
+    max-height: 70%;
+  }
 
-.prospective-card {
-  padding-left: 10%;
-  margin-left: 0%;
-}
 
-.board-image {
-  width:55%;
-  margin-right: 0%;
-}
+  .element-number-container {
+    text-align: center;
+  }
 
-.board-panel {
-  width:45%;
-  padding: 0%;
-  margin: 0%;
-  margin-top: 5%;
-}
+  .blue-square {
+    border-radius: 20px;
+    background-color: #0074D9;
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+  }
 
-.element-number-container {
-  text-align: center;
-}
+  .button-close-container {
+    padding-left: 35%;
+  }
+  .button-inner-class {
+    display: inline-block;
+  }
+  .button-close-class {
+    background-color: #dc3545;
+  }
 
-.blue-square {
-  background-color: #0074D9;
-  width: 1em;
-  height: 1em;
-  display: inline-block;
-}
-
-.button-close-container {
-  padding-left: 35%;
-}
-.button-inner-class {
-  display: inline-block;
-}
-.button-close-class {
-  background-color: #dc3545;
-}
+  .shopping-cart-class {
+    margin-right: 5%;
+  }
