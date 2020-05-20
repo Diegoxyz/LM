@@ -55,16 +55,4 @@ export class CatalogueComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.sub.unsubscribe();
       }
-    
-    get page(){
-        return this.config.currentPage;
-      }
-    
-    get pageSize(){
-    return this.config.itemsPerPage;
-    }
-
-    onPageChange(event){
-        this.config.currentPage = event;
-    }
 }
