@@ -114,9 +114,10 @@ input[type=number]::-webkit-inner-spin-button {
 #add-to-favorite{
     width: 2rem;
     height: 2rem;
-    margin-top: -70px;
-    margin-left: 8px;
+    margin-top: -25%;
+    margin-right: 85%;
 }
+
 
 h6{
   text-align: right;

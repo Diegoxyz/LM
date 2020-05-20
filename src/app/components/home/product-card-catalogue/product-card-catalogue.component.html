@@ -10,15 +10,6 @@
             </ng-template>
             
             <div class="hoverWrapper">
-                <div class="row align-items-center no-gutters justify-content-between">
-                    <div class="col-md-auto">
-                        <div>
-                            <p id="rcorners1">{{ quantity }}</p>
-                        </div>
-                    </div>
-                </div>
-
-            
                 <img class="img-fluid card-img-top" src="assets/img/items/Item1.PNG"
                     sizes="(max-width: 260px) 100vw, 260px" width="260" height="260" [ngbTooltip]="tipContent"
                     tooltipClass="my-custom-class">
@@ -28,41 +19,41 @@
 
                 <div class="card-body">
                     <div class="row align-items-center no-gutters justify-content-between">
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                             <h6 class="card-title">Code</h6>
                         </div>
-                        <div  class="col-md-7">
+                        <div  class="col-md-6">
                             <h6 id="card-title-id" class="card-title">{{ item.code }}</h6>
                         </div>
                     </div>
                     <div class="row align-items-center no-gutters justify-content-between">
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                             <h6 class="card-title">Description</h6>
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-6">
                             <h6 id="card-title-id" class="card-title">{{ item.description }}</h6>
                         </div>
                     </div>
 
                     <div class="row align-items-center no-gutters justify-content-between">
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                             <h6 class="card-text">Price &euro;</h6>
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-6">
                             <h6 id="card-title-id" class="card-title">{{ item.price }}</h6>
                         </div>
                     </div>
                     <div class="row align-items-center no-gutters justify-content-between">
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                             <h6 class="card-text">Stock</h6>
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-6">
                             <h6 id="card-title-id" class="card-title"><fa-icon *ngIf="item.stock" [icon]="faCircle" 
                                 [styles]="{'color': 'green'}"></fa-icon><fa-icon *ngIf="!item.stock" [icon]="faCircle" 
                                 [styles]="{'color': 'red'}"></fa-icon></h6>
                         </div>
                     </div>
-                    <div class="quantity">
+                    <div class="quantity" style="margin-left: 5%">
                         <div class="row align-items-center no-gutters">
                             <div class="col-md-auto">
                                 <button class="add-product" (click)="removeProduct()">
@@ -70,10 +61,12 @@
                                 </button>
                             </div>
                             <div class="col-md-auto">
-                                <input id="modify_qty" type="number" #selectedQuantity
-                                    class="input-number input-number-adaptive" step="1" min="0" max="" name=""
-                                    value="{{ quantity }}" title="Quantity" size="2" pattern="[0-9]*"
-                                    inputmode="numeric" aria-labelledby="">
+                                <div>
+                                    <input id="modify_qty" type="number" #selectedQuantity
+                                        step="1" min="0" max="9999" name=""
+                                        value="{{ quantity }}" title="Quantity" size="2" pattern="[0-9]*"
+                                        inputmode="numeric" aria-labelledby="">
+                                </div>
                             </div>
                             <div class="col-md-auto">
                                 <button class="add-product" (click)="addProduct()">
@@ -82,7 +75,7 @@
                             </div>
 
                             <div class="col-md-auto">
-                                <div style="padding-left: 120%;">
+                                <div style="padding-left: 150%;">
                                     <fa-icon [icon]="faShoppingCart" 
                                         [styles]="{'color': 'dc3545'}" (click)="addProduct()" size="2x">
                                     </fa-icon>

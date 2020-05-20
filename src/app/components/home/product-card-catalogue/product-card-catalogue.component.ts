@@ -40,7 +40,6 @@ export class ProductCardCatalogueComponent implements OnInit {
     }
     
     addProduct() {
-        this.quantity = this.quantity + 1;
         this.manageProducts.changeProduct(this.item,this.quantity);
         this.updateQuantityError();
     }
