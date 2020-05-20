@@ -24,7 +24,7 @@ export class ProductCardCatalogueComponent implements OnInit {
         //TODO We will load the image by odata, but for mock application let's use a fix one
 
         this.cartService.getCart().orders.forEach(o => {
-            if (o && o.product && o.product.code === this.item.code) {
+            if (o && this.item && o.product && o.product.code === this.item.code) {
                 this.quantity = o.quantity;
             }
         });
