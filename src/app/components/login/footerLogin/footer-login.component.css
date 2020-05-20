@@ -4,6 +4,11 @@ footer .footer-widget {
     color: #fff;
     font-size: 1.4rem;
     display: block;
+    margin-top: 20%;
+    max-height: 180px;
+    bottom: 0;
+    left: 0;
+
 }
 
 
