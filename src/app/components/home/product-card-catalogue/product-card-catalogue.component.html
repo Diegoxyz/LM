@@ -46,16 +46,20 @@
                 <div class="quantity" style="margin-left: 5%">
                     <div class="row align-items-center no-gutters">
                         <div class="col-md-auto">
-                            <div style="padding-left: 100%;">
-                                <input id="modify_qty" type="number" #selectedQuantity
-                                    step="1" min="0" max="9999" name=""
-                                    value="{{ quantity }}" title="Quantity" size="2" pattern="[0-9]*"
-                                    inputmode="numeric" aria-labelledby="">
+                            <div class="row">
+                                <div class="col"><span style="padding-left: 20px">&nbsp;</span></div>
+                                <div class="col">
+                                    <input id="modify_qty" type="number" #selectedQuantity
+                                        step="1" min="0" max="9999" name=""
+                                        value="{{ quantity }}" title="Quantity" size="2" pattern="[0-9]*"
+                                        inputmode="numeric" aria-labelledby="">
+                                </div>
                             </div>
+                            
                         </div>
 
                         <div class="col-md-auto">
-                            <div style="padding-left: 150%;">
+                            <div style="padding-left: 30%;">
                                 <button (click)="addProduct()" style="background-color: transparent;">
                                     <fa-icon [icon]="faShoppingCart" 
                                         [styles]="{'color': 'dc3545'}" size="2x">
