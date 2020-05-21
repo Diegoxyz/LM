@@ -36,7 +36,7 @@ export class BarComponent implements OnInit {
     this.customer = customer;
 
     //TODO Add existing cart from BE
-    this.cart = this.cartService.getCart(customer);
+    this.cart = this.cartService.loadMockCart(customer);
 
     this.manageProducts.manageProducts$.subscribe((h : HandledProduct) => {
         this.cart = this.cartService.addAnOrder(h.product, h.quantity);
@@ -66,7 +66,7 @@ export class BarComponent implements OnInit {
 
   public goCart() {
     this.changePage.goToPage(0);
-    this.router.navigate(['./cart']);
+    this.router.navigate(['./home/cart']);
   }
 
 }

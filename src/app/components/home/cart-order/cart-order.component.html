@@ -1,0 +1,23 @@
+<div id="order" class="row list-orders" >
+    <div  class="col-4 description_column" >
+        <!--<a (click)="openProduct()">{{ item.product.code}}</a>-->
+        <span>{{ order.product.description}}</span>
+    </div>
+    <div  class="col-2 code_column" >
+        <span>{{ order.product.code}}</span>
+    </div>
+    <div  class="col-2 price_column" >
+        <span>{{ order.product.price}}</span>
+    </div>
+    <div  class="col-2 quantity_column" >
+        <span><input type="number" 
+            id="qty"
+            step="1" min="0" max="9999" name=""
+            value="{{ order.quantity }}" title="Quantity" size="2" pattern="[0-9]*"
+            inputmode="numeric" aria-labelledby=""
+            (input)="onChangeQuantity($event.target.value)"></span>
+    </div>
+    <div  class="col-2 price_column" >
+        <span>{{ totalPrice }}</span>
+    </div>
+</div>

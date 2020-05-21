@@ -6,6 +6,7 @@ import { CatalogueComponent } from './catalogue.component';
 import { BoardsComponent } from './boards.component';
 import { OrdersComponent } from './orders.component';
 import { ProspectiveCardComponent } from './prospective-card/prospective-card.component';
+import { CartComponent } from './cart.component';
 
 
 const routes: Routes = [
@@ -19,7 +20,8 @@ const routes: Routes = [
            /* { path: 'boards/:machineId', component: BoardsComponent }, */
             { path: 'prospective', component: ProspectiveCardComponent },
             { path: 'boards', component: BoardsComponent },
-            { path: 'orders', component: OrdersComponent }
+            { path: 'orders', component: OrdersComponent },
+            { path: 'cart', component: CartComponent }
         ]
     }
 ];

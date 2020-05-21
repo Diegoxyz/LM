@@ -29,6 +29,8 @@ import { SearchProductsComponent } from './search-products/search-products.compo
 import { FooterComponent } from './footer/footer.component';
 import { OrderProductComponent } from './order-product/order-product.component';
 import { SearchOrdersComponent } from './search-orders/search-orders.component';
+import { CartOrderComponent } from './cart-order/cart-order.component';
+import { CartComponent } from './cart.component';
 
 @NgModule({
     imports: [
@@ -64,7 +66,9 @@ import { SearchOrdersComponent } from './search-orders/search-orders.component';
         SearchProductsComponent,
         FooterComponent,
         OrderProductComponent,
-        SearchOrdersComponent
+        SearchOrdersComponent,
+        CartOrderComponent,
+        CartComponent
     ]
 })
 export class HomeModule { }

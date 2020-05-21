@@ -17,6 +17,7 @@ import { Customer } from '@app/models/customer';
         let cart : Cart = this.getCart();
         if (product && quantity > 0 && cart != undefined && cart != null) {
           const order : Order = {
+            id: product.code,
             product : product,
             quantity : quantity
           }
@@ -64,12 +65,13 @@ import { Customer } from '@app/models/customer';
         let cart : Cart = null;
         const orders : Order[] = [];
         const items : Product[] = Array(20).fill(0).map((x, i) => (
-          new Product(`Code ${i + 1}`,`Product ${i + 1}`, (i * 10), (i%2 === 0))
+          new Product(`Code ${i + 1}`,`Product ${i + 1}`, (i+1 * 10), (i%2 === 0))
           ));
         items.forEach(i => {
           const order : Order = new Order;
           order.product = i;
           order.quantity = 1;
+          order.id = order.product.code;
           orders.push(order);
         })
         cart = {
