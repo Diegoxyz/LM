@@ -46,22 +46,12 @@
                 <div class="quantity" style="margin-left: 5%">
                     <div class="row align-items-center no-gutters">
                         <div class="col-md-auto">
-                            <button class="add-product" (click)="removeProduct()">
-                                -
-                            </button>
-                        </div>
-                        <div class="col-md-auto">
                             <div>
                                 <input id="modify_qty" type="number" #selectedQuantity
                                     step="1" min="0" max="9999" name=""
                                     value="{{ quantity }}" title="Quantity" size="2" pattern="[0-9]*"
                                     inputmode="numeric" aria-labelledby="">
                             </div>
-                        </div>
-                        <div class="col-md-auto">
-                            <button class="add-product" (click)="addOneProduct()">
-                                +
-                            </button>
                         </div>
 
                         <div class="col-md-auto">
