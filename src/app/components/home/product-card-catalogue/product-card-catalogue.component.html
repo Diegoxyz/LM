@@ -44,15 +44,18 @@
                     </div>
                 </div>
                 <div class="quantity" style="margin-left: 5%">
+                    <form [formGroup]="addProductForm">
                     <div class="row align-items-center no-gutters">
                         <div class="col-md-auto">
                             <div class="row">
                                 <div class="col"><span style="padding-left: 20px">&nbsp;</span></div>
                                 <div class="col">
-                                    <input id="modify_qty" type="number" #selectedQuantity
+                                    <input type="number" 
+                                        id="qty" formControlName="qty"
                                         step="1" min="0" max="9999" name=""
                                         value="{{ quantity }}" title="Quantity" size="2" pattern="[0-9]*"
                                         inputmode="numeric" aria-labelledby="">
+                                    
                                 </div>
                             </div>
                             
@@ -67,9 +70,8 @@
                                 </button>
                             </div>
                         </div>
-
-
                     </div>
+                    </form>
                     <div *ngIf="quantityError" class="row align-items-center no-gutters justify-content-between">
                         <div class="col-md-8">
                             <div class="alert alert-danger">
