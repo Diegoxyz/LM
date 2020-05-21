@@ -58,4 +58,15 @@ export class BarComponent implements OnInit {
     this.changePage.goToPage(0);
     this.router.navigate(['./home']);
   }
+
+  public goWishlist() {
+    this.changePage.goToPage(0);
+    this.router.navigate(['./wishlist']);
+  }
+
+  public goCart() {
+    this.changePage.goToPage(0);
+    this.router.navigate(['./cart']);
+  }
+
 }
