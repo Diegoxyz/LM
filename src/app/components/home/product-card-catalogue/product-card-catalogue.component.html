@@ -69,16 +69,18 @@
                                 </div>
                             </div>
                             <div class="col-md-auto">
-                                <button class="add-product" (click)="addProduct()">
+                                <button class="add-product" (click)="addOneProduct()">
                                     +
                                 </button>
                             </div>
 
                             <div class="col-md-auto">
                                 <div style="padding-left: 150%;">
-                                    <fa-icon [icon]="faShoppingCart" 
-                                        [styles]="{'color': 'dc3545'}" (click)="addProduct()" size="2x">
-                                    </fa-icon>
+                                    <button (click)="addProduct()" style="background-color: transparent;">
+                                        <fa-icon [icon]="faShoppingCart" 
+                                            [styles]="{'color': 'dc3545'}" size="2x">
+                                        </fa-icon>
+                                    </button>
                                 </div>
                             </div>
 

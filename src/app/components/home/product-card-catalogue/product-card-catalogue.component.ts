@@ -32,22 +32,30 @@ export class ProductCardCatalogueComponent implements OnInit {
     onKey(quantity: number) {
         if (quantity >= 0) {
             this.quantity = quantity;
-            this.manageProducts.changeProduct(this.item,this.quantity);
         } else {
             this.quantity = 0;
             this.quantityError = true;
         }
     }
     
-    addProduct() {
-        this.manageProducts.changeProduct(this.item,this.quantity);
+    addOneProduct() {
+        if (this.quantity >= 0) {
+            this.quantity = this.quantity + 1;
+        }
         this.updateQuantityError();
+    }
+
+    addProduct() {
+        if (this.quantity > 0) {
+            this.manageProducts.changeProduct(this.item,this.quantity);
+        } else {
+            this.quantityError = true;
+        }
     }
 
     removeProduct() {
         if (this.quantity > 0) {
             this.quantity = this.quantity - 1;
-            this.manageProducts.changeProduct(this.item,this.quantity);
         }
         this.updateQuantityError();
     }
