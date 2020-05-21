@@ -1,6 +1,6 @@
 <div><app-search-products></app-search-products></div>
-<div><ul class="flex-container">
-    <li *ngFor="let item of items" class="flex-item">
+<div><ul id="cat-container" class="flex-container">
+    <li *ngFor="let item of items" class="flex-item" >
         <app-product-catalogue-card [item]="item"></app-product-catalogue-card>
     </li>
 </ul>
