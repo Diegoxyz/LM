@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, TemplateRef } from '@angular/core';
 import { ManageProducts } from '../services/manage-products.service';
 import { Item } from '@app/models/item';
 import { Router } from '@angular/router';
@@ -16,6 +16,14 @@ export class MachineCardComponent implements OnInit {
 
     bsModalRef: BsModalRef;
     
+    config = {
+        animated: true,
+        keyboard: true,
+        backdrop: true,
+        ignoreBackdropClick: false,
+        class: "my-modal"
+    };
+
     constructor(private router: Router,private modalService: BsModalService) {
     }
     
@@ -26,8 +34,12 @@ export class MachineCardComponent implements OnInit {
     public openProspectives() {
         if (this.item) {
             // we will load the item's prospectives
-            // this.bsModalRef = this.modalService.show(ProspectiveCardComponent, { ignoreBackdropClick: true, class: 'modal-lg' });
-            this.router.navigate(['./home/prospective'], {queryParams:{itemCode: this.item.code}});
+            this.bsModalRef = this.modalService.show(ProspectiveCardComponent, this.config);
+            // this.router.navigate(['./home/prospective'], {queryParams:{itemCode: this.item.code}});
         }
     }
+
+    openModal(template: TemplateRef<any>) {
+        this.bsModalRef = this.modalService.show(template, this.config);
+      }
 }

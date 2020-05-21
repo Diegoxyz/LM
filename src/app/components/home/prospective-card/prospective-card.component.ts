@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({selector: 'app-prospetive-card',
 templateUrl: './prospective-card.component.html',
@@ -15,6 +16,8 @@ export class ProspectiveCardComponent implements OnInit {
     selectedQuantity : number = 0;
     faShoppingCart=faShoppingCart;
 
+    bsModalRef: BsModalRef;
+
     constructor(private router: Router) {
     }
     
@@ -23,8 +26,8 @@ export class ProspectiveCardComponent implements OnInit {
     }
 
     public close() {
-        // this.bsModalRef.hide();
-        this.router.navigate(['./home/boards']);
+        this.bsModalRef.hide();
+        // this.router.navigate(['./home/boards']);
     }
 
     onKey(quantity: number) {
