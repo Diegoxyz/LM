@@ -33,6 +33,7 @@ ul {
   
     /* Then we define how is distributed the remaining space */
     justify-content: space-around;
+    margin-left: 5%;
   }
 
   /* Medium screens */

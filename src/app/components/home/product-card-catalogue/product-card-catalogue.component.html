@@ -1,138 +1,90 @@
-<div class="">
-    <div class="container">
-        <div class="card align-items-center justify-content-center" style="width: 18rem;">
-            <ng-template #tipContent style="background-color: antiquewhite;">
-                <div>
-                    <p>{{ item.description }}</p>
-                    <p>{{ item.maxQuantity }}</p>
-                    <p>{{ item.minQuantity }}</p>
-                </div>
-            </ng-template>
+<div class="product-catalogue-container">
+    <div class="align-items-center justify-content-center" style="width: 18rem;">
+        <div class="hoverWrapper">
+            <img class="img-fluid card-img-top" src="assets/img/items/Item1.PNG"
+                sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
             
-            <div class="hoverWrapper">
-                <img class="img-fluid card-img-top" src="assets/img/items/Item1.PNG"
-                    sizes="(max-width: 260px) 100vw, 260px" width="260" height="260" [ngbTooltip]="tipContent"
-                    tooltipClass="my-custom-class">
-                
-                <img id="add-to-favorite" class="img-fluid" 
-                    src="assets/img/items/puntina.png">
+            <img id="add-to-favorite" class="img-fluid" 
+                src="assets/img/items/puntina.png">
 
-                <div class="card-body">
-                    <div class="row align-items-center no-gutters justify-content-between">
-                        <div class="col-md-6">
-                            <h6 class="card-title">Code</h6>
-                        </div>
-                        <div  class="col-md-6">
-                            <h6 id="card-title-id" class="card-title">{{ item.code }}</h6>
-                        </div>
+            <div class="">
+                <div class="row align-items-center no-gutters justify-content-between">
+                    <div class="col-md-6">
+                        <h6 class="card-title">Code</h6>
                     </div>
-                    <div class="row align-items-center no-gutters justify-content-between">
-                        <div class="col-md-6">
-                            <h6 class="card-title">Description</h6>
-                        </div>
-                        <div class="col-md-6">
-                            <h6 id="card-title-id" class="card-title">{{ item.description }}</h6>
-                        </div>
+                    <div  class="col-md-6">
+                        <h6 id="card-title-id" class="card-title">{{ item.code }}</h6>
                     </div>
-
-                    <div class="row align-items-center no-gutters justify-content-between">
-                        <div class="col-md-6">
-                            <h6 class="card-text">Price &euro;</h6>
-                        </div>
-                        <div class="col-md-6">
-                            <h6 id="card-title-id" class="card-title">{{ item.price }}</h6>
-                        </div>
+                </div>
+                <div class="row align-items-center no-gutters justify-content-between">
+                    <div class="col-md-6">
+                        <h6 class="card-title">Description</h6>
                     </div>
-                    <div class="row align-items-center no-gutters justify-content-between">
-                        <div class="col-md-6">
-                            <h6 class="card-text">Stock</h6>
-                        </div>
-                        <div class="col-md-6">
-                            <h6 id="card-title-id" class="card-title"><fa-icon *ngIf="item.stock" [icon]="faCircle" 
-                                [styles]="{'color': 'green'}"></fa-icon><fa-icon *ngIf="!item.stock" [icon]="faCircle" 
-                                [styles]="{'color': 'red'}"></fa-icon></h6>
-                        </div>
+                    <div class="col-md-6">
+                        <h6 id="card-title-id" class="card-title">{{ item.description }}</h6>
                     </div>
-                    <div class="quantity" style="margin-left: 5%">
-                        <div class="row align-items-center no-gutters">
-                            <div class="col-md-auto">
-                                <button class="add-product" (click)="removeProduct()">
-                                    -
-                                </button>
-                            </div>
-                            <div class="col-md-auto">
-                                <div>
-                                    <input id="modify_qty" type="number" #selectedQuantity
-                                        step="1" min="0" max="9999" name=""
-                                        value="{{ quantity }}" title="Quantity" size="2" pattern="[0-9]*"
-                                        inputmode="numeric" aria-labelledby="">
-                                </div>
-                            </div>
-                            <div class="col-md-auto">
-                                <button class="add-product" (click)="addOneProduct()">
-                                    +
-                                </button>
-                            </div>
-
-                            <div class="col-md-auto">
-                                <div style="padding-left: 150%;">
-                                    <button (click)="addProduct()" style="background-color: transparent;">
-                                        <fa-icon [icon]="faShoppingCart" 
-                                            [styles]="{'color': 'dc3545'}" size="2x">
-                                        </fa-icon>
-                                    </button>
-                                </div>
-                            </div>
-
-
-                        </div>
-                        <div *ngIf="quantityError" class="row align-items-center no-gutters justify-content-between">
-                            <div class="col-md-8">
-                                <div class="alert alert-danger">
-                                    <span>Quantity is not valid</span>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-
                 </div>
 
-
-                <!--            
-                <div id="hoverShow1">
-                    <div class="quantity">
-                        <div class="row align-items-center no-gutters">
-                            <div class="col-md-auto"><button class="add-product" (click)="removeProduct()">
-                            -
-                            </button></div>
-                            <div class="col-md-auto">
-                                <input type="number"
-                                    #selectedQuantity
-                                    (keyup.enter)="onKey(selectedQuantity.value)"
-                                    class="input-number input-number-adaptive" 
-                                    step="1" min="0" max="" 
-                                    name="" value="{{ quantity }}" title="Quantity" size="2" 
-                                    pattern="[0-9]*" 
-                                    inputmode="numeric" aria-labelledby=""
-                                >
-                            </div>
-                            <div class="col-md-auto"><button class="add-product" (click)="addProduct()">
-                                +
-                            </button></div>
+                <div class="row align-items-center no-gutters justify-content-between">
+                    <div class="col-md-6">
+                        <h6 class="card-text">Price &euro;</h6>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 id="card-title-id" class="card-title">{{ item.price }}</h6>
+                    </div>
+                </div>
+                <div class="row align-items-center no-gutters justify-content-between">
+                    <div class="col-md-6">
+                        <h6 class="card-text">Stock</h6>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 id="card-title-id" class="card-title"><fa-icon *ngIf="item.stock" [icon]="faCircle" 
+                            [styles]="{'color': 'green'}"></fa-icon><fa-icon *ngIf="!item.stock" [icon]="faCircle" 
+                            [styles]="{'color': 'red'}"></fa-icon></h6>
+                    </div>
+                </div>
+                <div class="quantity" style="margin-left: 5%">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col-md-auto">
+                            <button class="add-product" (click)="removeProduct()">
+                                -
+                            </button>
                         </div>
-                        <div *ngIf="quantityError" class="row align-items-center no-gutters justify-content-between">
-                            <div class="col-md-8">
-                                <div class="alert alert-danger">
-                                    <span>Quantity is not valid</span>
-                                </div>
+                        <div class="col-md-auto">
+                            <div>
+                                <input id="modify_qty" type="number" #selectedQuantity
+                                    step="1" min="0" max="9999" name=""
+                                    value="{{ quantity }}" title="Quantity" size="2" pattern="[0-9]*"
+                                    inputmode="numeric" aria-labelledby="">
+                            </div>
+                        </div>
+                        <div class="col-md-auto">
+                            <button class="add-product" (click)="addOneProduct()">
+                                +
+                            </button>
+                        </div>
+
+                        <div class="col-md-auto">
+                            <div style="padding-left: 150%;">
+                                <button (click)="addProduct()" style="background-color: transparent;">
+                                    <fa-icon [icon]="faShoppingCart" 
+                                        [styles]="{'color': 'dc3545'}" size="2x">
+                                    </fa-icon>
+                                </button>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div *ngIf="quantityError" class="row align-items-center no-gutters justify-content-between">
+                        <div class="col-md-8">
+                            <div class="alert alert-danger">
+                                <span>Quantity is not valid</span>
                             </div>
                         </div>
                     </div>
 
-                </div> 
- -->
+                </div>
             </div>
         </div>
     </div>

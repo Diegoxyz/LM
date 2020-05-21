@@ -31,6 +31,7 @@ ul {
  
    /* Then we define how is distributed the remaining space */
    justify-content: space-around;
+   margin-left: 6%;
  }
 
    /* Medium screens */
@@ -51,7 +52,7 @@ ul {
 
  .flex-item {
    background: #ffffff;
-   padding: 5px;
+   padding: 0px;
    margin-top: 10px;
    text-align: center;
    min-width: 33.33%;
