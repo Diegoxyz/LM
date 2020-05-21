@@ -10,6 +10,7 @@ import { MyAccountComponent } from '../my-account/my-account.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Router } from '@angular/router';
 import { ChangePage } from '../services/change-page.service';
+import { Order } from '@app/models/order';
 
 @Component({
   selector: 'app-bar',
@@ -40,6 +41,10 @@ export class BarComponent implements OnInit {
 
     this.manageProducts.manageProducts$.subscribe((h : HandledProduct) => {
         this.cart = this.cartService.addAnOrder(h.product, h.quantity);
+    });
+
+    this.cartService.cart$.subscribe((o : Order) => {
+      this.cart = this.cartService.getCart(this.customer);
     });
   }
 

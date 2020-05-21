@@ -1,12 +1,4 @@
-<div *ngIf="totalQuantity == 0">
-    <div class="row align-items-center justify-content-center" style="margin-top: 20%">
-        <div  class="col-4 col-md-auto h-100" >
-            <h1>No item</h1>
-        </div>
-    </div>
-</div>
-
-<div *ngIf="totalQuantity != 0" style="margin-top: 5%; margin-left: 5%; max-width: 90%;">
+<div style="margin-top: 5%; margin-left: 5%; max-width: 90%;">
     <div class="align-items-center justify-content-center">
         <div class="row headers-list-orders">
             <div class="col-4 h-100 description_column" >
@@ -28,12 +20,19 @@
         <div id="order" *ngFor="let order of orders">
             <app-cart-order [order]="order" (newOrder)="updateOrders($event)"></app-cart-order>
         </div>
+        <div *ngIf="orders.length === 0">
+        <div class="row align-items-center justify-content-center no-item" >
+            <div  class="col-12 col-md-auto h-100" >
+                <h1>No item</h1>
+            </div>
+        </div>
+        </div>
         <div class="row headers-list-orders" style="margin-bottom: 2%;">
             <div class="col-10 h-100" >
                 <span>&nbsp;</span>
             </div>
             <div class="col-2 h-100" >
-                <span>Totale {{totalPrice}}</span>
+                <span>Total {{totalPrice}}</span>
             </div>
         </div>
         <div class="row" style="margin-bottom: 5%;">

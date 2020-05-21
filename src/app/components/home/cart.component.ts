@@ -39,7 +39,7 @@ export class CartComponent implements OnInit, OnDestroy {
         const customer : Customer = {
             firstName : user.username,
             lastName : user.username,
-            fiscalCode : 'DCb70F21L736A',
+            fiscalCode : 'DCB70F21L736A',
         };
         this.cart = this.cartService.getCart(customer);
         this.orders = this.cart.orders;
@@ -57,6 +57,9 @@ export class CartComponent implements OnInit, OnDestroy {
 
     emptyCart(): void {
         this.cartService.emptyCart();
+        this.orders = [];
+        this.totalQuantity = 0;
+        this.totalPrice = 0;
     }
 
     submitOrder(template: TemplateRef<any>): void {

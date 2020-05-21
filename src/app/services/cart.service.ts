@@ -4,6 +4,7 @@ import { Cart } from '@app/models/cart';
 import { Order } from '@app/models/order';
 import { AccountService } from './account.service';
 import { Customer } from '@app/models/customer';
+import { Subject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -11,6 +12,8 @@ import { Customer } from '@app/models/customer';
   export class CartService {
     private cartId : string = "lmCart";
 
+    private _cart = new Subject();
+    cart$ = this._cart.asObservable();
 
     public addAnOrder(product : Product, quantity : number) : Cart {
         // simple way, we just add a product as soon as we receive it
@@ -39,6 +42,7 @@ import { Customer } from '@app/models/customer';
           
         }
         localStorage.setItem(this.cartId, JSON.stringify(cart));
+        this._cart.next();
         return cart;
       }
 
@@ -59,6 +63,7 @@ import { Customer } from '@app/models/customer';
 
       public emptyCart() {
         localStorage.removeItem(this.cartId);
+        this._cart.next();
       }
 
       public loadMockCart(customer? : Customer) : Cart {
