@@ -1,13 +1,22 @@
 <div class="flex-container search-categories-container">
     <div class="flex-item">
         <div class="row">
-            <div class="col">
-              <mat-form-field>
-                  <input type="text" matInput [matAutocomplete]="auto">
-              </mat-form-field>
-              <mat-autocomplete #auto="matAutocomplete">
-                  <mat-option *ngFor="let group of groupsNames" [value]="group">{{group}}</mat-option>
-                </mat-autocomplete>
+            <div class="col-8">
+                <div class="search-categories-button">
+                    <mat-form-field class="search-groups">
+                        <input type="text" matInput [matAutocomplete]="auto" placeholder="Search" >
+                    </mat-form-field>
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let group of groupsNames" [value]="group">{{group}}</mat-option>
+                      </mat-autocomplete>
+                </div>
+            </div>
+            <div class="col-4">
+                <button id="search" class="button-search">
+                    <span>Search   </span>  <fa-icon [icon]="faSearch" 
+                    [styles]="{'color': 'dc3545'}" size="1x">
+                    </fa-icon>
+                </button>
             </div>
         </div>
     </div>

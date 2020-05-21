@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Group } from '@app/models/item';
 import { ProductsService } from '@app/services/products.service';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-search-products',
@@ -21,6 +22,8 @@ export class SearchProductsComponent implements OnInit {
   category4 : boolean = false;
   category5 : boolean = false;
   category6 : boolean = false;
+
+  faSearch = faSearch;
 
   constructor(private fb: FormBuilder, private productsService: ProductsService) { }
 
