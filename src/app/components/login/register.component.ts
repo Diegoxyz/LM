@@ -51,4 +51,10 @@ export class RegisterComponent implements OnInit {
   onSubmit(): void {
     this.router.navigate(['/home']);
   }
+  
+
+  onCancel(): void {
+    /* this.registrationForm.reset(); */
+    this.router.navigate(['/home']);
+  }
 }

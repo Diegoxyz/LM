@@ -71,7 +71,16 @@
                 </div>
             </div>
             
-            <button type="submit" class="btn btn-primary" [disabled]="!registrationForm.valid">Submit form</button>
+            <!-- <button type="submit" class="btn btn-primary" [disabled]="!registrationForm.valid">Submit form</button> -->
+            <div class="row">
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-primary" [disabled]="!registrationForm.valid">Submit form</button>
+                </div>
+                <div class="col-md-6  text-right">
+                    <button class="btn btn-primary" (click)="onCancel()">cancel</button>
+                </div>
+            </div>
+            
         </form>
 
     </div>
