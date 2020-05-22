@@ -36,8 +36,6 @@ export class SearchMachinesComponent implements OnInit {
   removable = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
 
-  @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
-  @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
   constructor(private fb: FormBuilder, private productsService: ProductsService) { }
 
