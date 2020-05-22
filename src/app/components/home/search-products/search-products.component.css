@@ -15,7 +15,6 @@
   }
  
   .flex-item {
-    padding: 2%;
     margin-top: 2%;
     text-align: center;
   }
@@ -46,9 +45,17 @@ ul {
 .button-search {
   background-color: #ffffff;
   border: 1px solid #d8d6d6;
-  margin-left: 5%;
+  margin-left: 1%;
 }
 
 .chooseCategories {
   background-color: #ffffff;
+}
+
+.autocomplete-search-list {
+  width: 90%;
+}
+
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, .mat-accent .mat-pseudo-checkbox-checked, .mat-accent .mat-pseudo-checkbox-indeterminate, .mat-pseudo-checkbox-checked, .mat-pseudo-checkbox-indeterminate {
+  background-color: #dc3545 !important; /* Red background for example */
 }

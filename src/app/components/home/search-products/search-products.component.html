@@ -2,41 +2,75 @@
     <div class="flex-item">
         <div>
             <div class="row">
-                <div class="col-7" style="margin: 0%; padding-left: 5%">
-                    <mat-form-field class="search-groups">
-                        <input type="text" matInput [matAutocomplete]="auto" placeholder="Search">
-                    </mat-form-field>
-                    <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option *ngFor="let group of groupsNames" [value]="group">{{group}}</mat-option>
-                      </mat-autocomplete>
+                <div class="col-6" style="margin: 0%;">
+                    <mat-form-field class="autocomplete-search-list">
+                        <mat-chip-list #chipList aria-label="Remove Product">
+                          <mat-chip
+                            *ngFor="let product of selectedProducts"
+                            [selectable]="selectable"
+                            [removable]="removable"
+                            (removed)="removeProduct(product)">
+                            {{ product.item }}
+                            <mat-icon matChipRemove *ngIf="removable"><fa-icon [icon]="faTimesCircle" 
+                            size="1x">
+                                </fa-icon></mat-icon>
+                          </mat-chip>
+                          <input
+                            id="productSearch"
+                            placeholder="Search for products (code, description)"
+                            #productsInput
+                            [formControl]="searchProductControl"
+                            [matAutocomplete]="auto"
+                            [matChipInputFor]="chipList"
+                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                            (matChipInputTokenEnd)="addProduct($event)">
+                        </mat-chip-list>
+                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedProduct($event)">
+                          <mat-option *ngFor="let product of filteredProducts | async" [value]="product">
+                            <div (click)="optionClickedProduct($event, product);">
+                                <mat-checkbox [checked]="product.selected" (change)="toggleSelectionProduct(product)" 
+                                (click)="$event.stopPropagation()">
+                                    {{ product.item }}
+                                </mat-checkbox>
+                            </div>
+                          </mat-option>
+                        </mat-autocomplete>
+                      </mat-form-field>
                 </div>
-                <div class="col-5" style="margin: 0%; padding: 0%">
-                  <div ngbDropdown #myDrop="ngbDropdown" [autoClose]="false">
-                    <button id="dropdownCategories" ngbDropdownToggle ngbDropdownAnchor (focus)="myDrop.open()" class="chooseCategories">Choose categories</button>
-                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                        <ul>
-                            <li>
-                                <div class="row">
-                                    <div class="col-4"><button ngbDropdownItem (click)="setCategory1()" [class.selected-category]="category1">Category 1</button></div>
-                                    <div class="col-4"><button ngbDropdownItem (click)="setCategory2()" [class.selected-category]="category2">Category 2</button></div>
-                                    <div class="col-4"><button ngbDropdownItem (click)="setCategory3()" [class.selected-category]="category3">Category 3</button></div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="row">
-                                    <div class="col-4"><button ngbDropdownItem (click)="setCategory4()" [class.selected-category]="category4">Category 4</button></div>
-                                    <div class="col-4"><button ngbDropdownItem (click)="setCategory5()" [class.selected-category]="category5">Category 5</button></div>
-                                    <div class="col-4"><button ngbDropdownItem (click)="setCategory6()" [class.selected-category]="category6">Category 6</button></div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <button id="search" class="button-search">
-                        <span>Search   </span>  <fa-icon [icon]="faSearch" 
-                        [styles]="{'color': 'dc3545'}" size="1x">
-                        </fa-icon>
-                    </button>
-                </div>
+                <div class="col-6" style="margin: 0%; padding: 0%">
+                    <mat-form-field class="autocomplete-search-list">
+                        <mat-chip-list #chipGroupsList aria-label="Remove Groups">
+                          <mat-chip
+                            *ngFor="let group of selectedGroups"
+                            [selectable]="selectable"
+                            [removable]="removable"
+                            (removed)="removeGroup(group)">
+                            {{ group.item }}
+                            <mat-icon matChipRemove *ngIf="removable"><fa-icon [icon]="faTimesCircle" 
+                            size="1x">
+                                </fa-icon></mat-icon>
+                          </mat-chip>
+                          <input
+                            id="groupSearch"
+                            placeholder="Search for group"
+                            #groupsInput
+                            [formControl]="searchGroupControl"
+                            [matAutocomplete]="auto2"
+                            [matChipInputFor]="chipGroupsList"
+                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                            (matChipInputTokenEnd)="addGroup($event)">
+                        </mat-chip-list>
+                        <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="selectedGroup($event)">
+                          <mat-option *ngFor="let group of filteredGroups | async" [value]="group">
+                            <div (click)="optionClickedGroup($event, group);">
+                                <mat-checkbox [checked]="group.selected" (change)="toggleSelectionGroup(group)" 
+                                (click)="$event.stopPropagation()">
+                                    {{ group.item }}
+                                </mat-checkbox>
+                            </div>
+                          </mat-option>
+                        </mat-autocomplete>
+                      </mat-form-field>
                 </div>
             </div>
         </div>
@@ -56,6 +90,15 @@
                 </div>
                 <div class="col">&nbsp;</div>
             </div>
+        </div>
+    </div>
+    <div class="flex-item">
+        <div>
+            <button id="search" class="button-search">
+                <span>Search   </span>  <fa-icon [icon]="faSearch" 
+                [styles]="{'color': 'dc3545'}" size="1x">
+                </fa-icon>
+            </button>
         </div>
     </div>
 </div>
