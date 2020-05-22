@@ -1,7 +1,7 @@
 <div class="align-items-center justify-content-center rounded">
     <div class="container">
         <div class="card align-items-center justify-content-center hoverWrapper" style="width: 18rem;">
-            <a class="nav-link" (click)="openModal(template)">
+            <a class="nav-link" (click)="openSections()">
                 <img class="img-fluid card-img-top" src="assets/img/coffeeMachines/Macchina2.jpg" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
                 <div class="card-body">
                     <h6 class="card-title">{{ item.code }}</h6>
@@ -11,35 +11,3 @@
         </div>
     </div>
 </div>
-<style>
-  .modal{
-    display:flex !important;
-    top:40%;
-  }
-  
-  .my-modal {
-    border: solid 4px blue;
-    width: 100%;
-  }
-  
-  .modal-header {
-    background-color: lime;
-    width: 100%;
-  }
-  
-  .modal-body {
-    background-color: #ffffff;
-    width: 190%;
-    left: -50%;
-  }
-</style>
-<ng-template #template class="myClass">
-    <div class="modal-body">
-        <div style="background-color: #ffffff; padding-left: 5%">
-            <app-prospetive-card></app-prospetive-card>
-        </div>
-        <div class="row" style="margin-left: 70%; margin-top: 1%">
-            <div class="button-close-container"><div class="button-close-class"><button type="button" (click)="bsModalRef.hide()" class="button-close-class">CLOSE</button></div></div>
-        </div>
-    </div>
-  </ng-template>

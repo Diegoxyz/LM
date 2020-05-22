@@ -1,7 +1,15 @@
-<div><app-search-products></app-search-products></div>
-<div><ul class="flex-container">
+<div><app-search-machines></app-search-machines></div>
+<div *ngIf="sectionToBeDisplayed != 1">
+    <ul class="flex-container">
         <li *ngFor="let m of machines" class="flex-item">
-            <app-machine-card [item]="m"></app-machine-card>
+            <app-machine-card [item]="m" (openSection)="openSections($event)"></app-machine-card>
+        </li>
+    </ul>
+</div>
+<div *ngIf="sectionToBeDisplayed === 1">
+    <ul class="flex-container">
+        <li *ngFor="let s of sections" class="flex-item">
+            <app-section-card [item]="s"></app-section-card>
         </li>
     </ul>
 </div>

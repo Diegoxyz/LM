@@ -22,18 +22,19 @@
   .prospective-card {
     padding: 0%;
     margin: 0%;
-    max-width: 100%;
+    width: 100%;
   }
 
   .board-image {
-    width:55%;
+    width:75%;
     margin-right: 0%;
   }
 
   .board-panel {
     max-width:60%;
     padding: 0%;
-    padding-left: 5%;
+    padding-left: 1%;
+    padding-top: 2%;
     margin: 0%;
   }
 
@@ -42,7 +43,7 @@
     overflow-y: scroll; 
     overflow-x: hidden; 
     text-align:justify;
-    max-height: 100%;
+    max-height: 150%;
   }
 
 

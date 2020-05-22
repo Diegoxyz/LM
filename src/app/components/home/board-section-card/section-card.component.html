@@ -1,0 +1,54 @@
+<div class="align-items-center justify-content-center rounded">
+    <div class="container">
+        <div class="card align-items-center justify-content-center hoverWrapper" style="width: 18rem;">
+            <a class="nav-link" (click)="openModal(template)">
+                <img class="img-fluid card-img-top" src="assets/img/items/Section.PNG" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
+                <div class="card-body">
+                    <h6 class="card-title">{{ item.code }}</h6>
+                    <h6 class="card-title">{{ item.description }}</h6>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<style>
+  .modal{
+    display:flex !important;
+    border: solid 4px blue;
+    top:2%;
+  }
+  
+  .my-modal {
+    border: solid 4px blue;
+    width: 250%;
+    left: -75%;
+  }
+  
+  .modal-header {
+    background-color: lime;
+    width: 250%;
+    left: -75%;
+  }
+  
+  .modal-body {
+    background-color: #ffffff;
+    width: 270%;
+    left: -85%;
+  }
+</style>
+<ng-template #template class="myClass">
+  <div class="">
+    <div class="modal-body">
+        <div><button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">    
+          <span aria-hidden="true">×</span>
+        </button>
+        </div>
+        <div style="background-color: #ffffff;">
+            <app-prospetive-card></app-prospetive-card>
+        </div>
+        <!--<div class="row" style="margin-left: 70%; margin-top: 1%">
+            <div class="button-close-container"><div class="button-close-class"><button type="button" (click)="bsModalRef.hide()" class="button-close-class">CLOSE</button></div></div>
+        </div>-->
+    </div>
+  </div>
+  </ng-template>

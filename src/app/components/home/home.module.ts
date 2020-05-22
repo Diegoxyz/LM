@@ -16,6 +16,8 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatChipsModule } from '@angular/material/chips';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import { ProductCardCatalogueComponent } from './product-card-catalogue/product-card-catalogue.component';
 import { NgxPopper } from 'angular-popper';
 import { OrdersComponent } from './orders.component';
@@ -31,6 +33,8 @@ import { OrderProductComponent } from './order-product/order-product.component';
 import { SearchOrdersComponent } from './search-orders/search-orders.component';
 import { CartOrderComponent } from './cart-order/cart-order.component';
 import { CartComponent } from './cart.component';
+import { SearchMachinesComponent } from './search-machines/search-machines.component';
+import { SectionCardComponent } from './board-section-card/section-card.component';
 
 @NgModule({
     imports: [
@@ -47,6 +51,8 @@ import { CartComponent } from './cart.component';
         NgxPopper,
         FontAwesomeModule,
         MatAutocompleteModule,
+        MatChipsModule,
+        MatCheckboxModule,
         ModalModule.forRoot()
     ],
     declarations: [
@@ -60,10 +66,12 @@ import { CartComponent } from './cart.component';
         ProductCardCatalogueComponent,
         OrdersComponent,
         MachineCardComponent,
+        SectionCardComponent,
         ProspectiveCardComponent,
         MyAccountComponent,
         SwitchButtonComponent,
         SearchProductsComponent,
+        SearchMachinesComponent,
         FooterComponent,
         OrderProductComponent,
         SearchOrdersComponent,

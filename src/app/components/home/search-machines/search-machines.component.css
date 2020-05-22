@@ -1,0 +1,66 @@
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, .mat-accent .mat-pseudo-checkbox-checked, .mat-accent .mat-pseudo-checkbox-indeterminate, .mat-pseudo-checkbox-checked, .mat-pseudo-checkbox-indeterminate {
+  background-color: #dc3545 !important; /* Red background for example */
+  }
+
+.flex-container {
+    /* We first create a flex layout context */
+    display: flex;
+  
+    /* Then we define the flow direction 
+       and if we allow the items to wrap 
+     * Remember this is the same as:
+     * flex-direction: row;
+     * flex-wrap: wrap;
+     */
+    flex-flow: column wrap;
+  
+    /* Then we define how is distributed the remaining space */
+    justify-content: space-around;
+  }
+ 
+  .flex-item {
+    padding: 2%;
+    margin-top: 2%;
+    text-align: center;
+  }
+
+ul {
+    list-style-type: none;
+    display: inline;
+ }
+
+.search-categories-container {
+  background-color: #ffffff;
+  box-shadow: 2px 2px 5px 5px #d8d6d6;
+  width: 70%;
+  margin-left: 15%;
+  margin-top: 5%;
+}
+
+.selected-category {
+  border: 1px solid lightblue;
+  background-color: #ffffff;
+}
+
+.search-groups {
+  /*border: 2px solid #d8d6d6;*/
+  width: 100%;
+}
+
+.button-search {
+  background-color: #ffffff;
+  border: 1px solid #d8d6d6;
+  margin-left: 45%;
+}
+
+.chooseCategories {
+  background-color: #ffffff;
+}
+
+#search:hover {
+  border: 1px solid #dc3545;
+}
+
+.autocomplete-search-list {
+  width: 100%;
+}

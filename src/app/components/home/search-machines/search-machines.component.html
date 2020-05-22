@@ -1,0 +1,67 @@
+<div class="search-categories-container">
+    <mat-form-field class="autocomplete-search-list">
+        <mat-chip-list #chipList aria-label="Remove machine">
+          <mat-chip
+            *ngFor="let machine of selectedMachines"
+            [selectable]="selectable"
+            [removable]="removable"
+            (removed)="remove(machine)">
+            {{ machine.item }}
+            <mat-icon matChipRemove *ngIf="removable"><fa-icon [icon]="faTimesCircle" 
+            size="1x">
+                </fa-icon></mat-icon>
+          </mat-chip>
+          <input
+            placeholder="Search for machines"
+            #fruitInput
+            [formControl]="searchMachineControl"
+            [matAutocomplete]="auto"
+            [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+          <mat-option *ngFor="let machine of filteredMachines | async" [value]="machine">
+            <div (click)="optionClicked($event, machine);">
+                <mat-checkbox [checked]="machine.selected" (change)="toggleSelection(machine)" 
+                (click)="$event.stopPropagation()">
+                    {{ machine.item }}
+                </mat-checkbox>
+            </div>
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    <div>
+        <button id="search" class="button-search">
+            <span>Search   </span>  <fa-icon [icon]="faSearch" 
+            [styles]="{'color': 'dc3545'}" size="1x">
+            </fa-icon>
+        </button>
+    </div>
+</div>
+
+
+<!--<div class="flex-container search-categories-container">
+    <div class="flex-item">
+        <div>
+            <div class="row">
+                <div class="col-10" style="margin: 0%; padding-left: 5%">
+                    <mat-form-field class="search-groups" appearance="outline">
+                        <mat-label>Search for machines</mat-label>
+                        <input type="text" matInput [matAutocomplete]="auto">
+                    </mat-form-field>
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let machine of machineNames" [value]="machine">{{machine}}</mat-option>
+                      </mat-autocomplete>
+                </div>
+                <div class="col-2" style="margin: 0%; padding: 0%">
+                    <button id="search" class="button-search">
+                        <span>Search   </span>  <fa-icon [icon]="faSearch" 
+                        [styles]="{'color': 'dc3545'}" size="1x">
+                        </fa-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
