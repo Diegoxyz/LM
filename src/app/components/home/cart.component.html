@@ -1,24 +1,28 @@
 <div style="margin-top: 5%; margin-left: 5%; max-width: 90%;">
     <div class="align-items-center justify-content-center">
         <div class="row headers-list-orders">
-            <div class="col-4 h-100 description_column" >
+            <div class="col-1 h-100 description_column" >
+                <span>Select to remove</span>
+            </div>
+            <div  class="col-4 h-100 code_column" >
+                <span>CODE</span> <br />
                 <span>DESCRIPTION</span>
             </div>
-            <div  class="col-2 h-100 code_column" >
-                <span>CODE</span>
-            </div>
-            <div  class="col-2 h-100 price_column" >
+            <div  class="col-2 h-100 price_column" style="padding-top: 1%">
                 <span>PRICE</span>
             </div>
-            <div  class="col-2 h-100 quantity_column" >
+            <div  class="col-2 h-100 quantity_column" style="padding-top: 1%">
                 <span>QUANTITY</span>
             </div>
-            <div  class="col-2 h-100 total_column" >
+            <div  class="col-2 h-100 total_column" style="padding-top: 1%">
                 <span>TOTAL</span>
+            </div>
+            <div class="col-1 h-100 description_column" >
+                <span>&nbsp;</span>
             </div>
         </div>
         <div id="order" *ngFor="let order of orders">
-            <app-cart-order [order]="order" (newOrder)="updateOrders($event)"></app-cart-order>
+            <app-cart-order [order]="order" (newOrder)="updateOrders($event)" (deleteOrder)="deleteOrder($event)"></app-cart-order>
         </div>
         <div *ngIf="orders.length === 0">
         <div class="row align-items-center justify-content-center no-item" >
@@ -28,7 +32,7 @@
         </div>
         </div>
         <div class="row headers-list-orders" style="margin-bottom: 2%;">
-            <div class="col-10 h-100" >
+            <div class="col-9 h-100" >
                 <span>&nbsp;</span>
             </div>
             <div class="col-2 h-100" >
@@ -36,7 +40,10 @@
             </div>
         </div>
         <div class="row" style="margin-bottom: 5%;">
-            <div class="col-8 h-100" >
+            <div class="col-2 h-100" >
+                <button type="button" (click)="removeSelected()" style="background-color: #ffffff;">Remove Selected</button>
+            </div>
+            <div class="col-6 h-100" >
                 <span>&nbsp;</span>
             </div>
             <div class="col-2 h-100" >

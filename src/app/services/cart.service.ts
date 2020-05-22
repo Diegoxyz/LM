@@ -86,4 +86,11 @@ import { Subject } from 'rxjs';
         localStorage.setItem(this.cartId, JSON.stringify(cart));
         return cart;
       }
+
+      public setOrders(orders : Order[]) {
+        const cart : Cart = this.getCart();
+        cart.orders = orders;
+        localStorage.setItem(this.cartId, JSON.stringify(cart));
+        this._cart.next();
+      }
   }

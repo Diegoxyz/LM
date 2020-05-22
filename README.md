@@ -24,6 +24,8 @@ Localization (punto aperto, vedi sotto):
 	ng add @angular/localize
 
 Font Awesome: ng add @fortawesome/angular-fontawesome@0.6.1 
+npm install @fortawesome/free-regular-svg-icons
+npm install @fortawesome/free-solid-svg-icons
 
 ngx-bootstrap for modals:
 npm install ngx-bootstrap --save

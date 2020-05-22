@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Order } from '@app/models/order';
+import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 
 @Component({selector: 'app-cart-order',
 templateUrl: './cart-order.component.html',
@@ -11,8 +12,11 @@ export class CartOrderComponent implements OnInit {
     order : Order;
 
     @Output() newOrder = new EventEmitter<Order>();
+    @Output() deleteOrder = new EventEmitter<Order>();
 
     totalPrice : number = 0;
+
+    faTrash = faTrashAlt;
 
     constructor() {
 
@@ -30,4 +34,7 @@ export class CartOrderComponent implements OnInit {
         this.newOrder.emit(this.order);
     }
 
+    onDeleteOrder() {
+        this.deleteOrder.next(this.order);
+    }
 }

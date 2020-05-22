@@ -79,6 +79,28 @@ export class CartComponent implements OnInit, OnDestroy {
                     this.totalQuantity = this.totalQuantity + o.quantity;
                 }
             });
+            this.cartService.setOrders(this.orders);
         }
+    }
+
+    deleteOrder(order) {
+        if (order) {
+            const tempOrders : Order[] = new Array<Order>();
+            this.totalQuantity = 0;
+            this.totalPrice = 0;
+            this.orders.forEach( o => {
+                if (o.id != order.id) {
+                    tempOrders.push(o);
+                    this.totalPrice = this.totalPrice + (o.product.price * o.quantity);
+                    this.totalQuantity = this.totalQuantity + o.quantity;
+                }
+            });
+            this.orders = tempOrders;
+            this.cartService.setOrders(this.orders);
+        }
+    }
+
+    removeSelected() {
+        
     }
 }
