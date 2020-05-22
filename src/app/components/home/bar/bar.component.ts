@@ -11,6 +11,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Router } from '@angular/router';
 import { ChangePage } from '../services/change-page.service';
 import { Order } from '@app/models/order';
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-bar',
@@ -22,7 +23,8 @@ export class BarComponent implements OnInit {
   customer: Customer;
   cart : Cart;
   bsModalRef: BsModalRef;
-
+  faShoppingCart = faShoppingCart;
+  
   constructor(private accountService : AccountService, private manageProducts : ManageProducts, 
     private cartService : CartService, private modalService: BsModalService,private router: Router, private changePage: ChangePage) { }
 
