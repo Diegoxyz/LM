@@ -4,13 +4,14 @@ import { Group, Product, Item} from 'src/app/models/item';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faWindowClose, faCoffee } from '@fortawesome/free-solid-svg-icons';
 
-@Component({selector: 'app-boards',
-templateUrl: './boards.component.html',
-styleUrls: ['./boards.component.css']
+@Component({selector: 'app-boards-sections',
+templateUrl: './boards-sections.component.html',
+styleUrls: ['./boards-sections.component.css']
 })
-export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
+export class BoardsSectionsComponent implements OnInit,OnDestroy {
 
-    machineId?: string;
+    @Input()
+    machineId?: string = '1';
 
     groups : Group[] = []; 
     
@@ -26,25 +27,25 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
 
     faCoffee = faCoffee;
 
+    @Input()
+    private sectionId : number;
+
     private sub: any;
 
     /* Sections to be dislayed, 0: machines, 1: section */
     @Input()
-    sectionToBeDisplayed : number = 0;
+    sectionToBeDisplayed : number = 1;
 
     constructor(private productsService: ProductsService,
         private route: ActivatedRoute,private _router: Router
     ) {
        /*  this.groups = this.productsService.getAllGroups(); */
     }
-    ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
-        throw new Error("Method not implemented.");
-    }
 
     ngOnInit() {
 
-        this.sub = this.route.queryParams.subscribe(params => {
-            this.machineId = params['machineId']; 
+        this.sub = this.route.paramMap.subscribe(params => {
+            this.machineId = params.get('machineId'); 
             if (this.machineId) {
                 // add the loading of all the "prospectives" for a specific machine
                 this.sections = Array(23).fill(0).map((x, i) => (
@@ -62,7 +63,9 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
     }
 
     ngOnDestroy() {
-        this.sub.unsubscribe();
+        if (this.sub) {
+            this.sub.unsubscribe();
+        }
     }
 
     openSections(machine) {
@@ -71,8 +74,7 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
         this.sections = Array(23).fill(0).map((x, i) => (
             `Section ${i + 1}`
             ));
-        this.sectionToBeDisplayed = 1;
-        this._router.navigate(['./home/sections/machine']);
+        this._router.navigate(['./boards/sections']);
     }
 
     closeProspective() {
@@ -83,5 +85,6 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
         this.machineId = undefined;
         this.sections = undefined;
         this.machines = this.productsService.getAllMachines();
+        this._router.navigate(['./home/boards']);
     }
 }
