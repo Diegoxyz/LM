@@ -9,7 +9,7 @@ export class ProductsService {
   constructor() { }
 
   getAllProducts() : Product[] {
-    const items : Product[] = Array(150).fill(0).map((x, i) => (
+    const items : Product[] = Array(100).fill(0).map((x, i) => (
       new Product(`Code ${i + 1}`,`Product ${i + 1}`, (i+1 * 10), (i%2 === 0))
       ));
     return items;
