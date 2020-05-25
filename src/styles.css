@@ -16,7 +16,7 @@ body, input, div, p, a {
 }
 
 h1,h2,h3,h4,h5,h6 {
-    font-family:'Trade Gothic LT W01 Bd CnNo-20' !important;
+    font-family: "Trade Gothic LT ProCn",-apple-system,BlinkMacSystemFont,"tradegothiclt", sans-serif, "Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol" !important;
 }
 
 .btn, .btn-primary.disabled, .btn-primary:disabled {
