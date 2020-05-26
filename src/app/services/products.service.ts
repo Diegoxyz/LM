@@ -35,4 +35,11 @@ export class ProductsService {
       ));
     return items;
   }
+
+  getBoardsProducts() : Product[] {
+    const items : Product[] = Array(14).fill(0).map((x, i) => (
+      new Product(`Code ${i + 1}`,`Product ${i + 1}`, (i+1 * 10), (i%2 === 0))
+      ));
+    return items;
+  }
 }

@@ -1,5 +1,15 @@
 <app-bar></app-bar>
 <!--<app-menu></app-menu>-->
 <!-- <div style="padding: 5%; margin-top: 10%"><router-outlet></router-outlet></div> -->
-<div style="padding-top: 11.5%; margin-top: 5;"><router-outlet (activate)="onActivate($event)"></router-outlet></div>
-<div><app-footer></app-footer></div>
+<div style="padding-top: 11.5%; margin-top: 5;">
+    <router-outlet (activate)="onActivate($event)"></router-outlet>
+</div>
+
+<div id= "top-container" class="col-md-12  text-right"   style="padding-left: 12%; padding-right: 12%;">
+    <button id= "top-btn" class="btn btn-primary" style="margin-top: 1%; margin-bottom: 1%;" 
+    (click)="onTop()">TOP</button>
+</div>
+
+<div>
+    <app-footer></app-footer>
+</div>

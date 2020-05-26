@@ -14,4 +14,9 @@ export class LayoutComponent {
         //or document.body.scrollTop = 0;
         //or document.querySelector('body').scrollTo(0,0)
     }
+
+    onTop(): void {
+        window.scroll(0,0);
+      }   
+    
 }

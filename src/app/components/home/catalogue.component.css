@@ -60,5 +60,16 @@ ul {
  
  #cat-container{
    margin-left: 12%; 
-  margin-right: 12%;
+   margin-right: 12%;
+}
+
+
+#top-container{
+  padding-left: 12%; 
+  padding-right: 12%;
+}
+
+#top-btn{
+ margin-top: -6%;
+ margin-bottom: 1%;
 }

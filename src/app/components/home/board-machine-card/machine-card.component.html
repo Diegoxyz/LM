@@ -4,10 +4,32 @@
             <a class="nav-link" (click)="openSections()">
                 <img class="img-fluid card-img-top" src="assets/img/coffeeMachines/Macchina2.jpg" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
                 <div class="card-body">
-                    <h6 class="card-title">{{ item.code }}</h6>
-                    <h6 class="card-title">{{ item.description }}</h6>
+                    <div class="">
+                    <div class="row align-items-center no-gutters justify-content-right">
+                        <div id="col-width" class="col-md-6">
+                            <h6 id="card-title" class="card-title">Code</h6>
+                        </div>
+                        <div id="col-width" class="col-md-6">
+                            <h6 id="card-title-id" class="card-title">{{ item.code }}</h6>
+                        </div>
+                    </div>
+
+                    <div class="row align-items-center no-gutters justify-content-between">
+                        <div id="col-width" class="col-md-6">
+                            <h6 id="card-title" class="card-title">Description</h6>
+                        </div>
+                        <div id="col-width" class="col-md-6">
+                            <h6 id="card-title-id" class="card-title">{{ item.description }}</h6>
+                        </div>
+                    </div>
+
+<!--                     <h6 class="card-title">{{ item.code }}</h6>
+                    <h6 class="card-title">{{ item.description }}</h6> -->
+                    </div>
                 </div>
             </a>
         </div>
     </div>
 </div>
+
+

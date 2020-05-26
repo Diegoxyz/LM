@@ -80,3 +80,22 @@
 .button-close-class {
   background-color: #dc3545;
 }
+
+#col-width {
+  max-width: 50%;
+}
+
+
+#card-title{
+  text-align: right;
+  padding-right: 1rem;
+}
+
+#card-title-id{
+  text-align: left;
+}
+
+
+#col-spacer{
+  padding-right: 2rem;
+}

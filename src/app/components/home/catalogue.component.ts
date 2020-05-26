@@ -13,6 +13,7 @@ export class CatalogueComponent implements OnInit, OnDestroy {
     groupId: string;
 
     items : Product[] =[];
+
   
     config = {
         itemsPerPage: 9,
@@ -55,4 +56,8 @@ export class CatalogueComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.sub.unsubscribe();
       }
+
+      onTop(): void {
+        window.scroll(0,0);
+      }      
 }

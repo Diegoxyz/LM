@@ -57,8 +57,17 @@ ul {
   background-color: #ffffff;
 }
 
-#search:hover {
+/* #search:hover {
   border: 1px solid #dc3545;
+} */
+
+
+#div-search{
+  text-align: center;
+}
+
+#search {
+  margin-bottom: 1%;
 }
 
 .autocomplete-search-list {
@@ -66,3 +75,4 @@ ul {
   padding-left: 1%;
   padding-right: 1%;
 }
+

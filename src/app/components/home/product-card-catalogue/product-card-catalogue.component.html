@@ -1,77 +1,78 @@
 <div class="product-catalogue-container">
     <div class="align-items-center justify-content-center" style="width: 18rem;">
         <div class="hoverWrapper">
-            <img class="img-fluid card-img-top" src="assets/img/items/Item1.PNG"
-                sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
-            
-            <img id="add-to-favorite" class="img-fluid" 
-                src="assets/img/items/puntina.png">
+            <img class="img-fluid card-img-top" src="assets/img/items/Item1.PNG" sizes="(max-width: 260px) 100vw, 260px"
+                width="260" height="260">
+
+            <img id="add-to-favorite" class="img-fluid" src="assets/img/items/puntina.png">
 
             <div class="">
                 <div class="row align-items-center no-gutters justify-content-between">
-                    <div class="col-md-6">
-                        <h6 class="card-title">Code</h6>
+                    <div id="col-width" class="col-md-6">
+                        <h6 id="card-title" class="card-title">Code</h6>
                     </div>
-                    <div  class="col-md-6">
+                    <div id="col-width" class="col-md-6">
                         <h6 id="card-title-id" class="card-title">{{ item.code }}</h6>
                     </div>
                 </div>
                 <div class="row align-items-center no-gutters justify-content-between">
-                    <div class="col-md-6">
-                        <h6 class="card-title">Description</h6>
+                    <div id="col-width" class="col-md-6">
+                        <h6 id="card-title" class="card-title">Description</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div id="col-width" class="col-md-6">
                         <h6 id="card-title-id" class="card-title">{{ item.description }}</h6>
                     </div>
                 </div>
 
                 <div class="row align-items-center no-gutters justify-content-between">
-                    <div class="col-md-6">
-                        <h6 class="card-text">Price &euro;</h6>
+                    <div id="col-width" class="col-md-6">
+                        <h6 id="card-title" class="card-text">Price &euro;</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div id="col-width" class="col-md-6">
                         <h6 id="card-title-id" class="card-title">{{ item.price }}</h6>
                     </div>
                 </div>
                 <div class="row align-items-center no-gutters justify-content-between">
-                    <div class="col-md-6">
-                        <h6 class="card-text">Stock</h6>
+                    <div id="col-width" class="col-md-6">
+                        <h6 id="card-title" class="card-text">Stock</h6>
                     </div>
-                    <div class="col-md-6">
-                        <h6 id="card-title-id" class="card-title"><fa-icon *ngIf="item.stock" [icon]="faCircle" 
-                            [styles]="{'color': 'green'}"></fa-icon><fa-icon *ngIf="!item.stock" [icon]="faCircle" 
-                            [styles]="{'color': 'red'}"></fa-icon></h6>
+                    <div id="col-width" class="col-md-6">
+                        <h6 id="card-title-id" class="card-title">
+                            <fa-icon *ngIf="item.stock" [icon]="faCircle" [styles]="{'color': 'green'}"></fa-icon>
+                            <fa-icon *ngIf="!item.stock" [icon]="faCircle" [styles]="{'color': 'red'}"></fa-icon>
+                        </h6>
                     </div>
                 </div>
-                <div class="quantity" style="margin-left: 5%">
+                <div class="quantity">
                     <form [formGroup]="addProductForm">
-                    <div class="row align-items-center no-gutters">
-                        <div class="col-md-auto">
-                            <div class="row">
-                                <div class="col"><span style="padding-left: 20px">&nbsp;</span></div>
-                                <div class="col">
-                                    <input type="number" 
-                                        id="qty" formControlName="qty"
-                                        step="1" min="0" max="9999" name=""
-                                        value="{{ quantity }}" title="Quantity" size="2" pattern="[0-9]*"
-                                        inputmode="numeric" aria-labelledby="">
-                                    
-                                </div>
-                            </div>
-                            
-                        </div>
+                        <div class="row align-items-center no-gutters">
+                            <div id="col-width" class="col-md-6">
+                                <div class="row">
+                                    <!-- <div class="col">
+                                        <span style="padding-left: 20px">&nbsp;</span>
+                                    </div> -->
+                                    <div id="col-spacer" class="col align-items-right text-right">
+                                        <input type="number" id="qty" formControlName="qty" step="1" min="0" max="9999"
+                                            name="" value="{{ quantity }}" title="Quantity" size="2" pattern="[0-9]*"
+                                            inputmode="numeric" aria-labelledby="">
 
-                        <div class="col-md-auto">
-                            <div style="padding-left: 30%;">
-                                <button (click)="addProduct()" style="background-color: transparent;">
-                                    <fa-icon [icon]="faShoppingCart" 
-                                        [styles]="{'color': 'dc3545'}" size="2x">
-                                    </fa-icon>
-                                </button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div id="col-width" class="col-md-6 text-left" style="padding-left: 0.5em;">
+                                
+                                    <button (click)="addProduct()" 
+                                    style="background-color: transparent; border:solid 1px red;">
+                                        <fa-icon [icon]="faShoppingCart" [styles]="{'color': 'dc3545'}" size="2x">
+                                        </fa-icon>
+                                    </button>
+                                
                             </div>
                         </div>
-                    </div>
                     </form>
+
                     <div *ngIf="quantityError" class="row align-items-center no-gutters justify-content-between">
                         <div class="col-md-8">
                             <div class="alert alert-danger">
@@ -79,7 +80,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

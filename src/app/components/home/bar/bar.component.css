@@ -4,12 +4,16 @@
 } */
 
 
-.nav-link{
+.nav-link__old__{
 /*     padding-right: 30px; */
     text-transform: uppercase;
     padding-top: 0.7rem;
     font-family: "Trade Gothic LT ProCn";
     font-size: 19.44px;
+}
+
+.nav-link{
+    text-transform: uppercase;
 }
 
 #nav-link-cart{
@@ -30,9 +34,14 @@ img {
     border-style: none;
 }
 
-.nav{
+.nav__old__{
     margin-top: 0.7rem;
     margin-bottom: 0.4rem;
+}
+
+.nav {
+    margin-top: .7rem;
+    margin-bottom: .32rem;
 }
 
 .navbar-menu {

@@ -26,12 +26,12 @@
   }
 
   .board-image {
-    width:75%;
+    width: 70%;
     margin-right: 0%;
   }
 
   .board-panel {
-    max-width:60%;
+    width:30%;
     padding: 0%;
     padding-left: 1%;
     padding-top: 2%;
@@ -43,7 +43,7 @@
     overflow-y: scroll; 
     overflow-x: hidden; 
     text-align:justify;
-    max-height: 150%;
+    max-height: 30%;
   }
 
 
