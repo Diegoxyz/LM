@@ -1,52 +1,57 @@
 <div class="prospective-card">
     <div class="flex-container">
         <div class="flex-item board-image">
-            <img src="assets/img/coffeeMachines/tavola2_bigger.gif" alt="Carrozzeria" style="width: 100%; max-height:70%;">
+            <img src="assets/img/coffeeMachines/tavola2_bigger.gif" alt="Carrozzeria"
+                style="width: 100%; max-height:70%;">
         </div>
         <div class="flex-item board-panel">
             <div class="scroll">
-            <div *ngFor="let item of items" class="row" style="margin-top: 5%; margin-left: 1%;">
-                <div class="col-md-auto">
-                    <div class="row">
-                        <div class="col-md-4"><span>Position</span></div>
-                        <div class="col-md-8"><div class="element-number-container"><div class="blue-square">1</div></div></div>
-                    </div>
-                    <div class="row" style="margin-top: 2%;">
-                        <div class="col-md-4">
-                            <img src="assets/img/items/Miniatura.PNG" alt="Miniatura">
-                        </div>
-                        <div class="col-md-8" style="padding-left: 10%;">
-                            <div>Code: {{ item.code }}</div>
-                            <div style="display: inline;">Descr.: {{ item.description }}</div>
-                            <div>Stock: <fa-icon *ngIf="item.stock" [icon]="faCircle" [styles]="{'color': 'green'}"></fa-icon>
-                                <fa-icon *ngIf="!item.stock" [icon]="faCircle" [styles]="{'color': 'red'}"></fa-icon></div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-5">
-                            <div class="row">
-                                <div class="col-md-6"><div style="background-color: turquoise;">{{ item.price }} &euro;</div></div>
+                <div *ngFor="let item of items" class="row" style="margin-top: 5%; margin-left: 1%;">
+                    <div class="col-md-auto">
+                        <div class="row">
+                            <div class="col-md-4"><span>Position</span></div>
+                            <div class="col-md-8">
+                                <div class="element-number-container">
+                                    <div class="blue-square">1</div>
+                                </div>
                             </div>
-                            
                         </div>
-                        <div class="col-md-5">
-                            <input type="number"
-                                step="1" min="0" max="9999" 
-                                name="" value="{{ quantity }}" title="Quantity" size="2" 
-                                pattern="[0-9]*" 
-                                inputmode="numeric" aria-labelledby=""
-                            >
+                        <div class="row" style="margin-top: 2%;">
+                            <div class="col-md-4">
+                                <img src="assets/img/items/Miniatura.PNG" alt="Miniatura">
+                            </div>
+                            <div class="col-md-8" style="padding-left: 10%;">
+                                <div>Code: {{ item.code }}</div>
+                                <div style="display: inline;">Descr.: {{ item.description }}</div>
+                                <div>Stock: <fa-icon id="circle-green" *ngIf="item.stock" [icon]="faCircle">
+                                    </fa-icon>
+                                    <fa-icon id="circle-red" *ngIf="!item.stock" [icon]="faCircle">
+                                    </fa-icon>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-2">
-                            <fa-icon [icon]="faShoppingCart" 
-                                                [styles]="{'color': 'dc3545'}" (click)="addProduct()" size="1x">
-                                            </fa-icon>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div style="background-color: turquoise;">{{ item.price }} &euro;</div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-5">
+                                <input type="number" step="1" min="0" max="9999" name="" value="{{ quantity }}"
+                                    title="Quantity" size="2" pattern="[0-9]*" inputmode="numeric" aria-labelledby="">
+                            </div>
+                            <div class="col-md-2">
+                                <fa-icon id="btn-icon" [icon]="faShoppingCart" (click)="addProduct()" size="1x">
+                                </fa-icon>
+                            </div>
                         </div>
+                        <div class="row" style="border-bottom: solid 1px #d8d6d6; margin-left: 1%;">&nbsp;</div>
                     </div>
-                    <div class="row" style="border-bottom: solid 1px #d8d6d6; margin-left: 1%;">&nbsp;</div>
                 </div>
-            </div>
-            
+
             </div> <!-- scroll ends up here -->
         </div>
     </div>

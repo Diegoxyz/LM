@@ -3,8 +3,9 @@
 
         <div id="mButton" [class.selected-page]="currentPage === 1" (click)="goToCatalogue()">
             <div>
-                <div><fa-icon [icon]="faBookOpen" 
-                [styles]="{'color': 'dc3545'}" size="2x"></fa-icon></div>
+                <div>
+                    <fa-icon id="btn-icon" [icon]="faBookOpen" size="2x"></fa-icon>
+                </div>
                 <div class="button-description">
                     <p>Catalog</p>
                 </div>
@@ -13,8 +14,9 @@
         
         <div id="mButton" [class.selected-page]="currentPage === 2" (click)="goToBoards()">
             <div>
-                <div><fa-icon [icon]="faDraftingCompass" 
-                    [styles]="{'color': 'dc3545'}" size="2x"></fa-icon></div>
+                <div>
+                    <fa-icon id="btn-icon" [icon]="faDraftingCompass" size="2x"></fa-icon>
+                </div>
                 <div class="button-description">
                         <p>Boards</p>
                 </div>
@@ -23,9 +25,9 @@
 
         <div id="mButton" [class.selected-page]="currentPage === 3" (click)="goToOrders()">
             <div>
-                <div><fa-icon [icon]="faClipboardCheck" 
-                    [styles]="{'color': 'dc3545'}" size="2x">
-                </fa-icon></div>
+                <div>
+                    <fa-icon id="btn-icon" [icon]="faClipboardCheck" size="2x"></fa-icon>
+                </div>
                 <div class="button-description">
                     <p>Orders</p>
                 </div>

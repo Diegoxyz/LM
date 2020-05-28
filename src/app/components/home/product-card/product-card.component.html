@@ -9,9 +9,12 @@
                         <li><p class="card-text">Code {{ item.code }}</p></li>
                         <li><p class="card-text">Description {{ item.description }}</p></li>
                         <li><p class="card-text">Price {{ item.price }}&euro;</p></li>
-                        <li><p class="card-text">Stock <fa-icon *ngIf="item.stock" [icon]="faCircle" 
-                            [styles]="{'color': 'green'}"></fa-icon><fa-icon *ngIf="!item.stock" [icon]="faCircle" 
-                            [styles]="{'color': 'red'}"></fa-icon></p></li>
+                        <li>
+                            <p class="card-text">Stock 
+                                <fa-icon id="circle-green" *ngIf="item.stock" [icon]="faCircle" ></fa-icon>
+                                <fa-icon id="circle-red"  *ngIf="!item.stock" [icon]="faCircle"></fa-icon>
+                            </p>
+                        </li>
                         <li><p *ngIf="item.maxQuantity">maxQuantity{{ item.maxQuantity }}</p></li>
                         <li><p *ngIf="item.minQuantity">minQuantity{{ item.minQuantity }}</p></li>
                         <li>
@@ -24,8 +27,7 @@
                             inputmode="numeric" aria-labelledby=""
                             style="width: 50%">  
                             
-                            <fa-icon [icon]="faShoppingCart" 
-                                [styles]="{'color': 'red'}" (click)="addProduct(item)">
+                            <fa-icon id="circle-red" [icon]="faShoppingCart" (click)="addProduct(item)">
                             </fa-icon>
                         </li>
                     </ul>

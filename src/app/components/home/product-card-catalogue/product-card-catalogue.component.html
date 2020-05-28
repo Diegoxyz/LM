@@ -1,4 +1,4 @@
-<div class="product-catalogue-container">
+<div id= "mx" class="product-catalogue-container">
     <div class="align-items-center justify-content-center" style="width: 18rem;">
         <div class="hoverWrapper">
             <img class="img-fluid card-img-top" src="assets/img/items/Item1.PNG" sizes="(max-width: 260px) 100vw, 260px"
@@ -38,8 +38,8 @@
                     </div>
                     <div id="col-width" class="col-md-6">
                         <h6 id="card-title-id" class="card-title">
-                            <fa-icon *ngIf="item.stock" [icon]="faCircle" [styles]="{'color': 'green'}"></fa-icon>
-                            <fa-icon *ngIf="!item.stock" [icon]="faCircle" [styles]="{'color': 'red'}"></fa-icon>
+                            <fa-icon id="circle-green" *ngIf="item.stock" [icon]="faCircle"></fa-icon>
+                            <fa-icon id="circle-red"  *ngIf="!item.stock" [icon]="faCircle"></fa-icon>
                         </h6>
                     </div>
                 </div>
@@ -62,13 +62,11 @@
                             </div>
 
                             <div id="col-width" class="col-md-6 text-left" style="padding-left: 0.5em;">
-                                
-                                    <button (click)="addProduct()" 
-                                    style="background-color: transparent; border:solid 1px red;">
-                                        <fa-icon [icon]="faShoppingCart" [styles]="{'color': 'dc3545'}" size="2x">
-                                        </fa-icon>
-                                    </button>
-                                
+                                <button (click)="addProduct()" 
+                                    style="background-color: transparent; border: transparent;">
+                                    <fa-icon id="btn-icon" [icon]="faShoppingCart" size="2x">
+                                    </fa-icon>
+                                </button>
                             </div>
                         </div>
                     </form>

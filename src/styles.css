@@ -57,3 +57,20 @@ a {
 */
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+#btn-icon{
+    color: #dc3545;
+  }
+
+#circle-red{
+    color: green;
+  }
+
+#circle-green{
+    color: red;
+}
+
+#search{
+    color: '#fff';
+    margin-bottom: 1%;
+}

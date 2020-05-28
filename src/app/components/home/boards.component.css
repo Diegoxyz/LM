@@ -31,3 +31,20 @@ ul {
    text-align: center;
    min-width: 33.33%;
  }
+
+ #machines-container{
+  margin-left: 4%;
+  margin-right: 3%;
+  /* padding-left: 57px; */
+  padding-left: 4.9%;
+  padding-right: 0.2%;
+/*   border: solid 1px green; */
+}
+
+#machines-item{
+  padding-left: 0%;
+  padding-right: 0%;
+  margin-left: 0%;
+  margin-right: 0%;
+  /* border: solid 1px red; */
+}

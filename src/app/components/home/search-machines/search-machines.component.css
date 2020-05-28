@@ -32,8 +32,9 @@ ul {
 .search-categories-container {
   background-color: #ffffff;
   box-shadow: 2px 2px 5px 5px #d8d6d6;
-  width: 70%;
-  margin-left: 15%;
+  /* border: solid 1px red; */
+  width: 80%;
+  margin-left: 10%;
   margin-top: 5%;
 }
 
@@ -66,9 +67,9 @@ ul {
   text-align: center;
 }
 
-#search {
+/* #search {
   margin-bottom: 1%;
-}
+} */
 
 .autocomplete-search-list {
   width: 100%;
