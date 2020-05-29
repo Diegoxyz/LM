@@ -63,11 +63,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
 
 #circle-red{
-    color: green;
+    color: red;
   }
 
 #circle-green{
-    color: red;
+    color: green;
 }
 
 #search{
