@@ -1,0 +1,32 @@
+/* Medium screens */
+@media all and (max-width: 800px) {
+    #scroll-top-btn{
+        border: 2px;
+    }
+}
+
+/* Small screens */
+@media all and (max-width: 500px) {
+    #scroll-top-btn{
+        border: 1px;
+    }
+}
+
+#scroll-top-btn{
+    bottom: 10%;
+    cursor: pointer;
+    position: fixed;
+    right: 2%;
+    border-radius: 4px;
+    display: block;
+    border: 0px;
+}
+
+#scroll-top-icon{
+    color: '#fff';
+ } 
+
+.scroll-to-top{
+    display: none;
+    /* border: 10px; */
+}

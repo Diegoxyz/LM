@@ -40,6 +40,10 @@ ul {
      /* When on medium sized screens, we center it by evenly distributing empty space around items */
      justify-content: space-around;
    }
+
+   .flex-item {
+    min-width: 33.33%;
+   }
  }
  
  /* Small screens */
@@ -48,6 +52,10 @@ ul {
      /* On small screens, we are no longer using row direction but column */
      flex-direction: column;
    }
+
+   .flex-item {
+    min-width: 50%;
+   }
  }
 
  .flex-item {
@@ -55,12 +63,17 @@ ul {
    padding: 0px;
    margin-top: 10px;
    text-align: center;
-   min-width: 33.33%;
+   min-width: 25%;   /* min-width: 33.33%; */
+   /* border: solid 1px green; */
+
  }
  
  #cat-container{
    margin-left: 12%; 
    margin-right: 12%;
+   padding-left: 0.5%;
+   padding-right: 0.5%;  /* 2 */
+  /*  border: solid 1px yellow; */
 }
 
 

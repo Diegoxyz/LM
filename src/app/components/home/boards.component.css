@@ -24,21 +24,42 @@ ul {
    justify-content: space-around;
  }
 
+   /* Medium screens */
+@media all and (max-width: 800px) {
+  .flex-container {
+    /* When on medium sized screens, we center it by evenly distributing empty space around items */
+    justify-content: space-around;
+  }
+   .flex-item {
+    min-width: 33.33%;
+   }
+ }
+
+/* Small screens */
+@media all and (max-width: 500px) {
+  .flex-container {
+    /* On small screens, we are no longer using row direction but column */
+    flex-direction: column;
+  }
+   .flex-item {
+    min-width: 50%;
+   }
+  }
+
  .flex-item {
    background: #ffffff;
    padding: 2%;
    margin-top: 2%;
    text-align: center;
-   min-width: 33.33%;
+   min-width: 25%;
  }
 
  #machines-container{
   margin-left: 4%;
-  margin-right: 3%;
-  /* padding-left: 57px; */
-  padding-left: 4.9%;
-  padding-right: 0.2%;
-/*   border: solid 1px green; */
+  margin-right: 4%;
+  padding-left: 2%;
+  padding-right: 2%;
+  /* border: solid 1px green; */
 }
 
 #machines-item{

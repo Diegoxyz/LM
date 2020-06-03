@@ -1,10 +1,16 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { Product } from '@app/models/item';
+import { faAngleUp } from '@fortawesome/free-solid-svg-icons';
 
+@Component({ 
+    templateUrl: 'layout.component.html',
+    styleUrls:  ['layout.component.css']
+})
 
-@Component({ templateUrl: 'layout.component.html' })
 export class LayoutComponent {
     
+    faAngleUp=faAngleUp;
+
     constructor(
     ) {
     }
@@ -15,7 +21,7 @@ export class LayoutComponent {
         //or document.querySelector('body').scrollTo(0,0)
     }
 
-    onTop(): void {
+    onScrollTop(): void {
         window.scroll(0,0);
       }   
     
