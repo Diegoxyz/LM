@@ -2,9 +2,10 @@ export const LoginMeta = {
     type: "LoginSet",
     set: "LoginSet",
     fields: {
-        username: {type: 'string', nullable: true},
-        password: {type: 'string', nullable: true},
-        token: {type: 'string', nullable: true}
+        Username: {type: 'string', nullable: true},
+        Password: {type: 'string', nullable: true},
+        Token: {type: 'string', nullable: true},
+        Langu: {type: 'string', nullable: true}
       }
 }
 

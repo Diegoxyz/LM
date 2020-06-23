@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { AccountService } from 'src/app/services/account.service';
 import { first } from 'rxjs/operators';
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -44,17 +45,38 @@ export class LoginComponent implements OnInit {
     }
     if (this.email && this.password) {
       console.log(this.email.value + '-' + this.password.value);
-      this.accountService.login(this.email.value,this.password.value).pipe(first()).subscribe(
-        data => {
-          if (data === null) {
+      if (environment && environment.oData) {
+        this.accountService.login(this.email.value,this.password.value).pipe(first()).subscribe(
+          data => {
+            console.log("login onsubmit:" + data);
+            if (data === null) {
+              this.loginError = true;
+            } else {
+              this.loginError = false;
+            }
+            this.router.navigate([this.returnUrl]);
+          },
+          error => {
             this.loginError = true;
           }
-          this.router.navigate([this.returnUrl]);
-        },
-        error => {
-          this.loginError = true;
-        }
-      );
+        );
+      } else {
+        this.accountService.loginNoOData(this.email.value,this.password.value).pipe(first()).subscribe(
+          data => {
+            console.log("login onsubmit:" + data);
+            if (data === null) {
+              this.loginError = true;
+            } else {
+              this.loginError = false;
+            }
+            this.router.navigate([this.returnUrl]);
+          },
+          error => {
+            this.loginError = true;
+          }
+        );
+      }
+      
       // this.router.navigate(['/home']);
       // redirect to home if already logged in
       

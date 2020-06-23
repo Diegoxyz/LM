@@ -98,9 +98,10 @@ export class LoginService {
          console.log("Login: ", l, "Annotations: ", annots);
         });*/
         let newLoginSet : LoginSet = {
-          username : username,
-          password : password,
-          token : ''
+          Username : username,
+          Password : password,
+          Token    : '',
+          Langu    : ''
         }
 
         this.httpClient.get('/destinations/ZSD_SP_SRV/LoginSet',{
@@ -157,7 +158,7 @@ export class LoginService {
                   o.forEach((v : LoginSet) => {
                     console.log('v:' + v);
                     if (v) {
-                      console.log('v.token:' + v.token);
+                      console.log('v.token:' + v.Token);
                     }
                   })
                   console.log('entries:' + o.entries[0]);
@@ -168,10 +169,10 @@ export class LoginService {
                   console.log(annots.properties);
                   console.log(annots.id);
                   console.log('post login set:' + loginSet);
-                  console.log('loginSet.token:' + loginSet.token);
-                  console.log('loginSet.username:' + loginSet.username);
-                  newLoginSet.token = loginSet.token;
-                  console.log('newLoginSet.token:' + newLoginSet.token);
+                  console.log('loginSet.token:' + loginSet.Token);
+                  console.log('loginSet.username:' + loginSet.Username);
+                  newLoginSet.Token = loginSet.token;
+                  console.log('newLoginSet.token:' + newLoginSet.Token);
                   }
               );
             }
