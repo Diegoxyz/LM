@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { AccountService } from 'src/app/services/account.service';
 import { first } from 'rxjs/operators';
 import { environment } from '@environments/environment';
+import { User } from '@app/models/user';
 
 @Component({
   selector: 'app-login',
@@ -44,24 +45,45 @@ export class LoginComponent implements OnInit {
       return;
     }
     if (this.email && this.password) {
-      console.log(this.email.value + '-' + this.password.value);
+      this.loginError = true;
       if (environment && environment.oData) {
-        this.accountService.login(this.email.value,this.password.value).pipe(first()).subscribe(
-          data => {
-            console.log("login onsubmit:" + data);
-            if (data === null) {
-              this.loginError = true;
-            } else {
-              this.loginError = false;
-            }
-            this.router.navigate([this.returnUrl]);
-          },
+        this.accountService.fetchToken().subscribe(
+          response1 => {
+            console.log('step 1');
+            if (response1.headers) {
+              console.log('X-CSRF-Token:' + response1.headers.get('X-CSRF-Token'));
+              const csrftoken : string = response1.headers.get('X-CSRF-Token');
+              const u : User = new User();
+              if (csrftoken) {
+                this.accountService.postLogin(csrftoken, this.email.value, this.password.value).subscribe(response2 => {
+                  console.log('step 2');
+                  if (response2.headers.get('sap-message')) {
+                    console.log('found error message:' + response2.headers.get('sap-message'));
+                    // C'è stato un errore e.g. password non valida
+                    u.username = '';
+                    u.password = '';
+                    u.token = "";
+                  }
+                  if (response2.body && response2.body.d && response2.body.d.Token) {
+                    console.log('found token:' + response2.body.d.Token);
+                    u.username = this.email.value;
+                    u.password = this.password.value;
+                    u.token = response2.body.d.Token;
+                  }
+                  this.accountService.setUserValue(u.username,u.password, u.token);
+                  this.loginError = false;
+                  this.router.navigate([this.returnUrl]);
+                }
+                );
+                
+              } 
+          }},
           error => {
             this.loginError = true;
           }
         );
       } else {
-        this.accountService.loginNoOData(this.email.value,this.password.value).pipe(first()).subscribe(
+        this.accountService.loginWOOData(this.email.value,this.password.value).pipe(first()).subscribe(
           data => {
             console.log("login onsubmit:" + data);
             if (data === null) {

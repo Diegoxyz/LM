@@ -21,7 +21,7 @@ export class AccountService {
       this.user = this.userSubject.asObservable();
   }
   
-  public loginNoOData(username, password) {
+  public loginWOOData(username, password) {
     console.log('enrinment.oData:' + environment.oData);
     if (!environment.oData) {
       if ('wrong' === username) {
@@ -40,12 +40,7 @@ export class AccountService {
   public login(username, password) : Observable<User>{
     console.log('enrinment.oData:' + environment.oData);
     let loginService = this.factory.create<LoginSet>("LoginSet");
-    let newLoginSet : LoginSet = {
-      Username : username,
-      Password : password,
-      Token    : '',
-      Langu    : ''
-    }
+    
     this.http.get('/destinations/ZSD_SP_SRV/LoginSet',{
       observe: "response", headers: {
         'X-CSRF-Token':'Fetch'
@@ -56,24 +51,7 @@ export class AccountService {
           console.log('X-CSRF-Token:' + response.headers.get('X-CSRF-Token'));
           const csrftoken : string = response.headers.get('X-CSRF-Token');
       
-          let headers = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'X-CSRF-Token': csrftoken,
-            'Authorization': 'Basic ' + btoa('WEBAPPRIC' + 'ab123456') });
-          let opt = { observe: "response" as 'body', headers: headers };
-          console.log('newLoginSet:' + newLoginSet);
-          console.log('loginService:' + loginService);
-          this.postLogin(csrftoken,newLoginSet).subscribe(resp => {
-            console.log('r:'+ resp);
-            console.log('header:' + resp.headers);
-            console.log('sap-message:' + resp.headers.get('sap-message'));
-            console.log('body:' + resp.body);
-            console.log('body.d:' + resp.body.d);
-            console.log('body.d.Token:' + resp.body.d.Token);
-            if (resp.body && resp.body.d && resp.body.d.Token)
-            console.log('Token1:' + resp.body.Token);
-            newLoginSet = { ... resp.body };
-            console.log('Token2:' + newLoginSet.Token);
+          this.postLogin(csrftoken,username,password).subscribe(resp => {
             if (resp.headers.get('sap-message')) {
               // C'è stato un errore e.g. password non valida
               this.user = null;
@@ -88,54 +66,60 @@ export class AccountService {
               this.userSubject.next(u);
               return this.user;
             }
+            return null;
           })
-          /*loginDataSets.post(newLoginSet,options).subscribe(
-            o => {
-              o.forEach((v : LoginSet) => {
-                console.log('v:' + v);
-                if (v) {
-                  console.log('v.token:' + v.Token);
-                }
-              });
-              console.log('Token:' + o[0].Token);
-              console.log('Username:' + o[0].Username);
-              console.log('entries:' + o.entries[0]);
-              console.log('o.values.name:' + o.values.name);
-            },
-          
-            ([loginSet, annots ])=> { 
-              console.log('type:' + annots.type);
-              console.log(annots.properties);
-              console.log(annots.id);
-              console.log('post login set:' + loginSet);
-              console.log('loginSet.token:' + loginSet.Token);
-              console.log('loginSet.username:' + loginSet.Username);
-              newLoginSet.Token = loginSet.token;
-              console.log('newLoginSet.token:' + newLoginSet.Token);
-              }
-          );*/
         }
       }
-    });
-    /*Original code:
-    return this.http.post<User>(`${environment.apiUrl}/users/authenticate`, { username, password })
-        .pipe(map(user => {
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('user', JSON.stringify(user));
-            this.userSubject.next(user);
-            return user;
-        }));*/
+    },
+    error => {
       return null;
+    });
+    return null;
   }
 
-  postLogin(csrftoken : string, newLoginSet : LoginSet ): Observable<HttpResponse<any>> {
+  public fetchToken() : Observable<any>{
+    return this.http.get('/destinations/ZSD_SP_SRV/LoginSet',{
+      observe: "response", headers: {
+        'X-CSRF-Token':'Fetch'
+      }
+    });
+  }
+
+  public logIn(csrftoken : string, username : string, password : string) {
+    const u : User = new User();
+    this.postLogin(csrftoken,username,password).subscribe(response => {
+      if (response.headers.get('sap-message')) {
+        // C'è stato un errore e.g. password non valida
+        u.username = '';
+        u.password = '';
+        u.token = "";
+      }
+      if (response.body && response.body.d && response.body.d.Token) {
+        u.username = username;
+        u.password = password;
+        u.token = response.body.d.Token;
+        localStorage.setItem('user', JSON.stringify(u));
+        this.userSubject.next(u);
+        
+      }
+      return "";
+    });
+    return null;
+  }
+  postLogin(csrftoken : string, username : string, password : string ): Observable<HttpResponse<any>> {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'X-CSRF-Token': csrftoken,
       'Authorization': 'Basic ' + btoa('WEBAPPRIC' + 'ab123456') });
     let options = { headers: headers, observe: "response" as 'body'};
+    let loginSet : LoginSet = {
+      Username : username,
+      Password : password,
+      Token    : '',
+      Langu    : ''
+    }
     return this.http.post<HttpResponse<any>>(
-      '/destinations/ZSD_SP_SRV/LoginSet', newLoginSet, options);
+      '/destinations/ZSD_SP_SRV/LoginSet', loginSet, options);
   }
 
   public logout():void{
@@ -149,6 +133,15 @@ export class AccountService {
 
   public get userValue(): User {
     return this.userSubject.value;
+  }
+
+  public setUserValue(username : string, password : string, token: string) {
+    const u : User = new User();
+    u.username = username;
+    u.password = password;
+    u.token = token;
+    localStorage.setItem('user', JSON.stringify(u));
+    this.userSubject.next(u);
   }
 
   public get userLanguage(): string {
