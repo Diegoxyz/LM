@@ -34,7 +34,7 @@ export class Macchina implements MacchineSet {
         item.code = Matnr;
         item.description = Maktx + Family;
         item.family = Family;
-
+        item.picId=LoioId;
         return item;
     }
 }
