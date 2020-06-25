@@ -1,5 +1,27 @@
+import { UserDataSet } from './OData/UserDataSet/userdataset.entity';
+
 export class User {
     username: string;
     password: string;
-    token: string;
+    token?: string;
+    lang?: string;
+}
+
+export class UserData implements UserDataSet{
+    Kunnr: string;
+    Langu: string;
+    KunnrRif: string;
+    Kunnrx: string;
+    KunnrRifx: string;
+    Parnr: string;
+    Email: string;
+    ErdatAct: string;
+    UzeitAct: string;
+    PswInitial: string;
+    Scenario: string;
+    Ruolo: string;
+    ErdatChangePsw: string;
+    UzeitChangePsw: string;
+    Token: string;
+
 }

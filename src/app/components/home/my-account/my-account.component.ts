@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AccountService } from '@app/services/account.service';
 import { Router } from '@angular/router';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+import { UserDataSetService } from '@app/models/OData/UserDataSet/userdataset.service';
 
 @Component({
   selector: 'app-my-account',
@@ -10,11 +11,13 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 })
 export class MyAccountComponent implements OnInit {
 
-  constructor(private accountService : AccountService,private router: Router,public bsModalRef: BsModalRef) { }
+  constructor(private accountService : AccountService,private router: Router,public bsModalRef: BsModalRef, private userDataSetService : UserDataSetService) { }
   language : string;
+  name : string;
 
   ngOnInit(): void {
     this.language = this.accountService.userLanguage;
+    this.name = this.userDataSetService.userDataSetValue.Kunnrx;
   }
   
 

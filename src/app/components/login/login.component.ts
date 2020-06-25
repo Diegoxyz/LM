@@ -5,6 +5,7 @@ import { AccountService } from 'src/app/services/account.service';
 import { first } from 'rxjs/operators';
 import { environment } from '@environments/environment';
 import { User } from '@app/models/user';
+import { UserDataSetService } from '@app/models/OData/UserDataSet/userdataset.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
   loginError = false;
   returnUrl: string;
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private accountService: AccountService) { }
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private accountService: AccountService, 
+    private userDataSetService : UserDataSetService) { }
 
   public loginForm: FormGroup;
 
@@ -69,6 +71,9 @@ export class LoginComponent implements OnInit {
                     u.username = this.email.value;
                     u.password = this.password.value;
                     u.token = response2.body.d.Token;
+                    u.lang = response2.body.d.Langu;
+
+                    this.userDataSetService.saveUserDataSet(u.username, u.token, u.lang);
                   }
                   this.accountService.setUserValue(u.username,u.password, u.token);
                   this.loginError = false;
@@ -91,6 +96,7 @@ export class LoginComponent implements OnInit {
             } else {
               this.loginError = false;
             }
+            this.userDataSetService.saveUserDataSet(this.email.value, this.password.value, 'IT');
             this.router.navigate([this.returnUrl]);
           },
           error => {
