@@ -4,6 +4,8 @@ import { Item } from '@app/models/item';
 import { Router } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ProspectiveCardComponent } from '../prospective-card/prospective-card.component';
+import { DomSanitizer } from '@angular/platform-browser';
+import { BinDataMatnrSetService } from '@app/models/OData/BinDataMatnrSet/bindatamatnrset.service';
 
 @Component({selector: 'app-machine-card',
 templateUrl: './machine-card.component.html',
@@ -18,6 +20,10 @@ export class MachineCardComponent implements OnInit {
     
     @Output() openSection = new EventEmitter<Item>();
 
+    thumbnail: any;
+
+    baseImage: any;
+
     config = {
         animated: true,
         keyboard: true,
@@ -26,10 +32,23 @@ export class MachineCardComponent implements OnInit {
         class: "my-modal"
     };
 
-    constructor(private router: Router,private modalService: BsModalService) {
+    constructor(private router: Router,private modalService: BsModalService,
+        private binDataMatnrSetService: BinDataMatnrSetService, private sanitizer: DomSanitizer) {
+
     }
     
     ngOnInit(): void {
+        if (this.item.picId) {
+            console.log('item.picId:' + this.item.picId);
+            this.binDataMatnrSetService.getImage(this.item.code,this.item.picId).subscribe((resp : any) => {
+                if (resp.body && resp.body.d && resp.body.d) {
+                    console.log('baseImage.BinDoc:' + resp.body.d.BinDoc);
+                    let objectURL = 'data:image/jpeg;base64,' + resp.body.d.BinDoc;
+                    this.thumbnail = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+                }
+                this.baseImage = resp;
+            });
+        }
         
     }
 

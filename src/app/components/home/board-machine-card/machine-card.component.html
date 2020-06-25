@@ -2,7 +2,8 @@
     <div class="container">
         <div class="card align-items-center justify-content-center hoverWrapper" style="width: 18rem;">
             <a class="nav-link" (click)="openSections()">
-                <img class="img-fluid card-img-top" src="assets/img/coffeeMachines/Macchina2.jpg" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
+                <img *ngIf="thumbnail;else other_content" class="img-fluid card-img-top" id='pic' [src]='thumbnail' sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
+                <ng-template #other_content>"No picture" image to be added here</ng-template>
                 <div class="card-body">
                     <div class="">
                     <div class="row align-items-center no-gutters justify-content-right">
