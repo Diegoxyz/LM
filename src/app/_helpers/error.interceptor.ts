@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { AccountService } from '../services/account.service';
 
 
@@ -11,7 +11,17 @@ export class ErrorInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         
-        return next.handle(request).pipe(catchError(err => {
+        request = request.clone({ headers: request.headers.set('Authorization', 'Basic ' + btoa('WEBAPPRIC' + 'ab123456')) });
+
+        return next.handle(request).pipe(map((event: HttpEvent<any>) => {
+            if (event instanceof HttpResponse) {
+                console.log('event--->>>', event);
+                if (event.headers && event.headers.get('sap-message')) {
+                    this.accountService.logout();
+                }
+            }
+            return event;
+            }),catchError(err => {
             console.log('catched error');
             if (err.status === 401) {
                 // auto logout if 401 response returned from api
