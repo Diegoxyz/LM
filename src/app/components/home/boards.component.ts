@@ -3,6 +3,9 @@ import { ProductsService } from 'src/app/services/products.service';
 import { Group, Product, Item} from 'src/app/models/item';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faWindowClose, faCoffee } from '@fortawesome/free-solid-svg-icons';
+import { MacchineSetService } from '@app/models/OData/MacchineSet/macchineset.service';
+import { Macchina } from '@app/models/OData/MacchineSet/macchineset.entity';
+import { environment } from '@environments/environment';
 
 @Component({selector: 'app-boards',
 templateUrl: './boards.component.html',
@@ -32,7 +35,7 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
     @Input()
     sectionToBeDisplayed : number = 0;
 
-    constructor(private productsService: ProductsService,
+    constructor(private productsService: ProductsService,private macchineService: MacchineSetService,
         private route: ActivatedRoute,private _router: Router
     ) {
        /*  this.groups = this.productsService.getAllGroups(); */
@@ -57,8 +60,19 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
 
          });
 
-        
-        this.machines = this.productsService.getAllMachines();
+        if (environment && environment.oData) {
+            this.macchineService.getAllMachines().subscribe(resp => {
+                if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
+                    resp.body.d.results.forEach(m => {
+                        if (m) {
+                            this.machines.push(Macchina.fromJSON(m.Matnr, m.Email, m.Maktx, m.token, m.Langu, m.Family, m.LoioId));
+                        }
+                    });
+                }
+            });
+        } else {
+            this.machines = this.productsService.getAllMachines();
+        }
     }
 
     ngOnDestroy() {

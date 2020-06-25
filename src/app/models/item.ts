@@ -1,11 +1,13 @@
 export class Item {
     code: string;
     description: string;
+    family:string;
 
-    constructor(code?: string, description?: string) {
+    constructor(code?: string, description?: string, family?: string) {
         // some logic may be required
         this.code = code;
         this.description = description;
+        this.family = family;
     } 
 }
 

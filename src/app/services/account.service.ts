@@ -109,8 +109,7 @@ export class AccountService {
   postLogin(csrftoken : string, username : string, password : string ): Observable<HttpResponse<any>> {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'X-CSRF-Token': csrftoken,
-      'Authorization': 'Basic ' + btoa('WEBAPPRIC' + 'ab123456') });
+      'X-CSRF-Token': csrftoken });
     let options = { headers: headers, observe: "response" as 'body'};
     let loginSet : LoginSet = {
       Username : username,

@@ -14,7 +14,7 @@ import { UserDataSetService } from '@app/models/OData/UserDataSet/userdataset.se
 })
 export class LoginComponent implements OnInit {
 
-  loginError = false;
+  loginError : boolean = undefined;
   returnUrl: string;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private accountService: AccountService, 
@@ -47,10 +47,10 @@ export class LoginComponent implements OnInit {
       return;
     }
     if (this.email && this.password) {
-      this.loginError = true;
       if (environment && environment.oData) {
         this.accountService.fetchToken().subscribe(
           response1 => {
+            this.loginError = true;
             console.log('step 1');
             if (response1.headers) {
               console.log('X-CSRF-Token:' + response1.headers.get('X-CSRF-Token'));

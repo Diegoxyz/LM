@@ -12,7 +12,7 @@
         </div>
         <div class="row align-items-center justify-content-center">
             <div *ngIf="loginError" class="alert alert-danger">
-                <span i18n="Username non valid|Error message">loginError</span>
+                <span i18n="Username non valid|Error message">{{ loginError }}</span>
             </div>
             <div *ngIf="!loginError" class="w-100"></div>
             <div class="col-7">

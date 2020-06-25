@@ -43,8 +43,7 @@ export class UserDataSetService {
         console.log('filter:' + outFilter);
 
         let headers = new HttpHeaders({
-          'Content-Type': 'application/json',
-          'Authorization': 'Basic ' + btoa('WEBAPPRIC' + 'ab123456') });
+          'Content-Type': 'application/json' });
         let options = { headers: headers, observe: "response" as 'body'};
         return this.http.get<HttpResponse<any>>(
           '/destinations/ZSD_SP_SRV/UserDataSet' + outFilter, options);
