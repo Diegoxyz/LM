@@ -16,9 +16,7 @@ footer .footer-widget {
 
 
 h3.widget_title {
-    font-size: 20.16px;
-    margin-bottom: 4.5px;
-    line-height: 24px;
+    font-size: 1.6em;
 }
 
 
@@ -40,5 +38,15 @@ footer .footer-widget a {
 }
 
 .svg-inline--fa.fa-w-14 {
-    width: 19.6875px;
+    width: .875em
+}
+
+.widget-social{
+    margin-left: 0;
+    padding-left: 0;
+    font-size: 1.5rem;
+}
+
+.mr-1{
+    margin-right: 5% !important;
 }

@@ -69,3 +69,7 @@ ul {
   border: 1px solid #dc3545;
   background-color: #ffffff;
 }
+
+#code, #quantity, #description{
+  font-weight: bold;
+}

@@ -1,38 +1,28 @@
-<div id="barra" class="">
-    <div class="flex-container">
+<div id="barra" class="flex-container align-items-center">
 
-        <div id="mButton" [class.selected-page]="currentPage === 1" (click)="goToCatalogue()">
-            <div>
-                <div>
-                    <fa-icon id="btn-icon" [icon]="faBookOpen" size="2x"></fa-icon>
-                </div>
-                <div class="button-description">
-                    <p>Catalog</p>
-                </div>
-            </div>
-        </div>
-        
-        <div id="mButton" [class.selected-page]="currentPage === 2" (click)="goToBoards()">
-            <div>
-                <div>
-                    <fa-icon id="btn-icon" [icon]="faDraftingCompass" size="2x"></fa-icon>
-                </div>
-                <div class="button-description">
-                        <p>Boards</p>
-                </div>
-            </div>
+    <div class="row">
+        <div class="col-12">
+            <a href="#">
+                <img src="assets/img/logo/globo-leone.png" alt="logo" class="img-logo-horizontal">
+            </a>
         </div>
 
-        <div id="mButton" [class.selected-page]="currentPage === 3" (click)="goToOrders()">
-            <div>
-                <div>
-                    <fa-icon id="btn-icon" [icon]="faClipboardCheck" size="2x"></fa-icon>
-                </div>
-                <div class="button-description">
-                    <p>Orders</p>
-                </div>
-            </div>
-        </div>
+        <div class="col-10">
+            <ul class="nav-item text-center">
+                <li class="menu-item">
+                    <a class="nav-link" (click)="goToCatalogue()">Catalog</a>
+                </li>
 
+                <li class="menu-item">
+                    <a class="nav-link" (click)="goToBoards()">Boards</a>
+                </li>
+
+                <li class="menu-item">
+                    <a class="nav-link" (click)="goToOrders()"> Orders</a>
+                </li>
+
+            </ul>
+        </div>
     </div>
-</div>    
+
+</div>

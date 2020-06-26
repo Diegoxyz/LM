@@ -1,5 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 
+@font-face {
+    font-family: TradeGothicLT-Bold;
+    src: url("assets/font/TradeGothicLT-BoldCondTwenty_2430128327.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: TradeGothicLT;
+    src: url("assets/font/TradeGothicLT_2852984315.ttf") format("truetype");
+}
+
 body {
     margin: 0;
     font-size: 16,2px;
@@ -10,13 +20,13 @@ body {
 }
 
 body, input, div, p, a {
-    font-family: "Trade Gothic LT ProCn",-apple-system,BlinkMacSystemFont,"tradegothiclt", sans-serif, "Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol" !important;
+    font-family: "TradeGothicLT",-apple-system,BlinkMacSystemFont,"TradeGothicLT", sans-serif, "Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol" !important;
     /* font-family: SimSun !important; */
     font-weight: 400;
 }
 
 h1,h2,h3,h4,h5,h6 {
-    font-family: "Trade Gothic LT ProCn",-apple-system,BlinkMacSystemFont,"tradegothiclt", sans-serif, "Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol" !important;
+    font-family: "TradeGothicLT",-apple-system,BlinkMacSystemFont,"TradeGothicLT", sans-serif, "Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol" !important;
 }
 
 .btn, .btn-primary.disabled, .btn-primary:disabled {
@@ -56,7 +66,8 @@ a {
 }
 */
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
 
 #btn-icon{
     color: #dc3545;
@@ -74,3 +85,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     color: '#fff';
     margin-bottom: 1%;
 }
+
+h3.widget_title {
+    font-size: 1.6em;
+    margin-bottom: .5rem;
+    font-family: "TradeGothicLT-Bold" !important;
+    line-height: 1.2;
+}
+
+/* .textwidget {
+    background-color: green;
+} */

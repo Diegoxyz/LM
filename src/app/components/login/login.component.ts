@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
     if (this.accountService.userValue) {
       this.router.navigate(['/home']);
     }
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home/boards';
     this.loginForm = this.fb.group({
       email: ['', Validators.required],
       password: ['', Validators.required],

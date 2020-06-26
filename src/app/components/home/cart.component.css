@@ -9,3 +9,14 @@
     text-align: center;
     border: 1px solid #ffffff;
 }
+
+.code_column, 
+.price_column, .quantity_column, 
+.total_column{
+    font-weight: bold;
+    padding-top: 1%
+}
+
+.description_column{
+    font-weight: bold;
+}

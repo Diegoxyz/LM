@@ -2,13 +2,13 @@
     <div  class="col-1 description_column" style="padding-top: 0.5%">
         <input type="checkbox" />
     </div>
-    <div  class="col-4 description_column" >
-        <span>{{ order.product.code}} <br /> {{ order.product.description}}</span>
+    <div  class="col-4 description_column"  >
+        <span>{{ order.product.code}} - {{ order.product.description}}</span>
     </div>
-    <div  class="col-2 price_column" style="padding-top: 1%">
+    <div  class="col-2 price_column" style="padding-top: 1%" >
         <span>{{ order.product.price}} &euro;</span>
     </div>
-    <div  class="col-2 quantity_column" style="padding-top: 0.5%">
+    <div  class="col-2 quantity_column" style="padding-top: 0.5%" >
         <span><input type="number" 
             id="qty"
             step="1" min="0" max="9999" name=""
@@ -16,7 +16,7 @@
             inputmode="numeric" aria-labelledby=""
             (input)="onChangeQuantity($event.target.value)"> lt</span>
     </div>
-    <div  class="col-2 price_column" style="padding-top: 1%">
+    <div  class="col-2 price_column" style="padding-top: 1%"  >
         <span>{{ totalPrice }} &euro;</span>
     </div>
     <div  class="col-1 delete-column" style="padding-top: 0.5%">
