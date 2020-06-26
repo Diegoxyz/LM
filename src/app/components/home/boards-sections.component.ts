@@ -3,6 +3,9 @@ import { ProductsService } from 'src/app/services/products.service';
 import { Group, Product, Item} from 'src/app/models/item';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faWindowClose, faCoffee } from '@fortawesome/free-solid-svg-icons';
+import { SectionService } from '@app/services/section.service';
+import { Macchina } from '@app/models/OData/MacchineSet/macchineset.entity';
+import { environment } from '@environments/environment';
 
 @Component({selector: 'app-boards-sections',
 templateUrl: './boards-sections.component.html',
@@ -19,7 +22,7 @@ export class BoardsSectionsComponent implements OnInit,OnDestroy {
     
     machines : Item[] = [];
 
-    sections :string[];
+    sections : Item[] = [];
 
     section: string;
 
@@ -37,7 +40,8 @@ export class BoardsSectionsComponent implements OnInit,OnDestroy {
     sectionToBeDisplayed : number = 1;
 
     constructor(private productsService: ProductsService,
-        private route: ActivatedRoute,private _router: Router
+        private route: ActivatedRoute,private _router: Router,
+        private sectionService : SectionService
     ) {
        /*  this.groups = this.productsService.getAllGroups(); */
     }
@@ -48,9 +52,10 @@ export class BoardsSectionsComponent implements OnInit,OnDestroy {
             this.machineId = params.get('machineId'); 
             if (this.machineId) {
                 // add the loading of all the "prospectives" for a specific machine
-                this.sections = Array(23).fill(0).map((x, i) => (
+                this.sections = [];
+                /* this.sections = Array(23).fill(0).map((x, i) => (
                     `Section${i + 1}`
-                    ));
+                    )); */
             } else {
                 this.sections = undefined;
             }
@@ -58,7 +63,6 @@ export class BoardsSectionsComponent implements OnInit,OnDestroy {
 
          });
 
-        
         this.machines = this.productsService.getAllMachines();
     }
 
@@ -68,12 +72,24 @@ export class BoardsSectionsComponent implements OnInit,OnDestroy {
         }
     }
 
-    openSections(machine) {
+    openSections(machine : Macchina) {
         this.machines = [];
         this.section = "section";
-        this.sections = Array(23).fill(0).map((x, i) => (
+        /* this.sections = Array(23).fill(0).map((x, i) => (
             `Section ${i + 1}`
-            ));
+            )); */
+        // this.sections = this.sectionService.getMachineServices(machine.Matnr);
+        // if (environment && environment.oData) {
+            this.sectionService.getMachineServices(machine.Matnr).subscribe(resp => {
+                if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
+                    resp.body.d.results.forEach(s => {
+                        if (s) {
+                            this.sections.push(s);
+                        }
+                    });
+                }
+            });
+        // } 
         this._router.navigate(['./boards/sections']);
     }
 
