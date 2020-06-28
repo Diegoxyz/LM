@@ -14,8 +14,8 @@ const routes: Routes = [
     {
         path: '', component: LayoutComponent,
         children: [
-            { path: '', component: MainComponent },
-            { path: 'home', component: MainComponent },
+            { path: '', component: BoardsComponent },
+            { path: 'home', component: BoardsComponent },
             { path: 'catalogue/:groupId', component: CatalogueComponent },
             { path: 'catalogue', component: CatalogueComponent },
            /* { path: 'boards/:machineId', component: BoardsComponent }, */
