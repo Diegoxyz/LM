@@ -12,7 +12,7 @@ styleUrls: ['./prospective-card.component.css']
 export class ProspectiveCardComponent implements OnInit {
 
     @Input()
-    itemCode : string;
+    item : string;
 
     quantity : number = 0;
     selectedQuantity : number = 0;

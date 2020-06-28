@@ -38,3 +38,24 @@ export class Macchina implements MacchineSet {
         return item;
     }
 }
+
+export class Section {
+    MatnrMacchina: string;
+    MatnrSezione: string;
+    Maktx: string;
+    Langu: string;
+    LoioId: string;
+    Email: string;
+    Token: string;
+    
+    
+
+    static fromJSON(MatnrMacchina : string, MatnrSezione: string, Maktx: string, Langu : string, LoioId: string, Email: string, Token: string): Item {
+        const item = new Item();
+        item.code = MatnrSezione;
+        item.description = Maktx;
+        item.family = MatnrMacchina;
+        item.picId=LoioId;
+        return item;
+    }
+}

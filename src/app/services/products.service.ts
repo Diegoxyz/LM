@@ -29,6 +29,13 @@ export class ProductsService {
     return items;
   }
 
+  getAllSections() : Item[] {
+    const items : Item[] = Array(23).fill(0).map((x, i) => (
+      new Item(`Code ${i + 1}`,`Section ${i + 1}`)
+      ));
+    return items;
+  }
+
   getAllOrders() : Product[] {
     const items : Product[] = Array(20).fill(0).map((x, i) => (
       new Product(`Code ${i + 1}`,`Product ${i + 1}`, (i+1 * 10), (i%2 === 0))

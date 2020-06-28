@@ -4,7 +4,7 @@ import { Group, Product, Item} from 'src/app/models/item';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faWindowClose, faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { MacchineSetService } from '@app/models/OData/MacchineSet/macchineset.service';
-import { Macchina } from '@app/models/OData/MacchineSet/macchineset.entity';
+import { Macchina, Section } from '@app/models/OData/MacchineSet/macchineset.entity';
 import { environment } from '@environments/environment';
 import { SectionService } from '@app/services/section.service';
 
@@ -22,7 +22,7 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
     
     machines : Item[] = [];
 
-    sections :string[];
+    sections :Item[] = [];
 
     section: string;
 
@@ -47,7 +47,7 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
 
     ngOnInit() {
 
-        this.sub = this.route.queryParams.subscribe(params => {
+        /*this.sub = this.route.queryParams.subscribe(params => {
             this.machineId = params['machineId']; 
             if (this.machineId) {
                 // add the loading of all the "prospectives" for a specific machine
@@ -59,7 +59,7 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
             }
            
 
-         });
+         }); */
 
         if (environment && environment.oData) {
             this.macchineService.getAllMachines().subscribe(resp => {
@@ -77,7 +77,10 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
     }
 
     ngOnDestroy() {
-        this.sub.unsubscribe();
+        if (this.sub) {
+            this.sub.unsubscribe();
+        }
+        
     }
 
     /* openSections(machine) {
@@ -94,32 +97,32 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
         this.sectionToBeDisplayed = 1;
         this.machines = [];
         this.section = "section";
-        /* this.sections = Array(23).fill(0).map((x, i) => (
-            `Section ${i + 1}`
-            )); */
         // this.sections = this.sectionService.getMachineServices(machine.Matnr);
-        // if (environment && environment.oData) {
+        if (environment && environment.oData) {
             const code = mach.code.split(" ");
-            this.sectionService.getMachineServices(code[1]).subscribe(resp => {
+            console.log('openSections code:' + code + ',length:' + length);
+            console.log('openSections code[1]:' + code[1]);
+            let matrn = code[0];
+            if (code.length > 1) {
+                matrn = code[1];
+            }
+            this.sectionService.getMachineServices(matrn).subscribe(resp => {
                 if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
                     resp.body.d.results.forEach(s => {
                         if (s) {
-                            this.sections.push(s);
+                            this.sections.push(Section.fromJSON(s.MatnrMacchina, s.MatnrSezione, s.Maktx, s.Langu, s.LoioId, s.Email, s.Token));
                         }
                     });
                 }
-            }); 
-        // } 
-        this._router.navigate(['./boards/sections']);
+            });
+        } else {
+            this.sections = this.productsService.getAllSections();
+        }
+        // this._router.navigate(['./home/sections/machine']);
     }
 
     closeProspective() {
         this.sections = undefined;
     }
 
-    goToMachine() {
-        this.machineId = undefined;
-        this.sections = undefined;
-        this.machines = this.productsService.getAllMachines();
-    }
 }
