@@ -1,6 +1,6 @@
 <div id="section-card-comp"class="align-items-center justify-content-center rounded">
     <div id="section-container"class="container">
-        <div id="section-card" class="card align-items-center justify-content-center hoverWrapper">
+        <div id="section-card" class="card align-items-center justify-content-center hoverWrapper" style="width: 18rem;">
             <a class="nav-link" (click)="openModal(template)">
                 <!--<img class="img-fluid card-img-top" src="assets/img/items/SectionNoBorder.PNG" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">-->
                 <img *ngIf="thumbnail" class="img-fluid card-img-top" id='pic' [src]='thumbnail' sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
@@ -50,7 +50,7 @@
         </button>
         </div>
         <div style="background-color: #ffffff;">
-            <app-prospetive-card></app-prospetive-card>
+            <app-prospetive-card [item]=(item)></app-prospetive-card>
         </div>
         <!--<div class="row" style="margin-left: 70%; margin-top: 1%">
             <div class="button-close-container"><div class="button-close-class"><button type="button" (click)="bsModalRef.hide()" class="button-close-class">CLOSE</button></div></div>
