@@ -18,7 +18,9 @@ export class MachineCardComponent implements OnInit {
 
     bsModalRef: BsModalRef;
     
-    @Output() openSection = new EventEmitter<Item>();
+    @Output() 
+    openSection : EventEmitter<Item> = new EventEmitter<Item>();
+    
 
     thumbnail: any;
 
@@ -57,7 +59,7 @@ export class MachineCardComponent implements OnInit {
             // we will load the item's prospectives
             // this.bsModalRef = this.modalService.show(ProspectiveCardComponent, this.config);
             // this.router.navigate(['./home/prospective'], {queryParams:{itemCode: this.item.code}});
-            this.openSection.next(this.item);
+            this.openSection.emit(this.item);
         }
     }
 

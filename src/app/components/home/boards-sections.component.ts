@@ -22,7 +22,7 @@ export class BoardsSectionsComponent implements OnInit,OnDestroy {
     
     machines : Item[] = [];
 
-    sections : Item[] = [];
+    sections : string[] = [];
 
     section: string;
 
@@ -37,33 +37,49 @@ export class BoardsSectionsComponent implements OnInit,OnDestroy {
 
     /* Sections to be dislayed, 0: machines, 1: section */
     @Input()
-    sectionToBeDisplayed : number = 1;
+    sectionToBeDisplayed : number;
 
     constructor(private productsService: ProductsService,
         private route: ActivatedRoute,private _router: Router,
         private sectionService : SectionService
     ) {
        /*  this.groups = this.productsService.getAllGroups(); */
+       this.sub = this.route.paramMap.subscribe(params => {
+        this.machineId = params.get('machineId'); 
+        if (this.machineId) {
+            // add the loading of all the "prospectives" for a specific machine
+            this.sections = [];
+            /* this.sections = Array(23).fill(0).map((x, i) => (
+                `Section${i + 1}`
+                ));  */
+        } else {
+            this.sections = undefined;
+        }
+       
+
+     });
+
+    this.machines = this.productsService.getAllMachines();
     }
 
     ngOnInit() {
 
-        this.sub = this.route.paramMap.subscribe(params => {
+        /* this.sub = this.route.paramMap.subscribe(params => {
             this.machineId = params.get('machineId'); 
             if (this.machineId) {
                 // add the loading of all the "prospectives" for a specific machine
                 this.sections = [];
                 /* this.sections = Array(23).fill(0).map((x, i) => (
                     `Section${i + 1}`
-                    )); */
-            } else {
+                    ));  */
+           /* } else {
                 this.sections = undefined;
             }
            
 
          });
 
-        this.machines = this.productsService.getAllMachines();
+        this.machines = this.productsService.getAllMachines(); */
     }
 
     ngOnDestroy() {
@@ -72,7 +88,8 @@ export class BoardsSectionsComponent implements OnInit,OnDestroy {
         }
     }
 
-    openSections(machine : Macchina) {
+    openSections(mach: Item) {
+        this.sectionToBeDisplayed = 1;
         this.machines = [];
         this.section = "section";
         /* this.sections = Array(23).fill(0).map((x, i) => (
@@ -80,7 +97,8 @@ export class BoardsSectionsComponent implements OnInit,OnDestroy {
             )); */
         // this.sections = this.sectionService.getMachineServices(machine.Matnr);
         // if (environment && environment.oData) {
-            this.sectionService.getMachineServices(machine.Matnr).subscribe(resp => {
+            const code = mach.code.split(" ");
+            this.sectionService.getMachineServices(code[1]).subscribe(resp => {
                 if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
                     resp.body.d.results.forEach(s => {
                         if (s) {
@@ -88,7 +106,7 @@ export class BoardsSectionsComponent implements OnInit,OnDestroy {
                         }
                     });
                 }
-            });
+            }); 
         // } 
         this._router.navigate(['./boards/sections']);
     }
