@@ -1,8 +1,12 @@
 <div class="prospective-card">
     <div class="flex-container">
         <div class="flex-item board-image">
-            <img src="assets/img/coffeeMachines/tavola2_bigger.gif" alt="Carrozzeria"
-                style="width: 100%; max-height:70%;">
+            <img *ngIf="thumbnail" class="img-fluid card-img-top" id='pic' [src]='thumbnail' width="260" height="260" style="width: 100%; max-height:70%;">
+            <!-- <ng-template #other_content>"No picture" image to be added here</ng-template> -->
+            <div *ngIf="svgThumbnail">
+                <img [src]="sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ svgThumbnail)" width="500" height="500" style="width: 100%; max-height:70%;">
+            </div>
+            <img *ngIf="thumbnail === undefined && svgThumbnail === undefined" class="img-fluid card-img-top" src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260" style="width: 100%; max-height:70%;">
         </div>
         <div class="flex-item board-panel">
             <div class="scroll">
