@@ -4,6 +4,7 @@ import { faShoppingCart, faCircle } from '@fortawesome/free-solid-svg-icons';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ProductsService } from '@app/services/products.service';
 import { Product } from '@app/models/item';
+import { environment } from '@environments/environment';
 
 @Component({selector: 'app-prospetive-card',
 templateUrl: './prospective-card.component.html',
@@ -27,7 +28,11 @@ export class ProspectiveCardComponent implements OnInit {
     }
     
     ngOnInit(): void {
-        this.items = this.productsService.getBoardsProducts();
+        if (environment && environment.oData) {
+            // servizio da aggiungere
+        } else {
+            this.items = this.productsService.getBoardsProducts();
+        }
     }
 
     public close() {
