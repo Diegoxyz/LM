@@ -6,6 +6,7 @@ import { faWindowClose, faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { MacchineSetService } from '@app/models/OData/MacchineSet/macchineset.service';
 import { Macchina } from '@app/models/OData/MacchineSet/macchineset.entity';
 import { environment } from '@environments/environment';
+import { SectionService } from '@app/services/section.service';
 
 @Component({selector: 'app-boards',
 templateUrl: './boards.component.html',
@@ -36,7 +37,7 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
     sectionToBeDisplayed : number = 0;
 
     constructor(private productsService: ProductsService,private macchineService: MacchineSetService,
-        private route: ActivatedRoute,private _router: Router
+        private route: ActivatedRoute,private _router: Router, private sectionService : SectionService
     ) {
        /*  this.groups = this.productsService.getAllGroups(); */
     }
@@ -79,7 +80,7 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
         this.sub.unsubscribe();
     }
 
-    openSections(machine) {
+    /* openSections(machine) {
         this.machines = [];
         this.section = "section";
         this.sections = Array(23).fill(0).map((x, i) => (
@@ -87,6 +88,29 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
             ));
         this.sectionToBeDisplayed = 1;
         this._router.navigate(['./home/sections/machine']);
+    } */
+
+    openSections(mach: Item) {
+        this.sectionToBeDisplayed = 1;
+        this.machines = [];
+        this.section = "section";
+        /* this.sections = Array(23).fill(0).map((x, i) => (
+            `Section ${i + 1}`
+            )); */
+        // this.sections = this.sectionService.getMachineServices(machine.Matnr);
+        // if (environment && environment.oData) {
+            const code = mach.code.split(" ");
+            this.sectionService.getMachineServices(code[1]).subscribe(resp => {
+                if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
+                    resp.body.d.results.forEach(s => {
+                        if (s) {
+                            this.sections.push(s);
+                        }
+                    });
+                }
+            }); 
+        // } 
+        this._router.navigate(['./boards/sections']);
     }
 
     closeProspective() {
