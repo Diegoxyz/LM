@@ -62,6 +62,7 @@ export class AccountService {
               u.username = username;
               u.password = password;
               u.token = resp.body.d.Token;
+              u.lang = resp.body.d.Langu;
               localStorage.setItem('user', JSON.stringify(u));
               this.userSubject.next(u);
               return this.user;
@@ -115,7 +116,7 @@ export class AccountService {
       Username : username,
       Password : password,
       Token    : '',
-      Langu    : ''
+      Langu    : 'IT'
     }
     return this.http.post<HttpResponse<any>>(
       '/destinations/ZSD_SP_SRV/LoginSet', loginSet, options);
@@ -134,11 +135,12 @@ export class AccountService {
     return this.userSubject.value;
   }
 
-  public setUserValue(username : string, password : string, token: string) {
+  public setUserValue(username : string, password : string, token: string, lang: string) {
     const u : User = new User();
     u.username = username;
     u.password = password;
     u.token = token;
+    u.lang = lang;
     localStorage.setItem('user', JSON.stringify(u));
     this.userSubject.next(u);
   }

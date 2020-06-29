@@ -64,18 +64,20 @@ export class LoginComponent implements OnInit {
                     // C'è stato un errore e.g. password non valida
                     u.username = '';
                     u.password = '';
-                    u.token = "";
+                    u.token = '';
+                    u.lang = '';
                   }
                   if (response2.body && response2.body.d && response2.body.d.Token) {
                     console.log('found token:' + response2.body.d.Token);
                     u.username = this.email.value;
                     u.password = this.password.value;
                     u.token = response2.body.d.Token;
+                    console.log('response2.body.Langu:' + response2.body.d.Langu);
                     u.lang = response2.body.d.Langu;
 
                     this.userDataSetService.saveUserDataSet(u.username, u.token, u.lang);
                   }
-                  this.accountService.setUserValue(u.username,u.password, u.token);
+                  this.accountService.setUserValue(u.username,u.password, u.token, u.lang);
                   this.loginError = false;
                   this.router.navigate([this.returnUrl]);
                 }
