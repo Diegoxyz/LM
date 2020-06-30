@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { ProductsService } from '@app/services/products.service';
 import { faSearch, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
@@ -7,11 +7,16 @@ import { Observable } from 'rxjs';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
+import { Item } from '@app/models/item';
+import { Macchina } from '@app/models/OData/MacchineSet/macchineset.entity';
+import { environment } from '@environments/environment';
+import { MacchineSetService } from '@app/models/OData/MacchineSet/macchineset.service';
 
 export class MachineList {
-  constructor(public item: string, public selected?: boolean) {
+  constructor(public item: Item, public selected?: boolean) {
     if (selected === undefined) selected = false;
   }
+
 }
 
 @Component({
@@ -27,6 +32,8 @@ export class SearchMachinesComponent implements OnInit {
   filteredMachines : Observable<MachineList[]>;
   selectedMachines : MachineList[] = new Array<MachineList>();
   lastFilter = '';
+  // necessario per trovare la macchina giusta, non è modificato dalla ricerca
+  allMacchinas : Item[] = [];
 
   faSearch = faSearch;
   faTimesCircle = faTimesCircle;
@@ -36,25 +43,42 @@ export class SearchMachinesComponent implements OnInit {
   removable = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
 
+  @Output()
+  outMacchine : EventEmitter<Item[]> = new EventEmitter<Item[]>();
 
-  constructor(private fb: FormBuilder, private productsService: ProductsService) { }
+
+  constructor(private fb: FormBuilder, private productsService: ProductsService, private macchineService: MacchineSetService) { }
 
   ngOnInit(): void {
-    const listOfMachines = this.productsService.getAllMachines();
-    listOfMachines.forEach(m => {
-      this.machines.push({
-        item : m.code + ' ' + m.description
-      });
+    
+    if (environment && environment.oData) {
+      this.macchineService.getAllMachines().subscribe(resp => {
+        if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
+          console.log('search machine - resp.body.d.results.length:' + resp.body.d.results.length);
+            resp.body.d.results.forEach(m => {
+                if (m) {
+                  const ml : MachineList = new MachineList(Macchina.fromMacchinaJson(m));
+                  this.machines.push(ml);
+                  this.allMacchinas.push(m);
+                }
+            });
+        }
+        console.log('this.machines:' + this.machines);
+        this.filteredMachines = this.searchMachineControl.valueChanges.pipe(
+          startWith(null),
+          map((machine: MachineList | null) => machine ? this.filter(machine) : this.machines.slice()));
     });
-    /*this.searchMachineControl.valueChanges.pipe(
-      startWith<string | MachineList[]>(''),
-      map(value => typeof value === 'string' ? value : this.lastFilter),
-      map(filter => this.filter(filter))
-    ).subscribe(data => this.filteredMachines = data);*/
-
-    this.filteredMachines = this.searchMachineControl.valueChanges.pipe(
-      startWith(null),
-      map((machine: MachineList | null) => machine ? this.filter(machine) : this.machines.slice()));
+    } else {
+      const listOfMachines = this.productsService.getAllMachines();
+      listOfMachines.forEach(m => {
+        const ml : MachineList = new MachineList(m);
+        this.machines.push(ml);
+        this.allMacchinas.push(m);
+      });
+      this.filteredMachines = this.searchMachineControl.valueChanges.pipe(
+        startWith(null),
+        map((machine: MachineList | null) => machine ? this.filter(machine) : this.machines.slice()));
+    }
   }
 
   filter(filter: any): MachineList[] {
@@ -67,7 +91,7 @@ export class SearchMachinesComponent implements OnInit {
         s = filter;
       }
       return this.machines.filter(option => {
-        return option.item.toLowerCase().indexOf(s.toLowerCase()) >= 0;
+        return option.item && option.item.code && option.item.description && option.item.code.toLowerCase().indexOf(s.toLowerCase()) >= 0 || option.item.description.toLowerCase().indexOf(s.toLowerCase()) >= 0;
       })
     } else {
       return this.machines.slice();
@@ -85,7 +109,7 @@ export class SearchMachinesComponent implements OnInit {
       this.selectedMachines.push(item);
       // this.changeCallback( this.selectedMachines );
     } else {
-      const i = this.selectedMachines.findIndex(value => value.item === item.item );
+      const i = this.selectedMachines.findIndex(value => value.item.code === item.item.code );
       this.selectedMachines.splice(i, 1);
       // this.changeCallback( this.selectedMachines );
     }
@@ -102,9 +126,13 @@ export class SearchMachinesComponent implements OnInit {
 
     // Add our fruit
     if ((value || '').trim()) {
-      this.machines.push({
-        item: value.trim(),
-        selected : true
+      this.allMacchinas.forEach(am => {
+        if (am.code === value.trim() || am.description === value.trim()) {
+          this.machines.push({
+            item: am,
+            selected : true
+          });
+        }
       });
     }
 
@@ -125,9 +153,14 @@ export class SearchMachinesComponent implements OnInit {
   }*/
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.selectedMachines.push({
-      item : event.option.viewValue
+    this.allMacchinas.forEach(am => {
+      if (am.code === event.option.viewValue || am.description === event.option.viewValue) {
+        this.selectedMachines.push({
+          item : am
+        });
+      }
     });
+    
     // this.fruitInput.nativeElement.value = '';
     this.searchMachineControl.setValue(null);
   }
@@ -137,5 +170,13 @@ export class SearchMachinesComponent implements OnInit {
 
     return this.allFruits.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
   }*/
+
+  search() {
+      const om : Item[] = [];
+      if (this.selectedMachines !== undefined && this.selectedMachines.length > 0) {
+        this.selectedMachines.forEach(s => om.push(s.item));
+      }
+      this.outMacchine.emit(om);
+  }
 }
  

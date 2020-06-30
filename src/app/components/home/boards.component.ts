@@ -76,6 +76,8 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
         }
     }
 
+
+
     ngOnDestroy() {
         if (this.sub) {
             this.sub.unsubscribe();
@@ -123,6 +125,31 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
 
     closeProspective() {
         this.sections = undefined;
+    }
+
+    filterMacchine(items : Item[]) {
+        if (items) {
+            this.sectionToBeDisplayed = 0;
+            this.machines = [];
+
+            if (items.length > 0) {
+                items.forEach(i => this.machines.push(i));
+            } else {
+                if (environment && environment.oData) {
+                    this.macchineService.getAllMachines().subscribe(resp => {
+                        if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
+                            resp.body.d.results.forEach(m => {
+                                if (m) {
+                                    this.machines.push(Macchina.fromJSON(m.Matnr, m.Email, m.Maktx, m.token, m.Langu, m.Family, m.LoioId));
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    this.machines = this.productsService.getAllMachines();
+                }
+            }
+        }
     }
 
 }

@@ -1,4 +1,4 @@
-<div><app-search-machines></app-search-machines></div>
+<div><app-search-machines (outMacchine)="filterMacchine($event)"></app-search-machines></div>
 <div *ngIf="sectionToBeDisplayed != 1">
     <ul id="machines-container" class="flex-container">
         <li id="machines-item" *ngFor="let m of machines" class="flex-item">
