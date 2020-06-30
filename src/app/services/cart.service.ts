@@ -70,7 +70,7 @@ import { Subject } from 'rxjs';
         let cart : Cart = null;
         const orders : Order[] = [];
         const items : Product[] = Array(20).fill(0).map((x, i) => (
-          new Product(`Code ${i + 1}`,`Product ${i + 1}`, (i+1 * 10), (i%2 === 0))
+          new Product(`Code ${i + 1}`,`Product ${i + 1}`, (i+1 * 10), 'EUR', (i%2 === 0))
           ));
         items.forEach(i => {
           const order : Order = new Order;

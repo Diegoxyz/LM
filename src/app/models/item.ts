@@ -16,15 +16,22 @@ export class Item {
 export class Product extends Item {
     price: number;
     stock: boolean;
+    currency: string;
     maxQuantity?: number;
     minQuantity?: number;
-
-    constructor(code: string, description: string, price: number, stock: boolean, maxQuantity? : number, minQuantity?: number) {
+    /* ID dell'immagine, non sempre è presente */
+    picId?: string; 
+    thumbnail? : any;
+    svgThumbnail?: any;
+    
+    constructor(code: string, description: string, price: number, currency: string, stock: boolean, maxQuantity? : number, minQuantity?: number, LoioId?: string) {
         super(code, description);
         this.price = price;
         this.stock = stock;
         this.maxQuantity = maxQuantity;
         this.minQuantity = minQuantity;
+        this.currency = currency;
+        this.picId = LoioId;
     }
 }
 

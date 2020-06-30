@@ -1,4 +1,4 @@
-import { Item } from '@app/models/item';
+import { Item, Product } from '@app/models/item';
 
 export interface MacchineSet {
     /*
@@ -61,5 +61,43 @@ export class Section {
         item.family = MatnrMacchina;
         item.picId=LoioId;
         return item;
+    }
+}
+
+export class Materiale {
+    Matnr: string;
+    Kunnr: string;
+    MengeBom: string;
+    Maktx: string;
+    Maxlf: string;
+    Langu: string;
+    Minlf: string;
+    Matkl: string;
+    Pref: string;
+    Maktlx: string;
+    Prodh: string;
+    Prodhx: string;
+    Kdmat: string;
+    Netpr: string; // Price
+    Waers: string; // Currency
+    Labst: string;
+    Meins: string;
+    StockIndicator: string;
+    Email: string;
+    Token: string;
+    ItemNumBom: string;
+    MatnrSezione: string;
+    LoioId: string;
+
+    static fromJSON(m : Materiale): Product {
+        const price : number = Number(m.Netpr);
+        let isInStock = false;
+        if (price > 0) {
+            isInStock = true;
+        }
+        const maxQuantity = Number(m.Maxlf);
+        const minQuantity = Number(m.Minlf);
+        const product = new Product(m.Matnr,m.Matnr,price,m.Waers, isInStock,maxQuantity,minQuantity,m.LoioId);
+        return product;
     }
 }
