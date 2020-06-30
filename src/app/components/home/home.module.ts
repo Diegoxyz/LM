@@ -35,7 +35,6 @@ import { CartOrderComponent } from './cart-order/cart-order.component';
 import { CartComponent } from './cart.component';
 import { SearchMachinesComponent } from './search-machines/search-machines.component';
 import { SectionCardComponent } from './board-section-card/section-card.component';
-import { BoardsSectionsComponent } from './boards-sections.component';
 
 @NgModule({
     imports: [
@@ -77,8 +76,7 @@ import { BoardsSectionsComponent } from './boards-sections.component';
         OrderProductComponent,
         SearchOrdersComponent,
         CartOrderComponent,
-        CartComponent,
-        BoardsSectionsComponent
+        CartComponent
     ]
 })
 export class HomeModule { }
