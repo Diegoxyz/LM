@@ -98,6 +98,7 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
     openSections(mach: Item) {
         this.sectionToBeDisplayed = 1;
         this.machines = [];
+        this.sections = [];
         this.section = "section";
         // this.sections = this.sectionService.getMachineServices(machine.Matnr);
         if (environment && environment.oData) {
