@@ -14,7 +14,7 @@ import { UserDataSetService } from '@app/models/OData/UserDataSet/userdataset.se
 })
 export class LoginComponent implements OnInit {
 
-  loginError : boolean = undefined;
+  loginError : boolean = false;
   returnUrl: string;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private accountService: AccountService, 
@@ -74,12 +74,30 @@ export class LoginComponent implements OnInit {
                     u.token = response2.body.d.Token;
                     console.log('response2.body.Langu:' + response2.body.d.Langu);
                     u.lang = response2.body.d.Langu;
+                    this.accountService.setUserValue(u.username,u.password, u.token, u.lang);
+                    this.loginError = false;
 
-                    this.userDataSetService.saveUserDataSet(u.username, u.token, u.lang);
+                    this.userDataSetService.fetchUserDatSet(u.username, u.token, u.lang).subscribe(resp => {
+                      if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
+                        console.log('resp.body.d.results[0].PswInitial:' + resp.body.d.results[0].PswInitial);
+                        console.log('resp.body.d.results[0].PswInitial:' + (resp.body.d.results[0].PswInitial === undefined));
+                        console.log('resp.body.d.results[0].PswInitial:' + (resp.body.d.results[0].PswInitial === ''));
+                        if (resp.body.d.results[0].PswInitial) {
+                          console.log('resp.body.d.results[0].PswInitial found');
+                        }
+                        if (resp.body.d.results[0].PswInitial !== undefined && resp.body.d.results[0].PswInitial === '') {
+                          this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/account/changePwd';
+                        }
+                        console.log('returnUrl:' +this.returnUrl);
+                        this.userDataSetService.setUserSetValue(resp.body.d.results[0].Kunnr,resp.body.d.results[0].Scenario, resp.body.d.results[0].Kunnrx);
+                      }
+                      
+                      this.router.navigate([this.returnUrl]);
+                    }, error => {
+                      this.loginError = true;
+                    });
                   }
-                  this.accountService.setUserValue(u.username,u.password, u.token, u.lang);
-                  this.loginError = false;
-                  this.router.navigate([this.returnUrl]);
+                  
                 }
                 );
                 
@@ -99,6 +117,7 @@ export class LoginComponent implements OnInit {
               this.loginError = false;
             }
             this.userDataSetService.saveUserDataSet(this.email.value, this.password.value, 'IT');
+            this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/account/changePwd';
             this.router.navigate([this.returnUrl]);
           },
           error => {

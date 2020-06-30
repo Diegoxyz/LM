@@ -3,6 +3,7 @@ import { AccountService } from '@app/services/account.service';
 import { Router } from '@angular/router';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { UserDataSetService } from '@app/models/OData/UserDataSet/userdataset.service';
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-my-account',
@@ -17,7 +18,12 @@ export class MyAccountComponent implements OnInit {
 
   ngOnInit(): void {
     this.language = this.accountService.userLanguage;
-    this.name = this.userDataSetService.userDataSetValue.Kunnrx;
+    if (environment && environment.oData) {
+      this.name = this.userDataSetService.userDataSetValue.Kunnrx;
+    } else {
+      this.name = 'Test';
+    }
+    
   }
   
 

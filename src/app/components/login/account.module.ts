@@ -9,6 +9,7 @@ import { LayoutComponent } from './layout.component';
 import { LoginBarComponent } from './login-bar/login-bar.component';
 import { NgxPopper } from 'angular-popper';
 import { FooterLoginComponent } from './footerLogin/footer-login.component';
+import { ChangePasswordComponent } from './change-password.component';
 
 @NgModule({
     imports: [
@@ -22,7 +23,8 @@ import { FooterLoginComponent } from './footerLogin/footer-login.component';
         RegisterComponent,
         LayoutComponent,
         LoginBarComponent,
-        FooterLoginComponent
+        FooterLoginComponent,
+        ChangePasswordComponent
     ]
 })
 export class AccountModule { }

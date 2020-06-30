@@ -30,7 +30,7 @@ export class UserDataSetService {
       })
     }
 
-    private fetchUserDatSet(email : string, token : string, language : string) : Observable<any>{
+    public fetchUserDatSet(email : string, token : string, language : string) : Observable<any>{
         /* URL: http://192.168.0.83:8000/sap/opu/odata/sap/ZSD_SP_SRV/UserDataSet?&$format=json&$filter=Email eq 'roberto.mazzocato@eservices.it' and Token eq '000D3A2544DE1EDAAD8D7B3C3456628D' and Langu eq 'I' */
         // Se può essere utile: https://github.com/techniq/odata-query/blob/master/README.md
         let url : string = 'UserDataSet?';

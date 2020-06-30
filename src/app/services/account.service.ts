@@ -122,6 +122,22 @@ export class AccountService {
       '/destinations/ZSD_SP_SRV/LoginSet', loginSet, options);
   }
 
+  public changePassword(username: string, oldPassword: string, newPassword: string, token : string, lang : string, csrftoken : string): Observable<HttpResponse<any>> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-CSRF-Token': csrftoken });
+    let options = { headers: headers, observe: "response" as 'body'};
+    let loginSet = {
+      Username : username,
+      PasswordOld : oldPassword,
+      PasswordNew: newPassword,
+      Token    : token,
+      Langu    : lang
+    }
+    return this.http.post<HttpResponse<any>>(
+      '/destinations/ZSD_SP_SRV/ChangePswSet', loginSet, options);
+  }
+
   public logout():void{
     // TODO
     // remove user from local storage and set current user to null
