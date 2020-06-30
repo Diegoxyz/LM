@@ -79,16 +79,9 @@ export class LoginComponent implements OnInit {
 
                     this.userDataSetService.fetchUserDatSet(u.username, u.token, u.lang).subscribe(resp => {
                       if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
-                        console.log('resp.body.d.results[0].PswInitial:' + resp.body.d.results[0].PswInitial);
-                        console.log('resp.body.d.results[0].PswInitial:' + (resp.body.d.results[0].PswInitial === undefined));
-                        console.log('resp.body.d.results[0].PswInitial:' + (resp.body.d.results[0].PswInitial === ''));
-                        if (resp.body.d.results[0].PswInitial) {
-                          console.log('resp.body.d.results[0].PswInitial found');
-                        }
-                        if (resp.body.d.results[0].PswInitial !== undefined && resp.body.d.results[0].PswInitial === '') {
+                        if (resp.body.d.results[0].PswInitial !== undefined && resp.body.d.results[0].PswInitial !== '') {
                           this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/account/changePwd';
                         }
-                        console.log('returnUrl:' +this.returnUrl);
                         this.userDataSetService.setUserSetValue(resp.body.d.results[0].Kunnr,resp.body.d.results[0].Scenario, resp.body.d.results[0].Kunnrx);
                       }
                       
