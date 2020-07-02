@@ -1,13 +1,13 @@
 <div class="prospective-card">
     <div class="flex-container">
         <div class="flex-item board-image">
-            <img *ngIf="thumbnail" class="img-fluid card-img-top" id='pic' [src]='thumbnail' width="260" height="260" style="width: 100%; max-height:100%">
+            <img *ngIf="thumbnail" class="img-fluid card-img-top" id='pic' [src]='thumbnail' width="260" height="260" style="width: 100%; max-height:70%;">
             <div *ngIf="svgThumbnail">
                 <!-- <img [src]="sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ svgThumbnail)" width="500" height="500" style="width: 100%; max-height:70%;"> -->
-                <object 
-                    [data]="sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ svgThumbnail)" width="500" height="600" style="width: 100%; max-height:70%;"> 
-                </object>
-            </div>
+            <object 
+               [data]="sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ svgThumbnail)" width="500" height="600" style="width: 100%; max-height:70%;"> 
+            </object>
+        </div>
             <img *ngIf="thumbnail === undefined && svgThumbnail === undefined" class="img-fluid card-img-top" src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260" style="width: 100%; max-height:70%;">
         </div>
         <div class="flex-item board-panel">
@@ -34,36 +34,42 @@
                                 <br> -->
                                 <div style="display: inline;">Descr.: {{ item.description }} </div>
                                 <div>Stock: 
-                                    <fa-icon id="circle-green" *ngIf="item.stock" [icon]="faCircle"></fa-icon>
-                                    <fa-icon id="circle-red" *ngIf="!item.stock" [icon]="faCircle"></fa-icon>
+                                    <fa-icon id="circle-red" *ngIf="item.stockIndicator === '' || item.stockIndicator === '3'" [icon]="faCircle"></fa-icon>
+                                    <fa-icon id="circle-yellow" *ngIf="item.stockIndicator === '2'" [icon]="faCircle"></fa-icon>
+                                    <fa-icon id="circle-green" *ngIf="item.stockIndicator === '1'" [icon]="faCircle"></fa-icon>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4"><span>Position:</span></div>
                                     <div class="col-md-8">
                                         <div class="element-number-container">
-                                            <div class="blue-square">1</div>
+                                            <div class="blue-square">{{ item.itemNumBom }}</div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-2">
                                         <div class="row">
                                             <div class="col-md-auto" >
                                                 <div id="item-price" style="padding-top: 3px;">{{ item.price }} {{item.currency}}</div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-5">
-                                        <input id="qty" type="number" step="1" min="0" max="9999" name="" value="{{ quantity }}"
-                                            title="Quantity" size="2" pattern="[0-9]*" inputmode="numeric" aria-labelledby="">
-                                    </div>
-                                    <div id= "icon-btn-div" class="col-md-3">
-                                        <fa-icon id="btn-icon" [icon]="faShoppingCart" (click)="addProduct()" size="1x">
+                                    <form [formGroup]="productForm" (ngSubmit)="addProduct()">
+                                        <div class="col-md-10">
+                                            <div class="form-group">
+                                            <input id="id" formControlName="qty" type="number" step="1" min="0" max="9999"
+                                                title="Quantity" size="2" pattern="[0-9]*" inputmode="numeric" aria-labelledby="" class="form-control">
+                                            </div>
+                                        </div>
+                                       
+                                <div id= "icon-btn-div" class="col-md-3">
+                                    <button type="submit">
+                                        <fa-icon id="btn-icon" [icon]="faShoppingCart" size="1x">
                                         </fa-icon>
-                                    </div>
+                                    </button>
                                 </div>
-
+                            </form>
 
                             </div>
                         </div>

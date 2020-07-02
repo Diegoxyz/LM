@@ -12,6 +12,11 @@ import { Router } from '@angular/router';
 import { ChangePage } from '../services/change-page.service';
 import { Order } from '@app/models/order';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { environment } from '@environments/environment';
+import { CarrelloService } from '@app/services/carrello.service';
+import { UserDataSetService } from '@app/models/OData/UserDataSet/userdataset.service';
+import { Carrello } from '@app/models/carrello';
+import { UserDataSet } from '@app/models/OData/UserDataSet/userdataset.entity';
 
 @Component({
   selector: 'app-bar',
@@ -26,28 +31,75 @@ export class BarComponent implements OnInit {
   faShoppingCart = faShoppingCart;
   
   constructor(private accountService : AccountService, private manageProducts : ManageProducts, 
-    private cartService : CartService, private modalService: BsModalService,private router: Router, private changePage: ChangePage) { }
+    private cartService : CartService, private modalService: BsModalService,private router: Router, private changePage: ChangePage,
+    private carrelloService: CarrelloService, private userDataSetService : UserDataSetService) { }
 
   ngOnInit(): void {
     
-    const user : User = this.accountService.userValue;
-    const customer : Customer = {
-      firstName : user.username,
-      lastName : user.username,
-      fiscalCode : user.username,
-    };
-    this.customer = customer;
-
     //TODO Add existing cart from BE
-    this.cart = this.cartService.loadMockCart(customer);
+    if (environment && environment.oData) {
+      this.carrelloService.getCart().subscribe(resp => {
+        if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
+          console.log('bar.component - this.cart.orders:' + resp.body.d.results);
+          this.cart = Cart.fromCarrello(resp.body.d.results, this.userDataSetService.userDataSetValue);
+          console.log('bar.component - this.cart.orders:' + this.cart.orders);
+          this.cartService.setCart(this.cart);
+        }
+      });
+
+      this.cartService.cart$.subscribe((o : Order) => {
+        this.carrelloService.getCart().subscribe(resp => {
+          if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
+            console.log('bar.component2 - this.cart.orders:' + resp.body.d.results);
+            this.cart = Cart.fromCarrello(resp.body.d.results, this.userDataSetService.userDataSetValue);
+            console.log('bar.component2 - this.cart.orders:' + this.cart.orders);
+            this.cartService.setCart(this.cart);
+          }
+        });
+      });
+
+        
+    } else {
+      const user : User = this.accountService.userValue;
+      const customer : Customer = {
+        firstName : user.username,
+        lastName : user.username,
+        fiscalCode : user.username,
+      };
+      this.customer = customer;
+      // this.cart = this.cartService.loadMockCart(customer);
+      const carrello : Carrello[] = [];
+      const userDataSet : UserDataSet = { 
+            'Langu': 'I',
+            'KunnrRif': '',
+            "Kunnr": "100021",
+            'Kunnrx': 'Test',
+            'KunnrRifx': '',
+            'Parnr': '0000000530',
+            "Email": "roberto.mazzocato@eservices.it",
+            "ErdatAct": "\/Date(1590969600000)\/",
+            "UzeitAct": "PT11H12M00S",
+            "PswInitial": "",
+            "Scenario": "2",
+            "Ruolo": "",
+            "ErdatChangePsw": "\/Date(1590969600000)\/",
+            "UzeitChangePsw": "PT12H00M00S",
+            "Token": "000D3A2544DE1EDAADBEA94A0044C28D"
+      };
+
+      this.cart = Cart.fromCarrello(carrello, userDataSet);
+            console.log('bar.component2 - this.cart.orders:' + this.cart.orders);
+            this.cartService.setCart(this.cart);
+
+      this.cartService.cart$.subscribe((o : Order) => {
+        this.cart = this.cartService.getCart(this.customer);
+      });
+    }
 
     this.manageProducts.manageProducts$.subscribe((h : HandledProduct) => {
         this.cart = this.cartService.addAnOrder(h.product, h.quantity);
     });
 
-    this.cartService.cart$.subscribe((o : Order) => {
-      this.cart = this.cartService.getCart(this.customer);
-    });
   }
 
   public get cartQuantity() : number {
