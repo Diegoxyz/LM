@@ -33,8 +33,8 @@
 <!--                                 <div style="display: inline;">Code.:  {{ item.code }} </div>
                                 <br> -->
                                 <div style="display: inline;">Descr.: {{ item.description }} </div>
-                                <div>Stock: 
-                                    <fa-icon id="circle-red" *ngIf="item.stockIndicator === '' || item.stockIndicator === '3'" [icon]="faCircle"></fa-icon>
+                                <div>Stock:
+                                    <fa-icon id="circle-red" *ngIf="item.stockIndicator === undefined || item.stockIndicator === '' || item.stockIndicator === '3'" [icon]="faCircle"></fa-icon>
                                     <fa-icon id="circle-yellow" *ngIf="item.stockIndicator === '2'" [icon]="faCircle"></fa-icon>
                                     <fa-icon id="circle-green" *ngIf="item.stockIndicator === '1'" [icon]="faCircle"></fa-icon>
                                 </div>
@@ -48,28 +48,23 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-2">
+                                    <div class="col-md-4">
                                         <div class="row">
                                             <div class="col-md-auto" >
                                                 <div id="item-price" style="padding-top: 3px;">{{ item.price }} {{item.currency}}</div>
                                             </div>
                                         </div>
                                     </div>
-                                    <form [formGroup]="productForm" (ngSubmit)="addProduct()">
-                                        <div class="col-md-10">
-                                            <div class="form-group">
-                                            <input id="id" formControlName="qty" type="number" step="1" min="0" max="9999"
-                                                title="Quantity" size="2" pattern="[0-9]*" inputmode="numeric" aria-labelledby="" class="form-control">
-                                            </div>
-                                        </div>
-                                       
-                                <div id= "icon-btn-div" class="col-md-3">
-                                    <button type="submit">
-                                        <fa-icon id="btn-icon" [icon]="faShoppingCart" size="1x">
+                                    <div class="col-md-5">
+                                        <input id="qty" type="number" step="1" min="0" max="9999" name="" value="{{ quantity }}"
+                                            title="Quantity" size="2" pattern="[0-9]*" inputmode="numeric" aria-labelledby="">
+                                    </div>
+                                    <div id= "icon-btn-div" class="col-md-3">
+                                        <fa-icon id="btn-icon" [icon]="faShoppingCart" (click)="addProduct()" size="1x">
                                         </fa-icon>
-                                    </button>
+                                    </div>
                                 </div>
-                            </form>
+
 
                             </div>
                         </div>

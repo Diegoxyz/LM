@@ -97,7 +97,19 @@ export class Materiale {
         }
         const maxQuantity = Number(m.Maxlf);
         const minQuantity = Number(m.Minlf);
-        const product = new Product(m.Matnr,m.Matnr,price,m.Waers, isInStock,maxQuantity,minQuantity,m.LoioId);
+        const itNumB : string = '' + Number(m.ItemNumBom);
+
+        const product = new Product(m.Matnr,
+                                    m.Matnr,
+                                    price,
+                                    m.Waers, 
+                                    isInStock,
+                                    maxQuantity,
+                                    minQuantity
+                                    ,m.LoioId
+                                    ,itNumB
+                                    ,m.StockIndicator
+                                    )
         return product;
     }
 }
