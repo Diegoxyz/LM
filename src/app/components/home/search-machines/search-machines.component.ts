@@ -91,7 +91,7 @@ export class SearchMachinesComponent implements OnInit {
         s = filter;
       }
       return this.machines.filter(option => {
-        return option.item && option.item.code && option.item.description && option.item.code.toLowerCase().indexOf(s.toLowerCase()) >= 0 || option.item.description.toLowerCase().indexOf(s.toLowerCase()) >= 0;
+        return option.item && option.item.code && option.item.description && (option.item.code.toLowerCase().indexOf(s.toLowerCase()) >= 0 || option.item.description.toLowerCase().indexOf(s.toLowerCase())) >= 0;
       })
     } else {
       return this.machines.slice();
@@ -124,7 +124,7 @@ export class SearchMachinesComponent implements OnInit {
     const input = event.input;
     const value = event.value;
 
-    // Add our fruit
+
     if ((value || '').trim()) {
       this.allMacchinas.forEach(am => {
         if (am.code === value.trim() || am.description === value.trim()) {
@@ -161,7 +161,6 @@ export class SearchMachinesComponent implements OnInit {
       }
     });
     
-    // this.fruitInput.nativeElement.value = '';
     this.searchMachineControl.setValue(null);
   }
 

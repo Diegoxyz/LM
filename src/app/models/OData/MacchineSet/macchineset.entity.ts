@@ -100,10 +100,12 @@ export class Materiale {
         const itNumB : string = '' + Number(m.ItemNumBom);
 
         const product = new Product(m.Matnr,
-                                    m.Matnr,
+                                    m.Maktx,
                                     price,
                                     m.Waers, 
                                     isInStock,
+                                    m.Prodhx,
+                                    m.Pref,
                                     maxQuantity,
                                     minQuantity
                                     ,m.LoioId

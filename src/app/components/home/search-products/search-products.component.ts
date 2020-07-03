@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { Group } from '@app/models/item';
+import { Group, Product } from '@app/models/item';
 import { ProductsService } from '@app/services/products.service';
 import { faSearch,faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
@@ -8,9 +8,18 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { startWith, map } from 'rxjs/operators';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { CatalogueService } from '@app/services/catalogue.service';
+import { environment } from '@environments/environment';
+import { Materiale } from '@app/models/OData/MacchineSet/macchineset.entity';
+
+export class GroupList {
+  constructor(public group: Group, public selected?:boolean) {
+    if (selected === undefined) selected = false;
+  }
+}
 
 export class ItemList {
-  constructor(public item: string, public selected?: boolean) {
+  constructor(public item: Product, public selected?: boolean) {
     if (selected === undefined) selected = false;
   }
 }
@@ -31,13 +40,15 @@ export class SearchProductsComponent implements OnInit {
   filteredProducts : Observable<ItemList[]>;
   selectedProducts : ItemList[] = new Array<ItemList>();
   lastProductFilter = '';
+  allProducts : Product[] = [];
 
   searchGroupControl = new FormControl();
   searchOnlySelectedGroup: boolean = false;
-  groups : ItemList[] = [];
-  filteredGroups : Observable<ItemList[]>;
-  selectedGroups : ItemList[] = new Array<ItemList>();
+  groups : GroupList[] = [];
+  filteredGroups : Observable<GroupList[]>;
+  selectedGroups : GroupList[] = new Array<GroupList>();
   lastGroupFilter = '';
+  allGroups : Group[] = [];
 
   faSearch = faSearch;
   faTimesCircle = faTimesCircle;
@@ -47,28 +58,67 @@ export class SearchProductsComponent implements OnInit {
   removable = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
 
-  constructor(private fb: FormBuilder, private productsService: ProductsService) { }
+  @Output()
+  outProducts : EventEmitter<Product[]> = new EventEmitter<Product[]>();
+  
+  constructor(private fb: FormBuilder, private productsService: ProductsService, private catalogueService : CatalogueService) { }
 
   ngOnInit(): void {
-    const listOfGroups = this.productsService.getAllGroups();
-    listOfGroups.forEach(g => {
-      this.groups.push({
-        item : g.code + ' ' + g.description
+    if (environment && environment.oData) {
+      this.catalogueService.getHierarchies().subscribe(resp => {
+        if (resp && resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
+          resp.body.d.results.forEach(g => {
+            const gr : Group = new Group(g.Prodh,g.Prodhx);
+            this.groups.push({
+              group : gr
+            });
+            this.allGroups.push(g);
+          });
+        }
       });
-    });
-    this.filteredGroups = this.searchGroupControl.valueChanges.pipe(
-      startWith(null),
-      map((group: ItemList | null) => group ? this.filterGroup(group) : this.groups.slice()));
 
-    const listOfProducts = this.productsService.getAllProducts();
-    listOfProducts.forEach(m => {
-      this.products.push({
-        item : m.code + ' ' + m.description
+      this.filteredGroups = this.searchGroupControl.valueChanges.pipe(
+        startWith(null),
+        map((group: GroupList | null) => group ? this.filterGroup(group) : this.groups.slice()));
+      
+      this.catalogueService.getAllItems().subscribe(resp => {
+        if (resp && resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
+          resp.body.d.results.forEach(p => {
+            this.products.push({
+              item : Materiale.fromJSON(p)
+            });
+            this.allProducts.push(Materiale.fromJSON(p));
+          });
+        }
       });
-    });
-    this.filteredProducts = this.searchProductControl.valueChanges.pipe(
-      startWith(null),
-      map((product: ItemList | null) => product ? this.filterProduct(product) : this.products.slice()));
+      
+      this.filteredProducts = this.searchProductControl.valueChanges.pipe(
+        startWith(null),
+        map((product: ItemList | null) => product ? this.filterProduct(product) : this.products.slice()));
+    } else {
+      const listOfGroups = this.productsService.getAllGroups();
+      listOfGroups.forEach(g => {
+        this.groups.push({
+          group : g
+        });
+        this.allGroups.push(g);
+      });
+      this.filteredGroups = this.searchGroupControl.valueChanges.pipe(
+        startWith(null),
+        map((group: GroupList | null) => group ? this.filterGroup(group) : this.groups.slice()));
+
+      const listOfProducts = this.productsService.getAllProducts();
+      listOfProducts.forEach(m => {
+        this.products.push({
+          item : m
+        });
+        this.allProducts.push(m);
+      });
+      this.filteredProducts = this.searchProductControl.valueChanges.pipe(
+        startWith(null),
+        map((product: ItemList | null) => product ? this.filterProduct(product) : this.products.slice()));
+      }
+    
   }
 
   filterProduct(filter: any): ItemList[] {
@@ -81,14 +131,14 @@ export class SearchProductsComponent implements OnInit {
         s = filter;
       }
       return this.products.filter(option => {
-        return option.item.toLowerCase().indexOf(s.toLowerCase()) >= 0;
+        return option.item && option.item.code && option.item.description && (option.item.code.toLowerCase().indexOf(s.toLowerCase()) >= 0 || option.item.description.toLowerCase().indexOf(s.toLowerCase()) >= 0);
       })
     } else {
       return this.products.slice();
     }
   }
 
-  filterGroup(filter: any): ItemList[] {
+  filterGroup(filter: any): GroupList[] {
     this.lastGroupFilter = filter.item;
     if (filter) {
       let s = '';
@@ -98,7 +148,7 @@ export class SearchProductsComponent implements OnInit {
         s = filter;
       }
       return this.groups.filter(option => {
-        return option.item.toLowerCase().indexOf(s.toLowerCase()) >= 0;
+        return option.group && option.group.code && option.group.description && (option.group.code.toLowerCase().indexOf(s.toLowerCase()) >= 0 || option.group.description.toLowerCase().indexOf(s.toLowerCase()) >= 0);
       })
     } else {
       return this.groups.slice();
@@ -110,7 +160,7 @@ export class SearchProductsComponent implements OnInit {
     this.toggleSelectionProduct(item);
   }
 
-  optionClickedGroup(event: Event, item: ItemList) {
+  optionClickedGroup(event: Event, item: GroupList) {
     event.stopPropagation();
     this.toggleSelectionGroup(item);
   }
@@ -121,20 +171,20 @@ export class SearchProductsComponent implements OnInit {
       this.selectedProducts.push(item);
       // this.changeCallback( this.selectedMachines );
     } else {
-      const i = this.selectedProducts.findIndex(value => value.item === item.item );
+      const i = this.selectedProducts.findIndex(value => value.item.code === item.item.code );
       this.selectedProducts.splice(i, 1);
       // this.changeCallback( this.selectedMachines );
     }
 
   }
 
-  toggleSelectionGroup(item: ItemList) {
+  toggleSelectionGroup(item: GroupList) {
     item.selected = !item.selected;
     if (item.selected) {
       this.selectedGroups.push(item);
       // this.changeCallback( this.selectedMachines );
     } else {
-      const i = this.selectedGroups.findIndex(value => value.item === item.item );
+      const i = this.selectedGroups.findIndex(value => value.group.code === item.group.code );
       this.selectedGroups.splice(i, 1);
       // this.changeCallback( this.selectedMachines );
     }
@@ -145,7 +195,7 @@ export class SearchProductsComponent implements OnInit {
     this.toggleSelectionProduct(item);
   }
 
-  removeGroup(item: ItemList) {
+  removeGroup(item: GroupList) {
     this.toggleSelectionGroup(item);
   }
 
@@ -154,9 +204,13 @@ export class SearchProductsComponent implements OnInit {
     const value = event.value;
 
     if ((value || '').trim()) {
-      this.products.push({
-        item: value.trim(),
-        selected : true
+      this.allProducts.forEach(ap => {
+        if (ap.code === value.trim() || ap.description === value.trim()) {
+          this.products.push({
+            item: ap,
+            selected : true
+          });
+        }
       });
     }
 
@@ -173,9 +227,13 @@ export class SearchProductsComponent implements OnInit {
     const value = event.value;
 
     if ((value || '').trim()) {
-      this.groups.push({
-        item: value.trim(),
-        selected : true
+      this.allGroups.forEach(ag => {
+        if (ag.code === value.trim() || ag.description === value.trim()) {
+          this.groups.push({
+            group: ag,
+            selected: true
+          })
+        }
       });
     }
 
@@ -187,27 +245,27 @@ export class SearchProductsComponent implements OnInit {
     this.searchGroupControl.setValue(null);
   }
 
-  /*removeFruit(fruit: string): void {
-    const index = this.fruits.indexOf(fruit);
-
-    if (index >= 0) {
-      this.fruits.splice(index, 1);
-    }
-  }*/
-
   selectedProduct(event: MatAutocompleteSelectedEvent): void {
-    this.selectedProducts.push({
-      item : event.option.viewValue
+    this.allProducts.forEach(am => {
+      if (am.code === event.option.viewValue || am.description === event.option.viewValue) {
+        this.selectedProducts.push({
+          item : am
+        });
+      }
     });
-    // this.fruitInput.nativeElement.value = '';
+
     this.searchProductControl.setValue(null);
   }
 
   selectedGroup(event: MatAutocompleteSelectedEvent): void {
-    this.selectedGroups.push({
-      item : event.option.viewValue
+    this.allGroups.forEach(ag => {
+      if (ag.code === event.option.viewValue || ag.description === event.option.viewValue) {
+        this.selectedGroups.push({
+          group : ag
+        });
+      }
     });
-    // this.fruitInput.nativeElement.value = '';
+
     this.searchGroupControl.setValue(null);
   }
 
@@ -216,9 +274,47 @@ export class SearchProductsComponent implements OnInit {
   }
 
   public changeOnlySelected(event) {
-    if (event) {
-      this.searchOnlySelected = !this.searchOnlySelected;
+    this.searchOnlySelected = !this.searchOnlySelected;
+  }
+
+  search() {
+    const om : Product[] = [];
+
+    if (this.selectedProducts !== undefined && this.selectedProducts.length > 0) {
+      this.selectedProducts.forEach(s => {
+        if (!this.searchOnlySelected || (this.searchOnlySelected && s.item.preferred)) {
+          om.push(s.item);
+        }
+      });
+    } else if (this.searchOnlySelected) {
+      this.allProducts.forEach(s => {
+        if (s.preferred) {
+          om.push(s);
+        }
+      });
     }
+
+    let os : Product[] = om;
+
+    if (this.selectedGroups !== undefined && this.selectedGroups.length > 0) {
+      os = [];
+      this.selectedGroups.forEach(g => {
+        if (om.length > 0) {
+          om.forEach(o => {
+            if (o.prodhx === g.group.code) {
+              os.push(o);
+            }
+          })
+        } else if (this.allProducts.length > 0) {
+          this.allProducts.forEach(p => {
+            if (p.prodhx === g.group.code) {
+              os.push(p);
+            }
+          })
+        }
+      });
+    }
+    this.outProducts.emit(os);
   }
 
 }

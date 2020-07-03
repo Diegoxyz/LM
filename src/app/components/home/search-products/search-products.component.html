@@ -10,7 +10,7 @@
                             [selectable]="selectable"
                             [removable]="removable"
                             (removed)="removeProduct(product)">
-                            {{ product.item }}
+                            {{ product.item.description }}
                             <mat-icon matChipRemove *ngIf="removable"><fa-icon [icon]="faTimesCircle" 
                             size="1x">
                                 </fa-icon></mat-icon>
@@ -30,7 +30,7 @@
                             <div (click)="optionClickedProduct($event, product);">
                                 <mat-checkbox [checked]="product.selected" (change)="toggleSelectionProduct(product)" 
                                 (click)="$event.stopPropagation()">
-                                    {{ product.item }}
+                                    {{ product.item.description }}
                                 </mat-checkbox>
                             </div>
                           </mat-option>
@@ -45,7 +45,7 @@
                             [selectable]="selectable"
                             [removable]="removable"
                             (removed)="removeGroup(group)">
-                            {{ group.item }}
+                            {{ group.group.description }}
                             <mat-icon matChipRemove *ngIf="removable"><fa-icon [icon]="faTimesCircle" 
                             size="1x">
                                 </fa-icon></mat-icon>
@@ -65,7 +65,7 @@
                             <div (click)="optionClickedGroup($event, group);">
                                 <mat-checkbox [checked]="group.selected" (change)="toggleSelectionGroup(group)" 
                                 (click)="$event.stopPropagation()">
-                                    {{ group.item }}
+                                    {{ group.group.description }}
                                 </mat-checkbox>
                             </div>
                           </mat-option>
@@ -94,7 +94,7 @@
     </div>
     <div class="flex-item">
         <div>
-            <button id="search" class="btn btn-primary">
+            <button id="search" class="btn btn-primary" (click)="search()">
                 <span>Search&nbsp;&nbsp;&nbsp;</span>  <fa-icon [icon]="faSearch" size="1x">
                 </fa-icon>
             </button>

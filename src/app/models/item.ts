@@ -28,8 +28,11 @@ export class Product extends Item {
     svgThumbnail?: any;
     itemNumBom: string;
     stockIndicator: string;
+    // Gerarchia
+    prodhx: string;
+    preferred: boolean;
     
-    constructor(code: string, description: string, price: number, currency: string, stock: boolean, maxQuantity? : number, minQuantity?: number, LoioId?: string, itemNumBom?: string, stockIndicator?: string ) {
+    constructor(code: string, description: string, price: number, currency: string, stock: boolean, prodhx: string, pref : string, maxQuantity? : number, minQuantity?: number, LoioId?: string, itemNumBom?: string, stockIndicator?: string ) {
         super(code, description);
         this.price = price;
         this.stock = stock;
@@ -39,6 +42,12 @@ export class Product extends Item {
         this.picId = LoioId;
         this.itemNumBom = itemNumBom;
         this.stockIndicator = stockIndicator;
+        this.prodhx = prodhx;
+        if (pref.toUpperCase() === 'X') {
+            this.preferred = true;
+        } else {
+            this.preferred = false;
+        }
     }
 }
 
