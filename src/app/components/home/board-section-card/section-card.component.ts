@@ -41,26 +41,21 @@ export class SectionCardComponent implements OnInit {
     
     ngOnInit(): void {
         if (environment && environment.oData) {
+            this.thumbnail = undefined;
+            this.svgThumbnail = undefined;
             if (this.item.picId) {
-                console.log('section card item.picId:' + this.item.picId);
                 this.binDataMatnrSetService.getImage(this.item.code,this.item.picId).subscribe((resp : any) => {
                     if (resp.body && resp.body.d && resp.body.d) {
-                        let objectURL = '';
                         if (resp.body.d.Filename) {
-                            console.log('section-card resp.body.d.filename:' + resp.body.d.Filename);
-                            const s : string = '';
                             const fileName = resp.body.d.Filename && resp.body.d.Filename.substring(resp.body.d.Filename.lastIndexOf('.') + 1);
-                            console.log('section-card fileName:' + fileName);
                             // let objectURL = 'data:image/jpeg;base64,' + resp.body.d.BinDoc;
                             if (fileName && fileName === 'jpg') {
-                                console.log('fileName jpg');
                                 let objectURL = 'data:image/'+fileName+';base64,' + resp.body.d.BinDoc;
                                 this.thumbnail = this.sanitizer.bypassSecurityTrustUrl(objectURL);
                             } else if (fileName && fileName === 'svg') {
-                                console.log('fileName svg');
                                 this.svgThumbnail= resp.body.d.BinDoc;
                             } else {
-                                console.log('no fileName');
+                                console.log('section - no fileName or not recognized:' + fileName);
                             }                         
                         }
                     }
