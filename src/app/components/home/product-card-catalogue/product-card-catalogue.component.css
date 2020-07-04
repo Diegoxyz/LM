@@ -153,3 +153,13 @@ h6{
   text-align: left;
   padding-left: 0.5rem;
 }
+
+.card-description1 {
+  text-align: center;
+  font-weight: normal;
+}
+
+.card-description2 {
+  text-align: center;
+  font-weight: bold;
+}

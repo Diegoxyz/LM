@@ -10,10 +10,12 @@ export class ManageProducts {
   manageProducts$ = this._product.asObservable();
 
   changeProduct(product : Product, quantity : number) {
-    const handledProduct = {
-      product : product,
-      quantity : quantity
+    if (product !== null) {
+      const handledProduct = {
+        product : product,
+        quantity : quantity
+      }
+      this._product.next(handledProduct);
     }
-    this._product.next(handledProduct);
   }
 }

@@ -84,3 +84,8 @@
 #section-card{
   margin-left: 0%;
 }
+
+#code-card-title-id{
+ font-size: 0.8rem;
+ font-style: italic;
+}

@@ -49,6 +49,7 @@ import { Carrello } from '@app/models/carrello';
             '/destinations/ZSD_SP_SRV/CarrelloSet', carrello, options);
     }
 
+    // save === insert or update
     public updateCart(csrftoken : string, carrello : Carrello) : Observable<any> {
         const u : User = this.accountService.userValue;
         let headers = new HttpHeaders({

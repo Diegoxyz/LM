@@ -55,10 +55,13 @@
     border-radius: 30px;
     border: solid 1px black;
     /*background-color: #0074D9;*/
-    width: 1.25em;
-    height: 1.25em;
+    width: 1.8em;
+    height: 1.8em;
     display: inline-block;
-    padding-top: 1%;
+    padding-top: 1.8%;
+    padding-left: 1%;
+    padding-right: 1%;
+    font-size: 0.8rem;
   }
 
   .button-close-container {

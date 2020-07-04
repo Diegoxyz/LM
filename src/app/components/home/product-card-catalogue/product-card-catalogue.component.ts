@@ -71,22 +71,19 @@ export class ProductCardCatalogueComponent implements OnInit {
             qty: ['']
           });
 
-          this.qty.setValue(0);
+        this.qty.setValue(0);
         
         if (environment && !environment.oData) {
             if (this.item.code === 'Code 1') {
                 this.qty.setValue(10);
             }
         } 
-
+        
         this.cartService.getCart().orders.forEach(o => {
             if (o && this.item && o.product && o.product.code === this.item.code) {
                 this.qty.setValue(o.quantity);
             }
         });
-        
-
-        
     }
 
     get qty() {
