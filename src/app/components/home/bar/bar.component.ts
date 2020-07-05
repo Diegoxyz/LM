@@ -36,13 +36,10 @@ export class BarComponent implements OnInit {
 
   ngOnInit(): void {
     
-    //TODO Add existing cart from BE
-    if (environment && environment.oData) {
+    if (environment && environment.oData && this.accountService.user !== undefined && this.accountService.user !== null) {
       this.carrelloService.getCart().subscribe(resp => {
         if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
-          console.log('bar.component - this.cart.orders:' + resp.body.d.results);
           this.cart = Cart.fromCarrello(resp.body.d.results, this.userDataSetService.userDataSetValue);
-          console.log('bar.component - this.cart.orders:' + this.cart.orders);
           this.cartService.setCart(this.cart);
         }
       });
@@ -50,16 +47,14 @@ export class BarComponent implements OnInit {
       this.cartService.cart$.subscribe((o : Order) => {
         this.carrelloService.getCart().subscribe(resp => {
           if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
-            console.log('bar.component2 - this.cart.orders:' + resp.body.d.results);
             this.cart = Cart.fromCarrello(resp.body.d.results, this.userDataSetService.userDataSetValue);
-            console.log('bar.component2 - this.cart.orders:' + this.cart.orders);
             this.cartService.setCart(this.cart);
           }
         });
       });
 
         
-    } else {
+    } else if (environment && !environment.oData) {
       const user : User = this.accountService.userValue;
       const customer : Customer = {
         firstName : user.username,

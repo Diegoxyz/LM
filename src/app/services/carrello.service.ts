@@ -58,8 +58,15 @@ import { Carrello } from '@app/models/carrello';
         carrello.Email = u.username;
         carrello.Token = u.token;
         let options = { headers: headers, observe: "response" as 'body'};
-        return this.http.post<HttpResponse<any>>(
-            '/destinations/ZSD_SP_SRV/CarrelloSet', carrello, options);
+        let url = '';
+        const matrn = 'Matnr=' + '\'' + carrello.Matnr + '\'';
+        const email = 'Email=' + '\'' + u.username + '\'';
+        const token = 'Token=' + '\'' + u.token + '\'';
+        const langu = 'Langu=' + '\'' + u.lang + '\'';
+        url = url.concat('(').concat(matrn).concat(',').concat(email).concat(',').concat(token).concat(',').concat(langu).concat(')');
+        console.log('updateCart - url:' + url);
+        return this.http.put<HttpResponse<any>>(
+            '/destinations/ZSD_SP_SRV/CarrelloSet' + url, carrello, options);
     }
 
     public deleteFromCarrelloByCarrello(csrftoken : string, carrello : Carrello) : Observable<any> {
