@@ -58,13 +58,14 @@ export class CatalogueComponent implements OnInit, OnDestroy {
                     resp.body.d.results.forEach(m => {
                         if (m) {
                             this.items.push(Materiale.fromJSON(m));
-                            const imagesForRow = this.items.length > this.imagesToView?this.imagesToView:this.items.length;
-                            for (let i = 0;i<imagesForRow;i++){
-                                this.itemsToView.push(this.items[i]); 
-                            }
                             this.cachedItems.push(Materiale.fromJSON(m));
                         }
                     });
+                }
+                const imagesForRow = this.items.length > this.imagesToView?this.imagesToView:this.items.length;
+                console.log('catalogue - imagesForRow:' + imagesForRow);
+                for (let i = 0;i<imagesForRow;i++){
+                    this.itemsToView.push(this.items[i]); 
                 }
             });
         } else {

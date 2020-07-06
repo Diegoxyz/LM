@@ -173,4 +173,12 @@ export class AccountService {
   public setUserLanguage(language : string) {
     localStorage.setItem('currentLanguage', language);
   }
+
+  public isSessionStillValid() : boolean {
+    if (this.userValue === undefined || this.userValue === null || this.user === undefined || this.user === null) {
+      console.log('isSessionStillValid - return false');
+      return false;
+    }
+    return true;
+  }
 }

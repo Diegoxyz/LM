@@ -97,4 +97,8 @@ import { Subject } from 'rxjs';
       public setCart(cart: Cart) {
         localStorage.setItem(this.cartId, JSON.stringify(cart));
       }
+
+      public loadCart() : string {
+        return localStorage.getItem(this.cartId);
+      }
   }

@@ -35,24 +35,40 @@ export class BarComponent implements OnInit {
     private carrelloService: CarrelloService, private userDataSetService : UserDataSetService) { }
 
   ngOnInit(): void {
-    
+
+    if (!this.accountService.isSessionStillValid()) {
+      this.accountService.logout();
+      setTimeout(
+        () => this.router.navigate(['/account/login']),
+        100
+      );
+    }
     if (environment && environment.oData && this.accountService.user !== undefined && this.accountService.user !== null) {
       this.carrelloService.getCart().subscribe(resp => {
+        console.log('this.carrelloService.getCart -' + resp);
         if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
           this.cart = Cart.fromCarrello(resp.body.d.results, this.userDataSetService.userDataSetValue);
           this.cartService.setCart(this.cart);
         }
       });
-
-      this.cartService.cart$.subscribe((o : Order) => {
-        this.carrelloService.getCart().subscribe(resp => {
-          if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
-            this.cart = Cart.fromCarrello(resp.body.d.results, this.userDataSetService.userDataSetValue);
-            this.cartService.setCart(this.cart);
+      
+      if (this.accountService.isSessionStillValid()) {
+        console.log('cart:' + this.cartService.loadCart());
+        this.cartService.cart$.subscribe((o : Order) => {
+          console.log('this.cartService.cart$ : o:' + o);
+          if (o) {
+            this.carrelloService.getCart().subscribe(resp => {
+              console.log('this.carrelloService.getCart2 -' + resp);
+              if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
+                this.cart = Cart.fromCarrello(resp.body.d.results, this.userDataSetService.userDataSetValue);
+                this.cartService.setCart(this.cart);
+              }
+            });
           }
         });
-      });
-
+  
+      }
+      
         
     } else if (environment && !environment.oData) {
       const user : User = this.accountService.userValue;
