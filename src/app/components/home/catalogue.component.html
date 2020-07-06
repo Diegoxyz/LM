@@ -1,7 +1,11 @@
 <div><app-search-products (outProducts)="filterProducts($event)"></app-search-products></div>
-<div><ul id="cat-container" class="flex-container">
-    <li *ngFor="let item of items" class="flex-item" >
-        <app-product-catalogue-card [item]="item"></app-product-catalogue-card>
-    </li>
-</ul>
+<div>
+    
+        <div id="cat-container" class="flex-container">
+                <li *ngFor="let item of itemsToView"> 
+                    <app-product-catalogue-card [item]="item"></app-product-catalogue-card>
+                </li> 
+        </div>
+    
 </div>
+ 

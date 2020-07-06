@@ -36,6 +36,7 @@ import { CartComponent } from './cart.component';
 import { SearchMachinesComponent } from './search-machines/search-machines.component';
 import { SectionCardComponent } from './board-section-card/section-card.component';
 
+
 @NgModule({
     imports: [
         CommonModule,
