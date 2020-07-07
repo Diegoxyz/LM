@@ -3,13 +3,20 @@
         <div class="hoverWrapper">
             <!-- <img class="img-fluid card-img-top" src="assets/img/items/Item1.PNG" sizes="(max-width: 260px) 100vw, 260px"
                 width="260" height="260"> -->
+
             <img *ngIf="thumbnail" class="img-fluid card-img-top" id='pic' [src]='thumbnail' sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
-            <!-- <ng-template #other_content>"No picture" image to be added here</ng-template> -->
+
             <div *ngIf="svgThumbnail">
                 <img [src]="sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ svgThumbnail)" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
             </div>
             <img *ngIf="thumbnail === undefined && svgThumbnail === undefined" class="img-fluid card-img-top" src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
-            <img *ngIf="item.preferred === true" id="add-to-favorite" class="img-fluid" src="assets/img/items/star.png">
+        
+  <!--           <img *ngIf="item.preferred === true" id="add-to-favorite" class="img-fluid" src="assets/img/items/star.png"> -->
+
+                <img *ngIf="item.preferred === true;else other_content" id="add-to-favorite" class="img-fluid" src="assets/img/items/star.png">
+                <ng-template #other_content>
+                    <img id="add-to-favorite" class="img-fluid" src="assets/img/items/empty.png">
+                </ng-template>
 
             <div class="">
                 <div class="row align-items-center no-gutters justify-content-between">
@@ -34,7 +41,7 @@
                         <h6 id="card-title" class="card-text">{{ item.currency }}</h6>
                     </div>
                     <div id="col-width" class="col-md-6">
-                        <h6 id="card-title-id" class="card-title">{{ item.price }}</h6>
+                        <h6 id="card-title-id" class="card-title">{{ strPrice }}</h6>
                     </div>
                 </div>
                 <div class="row align-items-center no-gutters justify-content-between">

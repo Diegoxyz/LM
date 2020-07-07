@@ -128,11 +128,8 @@ export class ProspectiveCardComponent implements OnInit {
             if (this.item.code === 'Code 1') {
                 this.qty.setValue(10);
             }
-        }
-            
-        
-        
 
+        }
         
     }
 
@@ -157,6 +154,12 @@ export class ProspectiveCardComponent implements OnInit {
         return id + '_' + code;
     }
 
+    public getPrice(price : number) : string {
+        if (price) {
+            return price.toFixed(2);
+        }
+        return '0';
+    }
     addProduct(code : string) {
 
         if (environment && environment.oData) {

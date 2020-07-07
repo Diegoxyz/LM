@@ -88,9 +88,42 @@
   }
 
  #qty{
-  width: 105%;
+  width: 25px;
+  border: solid 1px red;
+} 
+
+#qty-parent{
+  padding-left: 20%  !important;
+  margin-right: 4% !important;
 }
 
 #icon-btn-div{
+  padding-left: 3% !important;
+  margin-left: 2% !important;
+}
+
+#no-scroll{
+  overflow-y:hidden;
+}
+
+#item-code-id{
+  padding-left: 0%;
+}
+#item-descritption-id{
+  padding-left: 0%;
+}
+
+#item-price{
   padding-top: 3px;
+
+}
+
+#item-price-parent{
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+#pic{
+  margin-top:23%;
+  padding-bottom: 24.5%;
 }

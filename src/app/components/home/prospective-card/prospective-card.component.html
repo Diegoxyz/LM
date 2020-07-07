@@ -1,76 +1,123 @@
 <div class="prospective-card">
     <div class="flex-container">
         <div class="flex-item board-image">
-            <img *ngIf="thumbnail" class="img-fluid card-img-top" id='pic' [src]='thumbnail' width="260" height="260" style="width: 100%; max-height:70%;">
+            <img *ngIf="thumbnail" class="img-fluid card-img-top" id='pic' [src]='thumbnail' width="260" height="260"
+                style="width: 100%; max-height:70%;">
             <div *ngIf="svgThumbnail">
                 <!-- <img [src]="sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ svgThumbnail)" width="500" height="500" style="width: 100%; max-height:70%;"> -->
-            <object 
-               [data]="sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ svgThumbnail)" width="500" height="600" style="width: 100%; max-height:70%;"> 
-            </object>
+                <object [data]="sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ svgThumbnail)"
+                    width="500" height="600" style="width: 100%; max-height:70%;">
+                </object>
+            </div>
+            <img *ngIf="thumbnail === undefined && svgThumbnail === undefined" class="img-fluid card-img-top"
+                src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px" width="260"
+                height="260" style="width: 100%; max-height:70%;">
         </div>
-            <img *ngIf="thumbnail === undefined && svgThumbnail === undefined" class="img-fluid card-img-top" src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260" style="width: 100%; max-height:70%;">
-        </div>
-        
-        <div class="flex-item board-panel">
-            <div class="scroll">
-                <div *ngFor="let item of items" class="row" style="margin-top: 5%; margin-left: 1%;">
-                    <div class="col-md-auto">
-                        <div class="row align-items-center no-gutters justify-content-end" style="margin-top: 2%;">
 
-                            <div class="col-md-8" style="padding-left: 9.5%;">
+        <div class="flex-item board-panel">
+            <!--<div id="scroll" class="scroll"> -->
+                {{ items.length }}
+                <div *ngIf="items.length > 1" id="scroll" class="scroll">
+                <div *ngFor="let item of items" class="row" style="margin-top: 5%; margin-left: 1%;">
+                    <div class="col-md-auto" >
+                        <div class="row align-items-center no-gutters justify-content-end"
+                            style="margin-top: 2%; border: solid 1px none;">
+                            <div class="col-md-8" id="item-code-id" >
                                 <div id="item-code">{{ item.code }}</div>
                             </div>
                         </div>
 
-                        <div class="row" style="margin-top: 2%;">
-                            <div class="col-md-4">
-                                <img *ngIf="item.thumbnail" class="img-fluid card-img-top" id='pic' [src]='thumbnail' width="20" height="20">
-                                <img *ngIf="item.thumbnail === undefined" class="img-fluid card-img-top" src="assets/img/items/No_Image_available.png" width="20" height="20">
+                        <div class="row" style="margin-top: 2%; ">
+                            <div class="col-md-4" >
+                                <img *ngIf="item.thumbnail" class="img-fluid card-img-top" id='pic' [src]='thumbnail'
+                                    width="20" height="20">
+                                <img *ngIf="item.thumbnail === undefined" class="img-fluid card-img-top"
+                                    src="assets/img/items/No_Image_available.png" width="20" height="20">
                             </div>
-                            <div class="col-md-8" style="padding-left: 10%;">
-                                <div style="display: inline;">{{ item.description }} </div>
-                                <div>Stock: 
-                                    <fa-icon id="circle-red" *ngIf="item.stockIndicator === undefined || item.stockIndicator === '' || item.stockIndicator === '3'" [icon]="faCircle"></fa-icon>
-                                    <fa-icon id="circle-yellow" *ngIf="item.stockIndicator === '2'" [icon]="faCircle"></fa-icon>
-                                    <fa-icon id="circle-green" *ngIf="item.stockIndicator === '1'" [icon]="faCircle"></fa-icon>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4"><span>Position:</span></div>
-                                    <div class="col-md-8">
-                                        <div class="element-number-container">
-                                            <div class="blue-square">{{ item.itemNumBom }}</div>
-                                        </div>
-                                    </div>
+
+                            <div class="col-md-8" id="item-descritption-id">
+                                <div style="display: inline; " >{{ item.description }} </div>
+                                <div >Stock:
+                                    <fa-icon id="circle-red"
+                                        *ngIf="item.stockIndicator === undefined || item.stockIndicator === '' || item.stockIndicator === '3'"
+                                        [icon]="faCircle"></fa-icon>
+                                    <fa-icon id="circle-yellow" *ngIf="item.stockIndicator === '2'" [icon]="faCircle">
+                                    </fa-icon>
+                                    <fa-icon id="circle-green" *ngIf="item.stockIndicator === '1'" [icon]="faCircle">
+                                    </fa-icon>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-4" style="padding-top: 1%; ">
+                                        <span>Position:</span>
+                                    </div>
+                                    <div class="col-md-8" >
+                                            <div class="blue-square">{{ item.itemNumBom }}</div>
+                                    </div>
+                                </div> 
+
+                                <div class="row align-items-start">
+                                    <div class="col-md-4" id="item-price">{{ getPrice(item.price) }}&nbsp;{{item.currency}}</div>
+                                    <div class="col-md-8">
+                                            <form [formGroup]="addProductForm" (ngSubmit)="addProduct(item.code)">
+                                                <div class="row">
+                                                    <div id="qty-parent" class="col-md-auto">
+                                                        <input [id]="Id('qty', item.code)" [formControlName]="item.code"
+                                                            type="number" step="1" min="0" max="9999" name=""
+                                                            value="{{ quantity }}" title="Quantity" size="2"
+                                                            pattern="[0-9]*" inputmode="numeric" aria-labelledby="">
+                                                    </div>
+
+                                                    <div id="icon-btn-div" class="col-md-3">
+                                                        <button
+                                                            style="background-color: transparent; border: transparent;">
+                                                            <fa-icon id="btn-icon" [icon]="faShoppingCart" size="1x">
+                                                            </fa-icon>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                       
+                                    </div>
+
+                                    <!--                                     <div class="col-md-4">
                                         <div class="row">
-                                            <div class="col-md-auto" >
-                                                <div id="item-price" style="padding-top: 3px;">{{ item.price }} {{item.currency}}</div>
+                                            <div class="col-md-auto" id="item-price-parent">
+                                                <div id="item-price">{{ item.price }}{{item.currency}}</div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <form [formGroup]="addProductForm" (ngSubmit)="addProduct(item.code)">
-                                    <div class="col-md-5">
-                                        <input [id]="Id('qty', item.code)" [formControlName]="item.code" type="number" step="1" min="0" max="9999" name="" value="{{ quantity }}"
-                                            title="Quantity" size="2" pattern="[0-9]*" inputmode="numeric" aria-labelledby="">
-                                    </div>
-                                    <div id= "icon-btn-div" class="col-md-3">
-                                        <button
-                                            style="background-color: transparent; border: transparent;">
-                                            <fa-icon id="btn-icon" [icon]="faShoppingCart" size="1x">
-                                            </fa-icon>
-                                        </button>
-                                    </div>
-                                    </form>
+
+                                        <div class="col-md-4">
+                                            <form id="form-product" [formGroup]="addProductForm"
+                                                (ngSubmit)="addProduct(item.code)" style="border: none">
+                                                <div class="row align-items-center justify-content-center">
+                                                    <div class="col-md-4">
+                                                        <input [id]="Id('qty', item.code)" [formControlName]="item.code"
+                                                            type="number" step="1" min="0" max="9999" name=""
+                                                            value="{{ quantity }}" title="Quantity" size="2"
+                                                            pattern="[0-9]*" inputmode="numeric" aria-labelledby="">
+                                                    </div>
+
+                                                    <div id="icon-btn-div" class="col-md-2"
+                                                        style="border: solid 1px red">
+                                                        <button
+                                                            style="background-color: transparent; border: transparent;">
+                                                            <fa-icon id="btn-icon" [icon]="faShoppingCart" size="1x">
+                                                            </fa-icon>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div> -->
+
                                 </div>
 
 
                             </div>
                         </div>
 
-<!--                         <div class="row">
+                        <!--                         <div class="row">
                             <div class="col-md-5">
                                 <div class="row">
                                     <div class="col-md-6">
