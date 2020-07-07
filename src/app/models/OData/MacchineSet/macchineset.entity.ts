@@ -36,7 +36,7 @@ export class Macchina implements MacchineSet {
     static fromJSON(Matnr : string, Email: string, Maktx: string, Token : string, Langu : string, Family: string, LoioId: string): Item {
         const item = new Item();
         item.code = Matnr;
-        item.description = Maktx + Family;
+        item.description = Maktx;
         item.family = Family;
         item.picId=LoioId;
         return item;
