@@ -11,25 +11,29 @@
                             [removable]="removable"
                             (removed)="removeProduct(product)">
                             {{ product.item.description }}
-                            <mat-icon matChipRemove *ngIf="removable"><fa-icon [icon]="faTimesCircle" 
-                            size="1x">
-                                </fa-icon></mat-icon>
+                            <mat-icon matChipRemove *ngIf="removable">
+							<fa-icon [icon]="faTimesCircle" size="1x">
+                                </fa-icon>
+								</mat-icon>
                           </mat-chip>
                           <input
                             id="productSearch"
                             placeholder="Search for products (code, description)"
-                            #productsInput
+                            type = "input">
+<!--                             #productsInput
                             [formControl]="searchProductControl"
                             [matAutocomplete]="auto"
                             [matChipInputFor]="chipList"
                             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                            (matChipInputTokenEnd)="addProduct($event)">
+                            (matChipInputTokenEnd)="addProduct($event)" >
+-->
+                            
                         </mat-chip-list>
                         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedProduct($event)">
                           <mat-option *ngFor="let product of filteredProducts | async" [value]="product">
                             <div (click)="optionClickedProduct($event, product);">
-                                <mat-checkbox [checked]="product.selected" (change)="toggleSelectionProduct(product)" 
-                                (click)="$event.stopPropagation()">
+                                <mat-checkbox [checked]="product.selected" 
+								(change)="toggleSelectionProduct(product)" (click)="$event.stopPropagation()">
                                     {{ product.item.description }}
                                 </mat-checkbox>
                             </div>
@@ -59,6 +63,8 @@
                             [matChipInputFor]="chipGroupsList"
                             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                             (matChipInputTokenEnd)="addGroup($event)">
+                            
+
                         </mat-chip-list>
                         <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="selectedGroup($event)">
                           <mat-option *ngFor="let group of filteredGroups | async" [value]="group">
@@ -75,8 +81,9 @@
             </div>
         </div>
     </div>
+
     <div class="flex-item">
-        <div style="padding-left: 35%;">
+        <div style="padding-left: 35%">
             <div class="row">
                 <div class="col">
                     <label class="form-label">
@@ -88,16 +95,19 @@
                         (changeValue)="changeOnlySelected($event)"
                     ></app-switch-button>
                 </div>
-                <div class="col">&nbsp;</div>
+                <div class="col">
+                    <button id="search" class="btn btn-primary" (click)="search()">
+                            <span>Search&nbsp;&nbsp;&nbsp;</span>  <fa-icon [icon]="faSearch" size="1x">
+                            </fa-icon>
+                        </button>
+                </div>
+
+                <div class="col">
+                    <div></div>
+                </div>
+
             </div>
         </div>
     </div>
-    <div class="flex-item">
-        <div>
-            <button id="search" class="btn btn-primary" (click)="search()">
-                <span>Search&nbsp;&nbsp;&nbsp;</span>  <fa-icon [icon]="faSearch" size="1x">
-                </fa-icon>
-            </button>
-        </div>
-    </div>
+
 </div>

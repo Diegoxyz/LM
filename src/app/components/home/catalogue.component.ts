@@ -106,8 +106,8 @@ export class CatalogueComponent implements OnInit, OnDestroy {
     
     filterProducts(products : Product[]) {
         if (products) {
+            this.itemsToView = [];
             this.items = [];
-
             if (products.length > 0) {
                 products.forEach(p => this.items.push(p));
                 this.imagesToView = 3;
@@ -115,8 +115,6 @@ export class CatalogueComponent implements OnInit, OnDestroy {
                 for (let i = 0;i<imagesForRow;i++){
                     this.itemsToView.push(this.items[i]); 
                 }
-            } else {
-                this.items = this.cachedItems;
             }
         }
 

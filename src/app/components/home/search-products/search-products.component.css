@@ -57,6 +57,18 @@ ul {
   width: 90%;
 }
 
+#search{
+  margin-top: 2.5%;
+  margin-right: 20%;
+}
+
+#productSearch{
+  width: 100%;
+  border: none;
+  padding-top: 7px;
+
+}
+
 ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, .mat-accent .mat-pseudo-checkbox-checked, .mat-accent .mat-pseudo-checkbox-indeterminate, .mat-pseudo-checkbox-checked, .mat-pseudo-checkbox-indeterminate {
   background-color: #dc3545 !important; /* Red background for example */
 }

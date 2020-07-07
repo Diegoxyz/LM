@@ -226,6 +226,8 @@ export class SearchProductsComponent implements OnInit {
     const input = event.input;
     const value = event.value;
 
+    alert('addGroup');
+
     if ((value || '').trim()) {
       this.allGroups.forEach(ag => {
         if (ag.code === value.trim() || ag.description === value.trim()) {
@@ -278,21 +280,24 @@ export class SearchProductsComponent implements OnInit {
   }
 
   search() {
-    const om : Product[] = [];
+    let om : Product[] = [];
 
-    if (this.selectedProducts !== undefined && this.selectedProducts.length > 0) {
-      this.selectedProducts.forEach(s => {
-        if (!this.searchOnlySelected || (this.searchOnlySelected && s.item.preferred)) {
-          om.push(s.item);
-        }
-      });
-    } else if (this.searchOnlySelected) {
-      this.allProducts.forEach(s => {
-        if (s.preferred) {
-          om.push(s);
-        }
-      });
+     let filter = (<HTMLInputElement>document.getElementById('productSearch')).value;
+
+    if (filter !== undefined || filter.length > 0 ) {
+      om = this.allProducts.filter(
+                                          product => product.code.toLowerCase().indexOf(filter.toLowerCase()) > -1 ||
+                                          product.description.toLowerCase().indexOf(filter.toLowerCase()) > -1
+                                          );
+    } else {
+      om = this.allProducts;
     }
+
+    if (this.searchOnlySelected) {
+      om = om.filter(p => p.preferred);
+    }
+
+	/*----------------------------------*/
 
     let os : Product[] = om;
 
