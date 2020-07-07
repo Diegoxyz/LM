@@ -10,7 +10,7 @@ export class ProductsService {
 
   getAllProducts() : Product[] {
     const items : Product[] = Array(100).fill(0).map((x, i) => (
-      new Product(`Code ${i + 1}`,`Product ${i + 1}`,  (i+1 * 10), 'EUR', (i%2 === 0), 'Gerarchia', (i%2 === 0)?'X':'')
+      new Product(`Code ${i + 1}`,`Product ${i + 1}`,  (i+1 * 10.11), 'EUR', (i%2 === 0), 'Gerarchia', (i%2 === 0)?'X':'')
       ));
     return items;
   }
