@@ -129,8 +129,7 @@ export class ProspectiveCardComponent implements OnInit {
                 this.qty.setValue(10);
             }
 
-        }
-        
+        }    
     }
 
     public close() {
@@ -160,6 +159,7 @@ export class ProspectiveCardComponent implements OnInit {
         }
         return '0';
     }
+
     addProduct(code : string) {
 
         if (environment && environment.oData) {

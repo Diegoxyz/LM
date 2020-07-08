@@ -1,11 +1,13 @@
 <div><app-search-products (outProducts)="filterProducts($event)"></app-search-products></div>
 <div>
-    
-        <div id="cat-container" class="flex-container">
-                <li *ngFor="let item of itemsToView"> 
-                    <app-product-catalogue-card [item]="item"></app-product-catalogue-card>
-                </li> 
+        <div *ngIf="itemsToView && itemsToView.length > 0; else elseBlock">
+                <ul id="cat-container" class="flex-container">
+                   <li *ngFor="let item of itemsToView" class="flex-item"> 
+                      <app-product-catalogue-card [item]="item"></app-product-catalogue-card>
+                    </li> 
+                </ul>
         </div>
+        <div #elseBlock>Nessun prodotto soddisfa la ricerca</div>
     
 </div>
  

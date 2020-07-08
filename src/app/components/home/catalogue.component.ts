@@ -79,6 +79,13 @@ export class CatalogueComponent implements OnInit, OnDestroy {
                }
                this.cachedItems = this.productsService.getAllProducts();
              });
+
+             this.items = this.productsService.getAllProducts();
+               const imagesForRow = this.items.length > this.imagesToView?this.imagesToView:this.items.length;
+               for (let i = 0;i<imagesForRow;i++){
+                 this.itemsToView.push(this.items[i]); 
+               }
+               this.cachedItems = this.productsService.getAllProducts();
         }
     }
 
