@@ -8,6 +8,11 @@ export class User {
 }
 
 export class UserData implements UserDataSet{
+    Stras: string;
+    Pstlz: string;
+    Ort01: string;
+    Regio: string;
+    Land1: string;
     Kunnr: string;
     Langu: string;
     KunnrRif: string;

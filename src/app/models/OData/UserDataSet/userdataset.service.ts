@@ -25,7 +25,7 @@ export class UserDataSetService {
       this.fetchUserDatSet(email,token,language).subscribe(resp => {
         if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
           console.log('saveUserDataSet');
-          this.setUserSetValue(resp.body.d.results[0].Kunnr,resp.body.d.results[0].Scenario, resp.body.d.results[0].Kunnrx);
+          this.setUserSetValue(resp);
         }
       })
     }
@@ -52,11 +52,29 @@ export class UserDataSetService {
         return this.userDataSetSubject.value;
       }
     
-      public setUserSetValue(Kunnr : string, Scenario : string, Kunnrx: string) {
-        const u : UserDataSet = new UserData();
-        u.Kunnr = Kunnr;
-        u.Scenario = Scenario;
-        u.Kunnrx = Kunnrx;
+      public setUserSetValue(resp : any) {
+        const u : UserDataSet = {
+          "Kunnr" : resp.body.d.results[0].Kunnr,
+          "Scenario" : resp.body.d.results[0].Scenario,
+          "Kunnrx" : resp.body.d.results[0].Kunnrx,
+          "Stras" : resp.body.d.results[0].Stras,
+          "Langu" : resp.body.d.results[0].Langu,
+          "Pstlz" : resp.body.d.results[0].Pstlz,
+          "KunnrRif" : resp.body.d.results[0].KunnrRif,
+          "KunnrRifx" : resp.body.d.results[0].KunnrRifx,
+          "Ort01" : resp.body.d.results[0].Ort01,
+          "Regio" : resp.body.d.results[0].Regio,
+          "Parnr" : resp.body.d.results[0].Parnr,
+          "Land1" : resp.body.d.results[0].Land1,
+          "Email" : resp.body.d.results[0].Email,
+          "ErdatAct" : resp.body.d.results[0].ErdatAct,
+          "UzeitAct" : resp.body.d.results[0].UzeitAct,
+          "PswInitial" : resp.body.d.results[0].PswInitial,
+          "Ruolo" : resp.body.d.results[0].Ruolo,
+          "ErdatChangePsw" : resp.body.d.results[0].ErdatChangePsw,
+          "UzeitChangePsw" : resp.body.d.results[0].UzeitChangePsw,
+          "Token" : resp.body.d.results[0].Token
+        }
         localStorage.setItem('userDataSet', JSON.stringify(u));
         this.userDataSetSubject.next(u);
       }

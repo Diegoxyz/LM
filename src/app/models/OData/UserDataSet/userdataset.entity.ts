@@ -1,12 +1,17 @@
 export interface UserDataSet {
     /* Codice utente */
     Kunnr: string, 
+    Stras: string, /* indirizzo */
     /* Linguaggio */
     Langu: string,
+    Pstlz: string, /* CAP */
     KunnrRif: string,
-    Kunnrx: string,
-    KunnrRifx: string,
+    Ort01: string, /* Citta' */
+    Kunnrx: string, /* Nome */
+    Regio: string, /* Provincia o Stato (per gli USA ad esempio) */
+    KunnrRifx: string, /* Da ignorare */
     Parnr: string,
+    Land1: string, /* Stato / Country: Italia */
     Email: string,
     ErdatAct: string,
     UzeitAct: string,
