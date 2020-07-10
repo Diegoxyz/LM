@@ -31,8 +31,8 @@ ul {
 
 .search-categories-container {
   background-color: #ffffff;
-  box-shadow: 1px 1px 1px 1px #d8d6d6;
-  /* border: solid 1px red; */
+ /*  box-shadow: 1px 1px 1px 1px #d8d6d6; */
+  border: solid 1px  #d8d6d6;
   width: 80%;
   margin-left: 10%;
   margin-top: 5%;

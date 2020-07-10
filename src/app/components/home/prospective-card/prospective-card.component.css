@@ -59,8 +59,8 @@
     height: 1.8em;
     display: inline-block;
     padding-top: 1.8%;
-    padding-left: 1%;
-    padding-right: 1%;
+    padding-left: 3%;
+    padding-right: 2%;
     font-size: 0.8rem;
   }
 
@@ -85,23 +85,31 @@
   
   #item-code{
     font-weight: bold;
+    border-right-width: 5px;
   }
+
+ #item-code-parent{
+  padding-right: 4%;
+}  
+
+#item-num{
+  padding-left: 0;
+}
 
  #qty{
   width: 25px;
-  border: solid 1px red;
 } 
 
-#qty-parent{
+/*  #qty-parent{
   padding-left: 20%  !important;
   margin-right: 4% !important;
-}
+} */
 
-#icon-btn-div{
+/* #icon-btn-div{
   padding-left: 3% !important;
   margin-left: 2% !important;
 }
-
+ */
 #no-scroll{
   overflow-y:hidden;
 }
@@ -123,7 +131,7 @@
   padding-right: 0 !important;
 }
 
-#pic-board{
+/* #pic-board{
   margin-top:23%;
   padding-bottom: 24.5%;
-}
+} */

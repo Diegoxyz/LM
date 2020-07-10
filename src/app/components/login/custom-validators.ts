@@ -16,28 +16,40 @@ export class CustomValidators {
     };
   }
 
+
+
+  static registerPasswordMatchValidator(control: AbstractControl) {
+    const password1: string = control.get('password1').value; // get password from our password form control
+    const password2: string = control.get('password2').value; // get password from our confirmPassword form control
+    // compare is the password math
+    if (password1 !== password2) {
+      // if they don't match, set an error in our confirmPassword form control
+      control.get('password2').setErrors({ NoPassswordMatch: true });
+    }
+  }
+
   static passwordMatchValidator(control: AbstractControl) {
-    const oldPassword: string = control.get('firstPassword').value; // get first password from our password form control
+    const password: string = control.get('password').value; // get first password from our password form control
     const password1: string = control.get('password1').value; // get password from our password form control
     const password2: string = control.get('password2').value; // get password from our confirmPassword form control
     const passwordMinLength = 8;
     
     // Password too short
-    if (oldPassword.length != passwordMinLength) {
-      control.get('firstPassword').setErrors({ NoPassswordMatch: true });
+    if (password.length > 0 &&  password.length < passwordMinLength) {
+      control.get('password').setErrors({ InvalidPasswordLen: true });
     }
     
-    if (password1.length != passwordMinLength) {
-        control.get('password1').setErrors({ NoPassswordMatch: true });
+    if (password1.length > 0 && password1.length < passwordMinLength) {
+        control.get('password1').setErrors({ InvalidPasswordLen: true });
     }
 
     // First and new password can't be the same
-    if (oldPassword == password1 || oldPassword == password2) {
+    if (password.length > 0 && password1.length  > 0 && password === password1 ) {
       // Password can't be the same
-      control.get('firstPassword').setErrors({ NoPassswordMatch: true });
+      control.get('password1').setErrors({ PassswordMatch: true });
     }
 
-    // compare is the password math
+    // compare if  password matches
     if (password1 !== password2) {
       // if they don't match, set an error in our confirmPassword form control
       control.get('password2').setErrors({ NoPassswordMatch: true });

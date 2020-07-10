@@ -82,7 +82,7 @@ export class LoginComponent implements OnInit {
                         if (resp.body.d.results[0].PswInitial !== undefined && resp.body.d.results[0].PswInitial !== '') {
                           this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/account/changePwd';
                         }
-                        this.userDataSetService.setUserSetValue(resp.body.d.results[0].Kunnr,resp.body.d.results[0].Scenario, resp.body.d.results[0].Kunnrx);
+                        this.userDataSetService.setUserSetValue(resp);
                       }
                       
                       this.router.navigate([this.returnUrl]);
@@ -110,6 +110,7 @@ export class LoginComponent implements OnInit {
               this.loginError = false;
             }
             this.userDataSetService.saveUserDataSet(this.email.value, this.password.value, 'IT');
+            // this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/account/changePwd';
             this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/account/changePwd';
             this.router.navigate([this.returnUrl]);
           },

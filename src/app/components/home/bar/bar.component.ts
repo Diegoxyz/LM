@@ -95,7 +95,12 @@ export class BarComponent implements OnInit {
             "Ruolo": "",
             "ErdatChangePsw": "\/Date(1590969600000)\/",
             "UzeitChangePsw": "PT12H00M00S",
-            "Token": "000D3A2544DE1EDAADBEA94A0044C28D"
+            "Token": "000D3A2544DE1EDAADBEA94A0044C28D",
+            "Stras": "via tal dei tali",
+            "Pstlz": "30100",
+            "Ort01": "Venezia",
+            "Regio": "VE",
+            "Land1": "IT"
       };
 
       this.cart = Cart.fromCarrello(carrello, userDataSet);

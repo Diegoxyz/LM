@@ -1,22 +1,25 @@
-<div id= "mx" class="product-catalogue-container">
-    <div class="align-items-center justify-content-center"> <!--style="width: 18rem; -->
-        <div class="hoverWrapper">
-            <!-- <img class="img-fluid card-img-top" src="assets/img/items/Item1.PNG" sizes="(max-width: 260px) 100vw, 260px"
-                width="260" height="260"> -->
+<div id="mx" class="product-catalogue-container">
 
-            <img *ngIf="thumbnail" class="img-fluid card-img-top" id='pic' [src]='thumbnail' sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
+    <div class="align-items-center justify-content-center">
+        <!--style="width: 18rem; -->
+        <div class="hoverWrapper">
+
+            <img *ngIf="thumbnail" class="img-fluid card-img-top" id='pic' [src]='thumbnail'
+                sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
 
             <div *ngIf="svgThumbnail">
-                <img [src]="sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ svgThumbnail)" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
+                <img [src]="sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ svgThumbnail)"
+                    sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
             </div>
-            <img *ngIf="thumbnail === undefined && svgThumbnail === undefined" class="img-fluid card-img-top" src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
-        
-  <!--           <img *ngIf="item.preferred === true" id="add-to-favorite" class="img-fluid" src="assets/img/items/star.png"> -->
 
-                <img *ngIf="item.preferred === true;else other_content" id="add-to-favorite" class="img-fluid" src="assets/img/items/star.png">
-                <ng-template #other_content>
-                    <img id="add-to-favorite" class="img-fluid" src="assets/img/items/empty.png">
-                </ng-template>
+            <img *ngIf="thumbnail === undefined && svgThumbnail === undefined" class="img-fluid card-img-top"
+                src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
+
+            <img *ngIf="item.preferred === true;else other_content" id="add-to-favorite" class="img-fluid" src="assets/img/items/star.png">
+
+            <ng-template #other_content>
+                <img id="add-to-favorite" class="img-fluid" src="assets/img/items/empty.png">
+            </ng-template>
 
             <div class="">
                 <div class="row align-items-center no-gutters justify-content-between">
@@ -31,17 +34,17 @@
                     </div>
                 </div>
                 <div class="row align-items-center no-gutters justify-content-between">
-                    <div class="col-md-12">
-                        <h6 class="card-description2">{{ item.description }}</h6>
+                    <div  class="col-md-12">
+                        <h6 id="item-description" class="card-description2">{{ item.description }}</h6>
                     </div>
                 </div>
 
                 <div class="row align-items-center no-gutters justify-content-between">
                     <div id="col-width" class="col-md-6">
-                        <h6 id="card-title" class="card-text">{{ item.currency }}</h6>
+                        <h6 id="card-price-id" class="card-title">{{ strPrice }}</h6>
                     </div>
                     <div id="col-width" class="col-md-6">
-                        <h6 id="card-title-id" class="card-title">{{ strPrice }}</h6>
+                        <h6 id="card-currency-id" class="card-text">{{ item.currency }}</h6>
                     </div>
                 </div>
                 <div class="row align-items-center no-gutters justify-content-between">
@@ -50,7 +53,9 @@
                     </div>
                     <div id="col-width" class="col-md-6">
                         <h6 id="card-title-id" class="card-title">
-                            <fa-icon id="circle-red" *ngIf="item.stockIndicator === undefined || item.stockIndicator === '' || item.stockIndicator === '3'" [icon]="faCircle"></fa-icon>
+                            <fa-icon id="circle-red"
+                                *ngIf="item.stockIndicator === undefined || item.stockIndicator === '' || item.stockIndicator === '3'"
+                                [icon]="faCircle"></fa-icon>
                             <fa-icon id="circle-yellow" *ngIf="item.stockIndicator === '2'" [icon]="faCircle"></fa-icon>
                             <fa-icon id="circle-green" *ngIf="item.stockIndicator === '1'" [icon]="faCircle"></fa-icon>
                         </h6>
@@ -65,9 +70,9 @@
                                         <span style="padding-left: 20px">&nbsp;</span>
                                     </div> -->
                                     <div id="col-spacer" class="col align-items-right text-right">
-                                        <input type="number" [id]="Id('qty')" formControlName="qty" step="1" min="0" max="9999"
-                                            name="" value="{{ quantity }}" title="Quantity" size="2" pattern="[0-9]*"
-                                            inputmode="numeric" aria-labelledby="">
+                                        <input type="number" [id]="Id('qty')" formControlName="qty" step="1" min="0"
+                                            max="9999" name="" value="{{ quantity }}" title="Quantity" size="2"
+                                            pattern="[0-9]*" inputmode="numeric" aria-labelledby="">
 
                                     </div>
                                 </div>
@@ -75,8 +80,7 @@
                             </div>
 
                             <div id="col-width" class="col-md-6 text-left" style="padding-left: 0.5em;">
-                                <button
-                                    style="background-color: transparent; border: transparent;">
+                                <button style="background-color: transparent; border: transparent;">
                                     <fa-icon id="btn-icon" [icon]="faShoppingCart" size="2x">
                                     </fa-icon>
                                 </button>

@@ -27,7 +27,8 @@ ul {
 
 .search-categories-container {
   background-color: #ffffff;
-  box-shadow: 1px 1px 1px 1px #d8d6d6;
+ /*  box-shadow: 1px 1px 1px 1px #d8d6d6; */
+  border: solid 1px  #d8d6d6;
   width: 70%;
   margin-left: 15%;
   margin-top: 5%;
@@ -38,15 +39,19 @@ ul {
   background-color: black;
 }
 
-.search-categories-button {
+/* .search-categories-button {
   border: 2px solid lightblue; 
-}
+} */
 
 .button-search {
   background-color: #ffffff;
 }
 
 .search-groups {
-  border: 2px solid #d8d6d6;
+  /* border: 2px solid #d8d6d6; */
   width: 100%;
+}
+
+#search-div{
+  padding-top: 0.5%;
 }

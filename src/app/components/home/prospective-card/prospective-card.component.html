@@ -19,8 +19,8 @@
             <div *ngIf="items.length === 1" id="no-scroll" class="scroll">    
                 <div *ngFor="let item of items" class="row" style="margin-top: 5%; margin-left: 1%;">
                     <div class="col-md-auto">
-                        <div class="row align-items-center no-gutters justify-content-end"
-                            style="margin-top: 2%; border: solid 1px none;">
+                        <div id="item-code-parent" class="row align-items-center no-gutters justify-content-end"
+                            style="margin-top: 2%;">
                             <div class="col-md-8" id="item-code-id">
                                 <div id="item-code">{{ item.code }}</div>
                             </div>
@@ -48,25 +48,25 @@
 
                                 <div class="row">
                                     <div class="col-md-4" style="padding-top: 1%; ">
-                                        <span>Position:</span>
+                                        <div>Position:</div>
                                     </div>
-                                    <div class="col-md-8">
+                                    <div id="item-num" class="col-md-8">
                                         <div class="blue-square">{{ item.itemNumBom }}</div>
                                     </div>
                                 </div>
 
                                 <div class="row align-items-start">
-                                    <div class="col-md-4" id="item-price">{{ item.price }}&nbsp;{{item.currency}}</div>
+                                    <div class="col-md-4" id="item-price">{{ getPrice(item.price) }}&nbsp;{{item.currency}}</div>
                                     <div class="col-md-8">
                                         <form [formGroup]="addProductForm" (ngSubmit)="addProduct(item.code)">
                                             <div class="row">
-                                                <div id="qty-parent" class="col-md-auto">
+                                                <div class="col-md-auto" style="padding-left: 20%;">
                                                     <input [id]="Id('qty', item.code)" [formControlName]="item.code"
                                                         type="number" step="1" min="0" max="9999" name=""
                                                         value="{{ quantity }}" title="Quantity" size="2"
                                                         pattern="[0-9]*" inputmode="numeric" aria-labelledby="">
                                                 </div>
-
+                                                <div class="col-md-1"></div>
                                                 <div id="icon-btn-div" class="col-md-3">
                                                     <button style="background-color: transparent; border: transparent;">
                                                         <fa-icon id="btn-icon" [icon]="faShoppingCart" size="1x">
@@ -89,8 +89,8 @@
             <div *ngIf="items.length > 1" id="scroll" class="scroll">    
                 <div *ngFor="let item of items" class="row" style="margin-top: 5%; margin-left: 1%;">
                     <div class="col-md-auto">
-                        <div class="row align-items-center no-gutters justify-content-end"
-                            style="margin-top: 2%; border: solid 1px none;">
+                        <div id="item-code-parent" class="row align-items-center no-gutters justify-content-end"
+                            style="margin-top: 2%;">
                             <div class="col-md-8" id="item-code-id">
                                 <div id="item-code">{{ item.code }}</div>
                             </div>
@@ -118,9 +118,9 @@
 
                                 <div class="row">
                                     <div class="col-md-4" style="padding-top: 1%; ">
-                                        <span>Position:</span>
+                                        <div>Position:</div>
                                     </div>
-                                    <div class="col-md-8">
+                                    <div id="item-num" class="col-md-8">
                                         <div class="blue-square">{{ item.itemNumBom }}</div>
                                     </div>
                                 </div>
@@ -130,12 +130,14 @@
                                     <div class="col-md-8">
                                         <form [formGroup]="addProductForm" (ngSubmit)="addProduct(item.code)">
                                             <div class="row">
-                                                <div id="qty-parent" class="col-md-auto">
+                                                <div class="col-md-auto" style="padding-left: 20%;">
                                                     <input [id]="Id('qty', item.code)" [formControlName]="item.code"
                                                         type="number" step="1" min="0" max="9999" name=""
                                                         value="{{ quantity }}" title="Quantity" size="2"
                                                         pattern="[0-9]*" inputmode="numeric" aria-labelledby="">
                                                 </div>
+                                                
+                                                <div class="col-md-1"></div>
 
                                                 <div id="icon-btn-div" class="col-md-3">
                                                     <button style="background-color: transparent; border: transparent;">

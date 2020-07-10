@@ -27,7 +27,7 @@ export class RegisterComponent implements OnInit {
     
     {
       // check whether our password and confirm password match
-      validator: CustomValidators.passwordMatchValidator
+      validator: CustomValidators.registerPasswordMatchValidator
     }
     );
   }

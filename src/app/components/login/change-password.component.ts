@@ -22,47 +22,48 @@ export class ChangePasswordComponent implements OnInit {
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private accountService: AccountService, 
     private userDataSetService : UserDataSetService) { }
 
-  public loginForm: FormGroup;
+  public changePasswordForm: FormGroup;
 
   ngOnInit(): void {
   
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home/boards';
-    this.loginForm = this.fb.group({
-      firstPassword: ['', Validators.required],
+    this.changePasswordForm = this.fb.group(
+      {
+      password:  ['', Validators.required],
       password1:  ['', Validators.required],
       password2:  ['', Validators.required],
-    },
-    
-    {
-      /* check if previos and new password are not the same 
-         and new  password and confirm password do not match */
-      validator: CustomValidators.passwordMatchValidator
     }
+    , 
+    {
+      // check if previos and new password are not the same 
+        // and new  password and confirm password do not match
+      validator: CustomValidators.passwordMatchValidator
+    }  
     );
   }
 
-
-  get firstPassword() {
-    return this.loginForm.get('firstPassword');
+  get password() {
+    console.log(this.changePasswordForm.get('password'))
+    return this.changePasswordForm.get('password');
   }
 
   get password1() {
-    return this.loginForm.get('password1');
+    return this.changePasswordForm.get('password1');
   }
 
   get password2() {
-    return this.loginForm.get('password2');
+    return this.changePasswordForm.get('password2');
   }
 
   onSubmit(): void {
     // stop here if form is invalid
-    if (this.loginForm.invalid) {
+    if (this.changePasswordForm.invalid) {
       return;
     }
 
     // save the new password and route to the home page
     
-    if (this.firstPassword && this.password1) {
+    if (this.password && this.password1) {
       if (environment && environment.oData) {
 
         this.accountService.fetchToken().subscribe(
@@ -75,7 +76,7 @@ export class ChangePasswordComponent implements OnInit {
               const u : User = this.accountService.userValue;
               const uData : UserData = new UserData();
               if (csrftoken) {
-                this.accountService.changePassword(u.username, this.firstPassword.value, this.password1.value, u.token,u.lang, csrftoken).subscribe(
+                this.accountService.changePassword(u.username, this.password.value, this.password1.value, u.token,u.lang, csrftoken).subscribe(
                   response2 => {
                     console.log('change password - no error');
 
