@@ -1,13 +1,17 @@
-<div><app-search-products (outProducts)="filterProducts($event)"></app-search-products></div>
 <div>
-        <div *ngIf="itemsToView && itemsToView.length > 0; else elseBlock">
+        <app-search-products (outProducts)="filterProducts($event)"></app-search-products>
+</div>
+<div>
+        <div *ngIf="itemsToView && itemsToView.length > 0">
                 <ul id="cat-container" class="flex-container">
-                   <li *ngFor="let item of itemsToView" class="flex-item"> 
-                      <app-product-catalogue-card [item]="item"></app-product-catalogue-card>
-                    </li> 
+                        <li *ngFor="let item of itemsToView" class="flex-item">
+                                <app-product-catalogue-card [item]="item"></app-product-catalogue-card>
+                        </li>
                 </ul>
         </div>
-        <div #elseBlock>Nessun prodotto soddisfa la ricerca</div>
-    
-</div>
- 
+        <div *ngIf="!itemsToView || itemsToView.length === 0">
+                <!-- test modal wait image-->
+                <div id="myModal" class="modal-content">
+                        <img class="modal" id="img_modal" src="assets/img/items/loading.gif">
+                </div>
+        </div>

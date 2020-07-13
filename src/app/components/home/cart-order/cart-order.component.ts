@@ -17,6 +17,7 @@ export class CartOrderComponent implements OnInit {
     totalPrice : number = 0;
 
     faTrash = faTrashAlt;
+    
 
     constructor() {
 

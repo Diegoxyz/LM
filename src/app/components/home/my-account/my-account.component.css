@@ -16,3 +16,6 @@ ul {
   label {
     cursor: pointer;
   }
+  .spacer{
+    padding-left: 3%;
+  }

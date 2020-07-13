@@ -7,22 +7,23 @@ import { CatalogueService } from '@app/services/catalogue.service';
 import { environment } from '@environments/environment';
 import { Materiale } from '@app/models/OData/MacchineSet/macchineset.entity';
 
-@Component({selector: 'app-catalogue',
-templateUrl: './catalogue.component.html',
-styleUrls: ['./catalogue.component.css']
+@Component({
+    selector: 'app-catalogue',
+    templateUrl: './catalogue.component.html',
+    styleUrls: ['./catalogue.component.css']
 })
 export class CatalogueComponent implements OnInit, OnDestroy {
 
     groupId: string;
 
-    items : Product[] =[];
+    items: Product[] = [];
 
-    itemsToView : Product[] =[];
+    itemsToView: Product[] = [];
     imagesToView: number = 3;
 
     // To avoid to call the service to retrieve all the products too many times
-    cachedItems : Product[] =[];
-  
+    cachedItems: Product[] = [];
+
     config = {
         itemsPerPage: 9,
         currentPage: 1,
@@ -44,15 +45,16 @@ export class CatalogueComponent implements OnInit, OnDestroy {
     private sub: any;
 
     constructor(private productsService: ProductsService,
-        private fb : FormBuilder,
-        private route: ActivatedRoute, private catalogueService : CatalogueService
+        private fb: FormBuilder,
+        private route: ActivatedRoute, private catalogueService: CatalogueService
     ) {
-        
+
     }
 
     ngOnInit() {
-        
+
         if (environment && environment.oData) {
+            console.log('environment.oData');
             this.catalogueService.getAllItems().subscribe(resp => {
                 if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
                     resp.body.d.results.forEach(m => {
@@ -62,40 +64,54 @@ export class CatalogueComponent implements OnInit, OnDestroy {
                         }
                     });
                 }
-                const imagesForRow = this.items.length > this.imagesToView?this.imagesToView:this.items.length;
+                const imagesForRow = this.items.length > this.imagesToView ? this.imagesToView : this.items.length;
                 console.log('catalogue - imagesForRow:' + imagesForRow);
-                for (let i = 0;i<imagesForRow;i++){
-                    this.itemsToView.push(this.items[i]); 
+                for (let i = 0; i < imagesForRow; i++) {
+                    this.itemsToView.push(this.items[i]);
                 }
-            });
+                document.getElementById('myModal').style.display = "none"
+            }
+            );
         } else {
+            console.log('environment = LOCAL');
             this.sub = this.route.params.subscribe(params => {
-                this.groupId = params['groupId']; 
-               // add the loading of all the items for a group
-               this.items = this.productsService.getAllProducts();
-               const imagesForRow = this.items.length > this.imagesToView?this.imagesToView:this.items.length;
-               for (let i = 0;i<imagesForRow;i++){
-                 this.itemsToView.push(this.items[i]); 
-               }
-               this.cachedItems = this.productsService.getAllProducts();
-             });
+                console.log('environment = LOCAL - popola 1');
+                this.groupId = params['groupId'];
+                // add the loading of all the items for a group
+                this.items = this.productsService.getAllProducts();
+                const imagesForRow = this.items.length > this.imagesToView ? this.imagesToView : this.items.length;
+                for (let i = 0; i < imagesForRow; i++) {
+                    this.itemsToView.push(this.items[i]);
+                }
+                this.cachedItems = this.productsService.getAllProducts();
+            }
+            );
 
-             this.items = this.productsService.getAllProducts();
-               const imagesForRow = this.items.length > this.imagesToView?this.imagesToView:this.items.length;
-               for (let i = 0;i<imagesForRow;i++){
-                 this.itemsToView.push(this.items[i]); 
-               }
-               this.cachedItems = this.productsService.getAllProducts();
+            this.items = this.productsService.getAllProducts();
+            const imagesForRow = this.items.length > this.imagesToView ? this.imagesToView : this.items.length;
+            for (let i = 0; i < imagesForRow; i++) {
+                this.itemsToView.push(this.items[i]);
+            }
+            console.log('environment = LOCAL - popola 2');
+            this.cachedItems = this.productsService.getAllProducts();
+
+            try {
+                console.log('environment = LOCAL - prova ciusura');
+                setTimeout(function () { document.getElementById('myModal').style.display = "none"; }, 3000);
+            } catch (Error) {
+                alert(Error.message);
+            }
         }
+
     }
 
     @HostListener('window:scroll', ['$event']) // for window scroll events
     onScroll(event) {
-        if (this.imagesToView < this.items.length){
-            this.imagesToView+=3;
-            const imagesForRow = this.items.length > this.imagesToView?this.imagesToView:this.items.length;
-            for (let i = this.imagesToView-3;i<imagesForRow;i++){
-                this.itemsToView.push(this.items[i]); 
+        if (this.imagesToView < this.items.length) {
+            this.imagesToView += 3;
+            const imagesForRow = this.items.length > this.imagesToView ? this.imagesToView : this.items.length;
+            for (let i = this.imagesToView - 3; i < imagesForRow; i++) {
+                this.itemsToView.push(this.items[i]);
             }
         }
     }
@@ -104,23 +120,23 @@ export class CatalogueComponent implements OnInit, OnDestroy {
         if (this.sub) {
             this.sub.unsubscribe();
         }
-        
-      }
+
+    }
 
     onTop(): void {
-        window.scroll(0,0);
+        window.scroll(0, 0);
     }
-    
-    filterProducts(products : Product[]) {
+
+    filterProducts(products: Product[]) {
         if (products) {
             this.itemsToView = [];
             this.items = [];
             if (products.length > 0) {
                 products.forEach(p => this.items.push(p));
                 this.imagesToView = 3;
-                const imagesForRow = this.items.length > this.imagesToView?this.imagesToView:this.items.length;
-                for (let i = 0;i<imagesForRow;i++){
-                    this.itemsToView.push(this.items[i]); 
+                const imagesForRow = this.items.length > this.imagesToView ? this.imagesToView : this.items.length;
+                for (let i = 0; i < imagesForRow; i++) {
+                    this.itemsToView.push(this.items[i]);
                 }
             }
         }

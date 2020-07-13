@@ -86,3 +86,22 @@ ul {
  margin-top: -6%;
  margin-bottom: 1%;
 }
+
+
+.modal-content {
+  /* gestione background */
+  display: block;
+  position: fixed;
+  z-index: 1; /* = on top */
+}
+
+.modal {            
+  display: block;
+  left: 35%;
+  top: 35%;
+  right: 0;
+  bottom: 0;
+  width: 30%;
+  height: 40%;
+/*   border: solid 1px black; */
+}

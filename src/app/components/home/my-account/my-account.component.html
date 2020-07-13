@@ -8,68 +8,73 @@
             </div>
 
             <div class="col-md-3" style="padding-top: 2%;">
-                <h5>Benventuto </h5>
+                <h5>Benvenuto </h5>
                 <h4>{{ name }}</h4>
             </div>
         </div>
 
 
-        <ul class="justify-content-center justify-content-md-end">
+        <ul class="justify-content-center justify-content-md-start">
 <!--             <li class="col d-lg-block">
-                    <div class="row align-items-center justify-content-between">
+                    <div class="row align-items-center justify-content-start">
                         <h6 *ngIf="language === 'english'">Name</h6><h6 *ngIf="language === 'italian'">Nome</h6><h6>{{ name }}</h6>
                     </div>
                 </li> -->
             <li class="col d-lg-block">
-                <div class="row align-items-center justify-content-between">
-                    <h6 *ngIf="language === 'english'">Email</h6>
-                    <h6 *ngIf="language === 'italian'">Email</h6>
-                    <h6>{{ email }}</h6>
+                <div class="row align-items-center justify-content-start">
+                    <h6 *ngIf="language === 'english'">Email:</h6>
+                    <h6 *ngIf="language === 'italian'">Email:</h6>
+                    <div>
+                        <h6>&nbsp;{{ email }} </h6>
+                    </div>
                 </div>
             </li>
-            <li class="col d-none d-lg-block">
-                <div class="row align-items-center justify-content-between">
-                    <h6 *ngIf="language === 'english'">Business Name</h6>
-                    <h6 *ngIf="language === 'italian'">Ragione Sociale</h6>
-                    <h6>LA MARZOCCO S.R.L.</h6>
+
+            <li class="col d-lg-block">
+                <div class="row align-items-center justify-content-start">
+                    <h6 *ngIf="language === 'english'">Business Name:</h6>
+                    <h6 *ngIf="language === 'italian'">Ragione Sociale:</h6>
+                    <div class="spacer"> <h6>LA MARZOCCO S.R.L.</h6> </div>
                 </div>
             </li>
-            <li class="col d-none d-lg-block">
-                <div class="row align-items-center justify-content-between">
-                    <h6 *ngIf="language === 'english'">Address</h6>
-                    <h6 *ngIf="language === 'italian'">Indirizzo</h6>
-                    <h6>{{ address }}</h6>
+
+            <li class="col d-lg-block">
+                <div class="row align-items-center justify-content-start">
+                    <h6 *ngIf="language === 'english'">Address:</h6>
+                    <h6 *ngIf="language === 'italian'">Indirizzo:</h6>
+                    <div class="spacer"> <h6>{{ address }}</h6> </div>
                 </div>
             </li>
-            <li class="col d-none d-lg-block">
-                <div class="row align-items-center justify-content-between">
-                    <h6 *ngIf="language === 'english'">Postal Code</h6>
-                    <h6 *ngIf="language === 'italian'">CAP</h6>
-                    <h6>{{ postalCode }}</h6>
+            <li class="col  d-lg-block">
+                <div class="row align-items-center justify-content-start">
+                    <h6 *ngIf="language === 'english'">Postal Code:</h6>
+                    <h6 *ngIf="language === 'italian'">CAP:</h6>
+                    <div class="spacer"> <h6>{{ postalCode }}</h6> </div>
+                    
                 </div>
             </li>
-            <li class="col d-none d-lg-block">
-                <div class="row align-items-center justify-content-between">
-                    <h6 *ngIf="language === 'english'">City</h6>
-                    <h6 *ngIf="language === 'italian'">Citt&aacute;</h6>
-                    <h6>{{ city }}</h6>
+            <li class="col  d-lg-block">
+                <div class="row align-items-center justify-content-start">
+                    <h6 *ngIf="language === 'english'">City:</h6>
+                    <h6 *ngIf="language === 'italian'">Citt&aacute;:</h6>
+                    <div class="spacer"> <h6>{{ city }}</h6> </div>
                 </div>
             </li>
-            <li class="col d-none d-lg-block">
-                <div class="row align-items-center justify-content-between">
-                    <h6 *ngIf="language === 'english'">Region</h6>
-                    <h6 *ngIf="language === 'italian'">Provincia</h6>
-                    <h6>{{ region }}</h6>
+            <li class="col  d-lg-block">
+                <div class="row align-items-center justify-content-start">
+                    <h6 *ngIf="language === 'english'">Region:</h6>
+                    <h6 *ngIf="language === 'italian'">Provincia:</h6>
+                    <div class="spacer"> <h6>{{ region }}</h6> </div>
                 </div>
             </li>
-            <li class="col d-none d-lg-block">
-                <div class="row align-items-center justify-content-between">
-                    <h6 *ngIf="language === 'english'">Country</h6>
-                    <h6 *ngIf="language === 'italian'">Nazione</h6>
-                    <h6>{{ country }}</h6>
+            <li class="col  d-lg-block">
+                <div class="row align-items-center justify-content-start">
+                    <h6 *ngIf="language === 'english'">Country:</h6>
+                    <h6 *ngIf="language === 'italian'">Nazione:</h6>
+                    <div class="spacer"> <h6>{{ country }}</h6> </div>
                 </div>
             </li>
-            <li class="col d-none d-lg-block">
+            <li class="col  d-lg-block">
                 <div class="row align-items-center justify-content-between">
                     <h6 *ngIf="language === 'english'">Choose your language</h6>
                     <h6 *ngIf="language === 'italian'">Scegli la lingua</h6>
@@ -83,7 +88,7 @@
                     </h6>
                 </div>
             </li>
-            <li class="col d-none d-lg-block">
+            <li class="col  d-lg-block">
                 <div class="row align-items-center justify-content-between">
                     <button type="button" (click)="cancel()" style="background-color: #ffffff;">Cancel</button>
                     <button type="button" (click)="logout()" style="background-color: #dc3545;">Logout</button>

@@ -6,7 +6,7 @@
         <span>{{ order.product.code}} - {{ order.product.description}}</span>
     </div>
     <div  class="col-2 price_column" style="padding-top: 1%" >
-        <span>{{ order.product.price}} &euro;</span>
+        <span>{{ order.product.price}} {{ order.product.currency }}</span>
     </div>
     <div  class="col-2 quantity_column" style="padding-top: 0.5%" >
         <span><input type="number" 
@@ -14,10 +14,10 @@
             step="1" min="0" max="9999" name=""
             value="{{ order.quantity }}" title="Quantity" size="2" pattern="[0-9]*"
             inputmode="numeric" aria-labelledby=""
-            (input)="onChangeQuantity($event.target.value)"> lt</span>
+            (input)="onChangeQuantity($event.target.value)"> {{ order.product.meins }}</span>
     </div>
     <div  class="col-2 price_column" style="padding-top: 1%"  >
-        <span>{{ totalPrice }} &euro;</span>
+        <span>{{ totalPrice }} &euro; che valuta usare per utente?</span>
     </div>
     <div  class="col-1 delete-column" style="padding-top: 0.5%">
         <button (click)="onDeleteOrder()" style="background-color: transparent;">
