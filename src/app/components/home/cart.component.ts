@@ -13,6 +13,7 @@ import { UserDataSetService } from '@app/models/OData/UserDataSet/userdataset.se
 import { CarrelloService } from '@app/services/carrello.service';
 import { HandledProduct } from './services/handled-product';
 import { ManageProducts } from './services/manage-products.service';
+import { CatalogueService } from '@app/services/catalogue.service';
 
 @Component({selector: 'app-cart',
 templateUrl: './cart.component.html',
@@ -37,8 +38,11 @@ export class CartComponent implements OnInit, OnDestroy {
         class: "modal-lg"
     };
 
+    currency : string = undefined;
+
     constructor(private accountService : AccountService, private cartService : CartService, private modalService: BsModalService, 
-        private router: Router, private manageProducts : ManageProducts, private carrelloService: CarrelloService, private userDataSetService : UserDataSetService) {
+        private router: Router, private manageProducts : ManageProducts, private carrelloService: CarrelloService, 
+        private userDataSetService : UserDataSetService, private catalogueService : CatalogueService) {
 
     }
     ngOnInit(): void {
@@ -60,15 +64,28 @@ export class CartComponent implements OnInit, OnDestroy {
                   this.orders = this.cart.orders;
                         this.orders.forEach(o => {
                             if (o.product) {
-                                this.products.push(o.product);
-                                this.totalPrice = this.totalPrice + (o.product.price * o.quantity);
+                                this.catalogueService.getItem(o.product.code).subscribe(p => {
+                                    if (p && p.body && p.body.d) {
+                                        o.product.price = p.body.d.Netpr;
+                                        console.log('o.product.code:' + o.product.code + ',p.body.d.Netpr:' + p.body.d.Netpr + ',o.product.price:' + o.product.price);
+                                        o.product.currency = p.body.d.Waers;
+                                        if (this.currency === undefined) {
+                                            this.currency = o.product.currency;
+                                        }
+                                        this.products.push(o.product);
+                                        this.totalPrice = this.totalPrice + (o.product.price * o.quantity);
+                                        this.totalQuantity = this.totalQuantity + o.quantity;
+                                    }
+                                    
+                                })
+                                
                             }
-                            this.totalQuantity = this.totalQuantity + o.quantity;
+                            
                         });
                 }
               });
               
-              if (this.accountService.isSessionStillValid()) {
+              /*if (this.accountService.isSessionStillValid()) {
                 console.log('cart.component - cart2:' + this.cartService.loadCart());
                 this.cartService.cart$.subscribe((o : Order) => {
                   console.log('cart.component - this.cartService.cart$ : o:' + o);
@@ -91,7 +108,7 @@ export class CartComponent implements OnInit, OnDestroy {
                   }
                 });
           
-              }
+              } */
         } else {
             const customer : Customer = {
                 firstName : user.username,
@@ -106,7 +123,8 @@ export class CartComponent implements OnInit, OnDestroy {
                     this.totalPrice = this.totalPrice + (o.product.price * o.quantity);
                 }
                 this.totalQuantity = this.totalQuantity + o.quantity;
-            })
+            });
+            this.currency = 'EUR';
         }
 
         this.manageProducts.manageProducts$.subscribe((h : HandledProduct) => {

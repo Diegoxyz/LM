@@ -1,6 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Order } from '@app/models/order';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import { CatalogueService } from '@app/services/catalogue.service';
+import { environment } from '@environments/environment';
+import { CarrelloService } from '@app/services/carrello.service';
+import { AccountService } from '@app/services/account.service';
+import { ManageProducts } from '../services/manage-products.service';
+import { Carrello } from '@app/models/carrello';
 
 @Component({selector: 'app-cart-order',
 templateUrl: './cart-order.component.html',
@@ -17,25 +23,100 @@ export class CartOrderComponent implements OnInit {
     totalPrice : number = 0;
 
     faTrash = faTrashAlt;
-    
 
-    constructor() {
+    constructor(private accountService: AccountService, private catalogueService : CatalogueService, 
+        private carrelloService : CarrelloService, private manageProducts: ManageProducts) {
 
     } 
 
     ngOnInit(): void {
         if (this.order) {
-            this.totalPrice = this.order.quantity * this.order.product.price;
+            if (environment && environment.oData) {
+                console.log('this.order.product.code:' + this.order.product.code);
+                console.log('this.order.product.price:' + this.order.product.price );
+                this.catalogueService.getItem(this.order.product.code).subscribe(p => {
+                    if (p && p.body && p.body.d) {
+                        this.order.product.price = p.body.d.Netpr;
+                        console.log('this.order.product.code:' + this.order.product.code + ',p.body.d.Netpr:' + p.body.d.Netpr + ',o.product.price:' + this.order.product.price);
+                        this.order.product.currency = p.body.d.Waers;
+                        console.log('this.order.quantity:' + this.order.quantity);
+                        this.totalPrice = this.order.quantity * this.order.product.price;
+                    }
+                    
+                })
+            }
         }
     }
 
     onChangeQuantity(value : any) {
-        this.order.quantity = value;
-        this.totalPrice = this.order.quantity * this.order.product.price;
-        this.newOrder.emit(this.order);
+        if (value) {
+
+        }
+        const qty = value;
+        if (environment && environment.oData) {
+            this.accountService.fetchToken().subscribe(
+                response1 => {
+                    if (response1.headers) {
+                        const csrftoken : string = response1.headers.get('X-CSRF-Token');
+                        if (qty > 0) { // Update
+                            const carrello : Carrello = new Carrello();
+                            carrello.Matnr = this.order.product.code;
+                            carrello.Menge = '' + qty;
+                            this.carrelloService.updateCart(csrftoken, carrello).subscribe(d => {
+                                console.log('update went fine');
+                                this.manageProducts.changeProduct(this.order.product,qty);
+                                this.order.quantity = value;
+                                this.totalPrice = this.order.quantity * this.order.product.price;
+                                this.newOrder.emit(this.order);
+                            },
+                            error => {
+                                console.log('error update:' + error);
+                            })
+                        } else { // delete
+                            this.carrelloService.deleteFromCarrello(csrftoken, this.order.product.code).subscribe(d => {
+                                console.log('delete went fine');
+                                this.manageProducts.changeProduct(this.order.product,qty);
+                                this.order.quantity = 0;
+                                this.totalPrice = this.order.quantity * this.order.product.price;
+                                this.newOrder.emit(this.order);
+                            },
+                            error => {
+                                console.log('error delete:' + error);
+                            });
+                        }
+                    }
+                    
+                }, error => {
+                    console.log('error:' + error);
+                });
+            
+        } else {
+            this.order.quantity = value;
+            this.totalPrice = this.order.quantity * this.order.product.price;
+            this.newOrder.emit(this.order);
+        }
     }
 
     onDeleteOrder() {
+        if (environment && environment.oData) {
+            this.accountService.fetchToken().subscribe(
+                response1 => {
+                    if (response1.headers) {
+                        const csrftoken : string = response1.headers.get('X-CSRF-Token');
+                        this.carrelloService.deleteFromCarrello(csrftoken, this.order.product.code).subscribe(d => {
+                            console.log('delete went fine');
+                            this.manageProducts.changeProduct(this.order.product,0);
+                            this.order.quantity = 0;
+                            this.totalPrice = this.order.quantity * this.order.product.price;
+                            this.newOrder.emit(this.order);
+                        },
+                        error => {
+                            console.log('error delete:' + error);
+                        });
+                    }
+                });
+        }
+        
         this.deleteOrder.next(this.order);
     }
 }

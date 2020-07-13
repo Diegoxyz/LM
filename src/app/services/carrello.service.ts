@@ -85,7 +85,7 @@ import { Carrello } from '@app/models/carrello';
         const langu = 'Langu=' + '\'' + u.lang + '\'';
         url = url.concat('(').concat(matrn).concat(',').concat(email).concat(',').concat(token).concat(',').concat(langu).concat(')');
         console.log('deleteFromCarrello - url:' + url);
-        return this.http.get<HttpResponse<any>>(
+        return this.http.delete<HttpResponse<any>>(
         '/destinations/ZSD_SP_SRV/CarrelloSet' + url, options);
     }
   }
