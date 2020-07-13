@@ -16,7 +16,7 @@ export class AccountService {
   public user: Observable<User>;
 
   constructor(private factory: ODataServiceFactory,
-    private http: HttpClient, private cartService : CartService) { 
+    private http: HttpClient, private cartService : CartService,) { 
       this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
       this.user = this.userSubject.asObservable();
   }
@@ -116,7 +116,7 @@ export class AccountService {
       Username : username,
       Password : password,
       Token    : '',
-      Langu    : 'IT'
+      Langu    : this.getLanguage()
     }
     return this.http.post<HttpResponse<any>>(
       '/destinations/ZSD_SP_SRV/LoginSet', loginSet, options);
@@ -180,5 +180,34 @@ export class AccountService {
       return false;
     }
     return true;
+  }
+
+  /**
+     * It returns the user language if any otherwise the browser language
+     */
+  public getLanguage() : string {
+      const u : User = this.userValue;
+      if (u && u.lang) {
+          return u.lang;
+      } else {
+          return this.getBrowserLanguage();
+      }
+  }
+
+  /** 
+     * Da essere utilizzato quando l'utente non è ancora loggato, 
+     * restituisce il linguaggio o 'IT' o 'EN', sono i soli riconosciuti dal BE
+     */
+    public getBrowserLanguage() : string {
+      const lang = navigator.language;
+      console.log('lang:' + lang);
+      if (lang) {
+          if (lang === 'it-IT') {
+              return 'IT';
+          } else if (lang === 'it') {
+              return 'IT';
+          }
+      }
+      return 'EN';
   }
 }
