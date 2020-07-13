@@ -49,7 +49,7 @@ export class SectionCardComponent implements OnInit {
                         if (resp.body.d.Filename) {
                             const fileName = resp.body.d.Filename && resp.body.d.Filename.substring(resp.body.d.Filename.lastIndexOf('.') + 1);
                             // let objectURL = 'data:image/jpeg;base64,' + resp.body.d.BinDoc;
-                            if (fileName && fileName === 'jpg') {
+                            if (fileName && fileName === 'jpg' || fileName === 'png') {
                                 let objectURL = 'data:image/'+fileName+';base64,' + resp.body.d.BinDoc;
                                 this.thumbnail = this.sanitizer.bypassSecurityTrustUrl(objectURL);
                             } else if (fileName && fileName === 'svg') {

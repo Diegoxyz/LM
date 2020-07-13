@@ -54,7 +54,7 @@ export class MachineCardComponent implements OnInit {
                     if (resp.body && resp.body.d && resp.body.d) {
                         if (resp.body.d.Filename) {
                             const fileName = resp.body.d.Filename && resp.body.d.Filename.substring(resp.body.d.Filename.lastIndexOf('.') + 1);
-                            if (fileName && fileName === 'jpg') {
+                            if (fileName && fileName === 'jpg' || fileName === 'png') {
                                 let objectURL = 'data:image/'+fileName+';base64,' + resp.body.d.BinDoc;
                                 this.thumbnail = this.sanitizer.bypassSecurityTrustUrl(objectURL);
                             } else if (fileName && fileName === 'svg') {
