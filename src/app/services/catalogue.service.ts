@@ -59,4 +59,26 @@ export class CatalogueService {
         return this.http.get<HttpResponse<any>>(
         '/destinations/ZSD_SP_SRV/GerarchiaSet' + outFilter, options);
     }
+
+    /*
+     * matrn: matricola del prodotto
+     * preferred: preferito o no
+     */
+    public setPreferred(matnr : string, preferred: boolean) : Observable<any> {
+        const u : User = this.accountService.userValue;
+
+        const matrn = 'Matnr=' + '\'' + matnr + '\'';
+        const email = 'Email=' + '\'' + (u !== undefined && u !== null ? u.username : '') + '\'' + ',';
+        const token = 'Token=' + '\'' + (u !== undefined && u !== null ? u.token : '')+ '\'' + ',';
+        const langu = 'Langu=' + '\'' + (u !== undefined && u !== null ? u.lang : '') + '\'' + ',';
+        const pref = 'Pref=' + '\'' + (preferred ? 'X' : '') + '\'';
+        const params ='?&$format=json';
+        let url = '';
+        url = url.concat('(').concat(matrn).concat(email).concat(token).concat(langu).concat(pref).concat(')').concat(params);
+
+        let headers = new HttpHeaders();
+        let options = { headers: headers, observe: "response" as 'body'};
+        return this.http.get<HttpResponse<any>>(
+            '/destinations/ZSD_SP_SRV/MatnrPrefSet' + url, options);
+    }
 }

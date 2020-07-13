@@ -97,7 +97,7 @@ export class Materiale {
         }
         const maxQuantity = Number(m.Maxlf);
         const minQuantity = Number(m.Minlf);
-        const itNumB : string = '' + Number(m.ItemNumBom);
+       /*  const itNumB : string = '' + Number(m.ItemNumBom); */
 
         const product = new Product(m.Matnr,
                                     m.Maktx,
@@ -106,10 +106,11 @@ export class Materiale {
                                     isInStock,
                                     m.Prodhx,
                                     m.Pref,
+                                    m.Meins,
                                     maxQuantity,
                                     minQuantity
                                     ,m.LoioId
-                                    ,itNumB
+                                    ,m.ItemNumBom /*  itNumB */
                                     ,m.StockIndicator
                                     )
         return product;

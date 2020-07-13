@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { UserDataSetService } from '@app/models/OData/UserDataSet/userdataset.service';
 import { environment } from '@environments/environment';
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-my-account',
@@ -22,6 +23,8 @@ export class MyAccountComponent implements OnInit {
   email: string;
   country: string;
 
+  faUserCircle=faUserCircle;
+
   ngOnInit(): void {
     this.language = this.accountService.userLanguage;
     if (environment && environment.oData) {
@@ -35,6 +38,13 @@ export class MyAccountComponent implements OnInit {
       this.language = this.userDataSetService.userDataSetValue.Langu;
     } else {
       this.name = 'Test';
+      this.address =' Via La Torre 14/H';
+      this.region = 'Scarperia'
+      this.city = 'Florence';
+      this.postalCode = '50038';
+      this.email = 'store@lamarzocco.com';
+      this.country = 'ITALY';
+      this.language = 'italian';
     }
     
   }
