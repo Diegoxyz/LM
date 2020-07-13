@@ -6,6 +6,7 @@ import { first } from 'rxjs/operators';
 import { environment } from '@environments/environment';
 import { User } from '@app/models/user';
 import { UserDataSetService } from '@app/models/OData/UserDataSet/userdataset.service';
+import { UtilityService } from '@app/services/utility.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
   returnUrl: string;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private accountService: AccountService, 
-    private userDataSetService : UserDataSetService) { }
+    private userDataSetService : UserDataSetService, private utilityService : UtilityService) { }
 
   public loginForm: FormGroup;
 
@@ -72,12 +73,11 @@ export class LoginComponent implements OnInit {
                     u.username = this.email.value;
                     u.password = this.password.value;
                     u.token = response2.body.d.Token;
-                    console.log('response2.body.Langu:' + response2.body.d.Langu);
                     u.lang = response2.body.d.Langu;
                     this.accountService.setUserValue(u.username,u.password, u.token, u.lang);
                     this.loginError = false;
 
-                    this.userDataSetService.fetchUserDatSet(u.username, u.token, u.lang).subscribe(resp => {
+                    this.userDataSetService.fetchUserDatSet(u.username, u.token, this.accountService.getLanguage()).subscribe(resp => {
                       if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
                         if (resp.body.d.results[0].PswInitial !== undefined && resp.body.d.results[0].PswInitial !== '') {
                           this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/account/changePwd';

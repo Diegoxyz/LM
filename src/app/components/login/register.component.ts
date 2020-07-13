@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomValidators } from './custom-validators';
+import { UtilityService } from '@app/services/utility.service';
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-register',
@@ -10,9 +12,14 @@ import { CustomValidators } from './custom-validators';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private router: Router) { }
+  constructor(private fb: FormBuilder, private router: Router,
+    private utilityService : UtilityService) { }
 
   public registrationForm : FormGroup;
+  
+  public nations : string = '';
+
+  public regions : string = '';
 
   ngOnInit(): void {
     this.registrationForm = this.fb.group({
@@ -30,6 +37,36 @@ export class RegisterComponent implements OnInit {
       validator: CustomValidators.registerPasswordMatchValidator
     }
     );
+
+    if (environment && environment.oData) {
+      this.utilityService.getNations().subscribe(resp => {
+        if (resp && resp.body && resp.body.d && resp.body.d.results.length > 0) {
+          resp.body.d.results.forEach(element => {
+            if (this.nations !== '') {
+              this.nations = this.nations.concat(',');
+            }
+            this.nations = this.nations.concat(element.Land1).concat('-').concat(element.Land1x);
+  
+            if (element.Land1 === 'IT') {
+              this.utilityService.getRegions(element.Land1).subscribe(resp => {
+                if (resp && resp.body && resp.body.d && resp.body.d.results.length > 0) {
+                  resp.body.d.results.forEach(element => {
+                    if (this.regions !== '') {
+                      this.regions = this.regions.concat(',');
+                    }
+                    this.regions = this.regions.concat(element.Regio).concat('-').concat(element.Agrigento);
+                  });
+                }
+              }, error => {
+                console.log('error:' + error);
+              });
+            }
+          });
+        }
+      }, error => {
+        console.log('error:' + error);
+      });
+    }
   }
 
   get username() {
