@@ -30,7 +30,7 @@ export class CatalogueService {
     public getItem(matnr : string) : Observable<any> {
         const u : User = this.accountService.userValue;
 
-        const matrn = 'Matnr=' + '\'' + matnr + '\'';
+        const matrn = 'Matnr=' + '\'' + encodeURIComponent(matnr) + '\'';
         const email = 'Email=' + '\'' + (u !== undefined && u !== null ? u.username : '') + '\'';
         const token = 'Token=' + '\'' + (u !== undefined && u !== null ? u.token : '')+ '\'';
         const langu = 'Langu=' + '\'' + (u !== undefined && u !== null ? u.lang : '') + '\'';
