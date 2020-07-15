@@ -22,8 +22,7 @@
                 </li> -->
             <li class="col d-lg-block">
                 <div class="row align-items-center justify-content-start">
-                    <h6 *ngIf="language === 'english'">Email:</h6>
-                    <h6 *ngIf="language === 'italian'">Email:</h6>
+                    <h6>{{'email' | translate }}:</h6>
                     <div>
                         <h6>&nbsp;{{ email }} </h6>
                     </div>
@@ -40,50 +39,44 @@
 
             <li class="col d-lg-block">
                 <div class="row align-items-center justify-content-start">
-                    <h6 *ngIf="language === 'english'">Address:</h6>
-                    <h6 *ngIf="language === 'italian'">Indirizzo:</h6>
+                    <h6>{{ 'address' | translate }}:</h6>
                     <div class="spacer"> <h6>{{ address }}</h6> </div>
                 </div>
             </li>
             <li class="col  d-lg-block">
                 <div class="row align-items-center justify-content-start">
-                    <h6 *ngIf="language === 'english'">Postal Code:</h6>
-                    <h6 *ngIf="language === 'italian'">CAP:</h6>
+                    <h6>{{ 'zip' | translate }}:</h6>
                     <div class="spacer"> <h6>{{ postalCode }}</h6> </div>
                     
                 </div>
             </li>
             <li class="col  d-lg-block">
                 <div class="row align-items-center justify-content-start">
-                    <h6 *ngIf="language === 'english'">City:</h6>
-                    <h6 *ngIf="language === 'italian'">Citt&aacute;:</h6>
+                    <h6>{{ 'city' | translate }}:</h6>
                     <div class="spacer"> <h6>{{ city }}</h6> </div>
                 </div>
             </li>
             <li class="col  d-lg-block">
                 <div class="row align-items-center justify-content-start">
-                    <h6 *ngIf="language === 'english'">Region:</h6>
-                    <h6 *ngIf="language === 'italian'">Provincia:</h6>
+                    <h6>{{ 'region' | translate}}:</h6>
                     <div class="spacer"> <h6>{{ region }}</h6> </div>
                 </div>
             </li>
             <li class="col  d-lg-block">
                 <div class="row align-items-center justify-content-start">
-                    <h6 *ngIf="language === 'english'">Country:</h6>
-                    <h6 *ngIf="language === 'italian'">Nazione:</h6>
+                    <h6>{{ 'country' | translate }}:</h6>
                     <div class="spacer"> <h6>{{ country }}</h6> </div>
                 </div>
             </li>
             <li class="col  d-lg-block">
                 <div class="row align-items-center justify-content-between">
-                    <h6 *ngIf="language === 'english'">Choose your language</h6>
-                    <h6 *ngIf="language === 'italian'">Scegli la lingua</h6>
+                    <h6>{{ 'chooseTheLanguage' | translate }}</h6>
                     <h6><label for="image-click"><img *ngIf="language === 'italian'" src="assets/img/menu/italy.png"
                                 alt="language - italian">
                             <img *ngIf="language === 'english'" src="assets/img/menu/uk.png"
                                 alt="language - english"></label>
                         <button id="image-click" (click)="changeLanguage()" class="visuallyhidden">
-                            Click to change the language
+                            {{ 'clickToChangeTheLanguage' | translate }}
                         </button>
                     </h6>
                 </div>
@@ -97,5 +90,3 @@
         </ul>
     </div>
 </div>
-<!-- </div>
-</div> -->

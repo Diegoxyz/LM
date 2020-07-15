@@ -30,5 +30,7 @@
     "regionRequired":"La provincia è obbligatoria.",
     "chooseYourRegion":"Scegli la tua provincia",
     "registrationRequestSeccessfullySent":"La tua richiesta è stata inviata con successo",
-    "unknownError":"Errore interno, prego chiamare il servizio clienti"
+    "unknownError":"Errore interno, prego chiamare il servizio clienti",
+    "chooseTheLanguage":"Scegli la lingua",
+    "clickToChangeTheLanguage":"Click to change the language"
 }

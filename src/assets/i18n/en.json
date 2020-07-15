@@ -30,5 +30,7 @@
     "regionRequired":"State is required.",
     "chooseYourRegion":"Choose your state",
     "registrationRequestSeccessfullySent":"Your request has been successfully sent",
-    "unknownError":"Internal error, please contact customer service"
+    "unknownError":"Internal error, please contact customer service",
+    "chooseTheLanguage":"Choose your language",
+    "clickToChangeTheLanguage":"Click to change the language"
 }
