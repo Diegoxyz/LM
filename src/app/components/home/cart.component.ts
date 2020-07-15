@@ -145,7 +145,8 @@ export class CartComponent implements OnInit, OnDestroy {
     }
 
     submitOrder(template: TemplateRef<any>): void {
-        this.bsModalRef = this.modalService.show(template, this.config);
+        // this.bsModalRef = this.modalService.show(template, this.config);
+        this.goToShipToSet();
     }
 
     updateOrders(newOrder) {
@@ -183,6 +184,11 @@ export class CartComponent implements OnInit, OnDestroy {
     }
 
     removeSelected() {
+        
+    }
+
+    goToShipToSet(){
+        this.router.navigate(['./home/cart/ship-to-set']);
         
     }
 }

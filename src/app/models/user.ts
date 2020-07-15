@@ -30,3 +30,36 @@ export class UserData implements UserDataSet{
     Token: string;
 
 }
+
+/*
+Classe usata per richiedere accesso alla applicazione
+ "Email": "roberto.mazzocato@delonghigroup.com",
+                "Langu": "I",
+                "Stcd1": "123456789", partita iva
+                "Stcd2": "1234567890", codice fiscale
+                "Name1": "Mario", nome
+                "Name2": "Rossi", cognome
+                "Telf1": "23232323", telefono
+                "Ort01": "Maserada", città
+                "Pstlz": "31052", cap
+                "Regio": "TV", provincia
+                "Sortl": "", vuoto
+                "Stras": "via Piazzola 13", indirizzo esteso
+                "Land1": "IT" stato
+*/
+export class UserReq {
+
+    Email   : string;
+    Stcd1   : string; // p.iva
+    Stcd2   : string; // codice fiscale
+    Name1   : string; // nome
+    Name2   : string; // cognome
+    Telf1   : string; // telefono
+    Ort01   : string; // città
+    Pstlz   : string; // cap
+    Regio   : string; // id della regione
+    Sortl   : string = ''; // da lasciare vuoto
+    Stras   : string; // indirizzo
+    Land1   : string; // id dello stato
+    Langu   : string; // linguaggio
+}

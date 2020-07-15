@@ -1,11 +1,12 @@
 import { Injectable, ɵɵresolveBody } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { User } from '../models/user';
+import { User, UserReq } from '../models/user';
 import { ODataServiceFactory } from 'angular-odata';
 import { LoginSet } from '../models/OData/LoginSet/loginset.entity';
 import { environment } from 'src/environments/environment';
 import { CartService } from './cart.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class AccountService {
   public user: Observable<User>;
 
   constructor(private factory: ODataServiceFactory,
-    private http: HttpClient, private cartService : CartService,) { 
+    private http: HttpClient, private cartService : CartService,private translateService: TranslateService) { 
       this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
       this.user = this.userSubject.asObservable();
   }
@@ -158,6 +159,7 @@ export class AccountService {
     u.token = token;
     u.lang = lang;
     localStorage.setItem('user', JSON.stringify(u));
+    this.translateService.use(this.convertSAPLanguageConvention(lang));
     this.userSubject.next(u);
   }
 
@@ -188,7 +190,7 @@ export class AccountService {
   public getLanguage() : string {
       const u : User = this.userValue;
       if (u && u.lang) {
-          return u.lang;
+          return this.convertSAPLanguageConvention(u.lang);
       } else {
           return this.getBrowserLanguage();
       }
@@ -200,14 +202,40 @@ export class AccountService {
      */
     public getBrowserLanguage() : string {
       const lang = navigator.language;
-      console.log('lang:' + lang);
+      console.log('getBrowserLanguage - lang:' + lang);
       if (lang) {
           if (lang === 'it-IT') {
-              return 'IT';
+              return 'it';
           } else if (lang === 'it') {
-              return 'IT';
+              return 'it';
           }
       }
-      return 'EN';
+      return 'en';
+  }
+
+  public convertSAPLanguageConvention(input : string) : string {
+    let output = '';
+    if (input.toUpperCase() === 'I') {
+      output = 'it';
+    } else if (input.toUpperCase() === 'IT') {
+      output = 'it';
+    } else if (input.toUpperCase() === 'E') {
+      output = 'en';
+    } else if (input.toUpperCase() === 'EN') {
+      output = 'en';
+    } else {
+      output = input;
+    }
+    console.log('convertSAPLanguageConvention - input:' + input + ',output:' + output);
+    return output;
+  }
+
+  public registration(csrftoken : string, userReq : UserReq) {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-CSRF-Token': csrftoken });
+    let options = { headers: headers, observe: "response" as 'body'};
+    return this.http.post<HttpResponse<any>>(
+      '/destinations/ZSD_SP_SRV/UserReqSet', userReq, options);
   }
 }

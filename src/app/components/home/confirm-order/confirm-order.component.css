@@ -1,0 +1,12 @@
+textarea {
+    resize: none;
+  }
+  
+.form-row {
+    margin-bottom: 1rem;
+}
+
+#confirmOrderForm{
+  margin-top: 3.5%;
+  margin-bottom: 7.6%;
+}

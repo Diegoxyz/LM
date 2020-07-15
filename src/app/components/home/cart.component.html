@@ -6,7 +6,6 @@
             </div>
             <div class="col-4 h-100 code_column">
                 <span>CODE - DESCRIPTION</span> 
-                <!-- <br /><span>DESCRIPTION</span> -->
             </div>
             <div class="col-2 h-100 price_column">
                 <span>PRICE</span>
@@ -45,53 +44,17 @@
         </div>
 
         <div class="row" style="margin-bottom: 5%;">
-            <div class="col-2 h-100">
-                <button type="button" (click)="removeSelected()" style="background-color: #ffffff;">Remove
-                    Selected</button>
+             <div id="remove" class="col-md-4 text-left">
+                <button class="btn btn-primary" (click)="removeSelected()">Remove Selected</button>
             </div>
-            <div class="col-6 h-100">
-                <span>&nbsp;</span>
+
+            <div id="empty" class="col-md-4 text-center">
+                <button class="btn btn-primary" (click)="emptyCart()">Empty Cart</button>
             </div>
-            <div class="col-2 h-100">
-                <button type="button" (click)="emptyCart()" style="background-color: #ffffff;">Empty Cart</button>
-            </div>
-            <div class="col-2 h-100">
-                <button type="button" (click)="submitOrder(template)" style="background-color: #dc3545;">Submit
-                    order</button>
+
+            <div id="submit" class="col-md-4 text-right">
+                <button class="btn btn-primary" (click)="goToShipToSet()">Submit order</button>
             </div>
         </div>
-
     </div>
 </div>
-
-<ng-template #template class="myClass">
-    <div class="modal-body" style="background-color: #ffffff; margin: 5%">
-        <div class="row">
-            <div class="col-3">Name</div>
-            <div class="col-3">.....</div>
-            <div class="col-3">Phone Number</div>
-            <div class="col-3">+39......</div>
-        </div>
-        <div class="row">
-            <div class="col-3">Address</div>
-            <div class="col-9">Via Milano .........................................</div>
-        </div>
-        <div class="row" style="margin: 2%;">
-            <div class="col-2"><span>&nbsp;</span></div>
-            <div class="col-4">
-                <div class="button-close-container">
-                    <div class="button-close-class"><button type="button" (click)="bsModalRef.hide()"
-                            style="background-color: #ffffff;">CLOSE</button></div>
-                </div>
-            </div>
-            <div class="col-2"><span>&nbsp;</span></div>
-            <div class="col-3">
-                <div class="button-close-container">
-                    <div class="button-close-class"><button type="button" (click)="bsModalRef.hide()"
-                            style="background-color: #dc3545;">SUBMIT ORDER</button></div>
-                </div>
-            </div>
-            <div class="col-1"><span>&nbsp;</span></div>
-        </div>
-    </div>
-</ng-template>

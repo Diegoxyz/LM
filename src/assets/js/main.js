@@ -9,10 +9,10 @@ $(window).scroll(function(){
       /*@see layout.component.css*/
     var border = $('#scroll-top-btn').css('border');
 
-    if (border.indexOf('1px') >=0) {
+    if (border && border.indexOf('1px') >=0) {
         /*small screen*/
         scrollLimit = 0.10;
-      } else if (border.indexOf('2px') >=0) {
+      } else if (border && border.indexOf('2px') >=0) {
         /*medium screen*/
         scrollLimit = 0.20;
       }

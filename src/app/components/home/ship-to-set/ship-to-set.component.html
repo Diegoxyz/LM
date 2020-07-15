@@ -1,0 +1,106 @@
+<div style="margin-top: 5%;">
+    <div class="align-items-center justify-content-center">
+        <div class="container">
+            <form [formGroup]="shippingForm" (ngSubmit)="onSubmit()">
+                <div class="form-row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <label for="receiver" i18n>Ship to</label>
+                        <input type="text" class="form-control" id="receiver" formControlName="receiver"
+                            placeholder="Ship to" required />
+                        <div *ngIf="receiver.invalid && (receiver.dirty || receiver.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="receiver.errors.required">
+                                <div i18n>Receiver is required</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <label for="address" i18n>Shipping address</label>
+                        <input type="text" class="form-control" id="address" formControlName="address"
+                            placeholder="Address" required />
+                        <div *ngIf="address.invalid && (address.dirty || address.touched)" class="alert alert-danger">
+                            <div *ngIf="address.errors.required">
+                                <div i18n>Shipping address is required</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4">
+                        <label for="zipCode" i18n>ZIP/Postal code</label>
+                        <input type="text" class="form-control" id="zipCode" formControlName="zipCode"
+                            placeholder="ZIP code" required />
+                        <div *ngIf="zipCode.invalid && (zipCode.dirty || zipCode.touched)" class="alert alert-danger">
+                            <div *ngIf="zipCode.errors.required">
+                                <div i18n>ZIP code is required</div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-4">
+                        <label for="city" i18n>City</label>
+                        <input type="text" class="form-control" id="city" formControlName="city" placeholder="City"
+                            required />
+                        <div *ngIf="city.invalid && (city.dirty || city.touched)" class="alert alert-danger">
+                            <div *ngIf="city.errors.required">
+                                <div i18n>City is required</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="form-row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4">
+                        <label for="country">{{ 'country' | translate }}</label>
+                        <select class="custom-select"  formControlName="country" id="country" required>
+                            <option [value]="country.id" *ngFor="let country of countries">{{country.name}}</option>
+                          </select>            
+                        <div *ngIf="country.invalid && (country.dirty || country.touched)" class="alert alert-danger">
+                            <div *ngIf="country.errors.required">
+                                <div>Country is required</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="region" i18n>Region</label>
+                        
+                            <select class="custom-select"  formControlName="region" id="region" required>
+                                <option value="" [disabled]="disableRegion">{{ 'regionRequired' | translate }}</option>
+                                <option [value]="region.id" *ngFor="let region of regions">{{region.name}}</option>
+                          </select> 
+                        
+                        <div *ngIf="region.invalid && (region.dirty || region.touched)" class="alert alert-danger">
+                            <div *ngIf="region.errors.required">
+                                <div i18n>Region is required</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-primary" [disabled]="!shippingForm.valid">Submit</button>
+                    </div>
+                    <div class="col-md-4  text-right">
+                        <button class="btn btn-primary" (click)="onCancel()">Back</button>
+                    </div>
+                    <div class="w-100"></div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

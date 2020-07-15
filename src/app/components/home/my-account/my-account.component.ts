@@ -5,6 +5,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { UserDataSetService } from '@app/models/OData/UserDataSet/userdataset.service';
 import { environment } from '@environments/environment';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-my-account',
@@ -13,7 +14,9 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 })
 export class MyAccountComponent implements OnInit {
 
-  constructor(private accountService : AccountService,private router: Router,public bsModalRef: BsModalRef, private userDataSetService : UserDataSetService) { }
+  constructor(private accountService : AccountService,private router: Router,
+    public bsModalRef: BsModalRef, private userDataSetService : UserDataSetService,
+    private translateService: TranslateService) { }
   language : string;
   name : string;
   address : string;
@@ -66,8 +69,10 @@ export class MyAccountComponent implements OnInit {
   public changeLanguage() {
     if (this.language === 'italian') {
       this.language = 'english';
+      this.translateService.use('en');
     } else {
       this.language = 'italian';
+      this.translateService.use('it');
     }
   }
 }

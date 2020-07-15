@@ -11,17 +11,20 @@ import { Observable } from 'rxjs';
 
     constructor(private http: HttpClient, private accountService : AccountService) { }
 
+    public getNations() : Observable<HttpResponse<any>> {
+        return this.getCountries();
+    }
     /**
      * Restituisce: 
      *  "Langu": "IT",
      *  "Land1": "AN", 
      *  "Land1x": "Antille Oland."
      */
-    public getNations(): Observable<HttpResponse<any>> {
-        const filter = { Langu : this.accountService.getLanguage() };
+    public getCountries(): Observable<HttpResponse<any>> {
+        const filter = { Langu : this.accountService.getLanguage().toUpperCase() };
         const format = 'json';
         const outFilter = buildQuery({ format, filter });
-        console.log('getNations filter:' + outFilter);
+        console.log('getCountries filter:' + outFilter);
 
 
         let headers = new HttpHeaders({
@@ -40,7 +43,7 @@ import { Observable } from 'rxjs';
      * @param countryCode Land1 da getNations()
      */
     public getRegions(countryCode : string) : Observable<HttpResponse<any>> {
-        const filter = { Langu : this.accountService.getLanguage(), Land1: countryCode };
+        const filter = { Langu : this.accountService.getLanguage().toUpperCase(), Land1: countryCode };
         const format = 'json';
         const outFilter = buildQuery({ format, filter });
         console.log('getRegions filter:' + outFilter);

@@ -6,6 +6,9 @@ import { BoardsComponent } from './boards.component';
 import { OrdersComponent } from './orders.component';
 import { ProspectiveCardComponent } from './prospective-card/prospective-card.component';
 import { CartComponent } from './cart.component';
+import { ShipToSetComponent } from './ship-to-set/ship-to-set.component';
+import { ConfirmOrderComponent } from './confirm-order/confirm-order.component';
+import { SaveOrderComponent } from './save-order/save-order.component';
 
 const routes: Routes = [
     {
@@ -19,7 +22,10 @@ const routes: Routes = [
             { path: 'prospective', component: ProspectiveCardComponent },
             { path: 'boards', component: BoardsComponent},
             { path: 'orders', component: OrdersComponent },
-            { path: 'cart', component: CartComponent }
+            { path: 'cart', component: CartComponent },
+            { path: 'cart/ship-to-set', component: ShipToSetComponent },
+            { path: 'cart/confirm-order', component: ConfirmOrderComponent },
+            { path: 'cart/save-order', component: SaveOrderComponent }
         ]
     }
 ];

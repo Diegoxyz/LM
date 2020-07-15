@@ -1,0 +1,75 @@
+<div style="margin-top: 5%;">
+    <div class="align-items-center justify-content-center">
+        <div class="container">
+
+
+            <form [formGroup]="saveOrderForm" (ngSubmit)="onSubmit()">
+                <div class="form-row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <label for="receiverID" i18n>Receiver ID</label>
+<!--                         <input type="text" class="form-control" id="receiverID" formControlName="receiverID"
+                            placeholder="receiverID" required /> -->
+                        <input type="text" 
+                            class="form-control" 
+                            id="receiverID" 
+                            name="receiverID"
+                            readonly>    
+<!--                          <div *ngIf="receiverID.invalid && (receiverID.dirty || receiverID.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="receiverID.errors.required">
+                                <div i18n>Receiver ID is required</div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+
+                <!--
+                <div class="form-row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <label for="note" i18n>Note</label>
+                        <textarea class="form-control" id="note" maxlength = "140"  required></textarea>                            
+                        <div *ngIf="note.invalid && (note.dirty || note.touched)" class="alert alert-danger">
+                            <div *ngIf="note.errors.required">
+                                <div i18n>Note is required</div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+
+
+                <div class="form-row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <label for="note" i18n>Note</label>
+                        <textarea type="text" 
+                                class="form-control md-textarea" 
+                                id="note" name="note" maxlength="140" readonly 
+                                >
+                        </textarea>
+ <!--                        <div *ngIf="note.invalid && (note.dirty || note.touched)" class="alert alert-danger">
+                            <div *ngIf="note.errors.required">
+                                <div i18n>Note is required</div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+
+
+                <div class="form-row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                    <div class="col-md-4  text-right">
+                        <button class="btn btn-primary" (click)="onCancel()">Back</button>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="w-100"></div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

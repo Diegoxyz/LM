@@ -30,6 +30,13 @@ npm install @fortawesome/free-solid-svg-icons
 ngx-bootstrap for modals:
 npm install ngx-bootstrap --save
 
+Traduzioni:
+npm i @ngx-translate/core --save
+npm install @ngx-translate/http-loader --save
+
+Import moment (https://medium.com/@jek.bao.choo/steps-to-add-moment-js-to-angular-cli-f9ab28e48bf0#:~:text=Introduction-,Moment.,to%20Angular%20(application%20platform).):
+npm install moment --save
+
 Modifiche fatte dopo user management:
 
 - Aggiunta classe AuthGuard per verificare se l'utente è loggato
@@ -63,7 +70,7 @@ Ad esempio, nel directory home c'è un file layout che introduce la barra che po
 
 Problemi aperti:
 	
-	1) Traduzioni (internalization / locales): Il cliente vuole fare traduzioni in real time, ovvero l'utente sceglie la lingua
+	1) Risolto usando ngxtranslate: https://github.com/ngx-translate/core/blob/master/README.md#installation Traduzioni (internalization / locales): Il cliente vuole fare traduzioni in real time, ovvero l'utente sceglie la lingua
 	il support di default di angular attualmente lo supporta in modo limitato, l'applicazione deve essere installata in diverse
 	directories, una per ogni linguaggio, quindi dovremo valutare se passare a ngx-translate anche se più vecchio
 	

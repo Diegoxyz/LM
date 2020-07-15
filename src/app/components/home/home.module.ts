@@ -35,7 +35,16 @@ import { CartOrderComponent } from './cart-order/cart-order.component';
 import { CartComponent } from './cart.component';
 import { SearchMachinesComponent } from './search-machines/search-machines.component';
 import { SectionCardComponent } from './board-section-card/section-card.component';
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
+import { ShipToSetComponent } from './ship-to-set/ship-to-set.component';
+import { ConfirmOrderComponent } from './confirm-order/confirm-order.component';
+import { SaveOrderComponent } from './save-order/save-order.component';
 
+export function createTranslateLoader(http: HttpClient) {
+    return new TranslateHttpLoader(http);
+}
 
 @NgModule({
     imports: [
@@ -54,7 +63,14 @@ import { SectionCardComponent } from './board-section-card/section-card.componen
         MatAutocompleteModule,
         MatChipsModule,
         MatCheckboxModule,
-        ModalModule.forRoot()
+        ModalModule.forRoot(),
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: createTranslateLoader,
+                deps: [HttpClient]
+            }
+          })
     ],
     declarations: [
         MainComponent,
@@ -77,7 +93,10 @@ import { SectionCardComponent } from './board-section-card/section-card.componen
         OrderProductComponent,
         SearchOrdersComponent,
         CartOrderComponent,
-        CartComponent
+        CartComponent,
+        ShipToSetComponent,
+        ConfirmOrderComponent,
+        SaveOrderComponent
     ]
 })
 export class HomeModule { }

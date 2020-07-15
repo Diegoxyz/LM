@@ -18,6 +18,7 @@ export class ChangePasswordComponent implements OnInit {
 
   loginError : boolean = undefined;
   returnUrl: string;
+  errorMessage : string = undefined;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private accountService: AccountService, 
     private userDataSetService : UserDataSetService) { }
@@ -74,14 +75,19 @@ export class ChangePasswordComponent implements OnInit {
               console.log('X-CSRF-Token:' + response1.headers.get('X-CSRF-Token'));
               const csrftoken : string = response1.headers.get('X-CSRF-Token');
               const u : User = this.accountService.userValue;
-              const uData : UserData = new UserData();
               if (csrftoken) {
                 this.accountService.changePassword(u.username, this.password.value, this.password1.value, u.token,u.lang, csrftoken).subscribe(
                   response2 => {
+                    if (response2.headers) {
+                      this.errorMessage = response2.headers.get('sap-message');
+                      console.log('errorMessage:' + this.errorMessage);
+                    }
                     console.log('change password - no error');
-
-                    this.loginError = false;
-                    this.router.navigate([this.returnUrl]);
+                    if (this.errorMessage === undefined) {
+                      this.loginError = false;
+                      this.router.navigate([this.returnUrl]);
+                    }
+                    
                 }, error => {
                   this.loginError = true;
                 }

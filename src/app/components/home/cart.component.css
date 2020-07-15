@@ -20,3 +20,8 @@
 .description_column{
     font-weight: bold;
 }
+
+#empty, #submit, #remove{
+   padding-left: 0;
+   padding-right: 0;
+}
