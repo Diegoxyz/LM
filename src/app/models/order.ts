@@ -60,6 +60,6 @@ export class SaveOrder {
     Langu   :   string;
     Vbeln   :   string;
     Note    :   string;
-    Vdatu   =  moment();
+    Vdatu   :   string;
     Kunwe   :   string;
 }

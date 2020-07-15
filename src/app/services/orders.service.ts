@@ -5,6 +5,7 @@ import { User } from '@app/models/user';
 import buildQuery from 'odata-query';
 import { Recipient, SaveOrder } from '@app/models/order';
 import { Observable } from 'rxjs';
+import * as moment from 'moment';
 
 @Injectable({
     providedIn: 'root'
@@ -54,8 +55,8 @@ export class OrdersService {
         let options = { headers: headers, observe: "response" as 'body'};
         // ZSD_SP_SRV/ShiptoSet(Kunwe='7000031')
         let url = '';
-        const Kunwe = 'Kunwe=' + '\'' + (recipient.Kunwe) + '\'';
-        url = url.concat('(').concat(',').concat(Kunwe).concat(')');
+        const Kunwe = 'Kunwe=' + '\'' + encodeURIComponent(recipient.Kunwe) + '\'';
+        url = url.concat('(').concat(Kunwe).concat(')');
         return this.http.put<HttpResponse<any>>(
             '/destinations/ZSD_SP_SRV/ShiptoSet' + url, recipient, options);
     }
@@ -67,6 +68,11 @@ export class OrdersService {
         const u : User = this.accountService.userValue;
         order.Email = u !== undefined ? u.username : '';
         order.Token = u !== undefined ? u.token : '';
+        order.Langu = u !== undefined && u !== null ? u.lang : '';
+        // 2020-08-01T00:00:00
+        const vdatu : string = moment().format('YYYY-MM-DDTHH:mm:ss');
+        order.Vdatu = vdatu;
+        order.Vbeln = '';
         let headers = new HttpHeaders({
             'Content-Type': 'application/json',
             'X-CSRF-Token': csrftoken });

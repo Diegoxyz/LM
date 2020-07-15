@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ODataModule, ODataSettings } from 'angular-odata';
 import { throwError } from 'rxjs';
-import { HttpErrorResponse, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpErrorResponse, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../environments/environment';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 export function oDataSettingsFactory() {
   return new ODataSettings({
@@ -24,6 +26,10 @@ export function oDataSettingsFactory() {
   });
 }
 
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
+
 @NgModule({
   declarations: [
     AppComponent
@@ -34,7 +40,14 @@ export function oDataSettingsFactory() {
     ODataModule,
     ReactiveFormsModule,
     NgbModule,
-    NoopAnimationsModule
+    NoopAnimationsModule,
+    TranslateModule.forRoot({
+      loader: {
+          provide: TranslateLoader,
+          useFactory: createTranslateLoader,
+          deps: [HttpClient]
+      }
+    })
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
