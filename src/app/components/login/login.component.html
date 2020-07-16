@@ -12,29 +12,29 @@
         </div>
         <div class="row align-items-center justify-content-center">
             <div *ngIf="loginError === true" class="alert alert-danger">
-                <span i18n="Username non valid|Error message">loginError</span>
+                <span>{{ errorMessage }}</span>
             </div>
             <div *ngIf="!loginError" class="w-100"></div>
             <div class="col-7">
                 
                 <div class="form-group">
-                    <label for="email" i18n="Email address|The email used to log in">Email</label>
-                    <input type="email" class="form-control" id="email" formControlName="email" aria-describedby="emailHelp" placeholder="Enter email" required>
+                    <label for="email">{{ 'email' | translate }}</label>
+                    <input type="email" class="form-control" id="email" formControlName="email" aria-describedby="emailHelp" placeholder="{{ 'emailPlaceholder' | translate }}" required>
                     <div *ngIf="email.invalid && (email.dirty || email.touched)"
                             class="alert alert-danger">
                         <div *ngIf="email.errors.required">
-                            <span i18n="Email address|Error message">Email is required.</span>
+                            <span>{{ 'emailRequired' | translate }}</span>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="password" i18n>Password</label>
-                    <input type="password" class="form-control" id="password" formControlName="password" placeholder="Password" required>
+                    <label for="password">{{ 'password' | translate }}</label>
+                    <input type="password" class="form-control" id="password" formControlName="password" placeholder="{{ 'passwordPlaceholder' | translate }}" required>
                     <div *ngIf="password.invalid && (password.dirty || password.touched)"
                             class="alert alert-danger">
 
                         <div *ngIf="password.errors.required">
-                            <ng-container i18n>Password is required.</ng-container>
+                            <ng-container>{{ 'passwordRequired' | translate }}</ng-container>
                         </div>
                     </div>
                 </div>
@@ -46,11 +46,11 @@
         <div class="row">
             <div class="w-100"></div>
             <div class="col-2">&nbsp;</div>
-            <div class="col-2"><div style="padding-left: 30%;"><button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Submit</button></div></div>
+            <div class="col-2"><div style="padding-left: 30%;"><button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">{{ 'submit' | translate }}</button></div></div>
             <div class="col-4">&nbsp;</div>
             <div class="col-2">
-                <div><a routerLink="../register">Register</a></div>
-                <div><a routerLink="../lostCredentials">Lost credentials</a></div>
+                <div><a routerLink="../register">{{ 'register' | translate }}</a></div>
+                <div><a routerLink="../lostCredentials">{{ 'lostCredentials' | translate }}</a></div>
             </div>
             <div class="w-100"></div>
         </div>

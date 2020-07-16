@@ -141,12 +141,12 @@
                 <div class="col-md-6">
                     <label for="region">{{ 'region' | translate }}</label>
                     <select class="custom-select"  formControlName="region" id="region" required>
-                        <option value="" [disabled]="disableRegion">{{ 'regionRequired' | translate }}</option>
+                        <option value="" [disabled]="disableRegion">{{ 'chooseYourRegion' | translate }}</option>
                         <option [value]="region.id" *ngFor="let region of regions">{{region.name}}</option>
                       </select>                    
                     <div *ngIf="region.invalid && (region.dirty || region.touched)" class="alert alert-danger">
                         <div *ngIf="region.errors.required">
-                            <div>{{ 'chooseYourRegion' | translate }}</div>
+                            <div>{{ 'regionRequired' | translate }}</div>
                         </div>
                       
                     </div>
@@ -156,10 +156,10 @@
                 <div class="row">
                     <div class="w-100"></div>
                     <div class="col-md-6">
-                        <button type="submit" class="btn btn-primary" [disabled]="!registrationForm.valid">Submit</button>
+                        <button type="submit" class="btn btn-primary" [disabled]="!registrationForm.valid">{{ 'submit' | translate }}</button>
                     </div>
                     <div class="col-md-6  text-right">
-                        <button class="btn btn-primary" (click)="onCancel()">cancel</button>
+                        <button class="btn btn-primary" (click)="onCancel()">{{ 'cancel' | translate }}</button>
                     </div>
                     <div class="w-100"></div>
                 </div>

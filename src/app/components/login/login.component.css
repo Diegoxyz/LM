@@ -50,7 +50,7 @@ p{
 
 
 .footer {
-      /*just for test I can't click links position: fixed; */
+      position: fixed;
       left: 0;
       bottom: 0;
       width: 100%;

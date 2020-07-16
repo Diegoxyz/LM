@@ -179,7 +179,7 @@ export class RegistrationComponent implements OnInit {
                 resp => {
                   if (resp.headers) {
                     const sapMessage = resp.headers.get('sap-message');
-                    if (sapMessage !== undefined) {
+                    if (sapMessage !== undefined && sapMessage !== null) {
                       const docSapMessage : Document = (new window.DOMParser()).parseFromString(sapMessage, 'text/xml');
                       this.errorMessage = this.translateService.instant('unknownError');
                       if (docSapMessage.hasChildNodes()) {

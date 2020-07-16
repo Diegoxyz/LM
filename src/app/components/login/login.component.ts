@@ -7,6 +7,7 @@ import { environment } from '@environments/environment';
 import { User } from '@app/models/user';
 import { UserDataSetService } from '@app/models/OData/UserDataSet/userdataset.service';
 import { UtilityService } from '@app/services/utility.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -17,9 +18,10 @@ export class LoginComponent implements OnInit {
 
   loginError : boolean = false;
   returnUrl: string;
+  errorMessage : string;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private accountService: AccountService, 
-    private userDataSetService : UserDataSetService, private utilityService : UtilityService) { }
+    private userDataSetService : UserDataSetService, private translateService : TranslateService) { }
 
   public loginForm: FormGroup;
 
@@ -51,7 +53,6 @@ export class LoginComponent implements OnInit {
       if (environment && environment.oData) {
         this.accountService.fetchToken().subscribe(
           response1 => {
-            this.loginError = true;
             console.log('step 1');
             if (response1.headers) {
               console.log('X-CSRF-Token:' + response1.headers.get('X-CSRF-Token'));
@@ -60,14 +61,28 @@ export class LoginComponent implements OnInit {
               if (csrftoken) {
                 this.accountService.postLogin(csrftoken, this.email.value, this.password.value).subscribe(response2 => {
                   console.log('step 2');
-                  if (response2.headers.get('sap-message')) {
-                    console.log('found error message:' + response2.headers.get('sap-message'));
+                  const sapMessage = response2.headers.get('sap-message');
+                  if (sapMessage !== undefined && sapMessage !== null) {
+                    this.loginError = true;
+                    console.log('found error message:' + sapMessage);
                     // C'è stato un errore e.g. password non valida
                     u.username = '';
                     u.password = '';
                     u.token = '';
                     u.lang = '';
-                  }
+                    this.errorMessage = this.translateService.instant('unknownError');
+                    try {
+                      let sm = JSON.parse(sapMessage);
+                      this.errorMessage = sm.message;
+                    } catch (error) {
+                      const docSapMessage : Document = (new window.DOMParser()).parseFromString(sapMessage, 'text/xml');
+                      if (docSapMessage.hasChildNodes()) {
+                        if (docSapMessage.firstChild.childNodes.length >= 2) {
+                          this.errorMessage = docSapMessage.firstChild.childNodes[1].textContent;
+                        }
+                      }
+                    }
+                  } else 
                   if (response2.body && response2.body.d && response2.body.d.Token) {
                     console.log('found token:' + response2.body.d.Token);
                     u.username = this.email.value;
@@ -97,10 +112,33 @@ export class LoginComponent implements OnInit {
               } 
           }},
           error => {
+            this.errorMessage = this.translateService.instant('unknownError');
             this.loginError = true;
           }
         );
       } else {
+        // const sapMessage = '{"code":"ZSPB2B/000","message":"Accesso rifiutato","severity":"error","target":"","transition":false,"details":[]}';
+        const sapMessage = '<notification xmlns:sap="http://www.sap.com/Protocols/SAPData"><code>ZSPB2B/000</code><message>Utente gi&#x00E0; registrato</message><severity>error</severity><target></target><transition>false</transition><details/></notification>';
+        this.errorMessage = this.translateService.instant('unknownError');
+        try {
+          let sm = JSON.parse(sapMessage);
+          this.errorMessage = sm.message;
+        } catch (error) {
+          const docSapMessage : Document = (new window.DOMParser()).parseFromString(sapMessage, 'text/xml');
+          if (docSapMessage.hasChildNodes()) {
+            if (docSapMessage.firstChild.childNodes.length >= 2) {
+              this.errorMessage = docSapMessage.firstChild.childNodes[1].textContent;
+            }
+          }
+        }
+        
+        /*const docSapMessage : Document = (new window.DOMParser()).parseFromString(sapMessage, 'text/xml');
+        this.errorMessage = this.translateService.instant('unknownError');
+        if (docSapMessage.hasChildNodes()) {
+          if (docSapMessage.firstChild.childNodes.length >= 1) {
+            this.errorMessage = docSapMessage.firstChild.childNodes[0].textContent;
+          }
+        }*/
         this.accountService.loginWOOData(this.email.value,this.password.value).pipe(first()).subscribe(
           data => {
             console.log("login onsubmit:" + data);
