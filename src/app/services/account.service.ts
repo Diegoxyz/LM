@@ -42,7 +42,7 @@ export class AccountService {
     console.log('enrinment.oData:' + environment.oData);
     let loginService = this.factory.create<LoginSet>("LoginSet");
     
-    this.http.get('/destinations/ZSD_SP_SRV/LoginSet',{
+    this.http.get(environment.oData_destination + 'LoginSet',{
       observe: "response", headers: {
         'X-CSRF-Token':'Fetch'
       }
@@ -80,7 +80,7 @@ export class AccountService {
   }
 
   public fetchToken() : Observable<any>{
-    return this.http.get('/destinations/ZSD_SP_SRV/LoginSet',{
+    return this.http.get(environment.oData_destination + 'LoginSet',{
       observe: "response", headers: {
         'X-CSRF-Token':'Fetch'
       }
@@ -120,7 +120,7 @@ export class AccountService {
       Langu    : this.getLanguage()
     }
     return this.http.post<HttpResponse<any>>(
-      '/destinations/ZSD_SP_SRV/LoginSet', loginSet, options);
+      environment.oData_destination + 'LoginSet', loginSet, options);
   }
 
   public changePassword(username: string, oldPassword: string, newPassword: string, token : string, lang : string, csrftoken : string): Observable<HttpResponse<any>> {
@@ -136,7 +136,7 @@ export class AccountService {
       Langu    : lang
     }
     return this.http.post<HttpResponse<any>>(
-      '/destinations/ZSD_SP_SRV/ChangePswSet', loginSet, options);
+      environment.oData_destination + 'ChangePswSet', loginSet, options);
   }
 
   public logout():void{
@@ -236,6 +236,6 @@ export class AccountService {
       'X-CSRF-Token': csrftoken });
     let options = { headers: headers, observe: "response" as 'body'};
     return this.http.post<HttpResponse<any>>(
-      '/destinations/ZSD_SP_SRV/UserReqSet', userReq, options);
+      environment.oData_destination + 'UserReqSet', userReq, options);
   }
 }

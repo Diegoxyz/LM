@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { User } from '@app/models/user';
 import buildQuery from 'odata-query';
 import { Carrello } from '@app/models/carrello';
+import { environment } from '@environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -22,7 +23,7 @@ import { Carrello } from '@app/models/carrello';
         if (u !== undefined && u !== null) {
             username = u.username;
             token = u.token;
-            lang = u.lang;
+            lang = u.lang.toUpperCase();
         }
         
         const filter = { Email: username, Token: token, Langu : lang };
@@ -34,7 +35,7 @@ import { Carrello } from '@app/models/carrello';
         'Content-Type': 'application/json' });
         let options = { headers: headers, observe: "response" as 'body'};
         return this.http.get<HttpResponse<any>>(
-        '/destinations/ZSD_SP_SRV/CarrelloSet' + outFilter, options);
+            environment.oData_destination + 'CarrelloSet' + outFilter, options);
     }
 
     public addCart(csrftoken : string, carrello : Carrello) : Observable<any> {
@@ -46,7 +47,7 @@ import { Carrello } from '@app/models/carrello';
         carrello.Token = u.token;
         let options = { headers: headers, observe: "response" as 'body'};
         return this.http.post<HttpResponse<any>>(
-            '/destinations/ZSD_SP_SRV/CarrelloSet', carrello, options);
+            environment.oData_destination +  'CarrelloSet', carrello, options);
     }
 
     // save === insert or update
@@ -66,7 +67,7 @@ import { Carrello } from '@app/models/carrello';
         url = url.concat('(').concat(matrn).concat(',').concat(email).concat(',').concat(token).concat(',').concat(langu).concat(')');
         console.log('updateCart - url:' + url);
         return this.http.put<HttpResponse<any>>(
-            '/destinations/ZSD_SP_SRV/CarrelloSet' + url, carrello, options);
+            environment.oData_destination + 'CarrelloSet' + url, carrello, options);
     }
 
     public deleteFromCarrelloByCarrello(csrftoken : string, carrello : Carrello) : Observable<any> {
@@ -87,6 +88,6 @@ import { Carrello } from '@app/models/carrello';
         url = url.concat('(').concat(matrn).concat(',').concat(email).concat(',').concat(token).concat(',').concat(langu).concat(')');
         console.log('deleteFromCarrello - url:' + url);
         return this.http.delete<HttpResponse<any>>(
-        '/destinations/ZSD_SP_SRV/CarrelloSet' + url, options);
+            environment.oData_destination + 'CarrelloSet' + url, options);
     }
   }

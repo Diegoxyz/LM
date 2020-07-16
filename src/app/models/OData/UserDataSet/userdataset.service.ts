@@ -6,6 +6,7 @@ import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { UserData, User } from '@app/models/user';
 import { AccountService } from '@app/services/account.service';
 import buildQuery from 'odata-query';
+import { environment } from '@environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -46,7 +47,7 @@ export class UserDataSetService {
           'Content-Type': 'application/json' });
         let options = { headers: headers, observe: "response" as 'body'};
         return this.http.get<HttpResponse<any>>(
-          '/destinations/ZSD_SP_SRV/UserDataSet' + outFilter, options);
+          environment.oData_destination + 'UserDataSet' + outFilter, options);
     }
     public get userDataSetValue(): UserDataSet {
         return this.userDataSetSubject.value;

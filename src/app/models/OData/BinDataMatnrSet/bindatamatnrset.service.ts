@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import buildQuery from 'odata-query';
+import { environment } from '@environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -26,6 +27,6 @@ export class BinDataMatnrSetService {
         url = url.concat('(').concat(matrn).concat(',').concat(loioid).concat(')');
         console.log('getImage - url:' + url);
         return this.http.get<HttpResponse<any>>(
-        '/destinations/ZSD_SP_SRV/BinDataMatnrSet' + url + outFilter, options);
+            environment.oData_destination + 'BinDataMatnrSet' + url + outFilter, options);
     }
 }

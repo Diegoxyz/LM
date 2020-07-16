@@ -4,6 +4,7 @@ import { AccountService } from './account.service';
 import { Observable } from 'rxjs';
 import { User } from '@app/models/user';
 import buildQuery from 'odata-query';
+import { environment } from '@environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -15,7 +16,7 @@ export class CatalogueService {
     public getAllItems() : Observable<any> {
         const u : User = this.accountService.userValue;
         const filter = { Email: (u !== undefined && u !== null ? u.username : ''), 
-            Token: (u !== undefined && u !== null ? u.token : ''), Langu : (u !== undefined && u !== null ? u.lang : '')};
+            Token: (u !== undefined && u !== null ? u.token : ''), Langu : (u !== undefined && u !== null ? u.lang.toUpperCase() : '')};
         const format = 'json';
         const outFilter = buildQuery({ filter,format });
         console.log('CatalogueService getAllItems filter:' + outFilter);
@@ -24,7 +25,7 @@ export class CatalogueService {
         'Content-Type': 'application/json' });
         let options = { headers: headers, observe: "response" as 'body'};
         return this.http.get<HttpResponse<any>>(
-        '/destinations/ZSD_SP_SRV/CatalogoSet' + outFilter, options);
+            environment.oData_destination + 'CatalogoSet' + outFilter, options);
     }
 
     public getItem(matnr : string) : Observable<any> {
@@ -33,7 +34,7 @@ export class CatalogueService {
         const matrn = 'Matnr=' + '\'' + encodeURIComponent(matnr) + '\'';
         const email = 'Email=' + '\'' + (u !== undefined && u !== null ? u.username : '') + '\'';
         const token = 'Token=' + '\'' + (u !== undefined && u !== null ? u.token : '')+ '\'';
-        const langu = 'Langu=' + '\'' + (u !== undefined && u !== null ? u.lang : '') + '\'';
+        const langu = 'Langu=' + '\'' + (u !== undefined && u !== null ? u.lang.toUpperCase() : '') + '\'';
 
         let url = '';
         url = url.concat('(').concat(matrn).concat(',').concat(email).concat(',').concat(token).concat(',').concat(langu).concat(')');
@@ -41,14 +42,14 @@ export class CatalogueService {
         let headers = new HttpHeaders();
         let options = { headers: headers, observe: "response" as 'body'};
         return this.http.get<HttpResponse<any>>(
-            '/destinations/ZSD_SP_SRV/CatalogoSet' + url, options);
+            environment.oData_destination + 'CatalogoSet' + url, options);
     }
 
     // Ricerca per gerarchie
     public getHierarchies() : Observable<any> {
         const u : User = this.accountService.userValue;
         const filter = { Email: (u !== undefined && u !== null ? u.username : ''), 
-            Token: (u !== undefined && u !== null ? u.token : ''), Langu : (u !== undefined && u !== null ? u.lang : '')};
+            Token: (u !== undefined && u !== null ? u.token : ''), Langu : (u !== undefined && u !== null ? u.lang.toUpperCase() : '')};
         const format = 'json';
         const outFilter = buildQuery({ filter,format });
         console.log('CatalogueService getAllItems filter:' + outFilter);
@@ -57,7 +58,7 @@ export class CatalogueService {
         'Content-Type': 'application/json' });
         let options = { headers: headers, observe: "response" as 'body'};
         return this.http.get<HttpResponse<any>>(
-        '/destinations/ZSD_SP_SRV/GerarchiaSet' + outFilter, options);
+            environment.oData_destination + 'GerarchiaSet' + outFilter, options);
     }
 
     /*
@@ -79,6 +80,6 @@ export class CatalogueService {
         let headers = new HttpHeaders();
         let options = { headers: headers, observe: "response" as 'body'};
         return this.http.get<HttpResponse<any>>(
-            '/destinations/ZSD_SP_SRV/MatnrPrefSet' + url, options);
+            environment.oData_destination + 'MatnrPrefSet' + url, options);
     }
 }

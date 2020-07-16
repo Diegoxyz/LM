@@ -18,7 +18,7 @@ export function oDataSettingsFactory() {
   return new ODataSettings({
     //baseUrl: "https://services.odata.org/V4/TripPinServiceRW/",
     // baseUrl: "http://192.168.0.83:8000/sap/opu/odata/sap/ZKAN_APP_SRV/MonitorDataSet/?$format=json",
-    baseUrl: environment.destination_ZSD_SP_SRV,
+    baseUrl: environment.oData_destination,
     metadataUrl: "?$format=json",
     errorHandler: (error: HttpErrorResponse) => {
       return throwError(error);

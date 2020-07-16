@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { AccountService } from './account.service';
 import { Observable } from 'rxjs';
+import { environment } from '@environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -31,7 +32,7 @@ import { Observable } from 'rxjs';
             'Content-Type': 'application/json' });
         let options = { headers: headers, observe: "response" as 'body'};
         return this.http.get<HttpResponse<any>>(
-        '/destinations/ZSD_SP_SRV/LandSet' + outFilter, options);
+            environment.oData_destination + 'LandSet' + outFilter, options);
     }
     
     /**
@@ -51,7 +52,7 @@ import { Observable } from 'rxjs';
             'Content-Type': 'application/json' });
         let options = { headers: headers, observe: "response" as 'body'};
         return this.http.get<HttpResponse<any>>(
-        '/destinations/ZSD_SP_SRV/RegionSet' + outFilter, options);
+            environment.oData_destination + 'RegionSet' + outFilter, options);
 
     }
 

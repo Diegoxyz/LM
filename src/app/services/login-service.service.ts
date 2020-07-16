@@ -6,6 +6,7 @@ import { LoginSet } from '../models/OData/LoginSet/loginset.entity';
 import { UserDataSet } from '../models/OData/UserDataSet/userdataset.entity';
 import { UserReqSet } from '../models/OData/UserReq/userdataset.entity';
 import { HttpParams, HttpHeaders, HttpClient } from '@angular/common/http';
+import { environment } from '@environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -64,7 +65,7 @@ export class LoginService {
 
   public getCSRFToken(): string {
     let token : string = '';
-    this.httpClient.get('/destinations/ZSD_SP_SRV/LoginSet',{
+    this.httpClient.get(environment.oData_destination + 'LoginSet',{
       observe: "response", headers: {
         'X-CSRF-Token':'Fetch'
       }
@@ -104,7 +105,7 @@ export class LoginService {
           Langu    : ''
         }
 
-        this.httpClient.get('/destinations/ZSD_SP_SRV/LoginSet',{
+        this.httpClient.get(environment.oData_destination +  'LoginSet',{
           observe: "response", headers: {
             'X-CSRF-Token':'Fetch'
           }

@@ -6,6 +6,7 @@ import { User } from '@app/models/user';
 import { Observable } from 'rxjs';
 import { Item } from '@app/models/item';
 import { Macchina } from './macchineset.entity';
+import { environment } from '@environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -41,7 +42,7 @@ export class MacchineSetService {
           /* URL: http://192.168.0.83:8000/sap/opu/odata/sap/ZSD_SP_SRV/UserDataSet?&$format=json&$filter=Email eq 'roberto.mazzocato@eservices.it' and Token eq '000D3A2544DE1EDAAD8D7B3C3456628D' and Langu eq 'I' */
           // Se può essere utile: https://github.com/techniq/odata-query/blob/master/README.md
           const u : User = this.accountService.userValue;
-          const filter = { Email: u.username, Token: u.token, Langu : u.lang };
+          const filter = { Email: u.username, Token: u.token, Langu : u.lang.toUpperCase() };
           const format = 'json';
           const outFilter = buildQuery({ format, filter });
           console.log('filter:' + outFilter);
@@ -50,6 +51,6 @@ export class MacchineSetService {
             'Content-Type': 'application/json' });
           let options = { headers: headers, observe: "response" as 'body'};
           return this.http.get<HttpResponse<any>>(
-            '/destinations/ZSD_SP_SRV/MacchineSet' + outFilter, options);
+            environment.oData_destination + 'MacchineSet' + outFilter, options);
       }
 }

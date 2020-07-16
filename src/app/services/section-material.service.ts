@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { AccountService } from './account.service';
 import { Observable } from 'rxjs';
 import { User } from '@app/models/user';
+import { environment } from '@environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -24,6 +25,6 @@ export class SectionMaterial {
             'Content-Type': 'application/json' });
           let options = { headers: headers, observe: "response" as 'body'};
           return this.http.get<HttpResponse<any>>(
-            '/destinations/ZSD_SP_SRV/MaterialiSezioneSet' + outFilter, options);
+            environment.oData_destination + 'MaterialiSezioneSet' + outFilter, options);
     }
 }

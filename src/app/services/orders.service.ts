@@ -6,6 +6,7 @@ import buildQuery from 'odata-query';
 import { Recipient, SaveOrder } from '@app/models/order';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
+import { environment } from '@environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -36,7 +37,7 @@ export class OrdersService {
             let options = { headers: headers, observe: "response" as 'body'};
         
         return this.http.get<HttpResponse<any>>(
-            '/destinations/ZSD_SP_SRV/ShiptoSet' + outFilter, options);
+            environment.oData_destination + 'ShiptoSet' + outFilter, options);
 
     }
 
@@ -58,7 +59,7 @@ export class OrdersService {
         const Kunwe = 'Kunwe=' + '\'' + encodeURIComponent(recipient.Kunwe) + '\'';
         url = url.concat('(').concat(Kunwe).concat(')');
         return this.http.put<HttpResponse<any>>(
-            '/destinations/ZSD_SP_SRV/ShiptoSet' + url, recipient, options);
+            environment.oData_destination + 'ShiptoSet' + url, recipient, options);
     }
 
     /**
@@ -70,7 +71,7 @@ export class OrdersService {
         order.Token = u !== undefined ? u.token : '';
         order.Langu = u !== undefined && u !== null ? u.lang : '';
         // 2020-08-01T00:00:00
-        const vdatu : string = moment().format('YYYY-MM-DDTHH:mm:ss');
+        const vdatu : string = moment().format('YYYY-MM-DDT00:00:00');
         order.Vdatu = vdatu;
         order.Vbeln = '';
         let headers = new HttpHeaders({
@@ -79,6 +80,6 @@ export class OrdersService {
         // ZSD_SP_SRV/OrdineSet
         let options = { headers: headers, observe: "response" as 'body'};
         return this.http.post<HttpResponse<any>>(
-            '/destinations/ZSD_SP_SRV/OrdineSet', order, options);
+            environment.oData_destination +  'OrdineSet', order, options);
     }
 }
