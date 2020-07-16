@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { AccountService } from 'src/app/services/account.service';
 import { Customer } from '@app/models/customer';
 import { Cart } from '@app/models/cart';
@@ -17,22 +17,31 @@ import { CarrelloService } from '@app/services/carrello.service';
 import { UserDataSetService } from '@app/models/OData/UserDataSet/userdataset.service';
 import { Carrello } from '@app/models/carrello';
 import { UserDataSet } from '@app/models/OData/UserDataSet/userdataset.entity';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-bar',
   templateUrl: './bar.component.html',
   styleUrls: ['./bar.component.css']
 })
-export class BarComponent implements OnInit {
+export class BarComponent implements OnInit, OnDestroy {
 
   customer: Customer;
   cart : Cart;
   bsModalRef: BsModalRef;
   faShoppingCart = faShoppingCart;
+
+  private cartSubscription : Subscription;
   
   constructor(private accountService : AccountService, private manageProducts : ManageProducts, 
     private cartService : CartService, private modalService: BsModalService,private router: Router, private changePage: ChangePage,
     private carrelloService: CarrelloService, private userDataSetService : UserDataSetService) { }
+  
+  ngOnDestroy(): void {
+    if (this.cartSubscription) {
+      this.cartSubscription.unsubscribe();
+    }
+  }
 
   ngOnInit(): void {
 
@@ -55,15 +64,25 @@ export class BarComponent implements OnInit {
       if (this.accountService.isSessionStillValid()) {
         console.log('cart:' + this.cartService.loadCart());
         this.cartService.cart$.subscribe((o : Order) => {
-          console.log('this.cartService.cart$ : o:' + o);
-          if (o) {
-            this.carrelloService.getCart().subscribe(resp => {
+          if (this.accountService.isSessionStillValid()) {
+            this.cartSubscription = this.carrelloService.getCart().subscribe(resp => {
               console.log('this.carrelloService.getCart2 -' + resp);
+              if (resp.headers) {
+                const sapMessage = resp.headers.get('sap-message');
+                if (sapMessage !== undefined && sapMessage !== null) {
+                  console.log('session invalida return');
+                  return;
+                }
+              }
               if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
                 this.cart = Cart.fromCarrello(resp.body.d.results, this.userDataSetService.userDataSetValue);
                 this.cartService.setCart(this.cart);
               }
             });
+          } else {
+            if (this.cartSubscription) {
+              this.cartSubscription.unsubscribe();
+            }
           }
         });
   
