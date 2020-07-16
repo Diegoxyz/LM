@@ -7,6 +7,7 @@ import { LoginSet } from '../models/OData/LoginSet/loginset.entity';
 import { environment } from 'src/environments/environment';
 import { CartService } from './cart.service';
 import {TranslateService} from '@ngx-translate/core';
+import buildQuery from 'odata-query';
 
 @Injectable({
   providedIn: 'root'
@@ -237,5 +238,20 @@ export class AccountService {
     let options = { headers: headers, observe: "response" as 'body'};
     return this.http.post<HttpResponse<any>>(
       environment.oData_destination + 'UserReqSet', userReq, options);
+  }
+
+  public lostCredentials(csrftoken : string, email : string) : Observable<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-CSRF-Token': csrftoken });
+    
+    let url = '';
+    const langu = 'Langu=' + '\'' + this.getBrowserLanguage().toUpperCase() + '\'';
+    const em    = 'Email=' + '\'' + email + '\'';
+    url = url.concat('(').concat(em).concat(',').concat(langu).concat(')').concat();
+    console.log('lostcredentials - url:' + url);
+    let options = { headers: headers};
+    return this.http.get<HttpResponse<any>>(
+      environment.oData_destination + 'LostPswSet' + url + '?&' + '$format=json', options);
   }
 }
