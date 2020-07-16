@@ -82,7 +82,6 @@ export class LoginComponent implements OnInit {
                         if (resp.body.d.results[0].PswInitial !== undefined && resp.body.d.results[0].PswInitial !== '') {
                           this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/account/changePwd';
                         }
-                        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/account/changePwd';
                         this.userDataSetService.setUserSetValue(resp);
                       }
                       
