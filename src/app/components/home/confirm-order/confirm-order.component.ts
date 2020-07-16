@@ -6,6 +6,7 @@ import { AccountService } from 'src/app/services/account.service';
 import { OrdersService } from '@app/services/orders.service';
 import { environment } from '@environments/environment';
 import { SaveOrder } from '@app/models/order';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-confirm-order',
@@ -16,11 +17,11 @@ import { SaveOrder } from '@app/models/order';
 export class ConfirmOrderComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private accountService: AccountService,
-    private ordersService : OrdersService) { }
+    private ordersService : OrdersService, private translateService : TranslateService) { }
 
   public confirmOrderForm: FormGroup;
   private recipientId : string;
-  private errorMessage : string;
+  errorMessage : string;
 
   ngOnInit(): void {
     this.confirmOrderForm = new FormGroup({
@@ -45,8 +46,23 @@ export class ConfirmOrderComponent implements OnInit {
             const csrftoken : string = response1.headers.get('X-CSRF-Token');
             if (csrftoken) {
               this.ordersService.saveOrder(csrftoken,order).subscribe(resp => {
-                console.log('save order resp:' + resp);
-                this.router.navigate(['home/cart/save-order']);
+                if (resp.headers) {
+                  const sapMessage = resp.headers.get('sap-message');
+                  console.log('confirm-order : sapMessage:' + sapMessage);
+                  if (sapMessage !== undefined && sapMessage !== null) {
+                    const docSapMessage : Document = (new window.DOMParser()).parseFromString(sapMessage, 'text/xml');
+                      this.errorMessage = this.translateService.instant('unknownError');
+                      if (docSapMessage.hasChildNodes()) {
+                        if (docSapMessage.firstChild.childNodes.length >= 2) {
+                          this.errorMessage = docSapMessage.firstChild.childNodes[1].textContent;
+                        }
+                      }
+                  }
+                }
+                console.log('errorMessage:' + this.errorMessage);
+                if (this.errorMessage === undefined) {
+                  this.router.navigate(['home/cart/save-order']);
+                }
               })
             }
           }
