@@ -252,6 +252,6 @@ export class AccountService {
     console.log('lostcredentials - url:' + url);
     let options = { headers: headers};
     return this.http.get<HttpResponse<any>>(
-      environment.oData_destination + 'LostPswSet' + url + '?&' + '$format=json', options);
+      environment.oData_destination + 'LostPswSet' + url, options);
   }
 }

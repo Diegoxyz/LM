@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpResponse } from '@angular/common/http';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AccountService } from '../services/account.service';
@@ -27,15 +27,22 @@ export class ErrorInterceptor implements HttpInterceptor {
                     }
                 }
                 return event;
-                }),catchError(err => {
-                console.log('catched error');
-                if (err.status === 401) {
+                }),catchError((error: HttpErrorResponse) => {
+                if (error.status === 401) {
                     // auto logout if 401 response returned from api
                     this.accountService.logout();
                 }
-                
-                const error = err.error.message || err.statusText;
-                return throwError(error);
+                let errorMessage = '';
+                if (error.error instanceof ErrorEvent) {
+                    // client-side error
+                    errorMessage = error.error.message;
+                  } else {
+                    // server-side error
+                    errorMessage = error.status + '-' + error.message;
+                  }
+                console.log('catched error:' + errorMessage);
+                window.alert(errorMessage);
+                return throwError(errorMessage);
             }))
     }
 

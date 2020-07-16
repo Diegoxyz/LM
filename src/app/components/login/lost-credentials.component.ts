@@ -60,7 +60,7 @@ export class LostCredentialsComponent implements OnInit {
               }, error => {
                 if (error) {
                   this.loginError = true;
-                  this.errorMessage = this.translateService.instant('registrationRequestSeccessfullySent');
+                  // this.errorMessage = this.translateService.instant('registrationRequestSeccessfullySent');
                 }
               });
             }
