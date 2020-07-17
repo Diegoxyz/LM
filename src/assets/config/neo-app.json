@@ -1,0 +1,48 @@
+{
+	"authenticationMethod": "none",
+	"welcomeFile": "/index.html",
+	"routes": [{
+		"path": "/destinations/LFD-ZSD_SP",
+		"target": {
+			"type": "destination",
+			"name": "LFD-ZSD_SP"
+		}
+	}, {
+		"path": "/home",
+		"target": {
+			"type": "application",
+			"name": "lm",
+			"preferLocal": true
+		}
+	}, {
+		"path": "/home/catalogue",
+		"target": {
+			"type": "application",
+			"name": "lm",
+			"preferLocal": true
+		}
+	},{
+		"path": "/home/boards",
+		"target": {
+			"type": "application",
+			"name": "lm",
+			"preferLocal": true
+		}
+	},{
+		"path": "/home/orders",
+		"target": {
+			"type": "application",
+			"name": "lm",
+			"preferLocal": true
+		}
+	},{
+      "path": "/sap/opu/odata",
+      "target": {
+        "type": "destination",
+        "name": "LFD-ZSD_SP",
+        "entryPath": "/sap/opu/odata"
+      },
+      "description": "La Marzocco Test"
+    }],
+	"sendWelcomeFileRedirect": true
+}
