@@ -17,6 +17,8 @@ export class SaveOrderComponent implements OnInit {
 
   public saveOrderForm: FormGroup;
 
+  orderNumber : string;
+  notes : string;
 
 /*   ngOnInit(): void {
 
@@ -31,6 +33,12 @@ export class SaveOrderComponent implements OnInit {
       note: new FormControl(null, Validators.required),
       receiverID: new FormControl(null, Validators.required)
     });
+
+    this.orderNumber =this.route.snapshot.paramMap.get('orderNumber');
+    this.receiverID.setValue(this.orderNumber);
+    this.notes =this.route.snapshot.paramMap.get('notes');
+    this.note.setValue(this.notes);
+    console.log('SaveOrderComponent - orderNumber:' + this.orderNumber + '-' + this.notes );
   }
   
 

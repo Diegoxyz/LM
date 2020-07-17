@@ -48,5 +48,7 @@
     "passwordPlaceholder":"Add your password",
     "submit":"Conferma",
     "register":"Register",
-    "lostCredentials":"Lost credentials"
+    "lostCredentials":"Lost credentials",
+    "receiverID": "Receiver ID",
+    "note": "Note"
 }

@@ -29,6 +29,14 @@ export class CartOrderComponent implements OnInit {
 
     } 
 
+    public getPrice(price : number) : string {
+        console.log('getPrice - price:' + price);
+        if (price) {
+            return Number(price).toFixed(2);
+        }
+        return '0.00';
+    }
+
     ngOnInit(): void {
         if (this.order) {
             if (environment && environment.oData) {

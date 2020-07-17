@@ -97,7 +97,10 @@ export class CatalogueComponent implements OnInit, OnDestroy {
 
             try {
                 console.log('environment = LOCAL - prova ciusura');
-                setTimeout(function () { document.getElementById('myModal').style.display = "none"; }, 3000);
+                if (document.getElementById('myModal')) {
+                    setTimeout(function () { 
+                        document.getElementById('myModal').style.display = "none"; }, 3000);
+                }
             } catch (Error) {
                 alert(Error.message);
             }

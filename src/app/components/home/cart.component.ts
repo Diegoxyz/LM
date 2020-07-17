@@ -29,7 +29,7 @@ export class CartComponent implements OnInit, OnDestroy {
     
     totalPrice : number = 0;
     totalQuantity : number = 0;
-
+    strTotalPrice : string = '0.00';
     bsModalRef: BsModalRef;
 
     config = {
@@ -75,6 +75,7 @@ export class CartComponent implements OnInit, OnDestroy {
                                         this.products.push(o.product);
                                         this.totalPrice = this.totalPrice + (o.product.price * o.quantity);
                                         this.totalQuantity = this.totalQuantity + o.quantity;
+                                        this.strTotalPrice = this.totalPrice.toFixed(2);
                                     }
                                     
                                 })
@@ -120,13 +121,14 @@ export class CartComponent implements OnInit, OnDestroy {
             this.orders.forEach(o => {
                 if (o.product) {
                     this.products.push(o.product);
-                    this.totalPrice = this.totalPrice + (o.product.price * o.quantity);
+                    this.totalPrice = this.totalPrice + (o.product.price  * o.quantity) ;
                 }
                 this.totalQuantity = this.totalQuantity + o.quantity;
             });
             this.currency = 'EUR';
         }
 
+        this.strTotalPrice = this.totalPrice.toFixed(2);
         this.manageProducts.manageProducts$.subscribe((h : HandledProduct) => {
             this.cart = this.cartService.addAnOrder(h.product, h.quantity);
         });
@@ -142,6 +144,7 @@ export class CartComponent implements OnInit, OnDestroy {
         this.orders = [];
         this.totalQuantity = 0;
         this.totalPrice = 0;
+        this.strTotalPrice = '0.00';
     }
 
     submitOrder(template: TemplateRef<any>): void {
@@ -153,6 +156,7 @@ export class CartComponent implements OnInit, OnDestroy {
         if (newOrder) {
             this.totalQuantity = 0;
             this.totalPrice = 0;
+            this.strTotalPrice = '0.00';
             this.orders.forEach(o => {
                 if (o.id === newOrder.id) {
                     this.totalPrice = this.totalPrice + (newOrder.product.price * newOrder.quantity);
@@ -163,6 +167,7 @@ export class CartComponent implements OnInit, OnDestroy {
                 }
             });
             this.cartService.setOrders(this.orders);
+            this.strTotalPrice = this.totalPrice.toFixed(2);
         }
     }
 
@@ -180,6 +185,7 @@ export class CartComponent implements OnInit, OnDestroy {
             });
             this.orders = tempOrders;
             this.cartService.setOrders(this.orders);
+            this.strTotalPrice = this.totalPrice.toFixed(2);
         }
     }
 

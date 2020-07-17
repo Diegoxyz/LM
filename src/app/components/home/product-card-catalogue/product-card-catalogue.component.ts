@@ -11,6 +11,8 @@ import { environment } from '@environments/environment';
 import { AccountService } from '@app/services/account.service';
 import { CarrelloService } from '@app/services/carrello.service';
 import { Carrello } from '@app/models/carrello';
+import { CatalogueService } from '@app/services/catalogue.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({selector: 'app-product-catalogue-card',
 templateUrl: './product-card-catalogue.component.html',
@@ -36,9 +38,11 @@ export class ProductCardCatalogueComponent implements OnInit {
 
     strPrice = '';
 
-    constructor(private fb: FormBuilder,private manageProducts: ManageProducts, private cartService : CartService,
+    constructor(private fb: FormBuilder,private manageProducts: ManageProducts, 
+        private cartService : CartService,
         private accountService: AccountService, private carrelloService : CarrelloService, 
-        private binDataMatnrSetService: BinDataMatnrSetService, public sanitizer: DomSanitizer) {
+        private binDataMatnrSetService: BinDataMatnrSetService, public sanitizer: DomSanitizer,
+        private catalogueService : CatalogueService, private translateService : TranslateService) {
     }
     
     public addProductForm: FormGroup;
@@ -173,4 +177,38 @@ export class ProductCardCatalogueComponent implements OnInit {
             this.quantityError = true;
         }
     }
+
+    addToFavorite(){ 
+        if (environment && environment.oData) {
+            this.catalogueService.setPreferred(this.item.code, !this.item.preferred).subscribe(resp => {
+                let isError = false;
+                let errorMessage : string = undefined;
+                if (resp.headers) {
+                    const sapMessage = resp.headers.get('sap-message');
+                    if (sapMessage !== undefined && sapMessage !== null) {
+                        isError = true;
+                        errorMessage = this.translateService.instant('unknownError');
+                        try {
+                        let sm = JSON.parse(sapMessage);
+                        errorMessage = sm.message;
+                        } catch (error) {
+                        const docSapMessage : Document = (new window.DOMParser()).parseFromString(sapMessage, 'text/xml');
+                        if (docSapMessage.hasChildNodes()) {
+                            if (docSapMessage.firstChild.childNodes.length >= 2) {
+                            errorMessage = docSapMessage.firstChild.childNodes[1].textContent;
+                            }
+                        }
+                        }
+                    }
+                    console.log('errorMessage:' + errorMessage);
+                }
+                if (!isError) {
+                    this.item.preferred = !this.item.preferred;
+                }
+                
+            })
+        } else {
+            this.item.preferred = !this.item.preferred;
+        }
+}
 }

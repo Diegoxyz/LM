@@ -6,3 +6,10 @@ textarea {
     margin-bottom: 1rem;
 }
 
+#step{
+  color: blue;
+}
+
+h5{
+  font-weight: bold;
+}

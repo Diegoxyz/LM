@@ -60,16 +60,16 @@
                                     <div class="col-md-8">
                                         <form [formGroup]="addProductForm" (ngSubmit)="addProduct(item.code)">
                                             <div class="row">
-                                                <div class="col-md-auto" style="padding-left: 20%;">
+                                                <div id="qty-id" class="col-md-auto" style="padding-left: 10%;">
                                                     <input [id]="Id('qty', item.code)" [formControlName]="item.code"
                                                         type="number" step="1" min="0" max="9999" name=""
                                                         value="{{ quantity }}" title="Quantity" size="2"
                                                         pattern="[0-9]*" inputmode="numeric" aria-labelledby="">
                                                 </div>
-                                                <div class="col-md-1"></div>
+                                                <div>test</div>
                                                 <div id="icon-btn-div" class="col-md-3">
-                                                    <button style="background-color: transparent; border: transparent;">
-                                                        <fa-icon id="btn-icon" [icon]="faShoppingCart" size="1x">
+                                                    <button id="btn-icon" style="background-color: transparent; border: transparent;">
+                                                        <fa-icon  [icon]="faShoppingCart" size="1x">
                                                         </fa-icon>
                                                     </button>
                                                 </div>
@@ -130,15 +130,12 @@
                                     <div class="col-md-8">
                                         <form [formGroup]="addProductForm" (ngSubmit)="addProduct(item.code)">
                                             <div class="row">
-                                                <div class="col-md-auto" style="padding-left: 20%;">
+                                                <div class="col-md-auto" style="padding-left: 10%;">
                                                     <input [id]="Id('qty', item.code)" [formControlName]="item.code"
                                                         type="number" step="1" min="0" max="9999" name=""
                                                         value="{{ quantity }}" title="Quantity" size="2"
                                                         pattern="[0-9]*" inputmode="numeric" aria-labelledby="">
                                                 </div>
-                                                
-                                                <div class="col-md-1"></div>
-
                                                 <div id="icon-btn-div" class="col-md-3">
                                                     <button style="background-color: transparent; border: transparent;">
                                                         <fa-icon id="btn-icon" [icon]="faShoppingCart" size="1x">

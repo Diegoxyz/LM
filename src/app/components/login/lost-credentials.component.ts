@@ -37,6 +37,7 @@ export class LostCredentialsComponent implements OnInit {
       return;
     }
     if (environment && environment.oData) {
+      this.errorMessage = undefined;
       this.accountService.fetchToken().subscribe(
         response1 => {
           console.log('step 1');
@@ -47,20 +48,27 @@ export class LostCredentialsComponent implements OnInit {
               this.accountService.lostCredentials(csrftoken, this.email.value).subscribe(response2 => {
                 console.log('response2:' + response2);
                 this.response2 = response2;
-
-                if (response2 && response2.error && response2.error.message) {
-                  this.errorMessage = response2.error.message;
-                  this.loginError = true;
+                if (response2.headers) {
+                  const sapMessage = response2.headers.get('sap-message');
+                  if (sapMessage !== undefined && sapMessage !== null) {
+                    this.errorMessage = this.translateService.instant('unknownError');
+                    try {
+                      let sm = JSON.parse(sapMessage);
+                      this.errorMessage = sm.message;
+                    } catch (error) {
+                      const docSapMessage : Document = (new window.DOMParser()).parseFromString(sapMessage, 'text/xml');
+                      if (docSapMessage.hasChildNodes()) {
+                          if (docSapMessage.firstChild.childNodes.length >= 2) {
+                            this.errorMessage = docSapMessage.firstChild.childNodes[1].textContent;
+                          }
+                      }
+                    }
+                  }
                 }
-
                 if (this.errorMessage === undefined) {
-                  this.loginError = true;
                   this.errorMessage = this.translateService.instant('registrationRequestSeccessfullySent');
-                }
-              }, error => {
-                if (error) {
+                } else {
                   this.loginError = true;
-                  // this.errorMessage = this.translateService.instant('registrationRequestSeccessfullySent');
                 }
               });
             }

@@ -7,6 +7,8 @@ import { OrdersService } from '@app/services/orders.service';
 import { environment } from '@environments/environment';
 import { SaveOrder } from '@app/models/order';
 import { TranslateService } from '@ngx-translate/core';
+import * as moment from 'moment';
+import { CustomValidators } from './custom-validators';
 
 @Component({
   selector: 'app-confirm-order',
@@ -24,21 +26,47 @@ export class ConfirmOrderComponent implements OnInit {
   errorMessage : string;
 
   ngOnInit(): void {
-    this.confirmOrderForm = new FormGroup({
-      note: new FormControl(null, Validators.required)
-    });
+/*     this.confirmOrderForm = new FormGroup({
+      note: new FormControl(null, Validators.required),
+      deliverydate: new FormControl(null, Validators.required)
+    }); */
+
+    
+
+    this.confirmOrderForm = this.fb.group(
+      {
+        note:  ['', Validators.required],
+        deliverydate:  ['', Validators.required]
+    } 
+    , 
+    {
+      // data non minore a quella odierna
+      validator: CustomValidators.checkDeliveryDate
+    }  
+    );
 
     this.recipientId =this.route.snapshot.paramMap.get('recipientId');
 
+    let  defaultdate = (moment().add(2, 'days')).format('YYYY-MM-DD');
+    this.deliverydate.setValue( defaultdate);
+
+  
   }
 
   get note() { return this.confirmOrderForm.get('note') };
 
+  get deliverydate() { return this.confirmOrderForm.get('deliverydate') };
+
   onSubmit(): void {
+    if (!this.confirmOrderForm.valid) {
+      return;
+    }
+
+
     const order = new SaveOrder();
     order.Note = this.note.value;
     order.Kunwe = this.recipientId;
-
+    order.Vdatu = this.deliverydate.value + 'T00:00:00';
     if (environment && environment.oData) {
       this.accountService.fetchToken().subscribe(
         response1 => {
@@ -60,9 +88,18 @@ export class ConfirmOrderComponent implements OnInit {
                   }
                 }
                 console.log('errorMessage:' + this.errorMessage);
-                if (this.errorMessage === undefined) {
-                  this.router.navigate(['home/cart/save-order']);
+                /*if (this.errorMessage === undefined) {
+                  // this.router.navigate(['home/cart/save-order']);
+                  
+                }*/
+                if (this.errorMessage === undefined || this.errorMessage === null) {
+                  this.errorMessage = this.translateService.instant('registrationRequestSeccessfullySent');
                 }
+                let orderNumber: string = ''
+                if (resp.body && resp.body.d && resp.body.d.Vbeln) {
+                  orderNumber = resp.body.d.Vbeln;
+                }
+                this.router.navigate(['home/cart/save-order', { orderNumber: resp.body.d.Vbeln, notes: this.errorMessage }]);
               })
             }
           }

@@ -5,11 +5,12 @@ import { catchError, map } from 'rxjs/operators';
 import { AccountService } from '../services/account.service';
 import { ODataSettingsService } from './oDataSettings.service';
 import { environment } from '@environments/environment';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-    constructor(private accountService: AccountService, private oDataSettingsService : ODataSettingsService) {
+    constructor(private accountService: AccountService, private translateService : TranslateService) {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -34,13 +35,23 @@ export class ErrorInterceptor implements HttpInterceptor {
                 }
                 let errorMessage = '';
                 if (error.error instanceof ErrorEvent) {
+                    console.log('client side error');
                     // client-side error
-                    errorMessage = error.error.message;
+                    errorMessage = error.error.message + ':' + error.message + ':' + error.url;
                   } else {
+                    console.log('server side error:' + error.error);
+                    if (error.error) {
+                        console.log('server side error message:' + error.error.message);
+                    }
                     // server-side error
-                    errorMessage = error.status + '-' + error.message;
+                    errorMessage = error.status + '-' + error.message + '-' + error.statusText;
                   }
                 console.log('catched error:' + errorMessage);
+                if (!(error.error instanceof ErrorEvent)) {
+                    return Observable.throw(error);
+                }
+                
+                errorMessage = this.translateService.instant('unknownError');
                 window.alert(errorMessage);
                 return throwError(errorMessage);
             }))

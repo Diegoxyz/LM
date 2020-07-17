@@ -94,13 +94,15 @@ export class LoginComponent implements OnInit {
 
                     this.userDataSetService.fetchUserDatSet(u.username, u.token, this.accountService.getLanguage()).subscribe(resp => {
                       if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
+                        console.log('resp.body.d.results[0].PswInitial:' + resp.body.d.results[0].PswInitial);
                         if (resp.body.d.results[0].PswInitial !== undefined && resp.body.d.results[0].PswInitial !== '') {
-                          this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/account/changePwd';
+                          console.log('pswinitial');
+                          this.returnUrl = '/account/changePwd';
                         }
                         this.userDataSetService.setUserSetValue(resp);
                       }
-                      
-                      this.router.navigate([this.returnUrl]);
+                      console.log('this.returnUrl:' + this.returnUrl);
+                      this.router.navigate([this.returnUrl, { email: this.email.value }]);
                     }, error => {
                       this.loginError = true;
                     });

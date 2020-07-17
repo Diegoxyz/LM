@@ -1,11 +1,11 @@
 <div style="margin-top: 5%; margin-left: 5%; max-width: 90%;">
     <div class="align-items-center justify-content-center">
         <div class="row headers-list-orders">
-            <div class="col-1 h-100 description_column">
-                <span>Select to remove</span>
+            <div class="col-1 h-100 description_column" >
+                <span>&nbsp;</span>
             </div>
-            <div class="col-4 h-100 code_column">
-                <span>CODE - DESCRIPTION</span> 
+            <div class="col-4 h-100 code_column" style= "text-align: left;">
+                <span>PRODUCTS</span> 
             </div>
             <div class="col-2 h-100 price_column">
                 <span>PRICE</span>
@@ -39,21 +39,21 @@
                 <span>&nbsp;</span>
             </div>
             <div class="col-2 h-100">
-                <span>Total {{totalPrice}} {{currency}}</span>
+                <div id="grand-total">Grand total {{strTotalPrice}} {{currency}}</div>
             </div>
         </div>
 
         <div class="row" style="margin-bottom: 5%;">
-             <div id="remove" class="col-md-4 text-left">
+<!--              <div id="remove" class="col-md-4 text-left">
                 <button class="btn btn-primary" (click)="removeSelected()">Remove Selected</button>
-            </div>
+            </div> -->
 
-            <div id="empty" class="col-md-4 text-center">
+            <div id="empty" class="col-md-6 text-left">
                 <button class="btn btn-primary" (click)="emptyCart()">Empty Cart</button>
             </div>
 
-            <div id="submit" class="col-md-4 text-right">
-                <button class="btn btn-primary" (click)="goToShipToSet()">Submit order</button>
+            <div id="submit" class="col-md-6 text-right">
+                <button class="btn btn-primary" (click)="goToShipToSet()">Go to delivery address</button>
             </div>
         </div>
     </div>

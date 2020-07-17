@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '@environments/environment';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { UtilityService } from '@app/services/utility.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AccountService } from 'src/app/services/account.service';
@@ -16,23 +16,23 @@ import { Recipient } from '@app/models/order';
 export class ShipToSetComponent implements OnInit {
 
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private accountService: AccountService, 
-    private utilityService : UtilityService, private orderService : OrdersService) { }
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private accountService: AccountService,
+    private utilityService: UtilityService, private orderService: OrdersService) { }
 
   public shippingForm: FormGroup;
 
   countryForm: FormGroup;
-  
-  countries : Country[] = [];
-  regions : Region[] = [];
+
+  countries: Country[] = [];
+  regions: Region[] = [];
   recipients: Recipient[] = [];
   disableRegion: boolean = true;
 
-  recipientId : string = undefined;
-
+  recipientId: string = undefined;
   ngOnInit(): void {
 
-   this.shippingForm = this.fb.group({
+    this.shippingForm = this.fb.group({
+      recipient: ['', Validators.required],
       receiver: ['', Validators.required],
       address: ['', Validators.required],
       city: ['', Validators.required],
@@ -40,13 +40,13 @@ export class ShipToSetComponent implements OnInit {
       country: ['', Validators.required],
       region: ['', Validators.required]
     });
- 
+
 
     if (environment && environment.oData) {
       this.utilityService.getCountries().subscribe(resp => {
         if (resp && resp.body && resp.body.d && resp.body.d.results.length > 0) {
           resp.body.d.results.forEach(c => {
-            this.countries.push({ 'id':c.Land1, 'name':c.Land1x});
+            this.countries.push({ 'id': c.Land1, 'name': c.Land1x });
           });
         }
       });
@@ -88,7 +88,7 @@ export class ShipToSetComponent implements OnInit {
             this.utilityService.getRegions(firstRecipient.Land1).subscribe(resp => {
               if (resp && resp.body && resp.body.d && resp.body.d.results.length > 0) {
                 resp.body.d.results.forEach(r => {
-                  this.regions.push({ 'id':r.Regio, 'name':r.Regiox});
+                  this.regions.push({ 'id': r.Regio, 'name': r.Regiox });
                 });
                 this.region.setValue(firstRecipient.Regio);
               }
@@ -99,72 +99,153 @@ export class ShipToSetComponent implements OnInit {
         }
       });
     } else {
-      this.countries.push({ "id": "01", "name": "Italy"});
-      this.countries.push({ "id": "02", "name": "Germany"});
+      this.countries.push({ "id": "01", "name": "Italy" });
+      this.countries.push({ "id": "02", "name": "Germany" });
 
-      this.regions.push({'id':'01',name:'Veneto'});
-      this.regions.push({'id':'02',name:'Piemonte'});
+      this.regions.push({ 'id': '01', name: 'Veneto' });
+      this.regions.push({ 'id': '02', name: 'Piemonte' });
+
+      this.recipients.push({
+        "Kunwe": "id_dest_01",
+        "Kunwex": "destinatario merce 01",
+        "Email": "",
+        "Token": "",
+        "Langu": "",
+        "Stras": "indirizzo_01",
+        "Pstlz": "cap-01",
+        "Ort01": "citta_01",
+        "Regio": "Prov_01",
+        "Regiox": "Regione_01",
+        "Land1": "Sigla_Stato_01",
+        "Land1x": "Desc_stato:_01"
+      });
+
+
+      this.recipients.push({
+        "Kunwe": "id_dest_02",
+        "Kunwex": "destinatario merce 02",
+        "Email": "",
+        "Token": "",
+        "Langu": "",
+        "Stras": "indirizzo_02",
+        "Pstlz": "cap-02",
+        "Ort01": "citta_02",
+        "Regio": "Prov_02",
+        "Regiox": "Regione_02",
+        "Land1": "Sigla_Stato_02",
+        "Land1x": "Desc_stato:_02"
+      });
+
+      this.recipients.push({
+        "Kunwe": "id_dest_03",
+        "Kunwex": "destinatario merce 03",
+        "Email": "",
+        "Token": "",
+        "Langu": "",
+        "Stras": "indirizzo_03",
+        "Pstlz": "cap-03",
+        "Ort01": "citta_03",
+        "Regio": "Prov_03",
+        "Regiox": "Regione_03",
+        "Land1": "Sigla_Stato_03",
+        "Land1x": "Desc_stato:_03"
+      });
     }
 
 
   }
-  
 
-    get receiver() {
-      return this.shippingForm.get('receiver');
-    }
-  
- 
-    get address() {
-      return this.shippingForm.get('address');
-    }
-  
-    get city() {
-      return this.shippingForm.get('city');
-    }
-  
-    get zipCode() {
-      return this.shippingForm.get('zipCode');
-    }
-  
-    get country() {
-      return this.shippingForm.get('country');
-    }
+  get recipient() {
+    return this.shippingForm.get('recipient');
+  }
 
-    get region() {
-      return this.shippingForm.get('region');
-    }
-  
-    changeCountry(event) {
-      if (event) {
-        this.regions = [];
-        this.disableRegion = this.country.status === 'INVALID';
-        if (!this.disableRegion) {
-          console.log('this.disableregion:' + this.disableRegion);
-          if (environment && environment.oData) {
-            const countryCode = this.country.value;
-            console.log('countryCode:' + countryCode)
-            this.utilityService.getRegions(countryCode).subscribe(resp => {
-              if (resp && resp.body && resp.body.d && resp.body.d.results.length > 0) {
-                resp.body.d.results.forEach(r => {
-                  this.regions.push({ 'id':r.Regio, 'name':r.Regiox});
-                });
-              }
-            });
-          } else {
-            this.regions.push({'id':'01',name:'Veneto'});
-            this.regions.push({'id':'02',name:'Piemonte'});
-          }
-          
+
+  get receiver() {
+    return this.shippingForm.get('receiver');
+  }
+
+
+  get address() {
+    return this.shippingForm.get('address');
+  }
+
+  get city() {
+    return this.shippingForm.get('city');
+  }
+
+  get zipCode() {
+    return this.shippingForm.get('zipCode');
+  }
+
+  get country() {
+    return this.shippingForm.get('country');
+  }
+
+  get region() {
+    return this.shippingForm.get('region');
+  }
+
+  changeCountry(event) {
+    if (event) {
+      this.regions = [];
+      this.disableRegion = this.country.status === 'INVALID';
+      if (!this.disableRegion) {
+        console.log('this.disableregion:' + this.disableRegion);
+        if (environment && environment.oData) {
+          const countryCode = this.country.value;
+          console.log('countryCode:' + countryCode)
+          this.utilityService.getRegions(countryCode).subscribe(resp => {
+            if (resp && resp.body && resp.body.d && resp.body.d.results.length > 0) {
+              resp.body.d.results.forEach(r => {
+                this.regions.push({ 'id': r.Regio, 'name': r.Regiox });
+              });
+            }
+          });
+        } else {
+          this.regions.push({ 'id': '01', name: 'Veneto' });
+          this.regions.push({ 'id': '02', name: 'Piemonte' });
         }
+
       }
     }
+  }
+
+
+  changeRecipient(event) {
+    if (event) {
+      console.log('test:' + this.recipient.value)
+      this.recipients.forEach( r => {
+        if (r.Kunwe === this.recipient.value) {
+          this.recipientId = r.Kunwe;
+            this.receiver.setValue(r.Kunwex);
+            this.address.setValue(r.Stras);
+            this.city.setValue(r.Ort01);
+            this.zipCode.setValue(r.Pstlz);
+            this.country.setValue(r.Land1);
+            this.region.setValue(r.Regio);
+            if (environment && environment.oData) {
+              this.utilityService.getRegions(r.Land1).subscribe(resp => {
+                if (resp && resp.body && resp.body.d && resp.body.d.results.length > 0) {
+                  resp.body.d.results.forEach(r => {
+                    this.regions.push({ 'id': r.Regio, 'name': r.Regiox });
+                  });
+                  this.region.setValue(r.Regio);
+                }
+              });
+            }
+            
+        }
+      })
+
+    }
+  }
+
 
   onSubmit(): void {
     //TODO valida il form
     if (environment && !environment.oData) {
       this.recipientId = 'test';
-      this.router.navigate(['/home/cart/confirm-order', { recipientId : this.recipientId }]);
+      this.router.navigate(['/home/cart/confirm-order', { recipientId: this.recipientId }]);
     } else {
       // Casomai l'utente l'avesse modificato andiamo a salvarlo comunque
       const recipient = new Recipient();
@@ -179,19 +260,19 @@ export class ShipToSetComponent implements OnInit {
       this.accountService.fetchToken().subscribe(
         response1 => {
           if (response1.headers) {
-            const csrftoken : string = response1.headers.get('X-CSRF-Token');
+            const csrftoken: string = response1.headers.get('X-CSRF-Token');
             if (csrftoken) {
-              this.orderService.updateDestinatarioMerce(csrftoken,recipient).subscribe(resp => {
+              this.orderService.updateDestinatarioMerce(csrftoken, recipient).subscribe(resp => {
                 console.log('update destinatario resp:' + resp);
-                this.router.navigate(['/home/cart/confirm-order', { recipientId : this.recipientId }]);
+                this.router.navigate(['/home/cart/confirm-order', { recipientId: this.recipientId }]);
               })
             }
           }
         }
       );
     }
-    
-    
+
+
   }
 
   onCancel(): void {

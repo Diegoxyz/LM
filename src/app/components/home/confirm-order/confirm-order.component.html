@@ -3,20 +3,34 @@
         <div class="container">
 
             <form id="confirmOrderForm" [formGroup]="confirmOrderForm" (ngSubmit)="onSubmit()">
-                <!-- 
+
+                <div class="form-row"> 
+                    <div class="col-md-2"></div>
+                    <div Id="step" class="col-md-8 text-center" >
+                    <h5>STEP 2 di 3 - CONFERMA ORDINE </h5></div>
+                </div>
+                <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
                 <div class="form-row">
                     <div class="col-md-2"></div>
                     <div class="col-md-8">
-                        <label for="note" i18n>Note</label>
-                        <textarea class="form-control" id="note" name="note" maxlength = "140"  required></textarea>
-                        <div *ngIf="note.invalid && (note.dirty || note.touched)" class="alert alert-danger">
-                            <div *ngIf="note.errors.required">
-                                <div i18n>Note is required</div>
+                        <label for="deliverydate" i18n>Requested delivery date</label>
+                        <input type="date" class="form-control" id="deliverydate" name="deliverydate"required formControlName="deliverydate">
+                        <div *ngIf="deliverydate.invalid && (deliverydate.dirty || deliverydate.touched)" class="alert alert-danger">
+                            <div *ngIf="deliverydate.errors.required">
+                                <div i18n>Requested delivery date is required</div>
                             </div>
-                        </div> -->
+                        </div>
+                        <div *ngIf="confirmOrderForm.controls['deliverydate'].hasError('invalidDate')" class="alert alert-danger">
+                            <div>
+                                <div i18n>Requested delivery date must be greater than today's date</div>
+                            </div>
+                        </div>
 
+                    </div>
+                </div>
 
                 {{ errorMessage }}
+                
                 <div class="form-row">
                     <div class="col-md-2"></div>
                     <div class="col-md-8">
@@ -34,13 +48,15 @@
 
                 <div class="form-row">
                     <div class="col-md-2"></div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 text-left">
+                        <button class="btn btn-primary" (click)="onCancel()">Back</button>
+                    </div>
+
+                    <div class="col-md-4 text-right">
                         <button type="submit" class="btn btn-primary"
                             [disabled]="!confirmOrderForm.valid">Submit</button>
                     </div>
-                    <div class="col-md-4  text-right">
-                        <button class="btn btn-primary" (click)="onCancel()">Back</button>
-                    </div>
+
                     <div class="w-100"></div>
                     <div class="w-100"></div>
                 </div>

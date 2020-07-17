@@ -51,10 +51,10 @@
     text-align: center;
   }
 
+  /*
   .blue-square {
     border-radius: 30px;
     border: solid 1px black;
-    /*background-color: #0074D9;*/
     width: 1.8em;
     height: 1.8em;
     display: inline-block;
@@ -62,7 +62,7 @@
     padding-left: 3%;
     padding-right: 2%;
     font-size: 0.8rem;
-  }
+  }*/
 
   .button-close-container {
     padding-left: 35%;
@@ -135,3 +135,22 @@
   margin-top:23%;
   padding-bottom: 24.5%;
 } */
+
+
+#icon-btn-div{
+  padding-left: 0px;  /* padding-right: 0px; */
+}
+
+
+#btn-icon{
+  padding-left: 0px;  /* padding-right: 0px; */
+}
+
+#qty-id{
+  padding-right: 0px;
+}
+
+#col-md-1{
+  padding-left: 0px;
+  padding-right: 0px;
+}

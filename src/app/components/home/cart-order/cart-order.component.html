@@ -2,13 +2,13 @@
     <div  class="col-1 description_column" style="padding-top: 0.5%">
         <input type="checkbox" />
     </div>
-    <div  class="col-4 description_column"  >
+    <div  class="col-4 description_column" style="text-align: left;   margin: auto;">
         <span>{{ order.product.code}} - {{ order.product.description}}</span>
     </div>
-    <div  class="col-2 price_column" style="padding-top: 1%" >
-        <span>{{ order.product.price}} {{ order.product.currency }}</span>
+    <div  class="col-2 price_column" style="margin: auto; text-align: right;" >
+        <span>{{ getPrice(order.product.price) }} {{ order.product.currency }}</span>
     </div>
-    <div  class="col-2 quantity_column" style="padding-top: 0.5%" >
+    <div  class="col-2 quantity_column" style="margin: auto;" >
         <span><input type="number" 
             id="qty"
             step="1" min="0" max="9999" name=""
@@ -16,10 +16,10 @@
             inputmode="numeric" aria-labelledby=""
             (input)="onChangeQuantity($event.target.value)"> {{ order.product.meins }}</span>
     </div>
-    <div  class="col-2 price_column" style="padding-top: 1%"  >
-        <span>{{ totalPrice }} {{ order.product.currency }}</span>
+    <div  class="col-2 price_column" style="margin: auto; text-align: right;">
+        <span>{{ getPrice(totalPrice) }} {{ order.product.currency }}</span>
     </div>
-    <div  class="col-1 delete-column" style="padding-top: 0.5%">
+    <div  class="col-1 delete-column" style="margin: auto;">
         <button (click)="onDeleteOrder()" style="background-color: transparent;">
             <fa-icon [icon]="faTrash" 
                 size="1x">

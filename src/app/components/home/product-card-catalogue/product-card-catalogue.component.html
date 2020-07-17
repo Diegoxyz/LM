@@ -18,7 +18,7 @@
             <img *ngIf="item.preferred === true;else other_content" id="add-to-favorite" class="img-fluid" src="assets/img/items/star.png">
 
             <ng-template #other_content>
-                <img id="add-to-favorite" class="img-fluid" src="assets/img/items/empty.png">
+                <img id="add-to-favorite" class="img-fluid" src="assets/img/items/star_unselected.png" (click)="addToFavorite()">
             </ng-template>
 
             <div class="">

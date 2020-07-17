@@ -7,6 +7,7 @@ import { environment } from '@environments/environment';
 import { User, UserData } from '@app/models/user';
 import { UserDataSetService } from '@app/models/OData/UserDataSet/userdataset.service';
 import { CustomValidators } from './custom-validators';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -19,9 +20,10 @@ export class ChangePasswordComponent implements OnInit {
   loginError : boolean = undefined;
   returnUrl: string;
   errorMessage : string = undefined;
+  email: string;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private accountService: AccountService, 
-    private userDataSetService : UserDataSetService) { }
+    private translateService : TranslateService) { }
 
   public changePasswordForm: FormGroup;
 
@@ -41,6 +43,7 @@ export class ChangePasswordComponent implements OnInit {
       validator: CustomValidators.passwordMatchValidator
     }  
     );
+    this.email =this.route.snapshot.paramMap.get('email');
   }
 
   get password() {
@@ -76,16 +79,34 @@ export class ChangePasswordComponent implements OnInit {
               const csrftoken : string = response1.headers.get('X-CSRF-Token');
               const u : User = this.accountService.userValue;
               if (csrftoken) {
+                if (u) {
+                  this.email = u.username;
+                }
+                this.errorMessage = undefined;
                 this.accountService.changePassword(u.username, this.password.value, this.password1.value, u.token,u.lang, csrftoken).subscribe(
                   response2 => {
                     if (response2.headers) {
-                      this.errorMessage = response2.headers.get('sap-message');
+                      const sapMessage = response2.headers.get('sap-message');
+                      if (sapMessage !== undefined && sapMessage !== null) {
+                        this.errorMessage = this.translateService.instant('unknownError');
+                        try {
+                          let sm = JSON.parse(sapMessage);
+                          this.errorMessage = sm.message;
+                        } catch (error) {
+                          const docSapMessage : Document = (new window.DOMParser()).parseFromString(sapMessage, 'text/xml');
+                          if (docSapMessage.hasChildNodes()) {
+                              if (docSapMessage.firstChild.childNodes.length >= 2) {
+                                this.errorMessage = docSapMessage.firstChild.childNodes[1].textContent;
+                              }
+                          }
+                        }
+                      }
                       console.log('errorMessage:' + this.errorMessage);
                     }
                     console.log('change password - no error');
-                    if (this.errorMessage === undefined) {
+                    if (this.errorMessage === undefined || this.errorMessage === null) {
                       this.loginError = false;
-                      this.router.navigate([this.returnUrl]);
+                      this.router.navigate(['/home/boards']);
                     }
                     
                 }, error => {

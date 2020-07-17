@@ -4,13 +4,14 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { AccountService } from './account.service';
 import { Observable } from 'rxjs';
 import { environment } from '@environments/environment';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
     providedIn: 'root'
   })
   export class UtilityService {
 
-    constructor(private http: HttpClient, private accountService : AccountService) { }
+    constructor(private http: HttpClient, private accountService : AccountService, private translateService : TranslateService) { }
 
     public getNations() : Observable<HttpResponse<any>> {
         return this.getCountries();
@@ -56,4 +57,21 @@ import { environment } from '@environments/environment';
 
     }
 
+    public getSAPErrorMessage(response : any) : string {
+        let errorMessage : string = undefined;
+        if (response.headers) {
+            const sapMessage = response.headers.get('sap-message');
+            console.log('confirm-order : sapMessage:' + sapMessage);
+            if (sapMessage !== undefined && sapMessage !== null) {
+              const docSapMessage : Document = (new window.DOMParser()).parseFromString(sapMessage, 'text/xml');
+                errorMessage = this.translateService.instant('unknownError');
+                if (docSapMessage.hasChildNodes()) {
+                  if (docSapMessage.firstChild.childNodes.length >= 2) {
+                    errorMessage = docSapMessage.firstChild.childNodes[1].textContent;
+                  }
+                }
+            }
+          }
+        return errorMessage;
+    }
   }

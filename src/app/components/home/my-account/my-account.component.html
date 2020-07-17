@@ -14,22 +14,122 @@
         </div>
 
 
-        <ul class="justify-content-center justify-content-md-start">
-<!--             <li class="col d-lg-block">
+        <div class="row">
+            <div class="col-md-6" style="text-align: right;">
+				<h6>{{'email' | translate }}:</h6>
+            </div>
+            <div class="col-md-6" style="text-align: left;">
+                <h6>{{ email }} </h6>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-6" style="text-align: right;">
+                <h6>{{ 'businessName' | translate }}:</h6>
+            </div>
+            <div class="col-md-6" style="text-align: left;">
+                <h6>LA MARZOCCO S.R.L.</h6>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-6" style="text-align: right;">
+				 <h6>{{ 'address' | translate }}:</h6>
+            </div>
+            <div class="col-md-6" style="text-align: left;">
+                <h6>{{ address }}</h6>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6" style="text-align: right;">
+				<h6>{{ 'zip' | translate }}:</h6>
+            </div>
+            <div class="col-md-6" style="text-align: left;">
+                <h6>{{ postalCode }}</h6>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6" style="text-align: right;">
+                 <h6>{{ 'city' | translate }}:</h6>
+            </div>
+            <div class="col-md-6" style="text-align: left;">
+                <h6>{{ city }}</h6>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6" style="text-align: right;">
+    		<h6>{{ 'region' | translate}}:</h6>
+            </div>
+            <div class="col-md-6" style="text-align: left;">
+                <h6>{{ region }}</h6>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6" style="text-align: right;">
+				<h6>{{ 'country' | translate }}:</h6>
+            </div>
+            <div class="col-md-6" style="text-align: left;">
+                <h6>{{ country }}</h6>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6" style="text-align: right;">
+				<h6>{{ 'chooseTheLanguage' | translate }}</h6>
+
+            </div>
+            <div class="col-md-6" style="text-align: left;">
+
+                <h6><label for="image-click"><img *ngIf="language === 'italian'" src="assets/img/menu/italy.png"
+                            alt="language - italian">
+                        <img *ngIf="language === 'english'" src="assets/img/menu/uk.png"
+                            alt="language - english"></label>
+                    <button id="image-click" (click)="changeLanguage()" class="visuallyhidden">
+                         {{ 'clickToChangeTheLanguage' | translate }}
+                    </button>
+                </h6>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6" style="text-align: left;">
+                <button class="btn btn-primary" (click)="cancel()">
+                    {{ 'cancel' | translate }}
+                </button>
+            </div>
+            <div class="col-md-6" style="text-align: right;">
+                <button class="btn btn-primary" (click)="logout()">
+                    {{ 'logout' | translate }}
+                </button>
+            </div>
+        </div>
+
+
+        <!-- <ul class="justify-content-center justify-content-md-start">
+                         <li class="col d-lg-block">
                     <div class="row align-items-center justify-content-start">
                         <h6 *ngIf="language === 'english'">Name</h6><h6 *ngIf="language === 'italian'">Nome</h6><h6>{{ name }}</h6>
                     </div>
-                </li> -->
-            <li class="col d-lg-block">
+                </li>
+
+                        <li class="col d-lg-block">
                 <div class="row align-items-center justify-content-start">
-                    <h6>{{'email' | translate }}:</h6>
+                    <h6 *ngIf="language === 'english'">Email:</h6>
+                    <h6 *ngIf="language === 'italian'">Email:</h6>
                     <div>
                         <h6>&nbsp;{{ email }} </h6>
                     </div>
                 </div>
             </li>
 
-            <li class="col d-lg-block">
+             <li class="col d-lg-block">
                 <div class="row align-items-center justify-content-start">
                     <h6 *ngIf="language === 'english'">Business Name:</h6>
                     <h6 *ngIf="language === 'italian'">Ragione Sociale:</h6>
@@ -39,54 +139,64 @@
 
             <li class="col d-lg-block">
                 <div class="row align-items-center justify-content-start">
-                    <h6>{{ 'address' | translate }}:</h6>
+                    <h6 *ngIf="language === 'english'">Address:</h6>
+                    <h6 *ngIf="language === 'italian'">Indirizzo:</h6>
                     <div class="spacer"> <h6>{{ address }}</h6> </div>
                 </div>
             </li>
+
             <li class="col  d-lg-block">
                 <div class="row align-items-center justify-content-start">
-                    <h6>{{ 'zip' | translate }}:</h6>
+                    <h6 *ngIf="language === 'english'">Postal Code:</h6>
+                    <h6 *ngIf="language === 'italian'">CAP:</h6>
                     <div class="spacer"> <h6>{{ postalCode }}</h6> </div>
                     
                 </div>
             </li>
             <li class="col  d-lg-block">
                 <div class="row align-items-center justify-content-start">
-                    <h6>{{ 'city' | translate }}:</h6>
+                    <h6 *ngIf="language === 'english'">City:</h6>
+                    <h6 *ngIf="language === 'italian'">Citt&aacute;:</h6>
                     <div class="spacer"> <h6>{{ city }}</h6> </div>
                 </div>
             </li>
             <li class="col  d-lg-block">
                 <div class="row align-items-center justify-content-start">
-                    <h6>{{ 'region' | translate}}:</h6>
+                    <h6 *ngIf="language === 'english'">Region:</h6>
+                    <h6 *ngIf="language === 'italian'">Provincia:</h6>
                     <div class="spacer"> <h6>{{ region }}</h6> </div>
                 </div>
             </li>
             <li class="col  d-lg-block">
                 <div class="row align-items-center justify-content-start">
-                    <h6>{{ 'country' | translate }}:</h6>
+                    <h6 *ngIf="language === 'english'">Country:</h6>
+                    <h6 *ngIf="language === 'italian'">Nazione:</h6>
                     <div class="spacer"> <h6>{{ country }}</h6> </div>
                 </div>
             </li>
+
             <li class="col  d-lg-block">
                 <div class="row align-items-center justify-content-between">
-                    <h6>{{ 'chooseTheLanguage' | translate }}</h6>
+                    <h6 *ngIf="language === 'english'">Choose your language</h6>
+                    <h6 *ngIf="language === 'italian'">Scegli la lingua</h6>
                     <h6><label for="image-click"><img *ngIf="language === 'italian'" src="assets/img/menu/italy.png"
                                 alt="language - italian">
                             <img *ngIf="language === 'english'" src="assets/img/menu/uk.png"
                                 alt="language - english"></label>
                         <button id="image-click" (click)="changeLanguage()" class="visuallyhidden">
-                            {{ 'clickToChangeTheLanguage' | translate }}
+                            Click to change the language
                         </button>
                     </h6>
                 </div>
             </li>
             <li class="col  d-lg-block">
                 <div class="row align-items-center justify-content-between">
-                    <button type="button" (click)="cancel()" style="background-color: #ffffff;">Cancel</button>
-                    <button type="button" (click)="logout()" style="background-color: #dc3545;">Logout</button>
+                    <button class="btn btn-primary" (click)="cancel()">Cancel</button>
+                    <button class="btn btn-primary" (click)="logout()">Logout</button>
                 </div>
             </li>
-        </ul>
+        </ul> -->
     </div>
 </div>
+<!-- </div>
+</div> -->

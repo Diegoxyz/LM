@@ -71,8 +71,8 @@ export class OrdersService {
         order.Token = u !== undefined ? u.token : '';
         order.Langu = u !== undefined && u !== null ? u.lang : '';
         // 2020-08-01T00:00:00
-        const vdatu : string = moment().format('YYYY-MM-DDT00:00:00');
-        order.Vdatu = vdatu;
+        // const vdatu : string = moment().format('YYYY-MM-DDT00:00:00');
+        // order.Vdatu = vdatu;
         order.Vbeln = '';
         let headers = new HttpHeaders({
             'Content-Type': 'application/json',

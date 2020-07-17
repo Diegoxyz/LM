@@ -250,7 +250,7 @@ export class AccountService {
     const em    = 'Email=' + '\'' + email + '\'';
     url = url.concat('(').concat(em).concat(',').concat(langu).concat(')').concat();
     console.log('lostcredentials - url:' + url);
-    let options = { headers: headers};
+    let options = { headers: headers, observe: "response" as 'body'};
     return this.http.get<HttpResponse<any>>(
       environment.oData_destination + 'LostPswSet' + url, options);
   }

@@ -48,5 +48,7 @@
     "passwordPlaceholder":"Inserisci la tua password",
     "submit":"Conferma",
     "register":"Registrazione",
-    "lostCredentials":"Password dimenticata?"
+    "lostCredentials":"Password dimenticata?",
+    "receiverID": "Numero Identificativo del destinatario",
+    "note": "Note"
 }
