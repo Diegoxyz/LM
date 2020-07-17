@@ -8,6 +8,7 @@ import { Product } from './item';
 export class Cart {
     customer : Customer;
 
+    // Just for test
     orders : Order[] = [];
 
     public static fromCarrello(carrello : Carrello[], u: UserDataSet) : Cart {

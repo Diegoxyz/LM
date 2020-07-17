@@ -6,7 +6,7 @@ import { first } from 'rxjs/operators';
 import { environment } from '@environments/environment';
 import { User } from '@app/models/user';
 import { UserDataSetService } from '@app/models/OData/UserDataSet/userdataset.service';
-import { UtilityService } from '@app/services/utility.service';
+import { NgxSpinnerService } from "ngx-spinner";
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -21,7 +21,8 @@ export class LoginComponent implements OnInit {
   errorMessage : string;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private accountService: AccountService, 
-    private userDataSetService : UserDataSetService, private translateService : TranslateService) { }
+    private userDataSetService : UserDataSetService, private translateService : TranslateService,
+    private spinner: NgxSpinnerService) { }
 
   public loginForm: FormGroup;
 
@@ -51,6 +52,7 @@ export class LoginComponent implements OnInit {
     }
     if (this.email && this.password) {
       if (environment && environment.oData) {
+        this.spinner.show();
         this.accountService.fetchToken().subscribe(
           response1 => {
             console.log('step 1');
@@ -108,7 +110,7 @@ export class LoginComponent implements OnInit {
                     });
                   }
                   
-                }
+                }, () => { this.spinner.hide(); }
                 );
                 
               } 
@@ -116,54 +118,66 @@ export class LoginComponent implements OnInit {
           error => {
             this.errorMessage = this.translateService.instant('unknownError');
             this.loginError = true;
+          },
+          () => {
+            this.spinner.hide();
           }
         );
       } else {
-        // const sapMessage = '{"code":"ZSPB2B/000","message":"Accesso rifiutato","severity":"error","target":"","transition":false,"details":[]}';
-        const sapMessage = '<notification xmlns:sap="http://www.sap.com/Protocols/SAPData"><code>ZSPB2B/000</code><message>Utente gi&#x00E0; registrato</message><severity>error</severity><target></target><transition>false</transition><details/></notification>';
-        this.errorMessage = this.translateService.instant('unknownError');
-        try {
-          let sm = JSON.parse(sapMessage);
-          this.errorMessage = sm.message;
-        } catch (error) {
-          const docSapMessage : Document = (new window.DOMParser()).parseFromString(sapMessage, 'text/xml');
-          if (docSapMessage.hasChildNodes()) {
-            if (docSapMessage.firstChild.childNodes.length >= 2) {
-              this.errorMessage = docSapMessage.firstChild.childNodes[1].textContent;
-            }
-          }
-        }
+         /** spinner starts on init */
+        this.spinner.show();
         
-        /*const docSapMessage : Document = (new window.DOMParser()).parseFromString(sapMessage, 'text/xml');
-        this.errorMessage = this.translateService.instant('unknownError');
-        if (docSapMessage.hasChildNodes()) {
-          if (docSapMessage.firstChild.childNodes.length >= 1) {
-            this.errorMessage = docSapMessage.firstChild.childNodes[0].textContent;
-          }
-        }*/
-        this.accountService.loginWOOData(this.email.value,this.password.value).pipe(first()).subscribe(
-          data => {
-            console.log("login onsubmit:" + data);
-            if (data === null) {
-              this.loginError = true;
-            } else {
-              this.loginError = false;
+        setTimeout(() => {
+          /** spinner ends after 5 seconds */
+          this.spinner.hide();
+        
+    
+          // const sapMessage = '{"code":"ZSPB2B/000","message":"Accesso rifiutato","severity":"error","target":"","transition":false,"details":[]}';
+          const sapMessage = '<notification xmlns:sap="http://www.sap.com/Protocols/SAPData"><code>ZSPB2B/000</code><message>Utente gi&#x00E0; registrato</message><severity>error</severity><target></target><transition>false</transition><details/></notification>';
+          this.errorMessage = this.translateService.instant('unknownError');
+          try {
+            let sm = JSON.parse(sapMessage);
+            this.errorMessage = sm.message;
+          } catch (error) {
+            const docSapMessage : Document = (new window.DOMParser()).parseFromString(sapMessage, 'text/xml');
+            if (docSapMessage.hasChildNodes()) {
+              if (docSapMessage.firstChild.childNodes.length >= 2) {
+                this.errorMessage = docSapMessage.firstChild.childNodes[1].textContent;
+              }
             }
-            this.userDataSetService.saveUserDataSet(this.email.value, this.password.value, 'IT');
-            // this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/account/changePwd';
-            this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/account/changePwd';
-            this.router.navigate([this.returnUrl]);
-          },
-          error => {
-            this.loginError = true;
           }
-        );
-      }
-      
+          
+          /*const docSapMessage : Document = (new window.DOMParser()).parseFromString(sapMessage, 'text/xml');
+          this.errorMessage = this.translateService.instant('unknownError');
+          if (docSapMessage.hasChildNodes()) {
+            if (docSapMessage.firstChild.childNodes.length >= 1) {
+              this.errorMessage = docSapMessage.firstChild.childNodes[0].textContent;
+            }
+          }*/
+          this.accountService.loginWOOData(this.email.value,this.password.value).pipe(first()).subscribe(
+            data => {
+              console.log("login onsubmit:" + data);
+              if (data === null) {
+                this.loginError = true;
+              } else {
+                this.loginError = false;
+              }
+              // this.userDataSetService.saveUserDataSet(this.email.value, this.password.value, 'IT');
+              // this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/account/changePwd';
+              this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/account/changePwd';
+              this.router.navigate([this.returnUrl]);
+            },
+            error => {
+              this.loginError = true;
+            }
+          );
+        }
+      , 5000);
       // this.router.navigate(['/home']);
       // redirect to home if already logged in
       
     }
   }
+}
 
 }

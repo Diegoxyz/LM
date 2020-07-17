@@ -14,6 +14,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import { RegistrationComponent } from './registration/registration.component';
 import { LostCredentialsComponent } from './lost-credentials.component';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -31,7 +32,8 @@ export function createTranslateLoader(http: HttpClient) {
                 useFactory: createTranslateLoader,
                 deps: [HttpClient]
             }
-          })
+          }),
+        NgxSpinnerModule
     ],
     declarations: [
         LoginComponent,

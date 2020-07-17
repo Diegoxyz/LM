@@ -41,6 +41,7 @@ import { HttpClient } from '@angular/common/http';
 import { ShipToSetComponent } from './ship-to-set/ship-to-set.component';
 import { ConfirmOrderComponent } from './confirm-order/confirm-order.component';
 import { SaveOrderComponent } from './save-order/save-order.component';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -70,7 +71,8 @@ export function createTranslateLoader(http: HttpClient) {
                 useFactory: createTranslateLoader,
                 deps: [HttpClient]
             }
-          })
+          }),
+        NgxSpinnerModule
     ],
     declarations: [
         MainComponent,

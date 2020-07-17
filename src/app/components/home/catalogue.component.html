@@ -1,3 +1,7 @@
+<ngx-spinner
+type="ball-clip-rotate-multiple" size="medium">
+    <p class="loading">Loading....</p>
+</ngx-spinner>
 <div>
         <app-search-products [searchLastProducts]='searchLastProducts' (outProducts)="filterProducts($event)"></app-search-products>
 </div>
@@ -9,9 +13,4 @@
                         </li>
                 </ul>
         </div>
-        <div *ngIf="displaySpinner && ((!itemsToView && !items) || (itemsToView.length === 0 && items.length === 0))">
-                <!-- test modal wait image-->
-                <div id="myModal" class="modal-content">
-                        <img class="modal" id="img_modal" src="assets/img/items/loading.gif">
-                </div>
-        </div>
+</div>

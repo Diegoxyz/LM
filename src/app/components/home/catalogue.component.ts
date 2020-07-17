@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CatalogueService } from '@app/services/catalogue.service';
 import { environment } from '@environments/environment';
 import { Materiale } from '@app/models/OData/MacchineSet/macchineset.entity';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
     selector: 'app-catalogue',
@@ -50,7 +51,7 @@ export class CatalogueComponent implements OnInit, OnDestroy {
 
     constructor(private productsService: ProductsService,
         private fb: FormBuilder,
-        private route: ActivatedRoute, private catalogueService: CatalogueService
+        private route: ActivatedRoute, private catalogueService: CatalogueService, private spinner: NgxSpinnerService
     ) {
 
     }
@@ -58,7 +59,7 @@ export class CatalogueComponent implements OnInit, OnDestroy {
     ngOnInit() {
 
         if (environment && environment.oData) {
-            this.displaySpinner = true;
+            this.spinner.show();
             const lastPurchases = this.route.snapshot.paramMap.get('lastPurchases');
             this.searchLastProducts = lastPurchases;
             console.log('lastPurchases:' + lastPurchases);
@@ -76,12 +77,18 @@ export class CatalogueComponent implements OnInit, OnDestroy {
                 for (let i = 0; i < imagesForRow; i++) {
                     this.itemsToView.push(this.items[i]);
                 }
-                document.getElementById('myModal').style.display = "none"
-                this.displaySpinner = false;
+                // document.getElementById('myModal').style.display = "none"
+                this.spinner.hide(); 
             }
             );
         } else {
             console.log('environment = LOCAL');
+            this.spinner.show();
+        
+            setTimeout(() => {
+            /** spinner ends after 5 seconds */
+            this.spinner.hide();
+            }, 5000);
             this.sub = this.route.params.subscribe(params => {
                 console.log('environment = LOCAL - popola 1');
                 this.groupId = params['groupId'];

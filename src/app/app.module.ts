@@ -13,6 +13,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 export function oDataSettingsFactory() {
   return new ODataSettings({
@@ -47,7 +48,8 @@ export function createTranslateLoader(http: HttpClient) {
           useFactory: createTranslateLoader,
           deps: [HttpClient]
       }
-    })
+    }),
+    NgxSpinnerModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

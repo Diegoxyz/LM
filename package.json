@@ -39,6 +39,7 @@
     "ng-lazyload-image": "^8.0.1",
     "ngx-bootstrap": "^5.6.1",
     "ngx-pagination": "^5.0.0",
+    "ngx-spinner": "^9.0.2",
     "odata-query": "^5.7.0",
     "popper.js": "^1.16.1",
     "rxjs": "~6.5.4",
