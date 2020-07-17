@@ -19,7 +19,7 @@ export class CatalogueService {
             Token: (u !== undefined && u !== null ? u.token : ''), Langu : (u !== undefined && u !== null ? u.lang.toUpperCase() : '')};
         const format = 'json';
         const outFilter = buildQuery({ filter,format });
-        console.log('CatalogueService getAllItems filter:' + outFilter);
+        console.log('CatalogueService getAllItems filter:' + outFilter + ',lastPurchases:'+lastPurchases);
 
         let headers = new HttpHeaders({
         'Content-Type': 'application/json' });

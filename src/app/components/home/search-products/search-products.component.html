@@ -66,6 +66,7 @@
                             
 
                         </mat-chip-list>
+
                         <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="selectedGroup($event)">
                           <mat-option *ngFor="let group of filteredGroups | async" [value]="group">
                             <div (click)="optionClickedGroup($event, group);">

@@ -60,6 +60,9 @@ export class SearchProductsComponent implements OnInit {
 
   @Output()
   outProducts : EventEmitter<Product[]> = new EventEmitter<Product[]>();
+
+  @Input()
+  searchLastProducts? : string;
   
   constructor(private fb: FormBuilder, private productsService: ProductsService, private catalogueService : CatalogueService) { }
 
@@ -74,14 +77,15 @@ export class SearchProductsComponent implements OnInit {
             });
             this.allGroups.push(g);
           });
+          this.filteredGroups = this.searchGroupControl.valueChanges.pipe(
+            startWith(null),
+            map((group: GroupList | null) => group ? this.filterGroup(group) : this.groups.slice()));
         }
       });
 
-      this.filteredGroups = this.searchGroupControl.valueChanges.pipe(
-        startWith(null),
-        map((group: GroupList | null) => group ? this.filterGroup(group) : this.groups.slice()));
       
-      this.catalogueService.getAllItems().subscribe(resp => {
+      
+      this.catalogueService.getAllItems(this.searchLastProducts).subscribe(resp => {
         if (resp && resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
           resp.body.d.results.forEach(p => {
             this.products.push({

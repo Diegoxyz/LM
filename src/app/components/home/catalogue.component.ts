@@ -44,6 +44,8 @@ export class CatalogueComponent implements OnInit, OnDestroy {
 
     private sub: any;
 
+    searchLastProducts? : string;
+
     constructor(private productsService: ProductsService,
         private fb: FormBuilder,
         private route: ActivatedRoute, private catalogueService: CatalogueService
@@ -55,6 +57,7 @@ export class CatalogueComponent implements OnInit, OnDestroy {
 
         if (environment && environment.oData) {
             const lastPurchases = this.route.snapshot.paramMap.get('lastPurchases');
+            this.searchLastProducts = lastPurchases;
             console.log('lastPurchases:' + lastPurchases);
             this.catalogueService.getAllItems(lastPurchases).subscribe(resp => {
                 if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
