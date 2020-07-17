@@ -30,6 +30,7 @@ export class MyAccountComponent implements OnInit {
 
   ngOnInit(): void {
     this.language = this.accountService.userLanguage;
+    console.log('this.language:' + this.language);
     if (environment && environment.oData) {
       this.name = this.userDataSetService.userDataSetValue.Kunnrx;
       this.address = this.userDataSetService.userDataSetValue.Stras;
@@ -74,5 +75,11 @@ export class MyAccountComponent implements OnInit {
       this.language = 'italian';
       this.translateService.use('it');
     }
+  }
+
+  public getLanguage() {
+    console.log('this.translateService.currentLang:' + this.translateService.currentLang) ;
+
+    return this.translateService.currentLang;
   }
 }

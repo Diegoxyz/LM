@@ -7,9 +7,10 @@
                 <div class="form-row"> 
                     <div class="col-md-2"></div>
                     <div Id="step" class="col-md-8 text-center" >
-                    <h5>STEP 2 di 3 - CONFERMA ORDINE </h5></div>
+                    <h5>{{ 'step3' | translate }}</h5>  <!-- STEP 3 di 4 - SALVATAGGIO ORDINE -->
                 </div>
-                <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+                </div>
+
                 <div class="form-row">
                     <div class="col-md-2"></div>
                     <div class="col-md-8">

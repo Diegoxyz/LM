@@ -8,7 +8,8 @@
                 <div class="form-row"> 
                     <div class="col-md-2"></div>
                     <div Id="step" class="col-md-8 text-center" >
-                    <h5>STEP 3 di 3 - INVIO ORDINE </h5></div>
+                        <h5>{{ 'step4' | translate }}</h5>   <!-- STEP 4 di 4 - INVIO ORDINE -->
+                    </div> 
                 </div>
 
                 <div class="form-row">
@@ -17,11 +18,13 @@
                         <label for="receiverID">{{ 'receiverID' | translate }}</label>
 <!--                         <input type="text" class="form-control" id="receiverID" formControlName="receiverID"
                             placeholder="receiverID" required /> -->
-                        <input type="text" 
+                        <!--<input type="text" 
                             class="form-control" 
                             id="receiverID" 
                             name="receiverID"
-                            readonly>    
+                            [ngModel]="receiverID"
+                            >   -->
+                            {{ orderNumber }}
 <!--                          <div *ngIf="receiverID.invalid && (receiverID.dirty || receiverID.touched)"
                             class="alert alert-danger">
                             <div *ngIf="receiverID.errors.required">
@@ -50,11 +53,11 @@
                     <div class="col-md-2"></div>
                     <div class="col-md-8">
                         <label for="note">{{ 'note' | translate }}</label>
-                        <textarea type="text" 
+                        {{ notes }}
+                        <!-- <textarea type="text" 
                                 class="form-control md-textarea" 
-                                id="note" name="note" maxlength="140" readonly 
-                                >
-                        </textarea>
+                                id="note" name="note" maxlength="140" [ngModel]="notes">
+                        </textarea>-->
  <!--                        <div *ngIf="note.invalid && (note.dirty || note.touched)" class="alert alert-danger">
                             <div *ngIf="note.errors.required">
                                 <div i18n>Note is required</div>
@@ -66,11 +69,11 @@
 
                 <div class="form-row">
                     <div class="col-md-2"></div>
-                    <div class="col-md-4">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                    <div class="col-md-4 text-left">
+                        <button class="btn btn-primary" (click)="onCancel()">Back</button>
                     </div>
                     <div class="col-md-4  text-right">
-                        <button class="btn btn-primary" (click)="onCancel()">Back</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                     <div class="w-100"></div>
                     <div class="w-100"></div>

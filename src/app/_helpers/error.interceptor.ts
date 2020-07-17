@@ -47,9 +47,9 @@ export class ErrorInterceptor implements HttpInterceptor {
                     errorMessage = error.status + '-' + error.message + '-' + error.statusText;
                   }
                 console.log('catched error:' + errorMessage);
-                if (!(error.error instanceof ErrorEvent)) {
+                /*if (!(error.error instanceof ErrorEvent)) {
                     return Observable.throw(error);
-                }
+                }*/
                 
                 errorMessage = this.translateService.instant('unknownError');
                 window.alert(errorMessage);

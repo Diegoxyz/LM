@@ -226,7 +226,7 @@ export class SearchProductsComponent implements OnInit {
     const input = event.input;
     const value = event.value;
 
-    alert('addGroup');
+    // alert('addGroup');
 
     if ((value || '').trim()) {
       this.allGroups.forEach(ag => {

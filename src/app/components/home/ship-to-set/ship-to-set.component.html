@@ -7,7 +7,9 @@
                 <div class="form-row"> 
                     <div class="col-md-2"></div>
                     <div Id="step" class="col-md-8 text-center" >
-                    <h5>STEP 1 di 3 - SELEZIONE DESTINATARIO MERCE </h5></div>
+                    <h5>{{ 'step2' | translate }}</h5>   <!-- STEP 2 di 4 - DESTINATARIO MERCE -->
+                    
+                </div>
                 </div>
                 <div class="form-row">
                     <div class="col-md-2"></div>
@@ -114,7 +116,7 @@
                 <button class="btn btn-primary" (click)="onCancel()">Back</button>
             </div>
             <div class="col-md-4 text-right">
-                <button type="submit" class="btn btn-primary" [disabled]="!shippingForm.valid">Submit</button>
+                <button type="submit" class="btn btn-primary" [disabled]="!isFormValid()">Submit</button>
             </div>
             <div class="w-100"></div>
         </div>

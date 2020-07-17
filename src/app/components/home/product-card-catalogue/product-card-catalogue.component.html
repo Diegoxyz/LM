@@ -15,7 +15,7 @@
             <img *ngIf="thumbnail === undefined && svgThumbnail === undefined" class="img-fluid card-img-top"
                 src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
 
-            <img *ngIf="item.preferred === true;else other_content" id="add-to-favorite" class="img-fluid" src="assets/img/items/star.png">
+            <img *ngIf="item.preferred === true;else other_content" id="add-to-favorite" class="img-fluid" src="assets/img/items/star.png" (click)="addToFavorite()">
 
             <ng-template #other_content>
                 <img id="add-to-favorite" class="img-fluid" src="assets/img/items/star_unselected.png" (click)="addToFavorite()">

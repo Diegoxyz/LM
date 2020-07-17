@@ -185,6 +185,10 @@ export class ShipToSetComponent implements OnInit {
     return this.shippingForm.get('region');
   }
 
+  public isFormValid() : boolean {
+    return this.receiver.valid && this.address.valid && this.city.valid && this.zipCode.valid && this.country.valid && this.region.valid;
+  }
+
   changeCountry(event) {
     if (event) {
       this.regions = [];
@@ -279,5 +283,5 @@ export class ShipToSetComponent implements OnInit {
     this.router.navigate(['/home/cart']);
   }
 
-
+  
 }

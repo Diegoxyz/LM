@@ -13,7 +13,7 @@ export class CatalogueService {
 
     constructor(private http: HttpClient, private accountService : AccountService) { }
 
-    public getAllItems() : Observable<any> {
+    public getAllItems(lastPurchases? : string) : Observable<any> {
         const u : User = this.accountService.userValue;
         const filter = { Email: (u !== undefined && u !== null ? u.username : ''), 
             Token: (u !== undefined && u !== null ? u.token : ''), Langu : (u !== undefined && u !== null ? u.lang.toUpperCase() : '')};
@@ -24,8 +24,13 @@ export class CatalogueService {
         let headers = new HttpHeaders({
         'Content-Type': 'application/json' });
         let options = { headers: headers, observe: "response" as 'body'};
-        return this.http.get<HttpResponse<any>>(
-            environment.oData_destination + 'CatalogoSet' + outFilter, options);
+        if (lastPurchases) {
+            return this.http.get<HttpResponse<any>>(
+                environment.oData_destination + 'CatalogoLastSet' + outFilter, options);
+        } else {
+            return this.http.get<HttpResponse<any>>(
+                environment.oData_destination + 'CatalogoSet' + outFilter, options);
+        }
     }
 
     public getItem(matnr : string) : Observable<any> {
@@ -68,10 +73,10 @@ export class CatalogueService {
     public setPreferred(matnr : string, preferred: boolean) : Observable<any> {
         const u : User = this.accountService.userValue;
 
-        const matrn = 'Matnr=' + '\'' + matnr + '\'';
+        const matrn = 'Matnr=' + '\'' + matnr + '\'' + ',';
         const email = 'Email=' + '\'' + (u !== undefined && u !== null ? u.username : '') + '\'' + ',';
         const token = 'Token=' + '\'' + (u !== undefined && u !== null ? u.token : '')+ '\'' + ',';
-        const langu = 'Langu=' + '\'' + (u !== undefined && u !== null ? u.lang : '') + '\'' + ',';
+        const langu = 'Langu=' + '\'' + (u !== undefined && u !== null ? u.lang.toUpperCase() : '') + '\'' + ',';
         const pref = 'Pref=' + '\'' + (preferred ? 'X' : '') + '\'';
         const params ='?&$format=json';
         let url = '';

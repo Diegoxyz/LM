@@ -31,6 +31,8 @@ export class MenuComponent implements OnInit {
 
  currentPage : number = 0;
 
+ reloadBoards = true;
+
  constructor(private productsService: ProductsService,
   private fb : FormBuilder,
   private router: Router,
@@ -63,7 +65,14 @@ export class MenuComponent implements OnInit {
 
   goToBoards() {
     this.currentPage = 2;
-    this.router.navigate(['./home/boards']);
+    if (this.reloadBoards) {
+      this.reloadBoards = false;
+      this.router.navigate(['./home/boards2']);
+    } else {
+      this.reloadBoards = true;
+      this.router.navigate(['./home/boards']);
+    }
+    
   }
 
   goToOrders() {

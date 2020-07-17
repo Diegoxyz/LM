@@ -50,5 +50,17 @@
     "register":"Registrazione",
     "lostCredentials":"Password dimenticata?",
     "receiverID": "Numero Identificativo del destinatario",
-    "note": "Note"
+    "note": "Note",
+    "step1": "STEP 1 DI 4 - CONFERMA ORDINE",
+    "step2": "STEP 2 DI 4 - DESTINATARIO MERCE",
+    "step3": "STEP 3 DI 4 - SALVATAGGIO ORDINE",
+    "step4": "STEP 4 DI 4 - INVIO ORDINE",
+    "products": "PRODUCTS",
+    "price": "PRICE",
+    "quantity": "QUANTITY",
+    "total":" TOTAL",
+    "noitem": "Nessun elemento",
+    "grandTotal": "Totale complessivo",
+    "emptyCart": "Svuota il carrello",
+    "goToDeliveryAddr": "Vai a Indirizzo di consengna"
 }

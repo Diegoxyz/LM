@@ -54,8 +54,9 @@ export class CatalogueComponent implements OnInit, OnDestroy {
     ngOnInit() {
 
         if (environment && environment.oData) {
-            console.log('environment.oData');
-            this.catalogueService.getAllItems().subscribe(resp => {
+            const lastPurchases = this.route.snapshot.paramMap.get('lastPurchases');
+            console.log('lastPurchases:' + lastPurchases);
+            this.catalogueService.getAllItems(lastPurchases).subscribe(resp => {
                 if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
                     resp.body.d.results.forEach(m => {
                         if (m) {
@@ -102,7 +103,7 @@ export class CatalogueComponent implements OnInit, OnDestroy {
                         document.getElementById('myModal').style.display = "none"; }, 3000);
                 }
             } catch (Error) {
-                alert(Error.message);
+                // alert(Error.message);
             }
         }
 

@@ -85,10 +85,10 @@
 
             </div>
             <div class="col-md-6" style="text-align: left;">
-
-                <h6><label for="image-click"><img *ngIf="language === 'italian'" src="assets/img/menu/italy.png"
+                {{ getLanguage() }}
+                <h6><label for="image-click"><img *ngIf="language === 'italian' || getLanguage() === 'it'" src="assets/img/menu/italy.png"
                             alt="language - italian">
-                        <img *ngIf="language === 'english'" src="assets/img/menu/uk.png"
+                        <img *ngIf="language === 'english' || getLanguage() === 'en'" src="assets/img/menu/uk.png"
                             alt="language - english"></label>
                     <button id="image-click" (click)="changeLanguage()" class="visuallyhidden">
                          {{ 'clickToChangeTheLanguage' | translate }}

@@ -134,7 +134,7 @@ export class AccountService {
       PasswordOld : oldPassword,
       PasswordNew: newPassword,
       Token    : token,
-      Langu    : lang
+      Langu    : lang.toUpperCase()
     }
     return this.http.post<HttpResponse<any>>(
       environment.oData_destination + 'ChangePswSet', loginSet, options);

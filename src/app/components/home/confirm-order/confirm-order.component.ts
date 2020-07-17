@@ -9,6 +9,7 @@ import { SaveOrder } from '@app/models/order';
 import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
 import { CustomValidators } from './custom-validators';
+import { CartService } from '@app/services/cart.service';
 
 @Component({
   selector: 'app-confirm-order',
@@ -19,7 +20,7 @@ import { CustomValidators } from './custom-validators';
 export class ConfirmOrderComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private accountService: AccountService,
-    private ordersService : OrdersService, private translateService : TranslateService) { }
+    private ordersService : OrdersService, private translateService : TranslateService, private cartService : CartService) { }
 
   public confirmOrderForm: FormGroup;
   private recipientId : string;
@@ -94,6 +95,7 @@ export class ConfirmOrderComponent implements OnInit {
                 }*/
                 if (this.errorMessage === undefined || this.errorMessage === null) {
                   this.errorMessage = this.translateService.instant('registrationRequestSeccessfullySent');
+                  this.cartService.emptyCart();
                 }
                 let orderNumber: string = ''
                 if (resp.body && resp.body.d && resp.body.d.Vbeln) {

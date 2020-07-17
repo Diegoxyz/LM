@@ -155,7 +155,7 @@ export class BarComponent implements OnInit, OnDestroy {
 
   public goWishlist() {
     this.changePage.goToPage(0);
-    this.router.navigate(['./wishlist']);
+    this.router.navigate(['./home/catalogue', { lastPurchases: 'true' }]);
   }
 
   public goCart() {

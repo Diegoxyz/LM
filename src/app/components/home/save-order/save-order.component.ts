@@ -17,8 +17,8 @@ export class SaveOrderComponent implements OnInit {
 
   public saveOrderForm: FormGroup;
 
-  orderNumber : string;
-  notes : string;
+  public orderNumber : string;
+  public notes : string;
 
 /*   ngOnInit(): void {
 

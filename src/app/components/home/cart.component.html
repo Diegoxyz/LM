@@ -1,20 +1,27 @@
 <div style="margin-top: 5%; margin-left: 5%; max-width: 90%;">
     <div class="align-items-center justify-content-center">
+        <div Id="step" class="col-md-12 text-center" >
+            <h5>{{ 'step1' | translate }}</h5>
+    </div>
+</div>
+
+<div style="margin-top: 5%; margin-left: 5%; max-width: 90%;">
+    <div class="align-items-center justify-content-center">
         <div class="row headers-list-orders">
             <div class="col-1 h-100 description_column" >
                 <span>&nbsp;</span>
             </div>
             <div class="col-4 h-100 code_column" style= "text-align: left;">
-                <span>PRODUCTS</span> 
+                <span>{{ 'products' | translate }} </span>   <!-- PRODUCTS -->
             </div>
-            <div class="col-2 h-100 price_column">
-                <span>PRICE</span>
+            <div class="col-2 h-100 price_column" style= "text-align: right;">
+                <span>{{ 'price' | translate }}</span>  <!-- PRICE -->
             </div>
             <div class="col-2 h-100 quantity_column">
-                <span>QUANTITY</span>
+                <span>{{ 'quantity' | translate }}</span>   <!-- QUANTITY -->
             </div>
-            <div class="col-2 h-100 total_column">
-                <span>TOTAL</span>
+            <div class="col-2 h-100 total_column" style= "text-align: right;">
+                <span>{{ 'total' | translate }}</span>  <!--  TOTAL -->
             </div>
             <div class="col-1 h-100 description_column">
                 <span>&nbsp;</span>
@@ -29,7 +36,7 @@
         <div *ngIf="orders.length === 0">
             <div class="row align-items-center justify-content-center no-item">
                 <div class="col-12 col-md-auto h-100">
-                    <h1>No item</h1>
+                    <h1>{{ 'noitem' | translate }}</h1>  <!--  No item -->
                 </div>
             </div>
         </div>
@@ -39,7 +46,7 @@
                 <span>&nbsp;</span>
             </div>
             <div class="col-2 h-100">
-                <div id="grand-total">Grand total {{strTotalPrice}} {{currency}}</div>
+                <div id="grand-total">{{ 'grandTotal' | translate }} {{strTotalPrice}} {{currency}}</div> <!-- Grand total -->
             </div>
         </div>
 
@@ -49,11 +56,11 @@
             </div> -->
 
             <div id="empty" class="col-md-6 text-left">
-                <button class="btn btn-primary" (click)="emptyCart()">Empty Cart</button>
+                <button class="btn btn-primary" (click)="emptyCart()">{{ 'emptyCart' | translate }}</button><!--  Empty Cart -->
             </div>
 
             <div id="submit" class="col-md-6 text-right">
-                <button class="btn btn-primary" (click)="goToShipToSet()">Go to delivery address</button>
+                <button class="btn btn-primary" (click)="goToShipToSet()">{{ 'goToDeliveryAddr' | translate }}</button> <!-- Go to delivery address -->
             </div>
         </div>
     </div>
