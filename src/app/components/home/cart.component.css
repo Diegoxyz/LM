@@ -38,3 +38,7 @@
 h5{
     font-weight: bold;
 }
+
+.col-md-11 {
+    text-align: right;
+}

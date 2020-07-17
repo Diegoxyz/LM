@@ -62,8 +62,9 @@ import { Subject } from 'rxjs';
       }
 
       public emptyCart() {
+        console.log('emptyCart');
         localStorage.removeItem(this.cartId);
-        this._cart.next();
+        this._cart.next(null);
       }
 
       public loadMockCart(customer? : Customer) : Cart {

@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { UtilityService } from '@app/services/utility.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AccountService } from 'src/app/services/account.service';
+import { CartService } from '@app/services/cart.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-save-order',
@@ -13,12 +15,13 @@ export class SaveOrderComponent implements OnInit {
 
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private accountService: AccountService, 
-    private utilityService : UtilityService) { }
+    private utilityService : UtilityService, private translateService : TranslateService, private cartService : CartService) { }
 
   public saveOrderForm: FormGroup;
 
   public orderNumber : string;
   public notes : string;
+  public successfullySent : boolean = false;
 
 /*   ngOnInit(): void {
 
@@ -38,7 +41,15 @@ export class SaveOrderComponent implements OnInit {
     this.receiverID.setValue(this.orderNumber);
     this.notes =this.route.snapshot.paramMap.get('notes');
     this.note.setValue(this.notes);
-    console.log('SaveOrderComponent - orderNumber:' + this.orderNumber + '-' + this.notes );
+    const isSuccessfullySent = this.route.snapshot.paramMap.get('successfullySent');
+    console.log('isSuccessfullySent:' + isSuccessfullySent);
+    if (isSuccessfullySent) {
+      this.successfullySent = true;
+      this.notes = this.translateService.instant('registrationRequestSeccessfullySent');
+      this.cartService.emptyCart();
+      this.cartService.getCart();
+    }
+    console.log('SaveOrderComponent - orderNumber:' + this.orderNumber + '-' + this.notes + '-' + this.successfullySent );
   }
   
 
@@ -57,7 +68,12 @@ export class SaveOrderComponent implements OnInit {
   }
 
   onCancel(): void {
-    this.router.navigate(['/home/cart']);
+    if (this.successfullySent) {
+      this.router.navigate(['/home/boards']);
+    } else {
+      this.router.navigate(['/home/cart/confirm-order']);
+    }
+    
   }
 
 

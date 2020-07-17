@@ -51,7 +51,7 @@
     "lostCredentials":"Lost credentials",
     "receiverID": "Receiver ID",
     "note": "Note",
-    "step1": "STEP 1 OF 4 - ORDER CONFIRMATION",
+    "step1": "STEP 1 OF 4 - SHIP TO INFORMATIONS",
     "step2": "STEP 2 OF 4 - RECIPIENT SELECTION",
     "step3": "STEP 3 OF 4 - SAVE ORDER",
     "step4": "STEP 4 OF 4 - SEND ORDER",
@@ -62,5 +62,12 @@
     "noitem": "No item",
     "grandTotal": " Grand total",
     "emptyCart": "Empty Cart",
-    "goToDeliveryAddr": "Go to delivery address"
+    "goToDeliveryAddr": "Go to delivery address",
+    "requestedDeliveryDate": "Requested delivery date",
+    "back": "BACK",
+    "orders": "ORDERS",
+    "goToStep3":"NEXT SAVE ORDER",
+    "goToStep4":"NEXT CONFIRM ORDER",
+    "btnStep4": "SAVE ORDER",
+    "wishlist":"last purchased"
 }

@@ -30,7 +30,9 @@ export class BarComponent implements OnInit, OnDestroy {
   cart : Cart;
   bsModalRef: BsModalRef;
   faShoppingCart = faShoppingCart;
+  orders : Order[] = [];
 
+  qty : number = 0;
   private cartSubscription : Subscription;
   
   constructor(private accountService : AccountService, private manageProducts : ManageProducts, 
@@ -139,7 +141,10 @@ export class BarComponent implements OnInit, OnDestroy {
 
   public get cartQuantity() : number {
     console.log('get cartQuantity:' + this.cart + ',' + (this.cart ? this.cart.orders : 'no cart') + ',' + (this.cart && this.cart.orders ? this.cart.orders.length : 'no orders'));
+    this.cart = this.cartService.getCart();
+    console.log('get cartQuantity2:' + this.cart + ',' + (this.cart ? this.cart.orders : 'no cart') + ',' + (this.cart && this.cart.orders ? this.cart.orders.length : 'no orders'));
     if (this.cart && this.cart.orders) {
+      this.orders = this.cart.orders;
       return this.cart.orders.length;
     }
     return 0;

@@ -90,21 +90,22 @@ export class ConfirmOrderComponent implements OnInit {
                   }
                 }
                 console.log('errorMessage:' + this.errorMessage);
-                /*if (this.errorMessage === undefined) {
-                  // this.router.navigate(['home/cart/save-order']);
-                  
-                }*/
-                if (this.errorMessage === undefined || this.errorMessage === null) {
-                  console.log('emptyCart');
-                  this.errorMessage = this.translateService.instant('registrationRequestSeccessfullySent');
-                  this.cartService.emptyCart();
-                  this.cartService.setCart(new Cart());
-                }
-                let orderNumber: string = ''
+                let orderNumber: string = '';
                 if (resp.body && resp.body.d && resp.body.d.Vbeln) {
                   orderNumber = resp.body.d.Vbeln;
                 }
-                this.router.navigate(['home/cart/save-order', { orderNumber: resp.body.d.Vbeln, notes: this.errorMessage }]);
+                let successfullySent = undefined;
+                if ((this.errorMessage === undefined || this.errorMessage === null) && (orderNumber !== undefined && orderNumber !== null && orderNumber !== '')) {
+                  console.log('emptyCart');
+                  successfullySent = 'true';
+                  this.cartService.emptyCart();
+                  const cart : Cart = this.cartService.getCart();
+                  cart.orders = [];
+                  this.cartService.setCart(cart);
+                }
+                
+                
+                this.router.navigate(['home/cart/save-order', { orderNumber: resp.body.d.Vbeln, notes: this.errorMessage, successfullySent: successfullySent }]);
               })
             }
           }
