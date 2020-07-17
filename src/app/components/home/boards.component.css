@@ -69,3 +69,12 @@ ul {
   margin-right: 0%;
   /* border: solid 1px red; */
 }
+
+.step{
+  color:  #dc3545;
+
+}
+
+h5, h6{
+  font-weight: bold;
+}

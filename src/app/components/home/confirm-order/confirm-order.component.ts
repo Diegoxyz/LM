@@ -10,6 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
 import { CustomValidators } from './custom-validators';
 import { CartService } from '@app/services/cart.service';
+import { Cart } from '@app/models/cart';
 
 @Component({
   selector: 'app-confirm-order',
@@ -94,8 +95,10 @@ export class ConfirmOrderComponent implements OnInit {
                   
                 }*/
                 if (this.errorMessage === undefined || this.errorMessage === null) {
+                  console.log('emptyCart');
                   this.errorMessage = this.translateService.instant('registrationRequestSeccessfullySent');
                   this.cartService.emptyCart();
+                  this.cartService.setCart(new Cart());
                 }
                 let orderNumber: string = ''
                 if (resp.body && resp.body.d && resp.body.d.Vbeln) {
@@ -109,6 +112,9 @@ export class ConfirmOrderComponent implements OnInit {
       );
       
     } else {
+      console.log('emptyCart');
+      this.errorMessage = this.translateService.instant('registrationRequestSeccessfullySent');
+      this.cartService.emptyCart();
       this.router.navigate(['home/cart/save-order']);
      }
     

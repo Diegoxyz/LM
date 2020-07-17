@@ -46,6 +46,8 @@ export class CatalogueComponent implements OnInit, OnDestroy {
 
     searchLastProducts? : string;
 
+    displaySpinner = false;
+
     constructor(private productsService: ProductsService,
         private fb: FormBuilder,
         private route: ActivatedRoute, private catalogueService: CatalogueService
@@ -56,6 +58,7 @@ export class CatalogueComponent implements OnInit, OnDestroy {
     ngOnInit() {
 
         if (environment && environment.oData) {
+            this.displaySpinner = true;
             const lastPurchases = this.route.snapshot.paramMap.get('lastPurchases');
             this.searchLastProducts = lastPurchases;
             console.log('lastPurchases:' + lastPurchases);
@@ -74,6 +77,7 @@ export class CatalogueComponent implements OnInit, OnDestroy {
                     this.itemsToView.push(this.items[i]);
                 }
                 document.getElementById('myModal').style.display = "none"
+                this.displaySpinner = false;
             }
             );
         } else {
@@ -136,6 +140,7 @@ export class CatalogueComponent implements OnInit, OnDestroy {
 
     filterProducts(products: Product[]) {
         if (products) {
+            this.displaySpinner = true;
             this.itemsToView = [];
             this.items = [];
             if (products.length > 0) {
@@ -146,6 +151,7 @@ export class CatalogueComponent implements OnInit, OnDestroy {
                     this.itemsToView.push(this.items[i]);
                 }
             }
+            this.displaySpinner = false;
         }
 
     }

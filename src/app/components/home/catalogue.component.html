@@ -9,7 +9,7 @@
                         </li>
                 </ul>
         </div>
-        <div *ngIf="(!itemsToView && !items) || (itemsToView.length === 0 && items.length === 0)">
+        <div *ngIf="displaySpinner && ((!itemsToView && !items) || (itemsToView.length === 0 && items.length === 0))">
                 <!-- test modal wait image-->
                 <div id="myModal" class="modal-content">
                         <img class="modal" id="img_modal" src="assets/img/items/loading.gif">

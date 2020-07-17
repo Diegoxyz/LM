@@ -8,10 +8,6 @@ import {TranslateService} from '@ngx-translate/core';
 import { UtilityService } from '@app/services/utility.service';
 import { Country, Region } from '@app/models/country';
 
-interface Food {
-  value: string;
-  viewValue: string;
-}
 
 @Component({
   selector: 'app-registration',
@@ -31,10 +27,6 @@ export class RegistrationComponent implements OnInit {
 
 
   public registrationForm: FormGroup;
-/*
-  public nations : string = '';
-  public regions : string = '';
-  public countries: string[]; */
 
   
   countryForm: FormGroup;

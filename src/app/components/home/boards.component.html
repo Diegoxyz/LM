@@ -7,6 +7,12 @@
     </ul>
 </div>
 <div *ngIf="sectionToBeDisplayed === 1">
+    <div class="row" style="margin-top: 1%">
+        <div class="col-2">&nbsp;</div>
+        <div class="col-4 text-center step"><h5>{{ machine.description }}</h5></div>
+        <div class="col-4 text-center step"><h6>{{ machine.family }}</h6></div>
+        <div class="col-2">&nbsp;</div>
+    </div>
     <ul id="sections-container" class="flex-container">
         <li id="section-item" *ngFor="let s of sections" class="flex-item">
             <app-section-card [item]="s"></app-section-card>

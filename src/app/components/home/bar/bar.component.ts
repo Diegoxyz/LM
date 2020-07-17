@@ -62,7 +62,7 @@ export class BarComponent implements OnInit, OnDestroy {
       });
       
       if (this.accountService.isSessionStillValid()) {
-        console.log('cart:' + this.cartService.loadCart());
+        console.log('loadCart:' + this.cartService.loadCart());
         this.cartService.cart$.subscribe((o : Order) => {
           if (this.accountService.isSessionStillValid()) {
             this.cartSubscription = this.carrelloService.getCart().subscribe(resp => {
@@ -138,6 +138,7 @@ export class BarComponent implements OnInit, OnDestroy {
   }
 
   public get cartQuantity() : number {
+    console.log('get cartQuantity:' + this.cart + ',' + (this.cart ? this.cart.orders : 'no cart') + ',' + (this.cart && this.cart.orders ? this.cart.orders.length : 'no orders'));
     if (this.cart && this.cart.orders) {
       return this.cart.orders.length;
     }

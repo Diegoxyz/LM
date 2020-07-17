@@ -36,6 +36,8 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
     @Input()
     sectionToBeDisplayed : number = 0;
 
+    machine : Item;
+
     constructor(private productsService: ProductsService,private macchineService: MacchineSetService,
         private route: ActivatedRoute,private _router: Router, private sectionService : SectionService
     ) {
@@ -101,6 +103,7 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
         this.sections = [];
         this.section = "section";
         // this.sections = this.sectionService.getMachineServices(machine.Matnr);
+        this.machine = mach;
         if (environment && environment.oData) {
             const code = mach.code.split(" ");
             console.log('openSections code:' + code + ',length:' + length);
