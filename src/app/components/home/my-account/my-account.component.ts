@@ -68,12 +68,23 @@ export class MyAccountComponent implements OnInit {
   }
 
   public changeLanguage() {
-    if (this.language === 'italian') {
-      this.language = 'english';
-      this.translateService.use('en');
+    console.log('changeLanguage:' + this.language);
+    console.log('this.translateService.langs:' + this.translateService.langs);
+    if (this.translateService.langs && this.translateService.langs.length > 0) {
+      console.log('this.translateService.langs[0]:' +this.translateService.langs[0]);
+      if (this.translateService.langs[0] === this.getLanguage()) {
+        this.translateService.use(this.translateService.langs[1]);
+      } else {
+        this.translateService.use(this.translateService.langs[0]);
+      }
     } else {
-      this.language = 'italian';
-      this.translateService.use('it');
+      if (this.language === 'italian') {
+        this.language = 'english';
+        this.translateService.use('en');
+      } else {
+        this.language = 'italian';
+        this.translateService.use('it');
+      }
     }
   }
 
