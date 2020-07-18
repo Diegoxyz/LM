@@ -22,7 +22,7 @@ export class Cart {
             const order : Order = new Order();
             order.id = c.Matnr;
 
-            const product : Product = new Product(c.Matnr, c.Maktx, 0, '', true,'Gerarchia','',c.Meins);
+            const product : Product = new Product(c.Matnr, c.Maktx, 0, '', true,'Gerarchia','Gerarchia','',c.Meins);
             order.product = product;
 
             order.quantity = Number(c.Menge);

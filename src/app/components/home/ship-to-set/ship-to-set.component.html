@@ -33,7 +33,7 @@
             <div class="col-md-8">
                 <label for="receiver">{{ 'shipTo' | translate }}</label>
                 <input type="text" class="form-control" id="receiver" formControlName="receiver" 
-					placeholder="Ship to" required />
+					placeholder="Ship to" required readonly />
                 <div *ngIf="receiver.invalid && (receiver.dirty || receiver.touched)" class="alert alert-danger">
                     <div *ngIf="receiver.errors.required">
                         <div>{{ 'shipToRequired' | translate }}</div>

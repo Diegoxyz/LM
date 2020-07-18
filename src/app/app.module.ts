@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -52,6 +52,7 @@ export function createTranslateLoader(http: HttpClient) {
     NgxSpinnerModule
   ],
   providers: [
+    Title,
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: ODataSettings, useFactory: oDataSettingsFactory }],
   bootstrap: [AppComponent]

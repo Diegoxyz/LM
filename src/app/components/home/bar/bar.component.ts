@@ -50,7 +50,7 @@ export class BarComponent implements OnInit, OnDestroy {
     if (!this.accountService.isSessionStillValid()) {
       this.accountService.logout();
       setTimeout(
-        () => this.router.navigate(['/account/login']),
+        () => this.router.navigate(['/account/login', {sessionEnded : 'sessionEnded'}]),
         100
       );
     }
@@ -140,9 +140,9 @@ export class BarComponent implements OnInit, OnDestroy {
   }
 
   public get cartQuantity() : number {
-    console.log('get cartQuantity:' + this.cart + ',' + (this.cart ? this.cart.orders : 'no cart') + ',' + (this.cart && this.cart.orders ? this.cart.orders.length : 'no orders'));
+    // console.log('get cartQuantity:' + this.cart + ',' + (this.cart ? this.cart.orders : 'no cart') + ',' + (this.cart && this.cart.orders ? this.cart.orders.length : 'no orders'));
     this.cart = this.cartService.getCart();
-    console.log('get cartQuantity2:' + this.cart + ',' + (this.cart ? this.cart.orders : 'no cart') + ',' + (this.cart && this.cart.orders ? this.cart.orders.length : 'no orders'));
+    // console.log('get cartQuantity2:' + this.cart + ',' + (this.cart ? this.cart.orders : 'no cart') + ',' + (this.cart && this.cart.orders ? this.cart.orders.length : 'no orders'));
     if (this.cart && this.cart.orders) {
       this.orders = this.cart.orders;
       return this.cart.orders.length;

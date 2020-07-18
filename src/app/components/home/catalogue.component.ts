@@ -83,12 +83,6 @@ export class CatalogueComponent implements OnInit, OnDestroy {
             );
         } else {
             console.log('environment = LOCAL');
-            this.spinner.show();
-        
-            setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-            }, 5000);
             this.sub = this.route.params.subscribe(params => {
                 console.log('environment = LOCAL - popola 1');
                 this.groupId = params['groupId'];

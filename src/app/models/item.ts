@@ -29,12 +29,13 @@ export class Product extends Item {
     itemNumBom: string;
     stockIndicator: string;
     // Gerarchia
+    prodh: string;
     prodhx: string;
     preferred: boolean;
     // Unità di misura della quantità, ad es. "pezzi", 
     meins: string;
     
-    constructor(code: string, description: string, price: number, currency: string, stock: boolean, prodhx: string, pref : string, meins : string, maxQuantity? : number, minQuantity?: number, LoioId?: string, itemNumBom?: string, stockIndicator?: string ) {
+    constructor(code: string, description: string, price: number, currency: string, stock: boolean, prodh: string, prodhx: string, pref : string, meins : string, maxQuantity? : number, minQuantity?: number, LoioId?: string, itemNumBom?: string, stockIndicator?: string ) {
         super(code, description);
         this.price = price;
         this.stock = stock;
@@ -44,6 +45,7 @@ export class Product extends Item {
         this.picId = LoioId;
         this.itemNumBom = itemNumBom;
         this.stockIndicator = stockIndicator;
+        this.prodh = prodh;
         this.prodhx = prodhx;
         if (pref.toUpperCase() === 'X') {
             this.preferred = true;

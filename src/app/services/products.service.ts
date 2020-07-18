@@ -10,14 +10,14 @@ export class ProductsService {
 
   getAllProducts() : Product[] {
     const items : Product[] = Array(100).fill(0).map((x, i) => (
-      new Product(`Code ${i + 1}`,`Product ${i + 1}`,  (i+1 * 10.11), 'EUR', (i%2 === 0), 'Gerarchia', (i%2 === 0)?'X':'','PZ')
+      new Product(`Code ${i + 1}`,`Product ${i + 1}`,  (i+1 * 10.11), 'EUR', (i%2 === 0), `Gr${i + 1}`, 'Gerarchia', (i%2 === 0)?'X':'','PZ')
       ));
     return items;
   }
 
   getAllGroups(): Group[] {
     const items : Group[] = Array(23).fill(0).map((x, i) => (
-      new Product(`Gr${i + 1}`,`Material Group ${i + 1}`,(i+1 * 10), 'EUR', (i%2 === 0), 'Gerarchia', (i%2 === 0)?'X':'','PZ')
+      new Product(`Gr${i + 1}`,`Material Group ${i + 1}`,(i+1 * 10), 'EUR', (i%2 === 0), `Gr${i + 1}`, 'Gerarchia', (i%2 === 0)?'X':'','PZ')
       ));
     return items;
   }
@@ -38,14 +38,14 @@ export class ProductsService {
 
   getAllOrders() : Product[] {
     const items : Product[] = Array(20).fill(0).map((x, i) => (
-      new Product(`Code ${i + 1}`,`Product ${i + 1}`, (i+1 * 10), 'EUR', (i%2 === 0), 'Gerarchia', (i%2 === 0)?'X':'','PZ')
+      new Product(`Code ${i + 1}`,`Product ${i + 1}`, (i+1 * 10), 'EUR', (i%2 === 0), `Gr${i + 1}`, 'Gerarchia', (i%2 === 0)?'X':'','PZ')
       ));
     return items;
   }
 
   getBoardsProducts() : Product[] {
     const items : Product[] = Array(14).fill(0).map((x, i) => (
-      new Product(`Code ${i + 1}`,`Product ${i + 1}`, (i+1 * 10), 'EUR', (i%2 === 0), 'Gerarchia', (i%2 === 0)?'X':'','PZ')
+      new Product(`Code ${i + 1}`,`Product ${i + 1}`, (i+1 * 10), 'EUR', (i%2 === 0), `Gr${i + 1}`, 'Gerarchia', (i%2 === 0)?'X':'','PZ')
       ));
     return items;
   }

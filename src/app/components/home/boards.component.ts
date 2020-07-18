@@ -7,6 +7,7 @@ import { MacchineSetService } from '@app/models/OData/MacchineSet/macchineset.se
 import { Macchina, Section } from '@app/models/OData/MacchineSet/macchineset.entity';
 import { environment } from '@environments/environment';
 import { SectionService } from '@app/services/section.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({selector: 'app-boards',
 templateUrl: './boards.component.html',
@@ -39,7 +40,8 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
     machine : Item;
 
     constructor(private productsService: ProductsService,private macchineService: MacchineSetService,
-        private route: ActivatedRoute,private _router: Router, private sectionService : SectionService
+        private route: ActivatedRoute,private _router: Router, private sectionService : SectionService,
+        private spinner: NgxSpinnerService
     ) {
        /*  this.groups = this.productsService.getAllGroups(); */
     }
@@ -64,6 +66,7 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
          }); */
 
         if (environment && environment.oData) {
+            this.spinner.show();
             this.macchineService.getAllMachines().subscribe(resp => {
                 if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
                     resp.body.d.results.forEach(m => {
@@ -72,6 +75,7 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
                         }
                     });
                 }
+                this.spinner.hide();
             });
         } else {
             this.machines = this.productsService.getAllMachines();

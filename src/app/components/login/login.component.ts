@@ -31,6 +31,13 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/home']);
     }
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home/boards';
+
+    const error = this.route.snapshot.paramMap.get('sessionEnded');
+    if (error) {
+      this.errorMessage = error;
+      this.loginError = true;
+    }
+
     this.loginForm = this.fb.group({
       email: ['', Validators.required],
       password: ['', Validators.required],
@@ -50,6 +57,8 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
+    this.loginError = false;
+    this.errorMessage = undefined;
     if (this.email && this.password) {
       if (environment && environment.oData) {
         this.spinner.show();
@@ -164,7 +173,7 @@ export class LoginComponent implements OnInit {
               }
               // this.userDataSetService.saveUserDataSet(this.email.value, this.password.value, 'IT');
               // this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/account/changePwd';
-              this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/account/changePwd';
+              // this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/account/changePwd';
               this.router.navigate([this.returnUrl]);
             },
             error => {

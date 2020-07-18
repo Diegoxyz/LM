@@ -34,18 +34,18 @@
         </div>
 
         <div *ngIf="orders.length === 0">
+            <!--  No item -->
             <div class="row align-items-center justify-content-center no-item">
                 <div class="col-12 col-md-auto h-100">
-                    <h1>{{ 'noitem' | translate }}</h1>  <!--  No item -->
+                    <h1>{{ 'noitem' | translate }}</h1>  
                 </div>
             </div>
         </div>
-
         <div class="row headers-list-orders" style="margin-bottom: 2%;">
 <!--             <div class="col-9 h-100">
                 <span>&nbsp;</span>
             </div> -->
-            <div class="col-md-11">
+            <div class="col-md-11 grand_total_column">
                 <div id="grand-total">{{ 'grandTotal' | translate }} {{strTotalPrice}} {{currency}}</div> <!-- Grand total -->
             </div>
         </div>

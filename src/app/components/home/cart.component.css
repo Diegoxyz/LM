@@ -12,9 +12,10 @@
 
 .code_column, 
 .price_column, .quantity_column, 
-.total_column{
+.total_column, .grand_total_column{
     font-weight: bold;
-    padding-top: 1%
+    padding-top: 1%;
+    padding-bottom: 1%;
 }
 
 .description_column{

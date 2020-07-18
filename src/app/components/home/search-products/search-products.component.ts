@@ -304,25 +304,30 @@ export class SearchProductsComponent implements OnInit {
 	/*----------------------------------*/
 
     let os : Product[] = om;
-
+    console.log('os.length1:' + os.length);
     if (this.selectedGroups !== undefined && this.selectedGroups.length > 0) {
       os = [];
       this.selectedGroups.forEach(g => {
         if (om.length > 0) {
           om.forEach(o => {
-            if (o.prodhx === g.group.code) {
+            console.log('selected groups - checking1:' + o.prodh + '-' + g.group.code);
+            if (o.prodh.indexOf(g.group.code) > -1) {
+              console.log('checking1 - adding:' + o.prodhx)
               os.push(o);
             }
           })
         } else if (this.allProducts.length > 0) {
           this.allProducts.forEach(p => {
-            if (p.prodhx === g.group.code) {
+            console.log('selected groups - checking2:' + p.prodh + '-' + g.group.code);
+            if (p.prodh.indexOf(g.group.code) > -1) {
+              console.log('checking2 - adding:' + p.prodhx)
               os.push(p);
             }
           })
         }
       });
     }
+    console.log('os.length2:' + os.length);
     this.outProducts.emit(os);
   }
 

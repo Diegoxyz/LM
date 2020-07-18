@@ -104,6 +104,7 @@ export class Materiale {
                                     price,
                                     m.Waers, 
                                     isInStock,
+                                    m.Prodh,
                                     m.Prodhx,
                                     m.Pref,
                                     m.Meins,
