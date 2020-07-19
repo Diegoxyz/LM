@@ -69,5 +69,7 @@
     "goToStep3":"VAI A CONFERMA ORDINE",
     "goToStep4":"VAI A INVIO ORDINE",
     "btnStep4": "SALVA ORDINE",
-    "wishlist":"ultimi acquisti"
+    "wishlist":"ultimi acquisti",
+    "noRecipientFound":"Nessun destinatario merci configurato, impossibile procedere",
+    "sessionEnded":"La sessione è scaduta, per piacere loggarsi di nuovo"
 }

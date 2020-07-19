@@ -69,5 +69,7 @@
     "goToStep3":"NEXT SAVE ORDER",
     "goToStep4":"NEXT CONFIRM ORDER",
     "btnStep4": "SAVE ORDER",
-    "wishlist":"last purchased"
+    "wishlist":"last purchased",
+    "noRecipientFound":"No recipient found, please set at least a recipient before proceeding with orders",
+    "sessionEnded":"Session expired, please log in again"
 }

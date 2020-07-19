@@ -79,6 +79,7 @@ export class ShipToSetComponent implements OnInit {
             const firstRecipient = this.recipients[0];
             console.log('this.recipients[0]:' + firstRecipient);
             this.recipientId = firstRecipient.Kunwe;
+            this.shippingForm.controls['recipient'].patchValue(this.recipientId);
             this.receiver.setValue(firstRecipient.Kunwex);
             this.address.setValue(firstRecipient.Stras);
             this.city.setValue(firstRecipient.Ort01);
@@ -105,7 +106,7 @@ export class ShipToSetComponent implements OnInit {
       this.regions.push({ 'id': '01', name: 'Veneto' });
       this.regions.push({ 'id': '02', name: 'Piemonte' });
 
-      this.recipients.push({
+      const firstRecipient = {
         "Kunwe": "id_dest_01",
         "Kunwex": "destinatario merce 01",
         "Email": "",
@@ -118,8 +119,10 @@ export class ShipToSetComponent implements OnInit {
         "Regiox": "Regione_01",
         "Land1": "Sigla_Stato_01",
         "Land1x": "Desc_stato:_01"
-      });
+      };
 
+      this.recipients.push(firstRecipient);
+      this.shippingForm.controls['recipient'].patchValue('id_dest_01');
 
       this.recipients.push({
         "Kunwe": "id_dest_02",
@@ -150,6 +153,8 @@ export class ShipToSetComponent implements OnInit {
         "Land1": "Sigla_Stato_03",
         "Land1x": "Desc_stato:_03"
       });
+
+      
     }
 
 

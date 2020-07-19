@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
 
     const error = this.route.snapshot.paramMap.get('sessionEnded');
     if (error) {
-      this.errorMessage = error;
+      this.errorMessage = this.translateService.instant('sessionEnded');
       this.loginError = true;
     }
 

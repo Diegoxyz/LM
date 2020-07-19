@@ -9,13 +9,21 @@
                     <div Id="step" class="col-md-8 text-center" >
                     <h5>{{ 'step2' | translate }}</h5>   <!-- STEP 2 di 4 - DESTINATARIO MERCE -->
                     
+                    </div>
                 </div>
+                <div class="form-row" *ngIf="recipients.length === 0"> 
+                    <div class="col-md-2"></div>
+                    <div id="errorMessage" class="col-md-8 text-center alert alert-danger">
+                        {{ 'noRecipientFound' | translate }}
+                    
+                    </div>
                 </div>
                 <div class="form-row">
                     <div class="col-md-2"></div>
                     <div class="col-md-8">
                         <label for="recipient">{{ 'recipient' | translate }}</label>
-                        <select class="custom-select" formControlName="recipient" id="recipient" required required (change)="changeRecipient($event)">
+                        <select class="custom-select" formControlName="recipient" id="recipient" required
+                         (change)="changeRecipient($event)" [disabled]="recipients.length === 1">
                              <option [value]="recipient.Kunwe" *ngFor="let recipient of recipients">{{ recipient.Kunwex }}</option>
                         </select>
 
