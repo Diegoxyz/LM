@@ -142,11 +142,16 @@ export class ProspectiveCardComponent implements OnInit {
     }
 
     public setQtyValue(code : string, value : number) {
-        this.addProductForm.get(code).setValue(value);
+        if (this.addProductForm.get(code)) {
+            this.addProductForm.get(code).setValue(value);
+        }
     }
 
     public getQtyValue(code : string) : number {
-        return this.addProductForm.get(code).value;
+        if (this.addProductForm.get(code)) {
+            return this.addProductForm.get(code).value;
+        }
+        return 0;
     }
 
     Id(id: string, code: string): string {

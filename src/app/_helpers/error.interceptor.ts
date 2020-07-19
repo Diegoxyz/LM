@@ -6,11 +6,12 @@ import { AccountService } from '../services/account.service';
 import { ODataSettingsService } from './oDataSettings.service';
 import { environment } from '@environments/environment';
 import { TranslateService } from '@ngx-translate/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-    constructor(private accountService: AccountService, private translateService : TranslateService) {
+    constructor(private accountService: AccountService, private translateService : TranslateService, private spinner: NgxSpinnerService) {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -46,13 +47,14 @@ export class ErrorInterceptor implements HttpInterceptor {
                     // server-side error
                     errorMessage = error.status + '-' + error.message + '-' + error.statusText;
                   }
-                console.log('catched error:' + errorMessage);
+                console.error('catched error:' + errorMessage);
                 /*if (!(error.error instanceof ErrorEvent)) {
                     return Observable.throw(error);
                 }*/
                 
                 errorMessage = this.translateService.instant('unknownError');
                 window.alert(errorMessage);
+                this.spinner.hide();
                 return throwError(errorMessage);
             }))
     }

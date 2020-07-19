@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 import { CartService } from './cart.service';
 import {TranslateService} from '@ngx-translate/core';
 import buildQuery from 'odata-query';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,8 @@ export class AccountService {
   public user: Observable<User>;
 
   constructor(private factory: ODataServiceFactory,
-    private http: HttpClient, private cartService : CartService,private translateService: TranslateService) { 
+    private http: HttpClient, private cartService : CartService,private translateService: TranslateService,
+    private router: Router) { 
       this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
       this.user = this.userSubject.asObservable();
   }
@@ -179,12 +181,38 @@ export class AccountService {
 
   public isSessionStillValid() : boolean {
     if (this.userValue === undefined || this.userValue === null || this.user === undefined || this.user === null) {
-      console.log('isSessionStillValid - return false');
+      console.log('isSessionStillValid - userValue or user not fount - return false');
       return false;
+    }
+    if (environment && environment.oData) {
+      this.checkSession().subscribe(resp => {
+        if (resp && resp.body && resp.body.d && resp.body.d.SessionValid && resp.body.d.SessionValid === 'X') {
+          console.log('session valid');
+        } else {
+          console.log('session invalid');
+          this.logout();
+          this.router.navigate(['/account/login', {sessionEnded : 'sessionEnded'}]);
+        }
+      })
     }
     return true;
   }
 
+  // ZSD_SP_SRV/UserSessionSet(Email='roberto.mazzocato@eservices.it',Token='000D3A2544DE1EDAAED4925935EA028D')?&$format=json
+  public checkSession() : Observable<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    const u : User = this.userValue;
+    let url = '';
+    const em    = 'Email=' + '\'' + u.username + '\'';
+    const token = 'Token=' + '\'' + u.token + '\'';
+    url = url.concat('(').concat(em).concat(',').concat(token).concat(')').concat();
+    console.log('checkSession - url:' + url);
+    let options = { headers: headers, observe: "response" as 'body'};
+    return this.http.get<HttpResponse<any>>(
+      environment.oData_destination + 'UserSessionSet' + url, options);
+  }
   /**
      * It returns the user language if any otherwise the browser language
      */

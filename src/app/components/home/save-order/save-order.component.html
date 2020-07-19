@@ -1,6 +1,6 @@
 <div style="margin-top: 5%;">
     <div class="align-items-center justify-content-center">
-        <div class="container">
+        <div [ngClass]="{'container alert alert-success': successfullySent, 'container alert alert-danger': !successfullySent }" role="alert">
 
 
             <form [formGroup]="saveOrderForm" (ngSubmit)="onSubmit()">
@@ -9,7 +9,16 @@
                     <div class="col-md-2"></div>
                     <div Id="step" class="col-md-8 text-center" >
                         <h5>{{ 'step4' | translate }}</h5>   <!-- STEP 4 di 4 - INVIO ORDINE -->
-                    </div> 
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+
+                <div *ngIf="successfullySent" class="form-row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        {{ notes }}
+                    </div>
+                    <div class="col-md-2"></div>
                 </div>
 
                 <div class="form-row">
@@ -32,6 +41,7 @@
                             </div>
                         </div> -->
                     </div>
+                    <div class="col-md-2"></div>
                 </div>
 
                 <!--
@@ -49,7 +59,7 @@
                 </div> -->
 
 
-                <div class="form-row">
+                <div class="form-row" *ngIf="!successfullySent">
                     <div class="col-md-2"></div>
                     <div class="col-md-8">
                         <label for="note">{{ 'note' | translate }}</label>
@@ -64,6 +74,7 @@
                             </div>
                         </div> -->
                     </div>
+                    <div class="col-md-2"></div>
                 </div>
 
 

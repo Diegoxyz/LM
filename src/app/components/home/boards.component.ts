@@ -46,7 +46,7 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
        /*  this.groups = this.productsService.getAllGroups(); */
     }
     ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
-        throw new Error("Method not implemented.");
+        console.log('boards - ngOnChanges');
     }
 
     ngOnInit() {
