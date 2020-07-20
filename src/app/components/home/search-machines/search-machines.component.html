@@ -12,7 +12,7 @@
                 </fa-icon></mat-icon>
           </mat-chip>
           <input
-            placeholder="Search for machines"
+            placeholder="{{ 'searchForMachines' | translate }}"
             #machineInput
             [formControl]="searchMachineControl"
             [matAutocomplete]="auto"
@@ -33,7 +33,7 @@
       </mat-form-field>
     <div id="div-search">
         <button id="search" class="btn btn-primary" (click)="search()">
-            Search&nbsp;&nbsp;&nbsp;
+            {{ 'search' | translate }}&nbsp;&nbsp;&nbsp;
             <fa-icon [icon]="faSearch" size="1x"></fa-icon>
         </button>
     </div>

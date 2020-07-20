@@ -101,7 +101,7 @@ export class ProspectiveCardComponent implements OnInit {
                                 this.items.push(product);
                             }
                             this.addProductForm.addControl(product.code,new FormControl(0, Validators.required));
-
+                            console.log('added control with this code:' + product.code);
                             this.cartService.getCart().orders.forEach(o => {
                                 if (o && o.product && o.product.code === product.code) {
                                     this.setQtyValue(o.product.code, o.quantity);
@@ -142,14 +142,27 @@ export class ProspectiveCardComponent implements OnInit {
     }
 
     public setQtyValue(code : string, value : number) {
+        console.log('setQtyValue - code:' + code);
+        console.log('this.addProductForm.controls.length:' + this.addProductForm.controls.length);
+        if (this.addProductForm.controls.length) {
+            console.log('this.addProductForm.controls[0].value:' + this.addProductForm.controls[0].value);
+        }
+        
         if (this.addProductForm.get(code)) {
+            console.log('setQtyValue - setting qty to code:' + code + '-' + value);
             this.addProductForm.get(code).setValue(value);
         }
     }
 
     public getQtyValue(code : string) : number {
+        console.log('getQtyValue - code:' + code);
+        console.log('getqtyvalue - contains:' + this.addProductForm.contains(code));
         if (this.addProductForm.get(code)) {
+            console.log('getQtyValue - found control with code:' + code + ' and the value is:' + this.addProductForm.get(code).value);
             return this.addProductForm.get(code).value;
+        } else if (this.addProductForm.contains(code)) {
+            console.log('getQtyValue - value:' + this.addProductForm.controls[code].value);
+            return this.addProductForm.controls[code].value;
         }
         return 0;
     }

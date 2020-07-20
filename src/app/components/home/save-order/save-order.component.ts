@@ -43,6 +43,7 @@ export class SaveOrderComponent implements OnInit {
     this.note.setValue(this.notes);
     const isSuccessfullySent = this.route.snapshot.paramMap.get('successfullySent');
     console.log('isSuccessfullySent:' + isSuccessfullySent);
+    
     if (isSuccessfullySent) {
       this.successfullySent = true;
       this.notes = this.translateService.instant('registrationRequestSeccessfullySent');

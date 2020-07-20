@@ -1,10 +1,11 @@
 <div style="margin-top: 5%;">
     <div class="align-items-center justify-content-center">
-        <div [ngClass]="{'container alert alert-success': successfullySent, 'container alert alert-danger': !successfullySent }" role="alert">
+        <div class="container" role="alert">
 
+            
 
             <form [formGroup]="saveOrderForm" (ngSubmit)="onSubmit()">
-
+                <div [ngClass]="{'alert alert-success': successfullySent, 'container alert alert-danger': !successfullySent }">
                 <div class="form-row"> 
                     <div class="col-md-2"></div>
                     <div Id="step" class="col-md-8 text-center" >
@@ -24,7 +25,7 @@
                 <div class="form-row">
                     <div class="col-md-2"></div>
                     <div class="col-md-8">
-                        <label for="receiverID">{{ 'receiverID' | translate }}</label>
+                        <label for="receiverID">{{ 'orderNumber' | translate }}</label>
 <!--                         <input type="text" class="form-control" id="receiverID" formControlName="receiverID"
                             placeholder="receiverID" required /> -->
                         <!--<input type="text" 
@@ -62,7 +63,7 @@
                 <div class="form-row" *ngIf="!successfullySent">
                     <div class="col-md-2"></div>
                     <div class="col-md-8">
-                        <label for="note">{{ 'note' | translate }}</label>
+                        <label for="note">{{ 'note' | translate }}:</label>
                         {{ notes }}
                         <!-- <textarea type="text" 
                                 class="form-control md-textarea" 
@@ -76,7 +77,7 @@
                     </div>
                     <div class="col-md-2"></div>
                 </div>
-
+            </div>
 
                 <div class="form-row">
                     <div class="col-md-2"></div>
@@ -92,6 +93,7 @@
                 </div>
 
             </form>
+            
         </div>
     </div>
 </div>

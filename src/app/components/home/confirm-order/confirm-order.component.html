@@ -4,44 +4,44 @@
 
             <form id="confirmOrderForm" [formGroup]="confirmOrderForm" (ngSubmit)="onSubmit()">
 
-                <div class="form-row"> 
+                <div class="form-row">
                     <div class="col-md-2"></div>
-                    <div Id="step" class="col-md-8 text-center" >
-                    <h5>{{ 'step3' | translate }}</h5>  <!-- STEP 3 di 4 - SALVATAGGIO ORDINE -->
-                </div>
+                    <div Id="step" class="col-md-8 text-center">
+                        <h5>{{ 'step3' | translate }}</h5> <!-- STEP 3 di 4 - SALVATAGGIO ORDINE -->
+                    </div>
                 </div>
 
                 <div class="form-row">
                     <div class="col-md-2"></div>
                     <div class="col-md-8">
-                        <label for="deliverydate" i18n>Requested delivery date</label>
-                        <input type="date" class="form-control" id="deliverydate" name="deliverydate"required formControlName="deliverydate">
-                        <div *ngIf="deliverydate.invalid && (deliverydate.dirty || deliverydate.touched)" class="alert alert-danger">
+                        <label for="deliverydate" >{{ 'requestedDeliveryDate' | translate }}</label>
+                        <input type="date" class="form-control" id="deliverydate" name="deliverydate" required
+                            formControlName="deliverydate">
+                        <div *ngIf="deliverydate.invalid && (deliverydate.dirty || deliverydate.touched)"
+                            class="alert alert-danger">
                             <div *ngIf="deliverydate.errors.required">
-                                <div i18n>Requested delivery date is required</div>
+                                <div>{{ 'requestedDeliveryDateRequired' | translate }}</div>
                             </div>
-                        </div>
-                        <div *ngIf="confirmOrderForm.controls['deliverydate'].hasError('invalidDate')" class="alert alert-danger">
-                            <div>
-                                <div i18n>Requested delivery date must be greater than today's date</div>
-                            </div>
-                        </div>
 
+                            <div *ngIf="confirmOrderForm.controls['deliverydate'].hasError('invalidDate')">
+                                <div>{{ 'requestedDeliveryDateError' | translate }} </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 {{ errorMessage }}
-                
+
                 <div class="form-row">
                     <div class="col-md-2"></div>
                     <div class="col-md-8">
-                        <label for="note" i18n>Note</label>
+                        <label for="note">{{ 'note' | translate }}</label>
                         <textarea type="text" class="form-control md-textarea" id="note" name="note" maxlength="140"
                             required formControlName="note">
                                 </textarea>
                         <div *ngIf="note.invalid && (note.dirty || note.touched)" class="alert alert-danger">
                             <div *ngIf="note.errors.required">
-                                <div i18n>Note is required</div>
+                                <div>{{ 'noteRequired' | translate }}</div>
                             </div>
                         </div>
                     </div>

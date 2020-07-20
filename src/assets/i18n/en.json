@@ -70,6 +70,30 @@
     "goToStep4":"NEXT CONFIRM ORDER",
     "btnStep4": "SAVE ORDER",
     "wishlist":"last purchased",
+	"search": "Search",
+	"searchForMachines" : "Search for machines",
+	"searchForProducts": "Search for products (code, description)",
+    "searchForGroup" : "Search for group",
+    "preferred" : "Preferred",
+    "noItem": "No item",
+    "code": "CODE",
+    "description" : "DESCRIPTION",
+    "requestedDeliveryDateRequired": "Requested delivery date is required",
+    "requestedDeliveryDateError" : "Requested delivery date must be greater than today's date",
+    "noteRequired": "Note is required",
+    "initialPassword" : "Initial password",
+    "initialPasswordPlaceholder": "Enter initial password",
+    "initialPasswordError": "Initial password is required. (Enter at least 8 characters)",
+    "newPassword":"New password",
+    "newPasswordError": "New Password is required (Enter at least 8 characters)",
+    "samePasswordError" : "Initial password and new password must be different",
+    "confirmPassword" : "Confirm password",
+    "confirmPasswordPlaceholder": "Retype password",
+    "confirmPasswordRequired": "Confirm password is required",
+    "noMatchPassword": "Passwords do not match",
     "noRecipientFound":"No recipient found, please set at least a recipient before proceeding with orders",
-    "sessionEnded":"Session expired, please log in again"
+    "sessionEnded":"Session expired, please log in again",
+    "orderNumber":"Numero ordine"
+    
+
 }

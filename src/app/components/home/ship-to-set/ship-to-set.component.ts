@@ -29,6 +29,9 @@ export class ShipToSetComponent implements OnInit {
   disableRegion: boolean = true;
 
   recipientId: string = undefined;
+
+  noRecipient : boolean = false;
+
   ngOnInit(): void {
 
     this.shippingForm = this.fb.group({
@@ -52,6 +55,7 @@ export class ShipToSetComponent implements OnInit {
       });
 
       this.orderService.getDestinatariMerce().subscribe(resp => {
+        this.noRecipient = true;
         if (resp && resp.body && resp.body.d && resp.body.d.results.length > 0) {
           resp.body.d.results.forEach(c => {
             console.log('c:' + c);
@@ -76,6 +80,7 @@ export class ShipToSetComponent implements OnInit {
           });
           console.log('this.recipients.length:' + this.recipients.length);
           if (this.recipients.length > 0) {
+            this.noRecipient = false;
             const firstRecipient = this.recipients[0];
             console.log('this.recipients[0]:' + firstRecipient);
             this.recipientId = firstRecipient.Kunwe;

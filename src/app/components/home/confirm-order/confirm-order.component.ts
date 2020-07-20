@@ -80,14 +80,19 @@ export class ConfirmOrderComponent implements OnInit {
                   const sapMessage = resp.headers.get('sap-message');
                   console.log('confirm-order : sapMessage:' + sapMessage);
                   if (sapMessage !== undefined && sapMessage !== null) {
+                    this.errorMessage = this.translateService.instant('unknownError');
+                    try {
+                    let sm = JSON.parse(sapMessage);
+                    this.errorMessage = sm.message;
+                    } catch (error) {
                     const docSapMessage : Document = (new window.DOMParser()).parseFromString(sapMessage, 'text/xml');
-                      this.errorMessage = this.translateService.instant('unknownError');
-                      if (docSapMessage.hasChildNodes()) {
+                    if (docSapMessage.hasChildNodes()) {
                         if (docSapMessage.firstChild.childNodes.length >= 2) {
-                          this.errorMessage = docSapMessage.firstChild.childNodes[1].textContent;
+                        this.errorMessage = docSapMessage.firstChild.childNodes[1].textContent;
                         }
-                      }
-                  }
+                    }
+                    }
+                }
                 }
                 console.log('errorMessage:' + this.errorMessage);
                 let orderNumber: string = '';
