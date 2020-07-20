@@ -71,7 +71,9 @@ export class ProductCardCatalogueComponent implements OnInit {
                 });
             }
         } else {
-            this.svgThumbnail = this.svgData;
+            this.thumbnail = undefined;
+            this.svgThumbnail = undefined;
+            // this.svgThumbnail = this.svgData;
         }
 
         this.addProductForm = this.fb.group({
