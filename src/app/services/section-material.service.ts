@@ -16,7 +16,7 @@ export class SectionMaterial {
     public getSectionMaterial(matnrSezione : string) : Observable<any> {
         console.log('getSectionMaterial matnrSezione:' + matnrSezione);
         const u : User = this.accountService.userValue;
-        const filter = { Email: u.username, Token: u.token, Langu : u.lang, MatnrSezione : matnrSezione };
+        const filter = { Email: u.username, Token: u.token, Langu : (u !== undefined && u !== null && u.lang ? u.lang.toUpperCase() : ''), MatnrSezione : matnrSezione };
         const format = 'json';
         const outFilter = buildQuery({ format, filter });
         console.log('getSectionMaterial filter:' + outFilter);

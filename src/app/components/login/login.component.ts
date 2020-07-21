@@ -17,6 +17,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class LoginComponent implements OnInit {
 
   loginError : boolean = false;
+  sessionEndedError : boolean = false;
   returnUrl: string;
   errorMessage : string;
 
@@ -34,8 +35,8 @@ export class LoginComponent implements OnInit {
 
     const error = this.route.snapshot.paramMap.get('sessionEnded');
     if (error) {
-      this.errorMessage = this.translateService.instant('sessionEnded');
-      this.loginError = true;
+      // this.errorMessage = this.translateService.instant('sessionEnded');
+      this.sessionEndedError = true;
     }
 
     this.loginForm = this.fb.group({

@@ -18,6 +18,9 @@ type="ball-clip-rotate-multiple" size="medium">
             <div *ngIf="loginError === true" class="alert alert-danger">
                 <span>{{ errorMessage }}</span>
             </div>
+            <div *ngIf="sessionEndedError === true" class="alert alert-danger">
+                <span>{{ 'sessionEnded' | translate }}</span>
+            </div>
             <div *ngIf="!loginError" class="w-100"></div>
             <div class="col-7">
                 

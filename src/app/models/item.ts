@@ -34,7 +34,8 @@ export class Product extends Item {
     preferred: boolean;
     // Unità di misura della quantità, ad es. "pezzi", 
     meins: string;
-    
+    strItemNumBom : string;
+
     constructor(code: string, description: string, price: number, currency: string, stock: boolean, prodh: string, prodhx: string, pref : string, meins : string, maxQuantity? : number, minQuantity?: number, LoioId?: string, itemNumBom?: string, stockIndicator?: string ) {
         super(code, description);
         this.price = price;
@@ -44,6 +45,11 @@ export class Product extends Item {
         this.currency = currency;
         this.picId = LoioId;
         this.itemNumBom = itemNumBom;
+        try {
+            this.strItemNumBom = '' + Number(itemNumBom);
+        } catch (error) {
+            this.strItemNumBom = itemNumBom;
+        }
         this.stockIndicator = stockIndicator;
         this.prodh = prodh;
         this.prodhx = prodhx;

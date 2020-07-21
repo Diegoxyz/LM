@@ -15,7 +15,7 @@
                     src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
 
                 <button *ngIf="item.preferred === true;else other_content" (click)="addToFavorite()" class="btn"
-                style="font-size:24px; border: 0px; background-color: transparent;"><i class="fa fa-star" style="font-size:36px;color:#dc3545">
+                style="font-size:24px; border: 0px; background-color: transparent;"><i class="fa fa-star" style="font-size:24px;color:#dc3545">
                 </i></button>
 
                 <ng-template #other_content>
