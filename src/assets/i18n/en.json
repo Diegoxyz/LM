@@ -93,7 +93,8 @@
     "noMatchPassword": "Passwords do not match",
     "noRecipientFound":"No recipient found, please set at least a recipient before proceeding with orders",
     "sessionEnded":"Session expired, please log in again",
-    "orderNumber":"Numero ordine"
+    "orderNumber":"Numero ordine",
+    "backToLogin":"Back"
     
 
 }

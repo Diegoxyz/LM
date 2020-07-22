@@ -19,6 +19,7 @@ export class RegistrationComponent implements OnInit {
 
 
   loginError : boolean = false;
+  successMessage : boolean = false;
   returnUrl: string;
   errorMessage? : string;
 
@@ -145,6 +146,8 @@ export class RegistrationComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.successMessage = false;
+    this.loginError = false;
     if (!this.registrationForm.valid) {
       return;
     }
@@ -183,7 +186,9 @@ export class RegistrationComponent implements OnInit {
                     console.log('errorMessage:' + this.errorMessage);
                   }
                   if (this.errorMessage === undefined) {
-                    this.errorMessage = this.translateService.instant('registrationRequestSeccessfullySent');
+                    this.successMessage = true;
+                  } else {
+                    this.loginError = true;
                   }
                     
                 }
@@ -193,14 +198,16 @@ export class RegistrationComponent implements OnInit {
         });
       
     } else {
-      const sapMessage = '<notification xmlns:sap="http://www.sap.com/Protocols/SAPData"><code>ZSPB2B/000</code><message>Utente gi&#x00E0; registrato</message><severity>error</severity><target></target><transition>false</transition><details/></notification>';
+      /*const sapMessage = '<notification xmlns:sap="http://www.sap.com/Protocols/SAPData"><code>ZSPB2B/000</code><message>Utente gi&#x00E0; registrato</message><severity>error</severity><target></target><transition>false</transition><details/></notification>';
       const docSapMessage : Document = (new window.DOMParser()).parseFromString(sapMessage, 'text/xml');
       this.errorMessage = this.translateService.instant('registrationRequestSeccessfullySent');
       if (docSapMessage.hasChildNodes()) {
         if (docSapMessage.firstChild.childNodes.length >= 2) {
           this.errorMessage = docSapMessage.firstChild.childNodes[1].textContent;
+          this.loginError = true;
         }
-      }
+      }*/
+      this.successMessage = true;
     }
   }
 

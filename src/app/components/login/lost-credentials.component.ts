@@ -15,6 +15,7 @@ export class LostCredentialsComponent implements OnInit {
   public loginForm: FormGroup;
   errorMessage : string;
   loginError : boolean = false;
+  successMessage : boolean = false;
   response2 : any;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute,private router: Router, 
@@ -32,6 +33,8 @@ export class LostCredentialsComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.successMessage = false;
+    this.loginError = false;
     // stop here if form is invalid
     if (this.loginForm.invalid) {
       return;
@@ -66,7 +69,7 @@ export class LostCredentialsComponent implements OnInit {
                   }
                 }
                 if (this.errorMessage === undefined) {
-                  this.errorMessage = this.translateService.instant('registrationRequestSeccessfullySent');
+                  this.successMessage = true;
                 } else {
                   this.loginError = true;
                 }
@@ -74,6 +77,14 @@ export class LostCredentialsComponent implements OnInit {
             }
           }
         });
-      }
+    } else {
+     // this.loginError = true;
+      // this.errorMessage = 'Errore';
+      this.successMessage = true;
+    }
+  }
+
+  onCancel(): void {
+    this.router.navigate(['/login']);
   }
 }

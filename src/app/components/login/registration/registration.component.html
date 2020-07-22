@@ -11,12 +11,13 @@
                 </div>
                 <div class="col-2"></div>
             </div>
-            <div>{{ errorMessage }}</div>
+            <div *ngIf="loginError" class="alert alert-danger">{{ errorMessage }}</div>
+            <div *ngIf="successMessage" class="alert alert-success">{{ 'registrationRequestSeccessfullySent' | translate }}</div>
             <div class="form-row">
                 <div class="col-md-5">
                     <label for="firstName">{{ 'firstName' | translate }}</label>
                     <input type="text" class="form-control" id="firstName" formControlName="firstName"
-                        placeholder="{{ 'firstName' | translate }}" required />
+                        placeholder="{{ 'firstName' | translate }}" required [readonly]="successMessage" />
                     <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="alert alert-danger">
                         <div *ngIf="firstName.errors.required">
                             <div>{{ 'firstNameRequired' | translate }}</div>
@@ -29,7 +30,7 @@
                 <div class="col-md-5">
                     <label for="lastName">{{ 'lastName' | translate }}</label>
                     <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="{{ 'lastName' | translate }}"
-                        required />
+                        required [readonly]="successMessage" />
                     <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="alert alert-danger">
                         <div *ngIf="lastName.errors.required">
                             <div>{{ 'lastNameRequired' | translate }}</div>
@@ -42,7 +43,7 @@
                 <div class="col-md-5">
                     <label for="taxNumber">{{ 'taxNumber' | translate }}</label>
                     <input type="text" class="form-control" id="taxNumber" formControlName="taxNumber"
-                        placeholder="{{ 'taxNumber' | translate }}" required />
+                        placeholder="{{ 'taxNumber' | translate }}" required [readonly]="successMessage" />
                     <div *ngIf="taxNumber.invalid && (taxNumber.dirty || taxNumber.touched)" class="alert alert-danger">
                         <div *ngIf="taxNumber.errors.required">
                             <div>{{ 'taxNumberRequired' | translate }}</div>
@@ -53,7 +54,7 @@
                 <div class="col-md-5">
                     <label for="vatNumber">{{ 'vatNumber' | translate }}</label>
                     <input type="text" class="form-control" id="vatNumber" formControlName="vatNumber"
-                        placeholder="{{ 'vatNumber' | translate }}" required />
+                        placeholder="{{ 'vatNumber' | translate }}" required [readonly]="successMessage" />
                     <div *ngIf="vatNumber.invalid && (vatNumber.dirty || vatNumber.touched)" class="alert alert-danger">
                         <div *ngIf="vatNumber.errors.required">
                             <div>{{ 'vatNumberRequired' | translate }}</div>
@@ -66,7 +67,7 @@
                 <div class="col-md-6">
                     <label for="address">{{ 'address' | translate }}</label>
                     <input type="text" class="form-control" id="address" formControlName="address" placeholder="Address"
-                        required />
+                        required [readonly]="successMessage" />
                     <div *ngIf="address.invalid && (address.dirty || address.touched)" class="alert alert-danger">
                         <div *ngIf="address.errors.required">
                             <div>{{ 'addressRequired' | translate }}</div>
@@ -76,7 +77,7 @@
 
                 <div class="col-md-6">
                     <label for="email">{{ 'email' | translate }}</label>
-                    <input type="email" class="form-control" id="email" formControlName="email" placeholder="{{ 'email' | translate }}" required>
+                    <input type="email" class="form-control" id="email" formControlName="email" placeholder="{{ 'email' | translate }}" required [readonly]="successMessage" />
                     <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
                         <div *ngIf="email.errors.required">
                             <div>{{ 'emailRequired' | translate }}</div>
@@ -92,7 +93,7 @@
             <div class="form-row">
                 <div class="col-md-4">
                     <label for="city">{{ 'city' | translate }}</label>
-                    <input type="text" class="form-control" id="city" formControlName="city" placeholder="{{ 'city' | translate }}" required />
+                    <input type="text" class="form-control" id="city" formControlName="city" placeholder="{{ 'city' | translate }}" required [readonly]="successMessage" />
                     <div *ngIf="city.invalid && (city.dirty || city.touched)" class="alert alert-danger">
                         <div *ngIf="city.errors.required">
                             <div>{{ 'cityRequired' | translate }}</div>
@@ -103,7 +104,7 @@
                 <div class="col-md-2">
                     <label for="zipCode">{{ 'zip' | translate }}</label>
                     <input type="text" class="form-control" id="zipCode" formControlName="zipCode" placeholder="{{ 'zip' | translate }}"
-                        required />
+                        required [readonly]="successMessage" />
                     <div *ngIf="zipCode.invalid && (zipCode.dirty || zipCode.touched)" class="alert alert-danger">
                         <div *ngIf="zipCode.errors.required">
                             <div>{{ 'zipRequired' | translate }}</div>
@@ -114,7 +115,7 @@
                 <div class="col-md-6">
                     <label for="phone">{{ 'phone' | translate }}</label>
                     <input type="text" class="form-control" id="phone" formControlName="phone" placeholder="{{ 'phone' | translate }}"
-                        required />
+                        required [readonly]="successMessage" />
                     <div *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="alert alert-danger">
                         <div *ngIf="phone.errors.required">
                             <div>{{ 'phoneRequired' | translate }}</div>
@@ -126,7 +127,7 @@
             <div class="form-row">
                 <div class="col-md-6">
                     <label for="country">{{ 'country' | translate }}</label>
-                    <select class="custom-select"  formControlName="country" id="country" required (change)="changeCountry($event)">
+                    <select class="custom-select"  formControlName="country" id="country" required (change)="changeCountry($event)" [disabled]="successMessage" >
                         <option value="">{{ 'chooseYourCountry' | translate }}</option>
                         <option [value]="country.id" *ngFor="let country of countries">{{country.name}}</option>
                       </select>                    
@@ -140,7 +141,7 @@
 
                 <div class="col-md-6">
                     <label for="region">{{ 'region' | translate }}</label>
-                    <select class="custom-select"  formControlName="region" id="region" required>
+                    <select class="custom-select"  formControlName="region" id="region" required [disabled]="successMessage">
                         <option value="" [disabled]="disableRegion">{{ 'chooseYourRegion' | translate }}</option>
                         <option [value]="region.id" *ngFor="let region of regions">{{region.name}}</option>
                       </select>                    
@@ -156,10 +157,11 @@
                 <div class="row">
                     <div class="w-100"></div>
                     <div class="col-md-6">
-                        <button type="submit" class="btn btn-primary" [disabled]="!registrationForm.valid">{{ 'submit' | translate }}</button>
+                        <button *ngIf="!successMessage" type="submit" class="btn btn-primary" [disabled]="!registrationForm.valid">{{ 'submit' | translate }}</button>
+                        <button *ngIf="successMessage"                class="btn btn-primary" (click)="onCancel()"                >{{ 'backToLogin' | translate }}</button>
                     </div>
                     <div class="col-md-6  text-right">
-                        <button class="btn btn-primary" (click)="onCancel()">{{ 'cancel' | translate }}</button>
+                        <button *ngIf="!successMessage"               class="btn btn-primary" (click)="onCancel()">{{ 'cancel' | translate }}</button>
                     </div>
                     <div class="w-100"></div>
                 </div>

@@ -48,7 +48,7 @@
     "passwordPlaceholder":"Inserisci la tua password",
     "submit":"Conferma",
     "register":"Registrazione",
-    "lostCredentials":"Password dimenticata?",
+    "lostCredentials":"Recupero credenziali",
     "receiverID": "Numero Identificativo del destinatario",
     "note": "Note",
     "step1": "STEP 1 DI 4 - PRODOTTI NEL CARRELLO",
@@ -93,6 +93,7 @@
     "noMatchPassword": "Le Passwords non coincidono",
     "noRecipientFound":"Nessun destinatario merci configurato, impossibile procedere",
     "sessionEnded":"La sessione è scaduta, per piacere loggarsi di nuovo",
-    "orderNumber":"Numero ordine"
+    "orderNumber":"Numero ordine",
+    "backToLogin":"Indietro"
 
 }
