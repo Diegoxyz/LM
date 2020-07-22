@@ -1,7 +1,7 @@
 {
     "welcomeMessage": "Benvenuto",
-    "catalog": "Catalogo",
-    "boards": "TAVOLE",
+    "catalog": "LISTA RICAMBI",
+    "boards": "CATALOGHI",
     "cart": "CARRELLO",
     "myAccount": "PROFILO",
     "firstName": "Nome",
