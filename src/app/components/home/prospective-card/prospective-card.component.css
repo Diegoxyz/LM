@@ -1,156 +1,239 @@
 .flex-container {
-    /* We first create a flex layout context */
-    display: flex;
-  
-    /* Then we define the flow direction 
-       and if we allow the items to wrap 
-     * Remember this is the same as:
-     * flex-direction: row;
-     * flex-wrap: wrap;
-     */
-    flex-flow: row wrap;
-  
-    /* Then we define how is distributed the remaining space */
-    justify-content: flex-start;
-  }
+  /* We first create a flex layout context */
+  display: flex;
 
-  .flex-item {
-    background: #ffffff;
-    margin: 0px;
-  }
+  /* Then we define the flow direction 
+     and if we allow the items to wrap 
+   * Remember this is the same as:
+   * flex-direction: row;
+   * flex-wrap: wrap;
+   */
+  flex-flow: row wrap;
 
-  .prospective-card {
-    padding: 0%;
-    margin: 0%;
-    width: 100%;
-  }
-
-  .board-image {
-    width: 70%;
-    margin-right: 0%;
-  }
-
-  .board-panel {
-    width:30%;
-    padding: 0%;
-    padding-left: 1%;
-    padding-top: 2%;
-    margin: 0%;
-  }
-
-  div.scroll { 
-    background-color: #ffffff; 
-    overflow-y: scroll; 
-    overflow-x: hidden; 
-    text-align:justify;
-    max-height: 30%;
-  }
-
-
-  .element-number-container {
-    text-align: center;
-  }
-
-  /*
-  .blue-square {
-    border-radius: 30px;
-    border: solid 1px black;
-    width: 1.8em;
-    height: 1.8em;
-    display: inline-block;
-    padding-top: 1.8%;
-    padding-left: 3%;
-    padding-right: 2%;
-    font-size: 0.8rem;
-  }*/
-
-  .button-close-container {
-    padding-left: 35%;
-  }
-  .button-inner-class {
-    display: inline-block;
-  }
-  .button-close-class {
-    background-color: #dc3545;
-  }
-
-  .shopping-cart-class {
-    margin-right: 5%;
-  }
-
-  #item-price{
-    font-weight: bold;
-    padding-top: 3px;
-  }
-  
-  #item-code{
-    font-weight: bold;
-    border-right-width: 5px;
-  }
-
- #item-code-parent{
-  padding-right: 4%;
-}  
-
-#item-num{
-  padding-left: 0;
+  /* Then we define how is distributed the remaining space */
+  justify-content: flex-start;
 }
 
- #qty{
-  width: 25px;
-} 
-
-/*  #qty-parent{
-  padding-left: 20%  !important;
-  margin-right: 4% !important;
-} */
-
-/* #icon-btn-div{
-  padding-left: 3% !important;
-  margin-left: 2% !important;
-}
- */
-#no-scroll{
-  overflow-y:hidden;
+.flex-item {
+  background: #ffffff;
+  margin: 0px;
 }
 
-#item-code-id{
-  padding-left: 0%;
+.prospective-card {
+  padding: 0%;
+  margin: 0%;
+  width: 100%;
 }
-#item-descritption-id{
-  padding-left: 0%;
+
+.board-image {
+  width: 70%;
+  margin-right: 0%;
+}
+
+.board-panel {
+  width:30%;
+  padding: 0%;
+  padding-left: 1%;
+  padding-top: 2%;
+  margin: 0%;
+}
+
+div.scroll { 
+  background-color: #ffffff; 
+  overflow-y: scroll; 
+  overflow-x: hidden; 
+  text-align:justify;
+  max-height: 30%;
+}
+
+
+.element-number-container {
+  text-align: center;
+}
+
+/*
+.blue-square {
+  border-radius: 30px;
+  border: solid 1px black;
+  width: 1.8em;
+  height: 1.8em;
+  display: inline-block;
+  padding-top: 1.8%;
+  padding-left: 3%;
+  padding-right: 2%;
+  font-size: 0.8rem;
+}*/
+
+.button-close-container {
+  padding-left: 35%;
+}
+.button-inner-class {
+  display: inline-block;
+}
+.button-close-class {
+  background-color: #dc3545;
+}
+
+.shopping-cart-class {
+  margin-right: 5%;
 }
 
 #item-price{
+  font-weight: bold;
   padding-top: 3px;
+}
+
+#item-code{
+  font-weight: bold;
+  border-right-width: 5px;
+}
+
+#item-code-parent{
+padding-right: 4%;
+}  
+
+#item-num{
+padding-left: 0;
+}
+
+#qty{
+width: 25px;
+} 
+
+/*  #qty-parent{
+padding-left: 20%  !important;
+margin-right: 4% !important;
+} */
+
+/* #icon-btn-div{
+padding-left: 3% !important;
+margin-left: 2% !important;
+}
+*/
+#no-scroll{
+overflow-y:hidden;
+}
+
+#item-code-id{
+padding-left: 0%;
+}
+#item-descritption-id{
+padding-left: 0%;
+}
+
+#item-price{
+padding-top: 3px;
 
 }
 
 #item-price-parent{
-  padding-left: 0 !important;
-  padding-right: 0 !important;
+padding-left: 0 !important;
+padding-right: 0 !important;
 }
 
 /* #pic-board{
-  margin-top:23%;
-  padding-bottom: 24.5%;
+margin-top:23%;
+padding-bottom: 24.5%;
 } */
 
-
-#icon-btn-div{
-  padding-left: 0px;  /* padding-right: 0px; */
-}
-
-
 #btn-icon{
-  padding-left: 0px;  /* padding-right: 0px; */
+padding-left: 0px;  /* padding-right: 0px; */
+/* margin-bottom: 1px; */
 }
 
 #qty-id{
-  padding-right: 0px;
+padding-right: 0px;
 }
 
 #col-md-1{
-  padding-left: 0px;
-  padding-right: 0px;
+padding-left: 0px;
+padding-right: 0px;
+}
+
+
+/* elimina spin button */
+input[type=number]::-webkit-outer-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+
+input[type=number]::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+
+/* .add-product{
+border: 0;
+color: #fff;
+background-color: #dc3545;
+border-color: #dc3545;
+color: #fff;
+font-size: 12px;
+border-radius: 0px;
+padding-top: 3px;
+padding-bottom: 3px;
+padding-left: 10px;
+padding-right: 10px;
+
+
+} */
+
+
+
+/*
+.sub-product{
+  padding: 3px 3px;
+  color:#dc3545;
+  background-color: #fff;
+  border-color:#dc3545;
+  font-size: 12px;
+  border-radius: 0px;
+padding-left: 8px;
+padding-right: 8px;
+font-weight: bold;
+padding-top: 2px;
+padding-bottom: 1px;
+border: solid 1px;
+}
+
+
+.add-product{
+  padding: 3px 3px;
+  color:#dc3545;
+  background-color: #fff;
+  border-color:#dc3545;
+  font-size: 12px;
+  border-radius: 0px;
+padding-left: 6px;
+padding-right: 6px;
+font-weight: bold;
+padding-top: 2px;
+padding-bottom: 1px;
+border: solid 1px;
+} */
+
+
+#qty-div{
+padding-left: 0px;
+padding-right: 2%;
+margin-left: 10%;
+}
+
+
+/* #btn-add{
+padding-left: 5px;
+padding-right: 4px;
+} */
+
+#sub, #add, #icon-btn-div {
+  padding-left: 1%;
+}
+
+#btn-sub, #btn-add {
+  color:#dc3545;
+  background-color: #fff;
+  border-color:#dc3545;
+  font-size: 12px;
+  border-radius: 0px;
+  border: solid 1px;
 }

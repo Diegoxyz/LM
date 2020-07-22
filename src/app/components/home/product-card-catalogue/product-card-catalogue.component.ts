@@ -77,10 +77,10 @@ export class ProductCardCatalogueComponent implements OnInit {
         }
 
         this.addProductForm = this.fb.group({
-            qty: ['']
+            qty: ['0']
           });
 
-        this.qty.setValue(0);
+        // this.qty.setValue(0);
         
         if (environment && !environment.oData) {
             if (this.item.code === 'Code 1') {
@@ -117,59 +117,58 @@ export class ProductCardCatalogueComponent implements OnInit {
     }
     
     addOneProduct() {
-        if (this.quantity >= 0) {
-            this.quantity = this.quantity + 1;
-        }
-        this.updateQuantityError();
+        this.addProduct(1);
     }
 
-    addProduct() {
-        if (this.qty && this.qty.value > 0) {
-            const q = this.qty.value;
-            if (environment && environment.oData) {
-                this.accountService.fetchToken().subscribe(
-                    response1 => {
-                        if (response1.headers) {
-                            const csrftoken : string = response1.headers.get('X-CSRF-Token');
-                            if (csrftoken) {
-                                if (q === 0) {
-                                    this.carrelloService.deleteFromCarrello(csrftoken, this.item.code).subscribe(d => {
-                                        console.log('delete went fine');
-                                        this.manageProducts.changeProduct(this.item,q);
-                                    },
-                                    error => {
-                                        console.log('error delete:' + error);
-                                    });
-                                } else {
-                                    const carrello : Carrello = new Carrello();
-                                    carrello.Matnr = this.item.code;
-                                    carrello.Menge = '' + q;
-                                    this.carrelloService.updateCart(csrftoken, carrello).subscribe(d => {
-                                        console.log('update went fine');
-                                        this.manageProducts.changeProduct(this.item,q);
-                                    },
-                                    error => {
-                                        console.log('error update:' + error);
-                                    })
-                                }
-                                
-                            }
-                        }
-                    })
-                ;
-            } else {
-                this.manageProducts.changeProduct(this.item,this.qty.value);
-            }
+    addProduct(addOrSubtract? : number) {
+
+        let q = 0;
+        if (addOrSubtract) {
+            q = this.quantity + addOrSubtract;
         } else {
-            this.quantityError = true;
+            q = this.quantity;
+        }
+        this.quantityError = false;
+        if (environment && environment.oData) {
+            this.accountService.fetchToken().subscribe(
+                response1 => {
+                    if (response1.headers) {
+                        const csrftoken : string = response1.headers.get('X-CSRF-Token');
+                        if (csrftoken) {
+                            if (q === 0) {
+                                this.carrelloService.deleteFromCarrello(csrftoken, this.item.code).subscribe(d => {
+                                    console.log('delete went fine');
+                                    this.manageProducts.changeProduct(this.item,q);
+                                },
+                                error => {
+                                    console.log('error delete:' + error);
+                                });
+                            } else {
+                                const carrello : Carrello = new Carrello();
+                                carrello.Matnr = this.item.code;
+                                carrello.Menge = '' + q;
+                                this.carrelloService.updateCart(csrftoken, carrello).subscribe(d => {
+                                    console.log('update went fine');
+                                    this.manageProducts.changeProduct(this.item,q);
+                                    this.quantity = q;
+                                },
+                                error => {
+                                    console.log('error update:' + error);
+                                })
+                            }
+                            
+                        }
+                    }
+                })
+            ;
+        } else {
+            this.manageProducts.changeProduct(this.item,q);
+            this.quantity = q;
         }
     }
 
     removeProduct() {
-        if (this.quantity > 0) {
-            this.quantity = this.quantity - 1;
-        }
-        this.updateQuantityError();
+        this.addProduct(-1);
     }
     
     updateQuantityError() {
@@ -177,6 +176,23 @@ export class ProductCardCatalogueComponent implements OnInit {
             this.quantityError = false;
         } else {
             this.quantityError = true;
+        }
+    }
+
+    updateQty(event) {
+        if (event && event.target && event.target.value) {
+            try {
+                const qty = Number(event.target.value);
+                if (qty < 0) {
+                    this.quantity = 0;
+                    this.quantityError = true;
+                } else {
+                    this.quantity = qty;
+                    this.quantityError = false;
+                }
+            } catch (error) {
+                this.quantity = 0;
+            }
         }
     }
 

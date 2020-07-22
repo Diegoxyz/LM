@@ -1,4 +1,4 @@
-<div class="flex-container search-categories-container">
+<div class="flex-container search-categories-container"   style="border: solid 1px trasparent">
     <div class="flex-item">
         <div>
             <div class="row">
@@ -18,7 +18,7 @@
                           </mat-chip>
                           <input
                             id="productSearch"
-                            placeholder="Search for products (code, description)"
+                            placeholder="{{ 'searchForProducts' | translate }}"
                             type = "input">
 <!--                             #productsInput
                             [formControl]="searchProductControl"
@@ -56,7 +56,7 @@
                           </mat-chip>
                           <input
                             id="groupSearch"
-                            placeholder="Search for group"
+                            placeholder="{{ 'searchForGroup' | translate }}"
                             #groupsInput
                             [formControl]="searchGroupControl"
                             [matAutocomplete]="auto2"
@@ -88,7 +88,7 @@
             <div class="row">
                 <div class="col">
                     <label class="form-label">
-                        Preferred
+                        {{ 'preferred' | translate }}
                     </label>
                     <app-switch-button
                         class="ml-auto"
@@ -98,7 +98,7 @@
                 </div>
                 <div class="col">
                     <button id="search" class="btn btn-primary" (click)="search()">
-                            <span>Search&nbsp;&nbsp;&nbsp;</span>  <fa-icon [icon]="faSearch" size="1x">
+                            <span>{{ 'search' | translate }}&nbsp;&nbsp;&nbsp;</span>  <fa-icon [icon]="faSearch" size="1x">
                             </fa-icon>
                         </button>
                 </div>

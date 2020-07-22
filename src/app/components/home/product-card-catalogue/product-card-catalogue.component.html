@@ -1,22 +1,24 @@
-<div id="mx" class="product-catalogue-container">
+<div id="mx" class="product-catalogue-container" style="border: solid 1px trasparent; padding-bottom: 1%;">
 
     <div class="align-items-center justify-content-center">
         <!--style="width: 18rem; -->
         <div class="hoverWrapper">
-
             <div class="containerA">
                 <img *ngIf="thumbnail" class="img-fluid card-img-top" id='pic' [src]='thumbnail'
                     sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
-                
-                <img *ngIf="svgThumbnail" [src]="sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ svgThumbnail)"
+
+                <img *ngIf="svgThumbnail"
+                    [src]="sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ svgThumbnail)"
                     sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
 
                 <img *ngIf="thumbnail === undefined && svgThumbnail === undefined" class="img-fluid card-img-top"
-                    src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
+                    src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px" width="260"
+                    height="260">
 
                 <button *ngIf="item.preferred === true;else other_content" (click)="addToFavorite()" class="btn"
-                style="font-size:24px; border: 0px; background-color: transparent;"><i class="fa fa-star" style="font-size:24px;color:#dc3545">
-                </i></button>
+                    style="font-size:24px; border: 0px; background-color: transparent;"><i class="fa fa-star"
+                        style="font-size:24px;color:#dc3545">
+                    </i></button>
 
                 <ng-template #other_content>
                     <!--<img id="add-to-favorite" class="img-fluid" src="assets/img/items/star_unselected.png" (click)="addToFavorite()">-->
@@ -40,8 +42,9 @@
                         <h6 class="card-description1">{{ item.code }}</h6>
                     </div>
                 </div>
+                
                 <div class="row align-items-center no-gutters justify-content-between">
-                    <div  class="col-md-12">
+                    <div class="col-md-12">
                         <h6 id="item-description" class="card-description2">{{ item.description }}</h6>
                     </div>
                 </div>
@@ -54,6 +57,7 @@
                         <h6 id="card-currency-id" class="card-text">{{ item.currency }}</h6>
                     </div>
                 </div>
+
                 <div class="row align-items-center no-gutters justify-content-between">
                     <div id="col-width" class="col-md-6">
                         <h6 id="card-title" class="card-text">Stock</h6>
@@ -68,41 +72,61 @@
                         </h6>
                     </div>
                 </div>
+
                 <div class="quantity">
-                    <form [formGroup]="addProductForm" (ngSubmit)="addProduct()">
+                    <form [formGroup]="addProductForm">
                         <div class="row align-items-center no-gutters">
-                            <div id="col-width" class="col-md-6">
-                                <div class="row">
-                                    <!-- <div class="col">
-                                        <span style="padding-left: 20px">&nbsp;</span>
-                                    </div> -->
-                                    <div id="col-spacer" class="col align-items-right text-right">
-                                        <input type="number" [id]="Id('qty')" formControlName="qty" step="1" min="0"
-                                            max="9999" name="" value="{{ quantity }}" title="Quantity" size="2"
-                                            pattern="[0-9]*" inputmode="numeric" aria-labelledby="">
-
-                                    </div>
-                                </div>
-
+                            <div class="col-md-2"></div>
+   
+                            <div class="col-md-auto">
+                                <input name="qty" type="number" #selectedQuantity
+                                    class="input-number input-number-adaptive" step="1" min="0" max="" name=""
+                                    value="{{ quantity }}" title="{{ 'numberOfPieces' | translate }}" size="2" pattern="[0-9]*"
+                                    inputmode="numeric" aria-labelledby=""
+                                    (change)="updateQty($event)">
                             </div>
 
-                            <div id="col-width" class="col-md-6 text-left" style="padding-left: 0.5em;">
-                                <button style="background-color: transparent; border: transparent;">
-                                    <fa-icon id="btn-icon" [icon]="faShoppingCart" size="2x">
+                             <div class="col-md-auto">&nbsp;</div>
+
+                            <div class="col-md-auto">
+                                <button class="sub-product" (click)="removeProduct()">
+                                    <!-- - -->
+                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                    <!--<i class="fa fa-star-o" style="font-size:24px;color:#dc3545"></i>-->
+                                </button>
+                            </div>
+
+                            <div class="col-md-auto">&nbsp;</div>
+
+                            <div class="col-md-auto">
+                                <button class="add-product" (click)="addOneProduct()">
+                                    <!-- + -->
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="col-md-auto">&nbsp;</div>
+
+                            <div id="col-width" class="col-md-auto text-left">
+                                <button style="background-color: 
+                                                transparent; border: solid 1px #dc3545;
+                                                padding-top: 2px;padding-bottom: 1px;"
+                                        (click)="addProduct()">
+                                    <fa-icon id="btn-icon" [icon]="faShoppingCart" size="1x">
                                     </fa-icon>
                                 </button>
                             </div>
-                        </div>
+                        </div>    
                     </form>
+                </div>
 
-                    <div *ngIf="quantityError" class="row align-items-center no-gutters justify-content-between">
-                        <div class="col-md-8">
-                            <div class="alert alert-danger">
-                                <span>Quantity is not valid</span>
-                            </div>
+                <div *ngIf="quantityError" class="row align-items-center no-gutters justify-content-between">
+                    <div class="col-md-8">
+                        <div class="alert alert-danger">
+                            <span>{{ 'quantityError' | translate }}</span>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
     </div>
 </div>

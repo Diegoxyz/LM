@@ -94,6 +94,8 @@
     "noRecipientFound":"Nessun destinatario merci configurato, impossibile procedere",
     "sessionEnded":"La sessione è scaduta, per piacere loggarsi di nuovo",
     "orderNumber":"Numero ordine",
-    "backToLogin":"Indietro"
+    "backToLogin":"Indietro",
+    "quantityError":"Valore non valido",
+    "numberOfPieces":"Quantità"
 
 }

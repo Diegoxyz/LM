@@ -15,6 +15,7 @@ import { Carrello } from '@app/models/carrello';
 import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 import { CartService } from '@app/services/cart.service';
 import { ManageProducts } from '../services/manage-products.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({selector: 'app-prospetive-card',
 templateUrl: './prospective-card.component.html',
@@ -43,7 +44,8 @@ export class ProspectiveCardComponent implements OnInit {
 
     constructor(private productsService: ProductsService, private router: Router, private manageProducts: ManageProducts, private cartService : CartService,
         private binDataMatnrSetService: BinDataMatnrSetService, public sanitizer: DomSanitizer, private sectionMaterial: SectionMaterial,
-        private carrelloService : CarrelloService, private accountService: AccountService, private fb: FormBuilder) {
+        private carrelloService : CarrelloService, private accountService: AccountService, private fb: FormBuilder,
+        private spinner: NgxSpinnerService) {
     }
     
     public addProductForm: FormGroup;
@@ -52,6 +54,7 @@ export class ProspectiveCardComponent implements OnInit {
         this.addProductForm = this.fb.group({});
 
         if (environment && environment.oData) {
+            this.spinner.show();
             // Carico l'immagine
             if (this.item.picId) {
                 this.binDataMatnrSetService.getImage(this.item.code,this.item.picId).subscribe((resp : any) => {
@@ -108,8 +111,11 @@ export class ProspectiveCardComponent implements OnInit {
                                 }
                             });
                         }
-                    });
+                    }
+                    
+                    );
                 }
+                this.spinner.hide();
             })
             
         } else {
@@ -178,10 +184,26 @@ export class ProspectiveCardComponent implements OnInit {
         return '0';
     }
 
+    addOneProduct(code : string) {
+        const q = this.getQtyValue(code);
+        this.setQtyValue(code, q + 1);
+        this.addProduct(code);
+    }
+
+    subOneProduct(code : string) {
+        const q = this.getQtyValue(code);
+        if (q === 0) {
+            return;
+        }
+        this.setQtyValue(code, q - 1);
+        this.addProduct(code);
+    }
+
     addProduct(code : string) {
 
         if (environment && environment.oData) {
             const q = this.getQtyValue(code);
+            console.log('addProduct - q:' + q);
             let productToBeAdded = null;
             this.items.forEach(i => {
                 if (i.code === code) {
