@@ -229,6 +229,11 @@ padding-right: 4px;
   padding-left: 1%;
 }
 
+#icon-btn-div {
+  padding-right: 0px;
+}
+
+
 #btn-sub, #btn-add {
   color:#dc3545;
   background-color: #fff;
@@ -236,4 +241,14 @@ padding-right: 4px;
   font-size: 12px;
   border-radius: 0px;
   border: solid 1px;
+}
+
+
+#btn-cart{
+  background-color: transparent; 
+  border: solid 1px #dc3545;
+  padding-left: 2px; 
+  padding-right: 2px;
+  padding-top: 2px; 
+  padding-bottom: 0px;
 }

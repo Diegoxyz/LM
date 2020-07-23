@@ -228,3 +228,8 @@ h6{
 .containerA .btn:hover {
   background-color: black;
 }
+
+#btn-add-product{
+  padding-left: 10px;
+  padding-right: 10px;
+}

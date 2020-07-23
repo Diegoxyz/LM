@@ -60,6 +60,7 @@ export class LoginComponent implements OnInit {
     }
     this.loginError = false;
     this.errorMessage = undefined;
+    this.sessionEndedError = false;
     if (this.email && this.password) {
       if (environment && environment.oData) {
         this.spinner.show();
