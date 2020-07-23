@@ -14,6 +14,7 @@ import { CarrelloService } from '@app/services/carrello.service';
 import { HandledProduct } from './services/handled-product';
 import { ManageProducts } from './services/manage-products.service';
 import { CatalogueService } from '@app/services/catalogue.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({selector: 'app-cart',
 templateUrl: './cart.component.html',
@@ -42,12 +43,13 @@ export class CartComponent implements OnInit, OnDestroy {
 
     constructor(private accountService : AccountService, private cartService : CartService, private modalService: BsModalService, 
         private router: Router, private manageProducts : ManageProducts, private carrelloService: CarrelloService, 
-        private userDataSetService : UserDataSetService, private catalogueService : CatalogueService) {
+        private userDataSetService : UserDataSetService, private catalogueService : CatalogueService, private spinner: NgxSpinnerService) {
 
     }
     ngOnInit(): void {
         const user : User = this.accountService.userValue;
-
+        console.log('showing spinner');
+        this.spinner.show();
         if (!this.accountService.isSessionStillValid()) {
             this.accountService.logout();
             setTimeout(
@@ -84,6 +86,7 @@ export class CartComponent implements OnInit, OnDestroy {
                             
                         });
                 }
+                this.spinner.hide();
               });
               
               /*if (this.accountService.isSessionStillValid()) {
@@ -111,21 +114,24 @@ export class CartComponent implements OnInit, OnDestroy {
           
               } */
         } else {
-            const customer : Customer = {
-                firstName : user.username,
-                lastName : user.username,
-                fiscalCode : 'DCB70F21L736A',
-            };
-            this.cart = this.cartService.getCart(customer);
-            this.orders = this.cart.orders;
-            this.orders.forEach(o => {
-                if (o.product) {
-                    this.products.push(o.product);
-                    this.totalPrice = this.totalPrice + (o.product.price  * o.quantity) ;
-                }
-                this.totalQuantity = this.totalQuantity + o.quantity;
-            });
-            this.currency = 'EUR';
+            
+            setTimeout(() => {
+                const customer : Customer = {
+                    firstName : user.username,
+                    lastName : user.username,
+                    fiscalCode : 'DCB70F21L736A',
+                };
+                this.cart = this.cartService.getCart(customer);
+                this.orders = this.cart.orders;
+                this.orders.forEach(o => {
+                    if (o.product) {
+                        this.products.push(o.product);
+                        this.totalPrice = this.totalPrice + (o.product.price  * o.quantity) ;
+                    }
+                    this.totalQuantity = this.totalQuantity + o.quantity;
+                });
+                this.currency = 'EUR';
+            } , 2000);
         }
 
         this.strTotalPrice = this.totalPrice.toFixed(2);
