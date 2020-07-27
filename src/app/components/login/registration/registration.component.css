@@ -1,21 +1,31 @@
-img.img-logo-horizontal {
-    width: 20%;
-    margin-top: 5%;
-    margin-bottom: 5%;
+ .content {
+    padding-top: 2%;
+} 
+
+a {
+    color: #dc3545;
+    text-decoration: none;
+    background-color: transparent;
+}
+ img.img-logo-horizontal {
+    width: 25%;
+    margin-left: 40%;
+    margin-bottom: 10%;
+    margin-top: 10%;
 }
 
 .form-row {
     margin-bottom: 1rem;
 }
 
-.container {
+/* .container {
     width: 100%;
     padding-top: 2%;
     padding-right: 5%;
     padding-left: 5%;
     margin-right: auto;
     margin-left: auto;
-}
+} */
 
 .widget_text{
     font-size: 12.6px;
@@ -35,7 +45,20 @@ h3.widget_title2 {
     margin-left: 0px;
 }
 
-.footer {
+p{
+    font-size:  0.75rem;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-family: "TradeGothicLT" !important;
+}
+
+.entry_content{
+    font-size:  0.75rem;
+    font-family: "TradeGothicLT" !important;
+}
+
+
+/* .footer {
       position: fixed;
       left: 0;
       bottom: 0;
@@ -43,6 +66,21 @@ h3.widget_title2 {
       background-color: #414141;
       color: #fff;
       font-size: 1.4rem;
+}
+ */
+
+.footer .footer-widget {
+   display: block;
+   left: 0;
+   bottom: 0;
+  
+   width: 100%;
+   background-color: #414141;
+   color: #fff;
+   font-size: 1.4rem;
+  
+   margin-top: 40%;
+   max-height: 45%;
 }
 
 /* Small screens */

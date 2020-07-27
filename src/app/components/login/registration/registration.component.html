@@ -1,20 +1,21 @@
 <div class="content" style="margin-bottom: 2%;">
     <div class="container">
         <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
-
             <div class="row align-items-center justify-content-center">
-              <div class="col-2"></div>
-                <div class="col-8" style="text-align: center">
+                <div class="w-100"></div>
+                <div class="col-6">
                     <a href="#">
                         <img src="assets/img/logo/globo-leone.png" alt="logo" class="img-logo-horizontal">
                     </a>
                 </div>
-                <div class="col-2"></div>
+                <div class="w-100"></div>
             </div>
+
+            
             <div *ngIf="loginError" class="alert alert-danger">{{ errorMessage }}</div>
             <div *ngIf="successMessage" class="alert alert-success">{{ 'registrationRequestSeccessfullySent' | translate }}</div>
             <div class="form-row">
-                <div class="col-md-5">
+                <div class="col-md-6">
                     <label for="firstName">{{ 'firstName' | translate }}</label>
                     <input type="text" class="form-control" id="firstName" formControlName="firstName"
                         placeholder="{{ 'firstName' | translate }}" required [readonly]="successMessage" />
@@ -25,9 +26,9 @@
                     </div>
                 </div>
 
-                <div class="col-md-2"></div>
+                <!-- <div class="col-md-2"></div> -->
 
-                <div class="col-md-5">
+                <div class="col-md-6">
                     <label for="lastName">{{ 'lastName' | translate }}</label>
                     <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="{{ 'lastName' | translate }}"
                         required [readonly]="successMessage" />
@@ -40,7 +41,7 @@
             </div>
 
             <div class="form-row">
-                <div class="col-md-5">
+                <div class="col-md-6">
                     <label for="taxNumber">{{ 'taxNumber' | translate }}</label>
                     <input type="text" class="form-control" id="taxNumber" formControlName="taxNumber"
                         placeholder="{{ 'taxNumber' | translate }}" required [readonly]="successMessage" />
@@ -50,8 +51,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-2"></div>
-                <div class="col-md-5">
+
+                <!-- <div class="col-md-2"></div> -->
+
+                <div class="col-md-6">
                     <label for="vatNumber">{{ 'vatNumber' | translate }}</label>
                     <input type="text" class="form-control" id="vatNumber" formControlName="vatNumber"
                         placeholder="{{ 'vatNumber' | translate }}" required [readonly]="successMessage" />
@@ -170,7 +173,7 @@
     </div>
 </div>
 
-<!-- <div class="footer">
+<div class="footer">
     <div class="footer-widget">
         <div class="container">
             <div class="row justify-content-around">
@@ -250,4 +253,4 @@
             </div>
         </div>
     </div>
-</div> -->
+</div>

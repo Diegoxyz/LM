@@ -30,7 +30,7 @@ ul {
    flex-flow: row wrap;
  
    /* Then we define how is distributed the remaining space */
-   justify-content: space-around;
+   justify-content: space-between;
    margin-left: 6%;
  }
 
@@ -63,17 +63,20 @@ ul {
    padding: 0px;
    margin-top: 10px;
    text-align: center;
-   min-width: 25%;   /* min-width: 33.33%; */
-   /* border: solid 1px green; */
+   min-width: 25%;   /* min-width: 33.33%;  25%*/   
 
  }
  
  #cat-container{
-   margin-left: 12%; 
-   margin-right: 12%;
-   padding-left: 0.5%;
-   padding-right: 0.5%;  /* 2 */
-  /*  border: solid 1px yellow; */
+   margin-left: 10%;  
+   margin-right: 10%;
+/*    padding-left: 0.5%;
+   padding-right: 0.5%;*/
+
+   padding-left: 0px;
+   padding-right: 0px;
+   
+   justify-content: space-between;
 }
 
 

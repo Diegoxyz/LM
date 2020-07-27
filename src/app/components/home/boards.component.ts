@@ -33,11 +33,13 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
 
     private sub: any;
 
-    /* Sections to be dislayed, 0: machines, 1: section */
+    /* Sections to be dislayed, 0: machines, 1: section, 2: prospective */
     @Input()
     sectionToBeDisplayed : number = 0;
 
     machine : Item;
+
+    prospective : Item;
 
     constructor(private productsService: ProductsService,private macchineService: MacchineSetService,
         private route: ActivatedRoute,private _router: Router, private sectionService : SectionService,
@@ -129,6 +131,11 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
             this.sections = this.productsService.getAllSections();
         }
         // this._router.navigate(['./home/sections/machine']);
+    }
+
+    openProspective(prosp: Item) {
+        this.prospective = prosp;
+        this.sectionToBeDisplayed = 2;
     }
 
     closeProspective() {

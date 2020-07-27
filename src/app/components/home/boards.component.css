@@ -21,7 +21,7 @@ ul {
    flex-flow: row wrap;
  
    /* Then we define how is distributed the remaining space */
-   justify-content: space-around;
+   justify-content: space-between;
  }
 
    /* Medium screens */
@@ -52,14 +52,16 @@ ul {
    margin-top: 2%;
    text-align: center;
    min-width: 25%;
+  /*  justify-content: space-between; */
  }
 
  #machines-container{
-  margin-left: 4%;
-  margin-right: 4%;
+  margin-left: 10%;  /* 4% */
+  margin-right: 10%;
   padding-left: 2%;
   padding-right: 2%;
-  /* border: solid 1px green; */
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 #machines-item{
@@ -67,14 +69,23 @@ ul {
   padding-right: 0%;
   margin-left: 0%;
   margin-right: 0%;
-  /* border: solid 1px red; */
 }
 
 .step{
   color:  #dc3545;
-
 }
 
 h5, h6{
   font-weight: bold;
+}
+
+#sections-container{
+  margin-left: 10%;
+  margin-right: 10%;
+  padding-left: 0;
+}
+
+#section-item{
+  padding-left: 0px;
+  padding-right: 0px;
 }

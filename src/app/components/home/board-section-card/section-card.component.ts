@@ -7,6 +7,8 @@ import { ProspectiveCardComponent } from '../prospective-card/prospective-card.c
 import { BinDataMatnrSetService } from '@app/models/OData/BinDataMatnrSet/bindatamatnrset.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from '@environments/environment';
+import { Output, EventEmitter } from '@angular/core';
+
 
 @Component({selector: 'app-section-card',
 templateUrl: './section-card.component.html',
@@ -16,6 +18,9 @@ export class SectionCardComponent implements OnInit {
 
     @Input()
     item : Item;
+
+    @Output() 
+    openProspective : EventEmitter<Item> = new EventEmitter<Item>();
 
     bsModalRef: BsModalRef;
     
@@ -75,6 +80,15 @@ export class SectionCardComponent implements OnInit {
             // this.router.navigate(['./home/prospective'], {queryParams:{itemCode: this.item.code}});
         }
     }
+
+    public openSpecificProspective() {
+        if (this.item) {
+            // we will load the item's prospectives
+            // this.router.navigate(['./home/prospective'], {queryParams:{itemCode: this.item.code}});
+            this.openProspective.emit(this.item);
+        }
+    }
+    
 
     openModal(template: TemplateRef<any>) {
         this.bsModalRef = this.modalService.show(template, this.config);

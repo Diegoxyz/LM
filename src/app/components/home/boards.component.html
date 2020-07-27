@@ -2,8 +2,8 @@
 type="ball-clip-rotate-multiple" size="medium">
     <p class="loading">Loading....</p>
 </ngx-spinner>
-<div><app-search-machines (outMacchine)="filterMacchine($event)"></app-search-machines></div>
-<div *ngIf="sectionToBeDisplayed != 1">
+<div *ngIf="sectionToBeDisplayed != 2"><app-search-machines (outMacchine)="filterMacchine($event)"></app-search-machines></div>
+<div *ngIf="sectionToBeDisplayed != 1 && sectionToBeDisplayed != 2">
     <ul id="machines-container" class="flex-container">
         <li id="machines-item" *ngFor="let m of machines" class="flex-item">
             <app-machine-card [item]="m" (openSection)="openSections($event)"></app-machine-card>
@@ -23,8 +23,13 @@ type="ball-clip-rotate-multiple" size="medium">
     </div>
     <ul id="sections-container" class="flex-container">
         <li id="section-item" *ngFor="let s of sections" class="flex-item">
-            <app-section-card [item]="s"></app-section-card>
+            <app-section-card [item]="s" (openProspective)="openProspective($event)"></app-section-card>
         </li>
     </ul>
 </div>
 
+  <div *ngIf="sectionToBeDisplayed === 2">
+    <div>
+        <app-prospetive-card [item]="prospective" ></app-prospetive-card>
+    </div>
+</div>
