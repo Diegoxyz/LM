@@ -3,7 +3,6 @@
 </ngx-spinner>
 
 <div class="prospective-card">
-
     <div class="flex-container" style="margin-top: 5%;">
 
         <div class="flex-item board-image">
@@ -16,18 +15,17 @@
                     </button>
                 </div> 
             </div>
-
+            {{ newSection }}
             <img *ngIf="thumbnail" class="img-fluid card-img-top" id="pic-board" [src]='thumbnail' width="260"
                 height="260" style="width: 100%; max-height:70%;">
-            <object *ngIf="svgThumbnail"
+            <!-- <object *ngIf="svgThumbnail"
                 [data]="sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ svgThumbnail)"
                 width="500" height="600" style="width: 100%; max-height:70%;">
-            </object>
+            </object> -->
 
-<!--             <object #objId [data]="sanitizer.bypassSecurityTrustResourceUrl(blobUrl)" width="500" height="600"
+             <object *ngIf="svgThumbnail" #objId [data]="sanitizer.bypassSecurityTrustResourceUrl(blobUrl)" width="500" height="600"
                 style="width: 100%; max-height:70%;">
             </object>
--->
 
             <img *ngIf="thumbnail === undefined && svgThumbnail === undefined" class="img-fluid card-img-top"
                 src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px" width="260"
@@ -36,13 +34,13 @@
             
             <div class="row">
                 <div class="col-md-6">
-                    <button class="btn" style="font-size:36px; border: 0px; background-color: transparent;">
+                    <button class="btn" style="font-size:36px; border: 0px; background-color: transparent;" [disabled]="isFirstOne" (click)="previousSection()">
                         <i class="fa fa-arrow-left" style="font-size:24px;color:#dc3545"></i>
                     </button>
                 </div>
 
                 <div class="col-md-6" style="text-align: right;">
-                    <button class="btn" style="font-size:36px; border: 0px; background-color: transparent;">
+                    <button class="btn" style="font-size:36px; border: 0px; background-color: transparent;" [disabled]="isLastOne" (click)="nextSection()">
                         <i class="fa fa-arrow-right" style="font-size:24px;color:#dc3545"></i>
                     </button>
                 </div> 

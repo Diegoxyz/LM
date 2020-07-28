@@ -30,6 +30,6 @@ type="ball-clip-rotate-multiple" size="medium">
 
   <div *ngIf="sectionToBeDisplayed === 2">
     <div>
-        <app-prospetive-card [item]="prospective" ></app-prospetive-card>
+        <app-prospetive-card [item]="prospective" [machine]="machine" [sections]="sections" [section]="selectedSection" (closeProspective)="openSections($event)"></app-prospetive-card>
     </div>
 </div>
