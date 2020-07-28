@@ -15,6 +15,8 @@ import { HandledProduct } from './services/handled-product';
 import { ManageProducts } from './services/manage-products.service';
 import { CatalogueService } from '@app/services/catalogue.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import * as XLSX from 'xlsx';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({selector: 'app-cart',
 templateUrl: './cart.component.html',
@@ -41,9 +43,13 @@ export class CartComponent implements OnInit, OnDestroy {
 
     currency : string = undefined;
 
+    loadingCartError = false;
+    loadingCartErrorMessage = false;
+
     constructor(private accountService : AccountService, private cartService : CartService, private modalService: BsModalService, 
         private router: Router, private manageProducts : ManageProducts, private carrelloService: CarrelloService, 
-        private userDataSetService : UserDataSetService, private catalogueService : CatalogueService, private spinner: NgxSpinnerService) {
+        private userDataSetService : UserDataSetService, private catalogueService : CatalogueService, private spinner: NgxSpinnerService,
+        private translateService : TranslateService) {
 
     }
     ngOnInit(): void {
@@ -80,7 +86,7 @@ export class CartComponent implements OnInit, OnDestroy {
                                         this.strTotalPrice = this.totalPrice.toFixed(2);
                                     }
                                     
-                                })
+                                });
                                 
                             }
                             
@@ -131,6 +137,7 @@ export class CartComponent implements OnInit, OnDestroy {
                     this.totalQuantity = this.totalQuantity + o.quantity;
                 });
                 this.currency = 'EUR';
+                this.spinner.hide();
             } , 2000);
         }
 
@@ -146,11 +153,30 @@ export class CartComponent implements OnInit, OnDestroy {
     }
 
     emptyCart(): void {
-        this.cartService.emptyCart();
-        this.orders = [];
-        this.totalQuantity = 0;
-        this.totalPrice = 0;
-        this.strTotalPrice = '0.00';
+        if (environment && environment.oData) {
+            this.orders.forEach(order => {
+                this.accountService.fetchToken().subscribe(
+                    response1 => {
+                        if (response1.headers) {
+                            const csrftoken : string = response1.headers.get('X-CSRF-Token');
+                            this.carrelloService.deleteFromCarrello(csrftoken, order.product.code).subscribe(d => {
+                                console.log('delete went fine');
+                                this.manageProducts.changeProduct(order.product,0);
+                                this.deleteOrder(order);
+                            },
+                            error => {
+                                console.log('error delete:' + error);
+                            });
+                        }
+                    });
+                });
+        } else {
+            this.cartService.emptyCart();
+            this.orders = [];
+            this.totalQuantity = 0;
+            this.totalPrice = 0;
+            this.strTotalPrice = '0.00';
+        }
     }
 
     submitOrder(template: TemplateRef<any>): void {
@@ -203,4 +229,112 @@ export class CartComponent implements OnInit, OnDestroy {
         this.router.navigate(['./home/cart/ship-to-set']);
         
     }
+
+    onFileChange(ev) {
+        if (!this.cartService.isCartEmpty()) {
+            this.loadingCartError = true;
+            this.loadingCartErrorMessage = this.translateService.instant('cartIsNotEmpty');
+            return;
+        }
+        let workBook = null;
+        let jsonData = null;
+        const reader = new FileReader();
+        const file = ev.target.files[0];
+        this.spinner.show();
+        reader.onload = (event) => {
+          const data = reader.result;
+          try{
+            workBook = XLSX.read(data, { type: 'binary' });
+          } catch (error) {
+                console.error('Error during import excel file:' + error);
+                this.loadingCartError = true;
+                this.loadingCartErrorMessage = this.translateService.instant('wrongCartFileFormat');
+                this.spinner.hide();
+                return;
+          }
+          
+          jsonData = workBook.SheetNames.reduce((initial, name) => {
+            const sheet = workBook.Sheets[name];
+            initial[name] = XLSX.utils.sheet_to_json(sheet);
+            initial[name].forEach(row => {
+                if (row.CodiceProdotto === undefined || row.Pezzi === undefined) {
+                    this.loadingCartError = true;
+                    this.loadingCartErrorMessage = this.translateService.instant('wrongCartFileFormat');
+                    this.spinner.hide();
+                    return;
+                }
+                const matrn = row.CodiceProdotto;
+                const order : Order = new Order();
+                const newProduct : Product = new Product(matrn,'',0,'EUR',false,'','','','');
+                order.product = newProduct;
+                order.quantity = row.Pezzi;
+                if (environment && environment.oData) {
+                    this.catalogueService.getItem(matrn).subscribe(p => {
+                        const sapMessage = p.headers.get('sap-message');
+                        if (sapMessage !== undefined && sapMessage !== null) {
+                            let errorMessage = this.translateService.instant('unknownError');
+                            try {
+                            let sm = JSON.parse(sapMessage);
+                            errorMessage = sm.message;
+                            } catch (error) {
+                            const docSapMessage : Document = (new window.DOMParser()).parseFromString(sapMessage, 'text/xml');
+                            if (docSapMessage.hasChildNodes()) {
+                                if (docSapMessage.firstChild.childNodes.length >= 2) {
+                                errorMessage = docSapMessage.firstChild.childNodes[1].textContent;
+                                }
+                            }
+                            }
+                            order.error = errorMessage;
+                        }
+                        if (matrn === 'A') {
+                            order.error = 'Errore';
+                        }
+                        if (p && p.body && p.body.d) {
+                            order.product.price = p.body.d.Netpr;
+                            order.product.description = p.body.d.Maktx;
+                            console.log('order.product.code:' + order.product.code + ',p.body.d.Netpr:' + p.body.d.Netpr + ',order.product.price:' + order.product.price);
+                            order.product.currency = p.body.d.Waers;
+                            if (this.currency === undefined) {
+                                this.currency = order.product.currency;
+                            }
+                            this.products.push(order.product);
+                            this.totalPrice = this.totalPrice + (order.product.price * order.quantity);
+                            this.totalQuantity = this.totalQuantity + order.quantity;
+                            this.strTotalPrice = this.totalPrice.toFixed(2);
+                            this.orders.push(order);
+                            this.cart.orders = this.orders;
+                        }
+                        
+                    });
+                } else {
+                    order.product.price = 1;
+                    order.product.currency = 'EUR';
+                    if (this.currency === undefined) {
+                        this.currency = order.product.currency;
+                    }
+                    this.products.push(order.product);
+                    this.totalPrice = this.totalPrice + (order.product.price * order.quantity);
+                    this.totalQuantity = this.totalQuantity + order.quantity;
+                    this.strTotalPrice = this.totalPrice.toFixed(2);
+                    this.orders.push(order);
+                    this.cart.orders = this.orders;
+                }
+            });
+            // aggiungi chiamata al servizio chiamata per item
+            return initial;
+          }, {});
+          const dataString = JSON.stringify(jsonData);
+          document.getElementById('output').innerHTML = dataString.slice(0, 300).concat("...");
+        }
+        reader.readAsBinaryString(file);
+        this.spinner.hide();
+    }
+
+    /*setDownload(data) {
+        setTimeout(() => {
+          const el = document.querySelector("#download");
+          el.setAttribute("href", `data:text/json;charset=utf-8,${encodeURIComponent(data)}`);
+          el.setAttribute("download", 'xlsxtojson.json');
+        }, 1000)
+    }*/
 }

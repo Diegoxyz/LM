@@ -96,6 +96,9 @@
     "orderNumber":"Numero ordine",
     "backToLogin":"Indietro",
     "quantityError":"Valore non valido",
-    "numberOfPieces":"Quantità"
+    "numberOfPieces":"Quantità",
+    "cartIsNotEmpty":"Impossibile caricare perché il carrello non è vuoto",
+    "downloadSampleFile":"Scarica foglio excel di esempio",
+    "wrongCartFileFormat":"Il formato del foglio è sbagliato, prego riferirsi al esempio"
 
 }
