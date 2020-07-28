@@ -24,6 +24,8 @@ export class CartOrderComponent implements OnInit {
 
     faTrash = faTrashAlt;
 
+    isError = false;
+
     constructor(private accountService: AccountService, private catalogueService : CatalogueService, 
         private carrelloService : CarrelloService, private manageProducts: ManageProducts) {
 
@@ -39,7 +41,9 @@ export class CartOrderComponent implements OnInit {
 
     ngOnInit(): void {
         if (this.order) {
+            
             if (environment && environment.oData) {
+                this.isError = this.order.error !== undefined;
                 console.log('this.order.product.code:' + this.order.product.code);
                 console.log('this.order.product.price:' + this.order.product.price );
                 this.catalogueService.getItem(this.order.product.code).subscribe(p => {
@@ -52,6 +56,8 @@ export class CartOrderComponent implements OnInit {
                     }
                     
                 })
+            } else {
+                this.isError = false;
             }
         }
     }

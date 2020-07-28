@@ -16,7 +16,7 @@ export class CatalogueService {
     public getAllItems(lastPurchases? : string) : Observable<any> {
         const u : User = this.accountService.userValue;
         const filter = { Email: (u !== undefined && u !== null ? u.username : ''), 
-            Token: (u !== undefined && u !== null ? u.token : ''), Langu : (u !== undefined && u !== null ? u.lang.toUpperCase() : '')};
+            Token: (u !== undefined && u !== null ? u.token : ''), Langu : (u !== undefined && u !== null && u.lang !== undefined ? u.lang.toUpperCase() : '')};
         const format = 'json';
         const outFilter = buildQuery({ filter,format });
         console.log('CatalogueService getAllItems filter:' + outFilter + ',lastPurchases:'+lastPurchases);
@@ -39,7 +39,7 @@ export class CatalogueService {
         const matrn = 'Matnr=' + '\'' + encodeURIComponent(matnr) + '\'';
         const email = 'Email=' + '\'' + (u !== undefined && u !== null ? u.username : '') + '\'';
         const token = 'Token=' + '\'' + (u !== undefined && u !== null ? u.token : '')+ '\'';
-        const langu = 'Langu=' + '\'' + (u !== undefined && u !== null ? u.lang.toUpperCase() : '') + '\'';
+        const langu = 'Langu=' + '\'' + (u !== undefined && u !== null && u.lang !== undefined ? u.lang.toUpperCase() : '') + '\'';
 
         let url = '';
         url = url.concat('(').concat(matrn).concat(',').concat(email).concat(',').concat(token).concat(',').concat(langu).concat(')');

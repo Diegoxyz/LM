@@ -8,7 +8,17 @@
             <h5>{{ 'step1' | translate }}</h5>
     </div>
 </div>
-
+<div>
+    <div *ngIf="loadingCartError === true" class="alert alert-danger">
+        <span>{{ loadingCartErrorMessage }}</span>
+    </div>
+    <div><input type="file" class="btn btn-primary" (change)="onFileChange($event)" /></div>
+    <div id="output"></div>
+    <div >
+        <a id="download" href="../../../assets/files/sampleCart.xlsx" download="sampleCart.xslx">
+            <i class="fa fa-download"></i><span>{{ 'downloadSampleFile' | translate }}</span></a>
+    </div>
+</div>
 <div style="margin-top: 5%; margin-left: 5%; max-width: 90%;">
     <div class="align-items-center justify-content-center">
         <div class="row headers-list-orders">
@@ -21,11 +31,14 @@
             <div class="col-2 h-100 price_column" style= "text-align: right;">
                 <span>{{ 'price' | translate }}</span>  <!-- PRICE -->
             </div>
-            <div class="col-2 h-100 quantity_column">
+            <div class="col-1 h-100 quantity_column">
                 <span>{{ 'quantity' | translate }}</span>   <!-- QUANTITY -->
             </div>
             <div class="col-2 h-100 total_column" style= "text-align: right;">
                 <span>{{ 'total' | translate }}</span>  <!--  TOTAL -->
+            </div>
+            <div class="col-1 h-100">
+                <span>&nbsp;</span>   <!-- ERROR -->
             </div>
             <div class="col-1 h-100 description_column">
                 <span>&nbsp;</span>
@@ -60,7 +73,7 @@
             </div> -->
 
             <div id="empty" class="col-md-6 text-left">
-                <button class="btn btn-primary" (click)="emptyCart()">{{ 'emptyCart' | translate }}</button><!--  Empty Cart -->
+                <button class="btn btn-primary" (click)="emptyCart()" [disabled]="orders.length === 0">{{ 'emptyCart' | translate }}</button><!--  Empty Cart -->
             </div>
 
             <div id="submit" class="col-md-6 text-right">

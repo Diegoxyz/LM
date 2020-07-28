@@ -61,6 +61,10 @@ import { Subject } from 'rxjs';
         return cart;
       }
 
+      public isCartEmpty() : boolean {
+        return this.getCart().orders.length === 0;
+      }
+      
       public emptyCart() {
         console.log('emptyCart');
         localStorage.removeItem(this.cartId);

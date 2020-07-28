@@ -1,4 +1,4 @@
-<div id="order" class="row list-orders" >
+<div id="order" class="row list-orders">
      <!--<div  class="col-1 description_column" style="padding-top: 0.5%">
          <input type="checkbox" /> 
     </div>-->
@@ -8,7 +8,7 @@
     <div  class="col-2 price_column" style="margin: auto; text-align: right;" >
         <span>{{ getPrice(order.product.price) }} {{ order.product.currency }}</span>
     </div>
-    <div  class="col-2 quantity_column" style="margin: auto;" >
+    <div  class="col-1 quantity_column" style="margin: auto;" >
         <span><input type="number" 
             id="qty"
             step="1" min="0" max="9999" name=""
@@ -18,6 +18,11 @@
     </div>
     <div  class="col-2 price_column" style="margin: auto; text-align: right;">
         <span>{{ getPrice(totalPrice) }} {{ order.product.currency }}</span>
+    </div>
+    <div  class="col-1" style="margin: auto;" >
+        <i *ngIf="isError" class="fa fa-exclamation-triangle" style="color: #856404;"></i>
+        <i *ngIf="!isError" class="fa fa-check" style="color: #2196F3;"></i>
+        <span>{{ order.error }}</span>
     </div>
     <div  class="col-1 delete-column" style="margin: auto;">
         <button (click)="onDeleteOrder()" style="background-color: transparent;">

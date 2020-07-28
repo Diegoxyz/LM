@@ -5,7 +5,7 @@ export class Order {
     id          : string;
     product     : Product;
     quantity    : number;
-
+    error?      : string;
 }
 
 /*

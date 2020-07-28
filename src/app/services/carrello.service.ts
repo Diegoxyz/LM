@@ -84,7 +84,7 @@ import { environment } from '@environments/environment';
         const matrn = 'Matnr=' + '\'' + prodId + '\'';
         const email = 'Email=' + '\'' + u.username + '\'';
         const token = 'Token=' + '\'' + u.token + '\'';
-        const langu = 'Langu=' + '\'' + u.lang + '\'';
+        const langu = 'Langu=' + '\'' + (u.lang ? u.lang.toUpperCase() : '') + '\'';
         url = url.concat('(').concat(matrn).concat(',').concat(email).concat(',').concat(token).concat(',').concat(langu).concat(')');
         console.log('deleteFromCarrello - url:' + url);
         return this.http.delete<HttpResponse<any>>(
