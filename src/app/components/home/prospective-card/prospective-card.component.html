@@ -1,27 +1,59 @@
-<ngx-spinner
-type="ball-clip-rotate-multiple" size="medium">
+<ngx-spinner type="ball-clip-rotate-multiple" size="medium">
     <p class="loading">Loading....</p>
 </ngx-spinner>
+
 <div class="prospective-card">
-    <div class="flex-container">
+
+    <div class="flex-container" style="margin-top: 5%;">
+
         <div class="flex-item board-image">
+
+            <div class="row">
+                <div class="col-md-auto">
+                    <button class="btn" (click)="onBack()"
+                            style="font-size:36px; border: 0px; background-color: transparent;">
+                        <i class="fa fa-arrow-left" style="font-size:24px;color:#dc3545"></i>
+                    </button>
+                </div> 
+            </div>
+
             <img *ngIf="thumbnail" class="img-fluid card-img-top" id="pic-board" [src]='thumbnail' width="260"
                 height="260" style="width: 100%; max-height:70%;">
-            <object *ngIf="svgThumbnail" [data]="sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ svgThumbnail)"
-                    width="500" height="600" style="width: 100%; max-height:70%;">
-                </object>
-            <object #objId  
-                    [data]="sanitizer.bypassSecurityTrustResourceUrl(blobUrl)" width="500" height="600" style="width: 100%; max-height:70%;"> 
-                </object>
+            <object *ngIf="svgThumbnail"
+                [data]="sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ svgThumbnail)"
+                width="500" height="600" style="width: 100%; max-height:70%;">
+            </object>
+
+<!--             <object #objId [data]="sanitizer.bypassSecurityTrustResourceUrl(blobUrl)" width="500" height="600"
+                style="width: 100%; max-height:70%;">
+            </object>
+-->
+
             <img *ngIf="thumbnail === undefined && svgThumbnail === undefined" class="img-fluid card-img-top"
                 src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px" width="260"
                 height="260" style="width: 100%; max-height:70%;">
             <!--<img #noImage class="img-fluid card-img-top" src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260" style="width: 100%; max-height:70%;">-->
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <button class="btn" style="font-size:36px; border: 0px; background-color: transparent;">
+                        <i class="fa fa-arrow-left" style="font-size:24px;color:#dc3545"></i>
+                    </button>
+                </div>
+
+                <div class="col-md-6" style="text-align: right;">
+                    <button class="btn" style="font-size:36px; border: 0px; background-color: transparent;">
+                        <i class="fa fa-arrow-right" style="font-size:24px;color:#dc3545"></i>
+                    </button>
+                </div> 
+            </div> 
+        
+        
         </div>
 
-        <div class="flex-item board-panel">
+        <div class="flex-item board-panel" style="height: 25%;">
             <!--nascono la scrollbar se un solo elemento presente-->
-            <div *ngIf="items.length === 1" id="no-scroll" class="scroll">    
+            <div *ngIf="items.length === 1" id="no-scroll" class="scroll">
                 <div *ngFor="let item of items" class="row" style="margin-top: 5%; margin-left: 1%;">
                     <div class="col-md-auto">
                         <div id="item-code-parent" class="row align-items-center no-gutters justify-content-end"
@@ -61,7 +93,8 @@ type="ball-clip-rotate-multiple" size="medium">
                                 </div>
 
                                 <div class="row align-items-start">
-                                    <div class="col-md-4" id="item-price">{{ getPrice(item.price) }}&nbsp;{{item.currency}}</div>
+                                    <div class="col-md-4" id="item-price">
+                                        {{ getPrice(item.price) }}&nbsp;{{item.currency}}</div>
                                     <div class="col-md-8">
                                         <form [formGroup]="addProductForm" (ngSubmit)="addProduct(item.code)">
                                             <div class="row">
@@ -79,12 +112,12 @@ type="ball-clip-rotate-multiple" size="medium">
                                                     </button>
                                                 </div>
 
-                                                  <div id="add"class="col-md-1">
+                                                <div id="add" class="col-md-1">
                                                     <button id="btn-add" class="add-product">
                                                         +
                                                     </button>
                                                 </div>
-            
+
                                                 <div id="icon-btn-div" class="col-md-3">
                                                     <button id="btn-cart">
                                                         <fa-icon id="btn-icon" [icon]="faShoppingCart" size="1x">
@@ -102,8 +135,8 @@ type="ball-clip-rotate-multiple" size="medium">
                 </div>
             </div> <!-- scroll ends up here -->
 
-            
-            <div *ngIf="items.length > 1" id="scroll" class="scroll">    
+
+            <div *ngIf="items.length > 1" id="scroll" class="scroll">
                 <div *ngFor="let item of items" class="row" style="margin-top: 5%; margin-left: 1%;">
                     <div class="col-md-auto">
                         <div id="item-code-parent" class="row align-items-center no-gutters justify-content-end"
@@ -143,7 +176,8 @@ type="ball-clip-rotate-multiple" size="medium">
                                 </div>
 
                                 <div class="row align-items-start">
-                                    <div class="col-md-4" id="item-price">{{ getPrice(item.price) }}&nbsp;{{item.currency}}</div>
+                                    <div class="col-md-4" id="item-price">
+                                        {{ getPrice(item.price) }}&nbsp;{{item.currency}}</div>
                                     <div class="col-md-8">
                                         <form [formGroup]="addProductForm" (ngSubmit)="addProduct(item.code)">
                                             <div class="row">
@@ -156,17 +190,19 @@ type="ball-clip-rotate-multiple" size="medium">
                                                 </div>
 
                                                 <div id="sub" class="col-md-2">
-                                                    <button id="btn-sub" class="sub-product" (click)="subOneProduct(item.code)">
+                                                    <button id="btn-sub" class="sub-product"
+                                                        (click)="subOneProduct(item.code)">
                                                         <i class="fa fa-minus" aria-hidden="true"></i>
                                                     </button>
                                                 </div>
 
                                                 <div id="add" class="col-md-2">
-                                                    <button id="btn-add" class="add-product" (click)="addOneProduct(item.code)">
+                                                    <button id="btn-add" class="add-product"
+                                                        (click)="addOneProduct(item.code)">
                                                         <i class="fa fa-plus" aria-hidden="true"></i>
                                                     </button>
                                                 </div>
-            
+
                                                 <div id="icon-btn-div" class="col-md-3">
                                                     <button id="btn-cart">
                                                         <fa-icon id="btn-icon" [icon]="faShoppingCart" size="1x">
@@ -186,4 +222,5 @@ type="ball-clip-rotate-multiple" size="medium">
             </div> <!-- scroll ends up here -->
         </div>
     </div>
+
 </div>

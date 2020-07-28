@@ -88,6 +88,13 @@ export class Materiale {
     ItemNumBom: string;
     MatnrSezione: string;
     LoioId: string;
+    NoteCliente: string;
+    Documentazione: string;
+    NoteGenerali: string;
+    MatNrSub: string;
+    MaktxSub: string;
+
+
 
     static fromJSON(m : Materiale): Product {
         const price : number = Number(m.Netpr);
@@ -112,7 +119,12 @@ export class Materiale {
                                     minQuantity
                                     ,m.LoioId
                                     ,m.ItemNumBom /*  itNumB */
-                                    ,m.StockIndicator
+                                    ,m.StockIndicator,
+                                    m.NoteCliente,
+                                    m.Documentazione,
+                                    m.NoteGenerali,
+                                    m.MatNrSub,
+                                    m.MaktxSub
                                     )
         return product;
     }

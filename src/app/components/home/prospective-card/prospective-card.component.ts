@@ -75,7 +75,7 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
         if (environment && environment.oData) {
             this.spinner.show();
             
-                    // Carico l'immagine
+        // Carico l'immagine
         if (this.item.picId) {
             this.binDataMatnrSetService.getImage(this.item.code,this.item.picId).subscribe((resp : any) => {
                 if (resp.body && resp.body.d && resp.body.d) {
@@ -393,6 +393,10 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
         } else {
             const q = this.qty.value;
         }
+    }
+
+    onBack(){
+        this.router.navigate(['/home']);
     }
 
 }

@@ -1,3 +1,5 @@
+/* import { ExecFileOptionsWithStringEncoding } from 'child_process'; */
+
 export class Item {
     code: string;
     description: string;
@@ -35,8 +37,18 @@ export class Product extends Item {
     // Unità di misura della quantità, ad es. "pezzi", 
     meins: string;
     strItemNumBom : string;
+    noteCliente?: string;
+    documentazione?: string;
+    noteGenerali?: string;
+    matNrSub?: string;
+    maktxSub?: string;
 
-    constructor(code: string, description: string, price: number, currency: string, stock: boolean, prodh: string, prodhx: string, pref : string, meins : string, maxQuantity? : number, minQuantity?: number, LoioId?: string, itemNumBom?: string, stockIndicator?: string ) {
+    constructor(code: string, description: string, price: number, currency: string, 
+                stock: boolean, prodh: string, prodhx: string, pref : string, 
+                meins : string, maxQuantity? : number, minQuantity?: number, LoioId?: string, 
+                itemNumBom?: string, stockIndicator?: string , noteCliente?: string, 
+                documentazione?: string, noteGenerali?: string, matNrSub?: string, 
+                maktxSub?: string  ) {
         super(code, description);
         this.price = price;
         this.stock = stock;
@@ -59,6 +71,11 @@ export class Product extends Item {
             this.preferred = false;
         }
         this.meins = meins;
+        this.noteCliente = noteCliente;
+        this.documentazione = documentazione;
+        this.noteGenerali = noteGenerali;
+        this.matNrSub = matNrSub;
+        this.maktxSub = maktxSub;
     }
 }
 

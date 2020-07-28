@@ -93,4 +93,5 @@ export class SectionCardComponent implements OnInit {
     openModal(template: TemplateRef<any>) {
         this.bsModalRef = this.modalService.show(template, this.config);
       }
+
 }

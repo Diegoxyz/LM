@@ -3,7 +3,7 @@ import { Product } from 'src/app/models/item';
 import { Order } from '@app/models/order';
 import { ManageProducts } from '../services/manage-products.service';
 import { CartService } from '@app/services/cart.service';
-import { faShoppingCart, faCircle } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingCart, faCircle, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { BinDataMatnrSetService } from '@app/models/OData/BinDataMatnrSet/bindatamatnrset.service';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -13,6 +13,8 @@ import { CarrelloService } from '@app/services/carrello.service';
 import { Carrello } from '@app/models/carrello';
 import { CatalogueService } from '@app/services/catalogue.service';
 import { TranslateService } from '@ngx-translate/core';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({selector: 'app-product-catalogue-card',
 templateUrl: './product-card-catalogue.component.html',
@@ -25,6 +27,7 @@ export class ProductCardCatalogueComponent implements OnInit {
     quantityError : boolean = false;
     faShoppingCart=faShoppingCart;
     faCircle=faCircle;
+    faInfoCircle=faInfoCircle;
     
     thumbnail: any = '';
 
@@ -38,11 +41,15 @@ export class ProductCardCatalogueComponent implements OnInit {
 
     strPrice = '';
 
+    bsModalRef: NgbModalRef;
+
     constructor(private fb: FormBuilder,private manageProducts: ManageProducts, 
         private cartService : CartService,
         private accountService: AccountService, private carrelloService : CarrelloService, 
         private binDataMatnrSetService: BinDataMatnrSetService, public sanitizer: DomSanitizer,
-        private catalogueService : CatalogueService, private translateService : TranslateService) {
+        private catalogueService : CatalogueService, private translateService : TranslateService,
+        private modalService: NgbModal
+        ) {
     }
     
     public addProductForm: FormGroup;
@@ -228,5 +235,12 @@ export class ProductCardCatalogueComponent implements OnInit {
         } else {
             this.item.preferred = !this.item.preferred;
         }
-}
+    }
+
+    openModal(template) {
+        this.bsModalRef = this.modalService.open(template, { size: 'xl' });
+      }
+/*       openInfoXl(template) {
+        this.modalService.open(template, { size: 'xl' });
+      } */
 }
