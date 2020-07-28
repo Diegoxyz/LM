@@ -42,13 +42,13 @@ export class Product extends Item {
     noteGenerali?: string;
     matNrSub?: string;
     maktxSub?: string;
-
+    kdmat?: string;
     constructor(code: string, description: string, price: number, currency: string, 
                 stock: boolean, prodh: string, prodhx: string, pref : string, 
                 meins : string, maxQuantity? : number, minQuantity?: number, LoioId?: string, 
                 itemNumBom?: string, stockIndicator?: string , noteCliente?: string, 
                 documentazione?: string, noteGenerali?: string, matNrSub?: string, 
-                maktxSub?: string  ) {
+                maktxSub?: string, kdmat?: string  ) {
         super(code, description);
         this.price = price;
         this.stock = stock;
@@ -76,6 +76,7 @@ export class Product extends Item {
         this.noteGenerali = noteGenerali;
         this.matNrSub = matNrSub;
         this.maktxSub = maktxSub;
+        this.kdmat = kdmat;
     }
 }
 

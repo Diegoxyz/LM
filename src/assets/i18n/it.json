@@ -99,6 +99,20 @@
     "numberOfPieces":"Quantità",
     "cartIsNotEmpty":"Impossibile caricare perché il carrello non è vuoto",
     "downloadSampleFile":"Scarica foglio excel di esempio",
-    "wrongCartFileFormat":"Il formato del foglio è sbagliato, prego riferirsi al esempio"
+    "wrongCartFileFormat":"Il formato del foglio è sbagliato, prego riferirsi al esempio",
+    "itemDetailCategory":"",
+    "customerCode":"",
+    "itemDetail": {
+        "category":"Categoria",
+        "customerCode":"Cod.Cliente",
+        "price":"Prezzo",
+        "stock":"Stock",
+        "minDeliveryQty":"Qtà Massima",
+        "maxDeliveryQty":"Qtà Minima",
+        "customerNote":"Note cliente",
+        "documentation":"Documentazione",
+        "generalNote":"Note generali",
+        "substituteMaterialNum":"Mat.Sostitutivo"
+    }
 
 }

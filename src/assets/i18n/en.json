@@ -99,5 +99,18 @@
     "numberOfPieces":"Quantity",
     "cartIsNotEmpty":"Cart can't be loaded because session cart is not empty",
     "downloadSampleFile":"Download sample cart Excel file",
-    "wrongCartFileFormat":"The format of the file is wrong, please refer to the sample file"
+    "wrongCartFileFormat":"The format of the file is wrong, please refer to the sample file",
+    "itemDetail": {
+        "category":"Category",
+        "customerCode":"Cust.Code",
+        "price":"Price",
+        "stock":"Stock",
+        "minDeliveryQty":"Max. delivery Qty",
+        "maxDeliveryQty":"Min. delivery Qry",
+        "customerNote":"Customer note",
+        "documentation":"Documentation",
+        "generalNote":"General Note",
+        "substituteMaterialNum":"Substitute Material"
+    }
+    
 }
