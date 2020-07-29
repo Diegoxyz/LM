@@ -9,6 +9,7 @@ import { CartComponent } from './cart.component';
 import { ShipToSetComponent } from './ship-to-set/ship-to-set.component';
 import { ConfirmOrderComponent } from './confirm-order/confirm-order.component';
 import { SaveOrderComponent } from './save-order/save-order.component';
+import { APP_BASE_HREF, LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 const routes: Routes = [
     {
@@ -33,6 +34,10 @@ const routes: Routes = [
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+    exports: [RouterModule],
+    providers: [
+        { provide: APP_BASE_HREF, useValue: '!' },
+        { provide: LocationStrategy, useClass: HashLocationStrategy },
+      ] 
 })
 export class HomeRoutingModule { }
