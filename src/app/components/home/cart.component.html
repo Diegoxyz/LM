@@ -8,16 +8,22 @@
             <h5>{{ 'step1' | translate }}</h5>
     </div>
 </div>
-<div>
-    <div *ngIf="loadingCartError === true" class="alert alert-danger">
-        <span>{{ loadingCartErrorMessage }}</span>
+<div style="margin-top: 5%; margin-left: 25%; max-width: 50%;">
+    <div class="align-items-center justify-content-center">
+        <div class="alert alert-dark">
+            <div class="align-items-center justify-content-center" style="margin-left: 30%;"><strong>{{ 'loadFromCartTitle' | translate }}</strong></div>
+        </div>
+        <div *ngIf="loadingCartError === true" class="alert alert-danger">
+            <span>{{ loadingCartErrorMessage }}</span>
+        </div>
+        <div style="margin-top: 2%;"><input #loadFromFile type="file" class="btn btn-primary" (change)="onFileChange($event)" />
+            <button *ngIf="loadingFromFile" class="btn" style="background-color: transparent;" (click)="reset()"><i class="fa fa-remove" aria-hidden="true" style="color:#dc3545;"></i></button></div>
+        <div style="margin-top: 2%;">
+            <a id="download" href="../../../assets/files/sampleCart.xlsx" download="sampleCart.xslx">
+                <i class="fa fa-download"></i><span>{{ 'downloadSampleFile' | translate }}</span></a>
+        </div>
     </div>
-    <div><input type="file" class="btn btn-primary" (change)="onFileChange($event)" /></div>
-    <div id="output"></div>
-    <div >
-        <a id="download" href="../../../assets/files/sampleCart.xlsx" download="sampleCart.xslx">
-            <i class="fa fa-download"></i><span>{{ 'downloadSampleFile' | translate }}</span></a>
-    </div>
+    
 </div>
 <div style="margin-top: 5%; margin-left: 5%; max-width: 90%;">
     <div class="align-items-center justify-content-center">
@@ -25,7 +31,7 @@
 <!--             <div class="col-1 h-100 description_column" >
                 <span>&nbsp;</span>
             </div> -->
-            <div class="col-5 h-100 code_column" style= "text-align: left; padding-left: 2.7%;">
+            <div class="col-4 h-100 code_column" style= "text-align: left; padding-left: 2.7%;">
                 <span>{{ 'products' | translate }} </span>   <!-- PRODUCTS -->
             </div>
             <div class="col-2 h-100 price_column" style= "text-align: right;">
@@ -37,7 +43,7 @@
             <div class="col-2 h-100 total_column" style= "text-align: right;">
                 <span>{{ 'total' | translate }}</span>  <!--  TOTAL -->
             </div>
-            <div class="col-1 h-100">
+            <div class="col-2 h-100">
                 <span>&nbsp;</span>   <!-- ERROR -->
             </div>
             <div class="col-1 h-100 description_column">

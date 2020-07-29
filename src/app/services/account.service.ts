@@ -155,6 +155,10 @@ export class AccountService {
     return this.userSubject.value;
   }
 
+  public setUserValueFromUser(user : User) {
+    return this.setUserValue(user.username, user.password, user.token, user.lang);
+  }
+  
   public setUserValue(username : string, password : string, token: string, lang: string) {
     const u : User = new User();
     u.username = username;

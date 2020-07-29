@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, TemplateRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, ElementRef } from '@angular/core';
 import { Product } from '@app/models/item';
 import { Cart } from '@app/models/cart';
 import { Order } from '@app/models/order';
@@ -17,6 +17,7 @@ import { CatalogueService } from '@app/services/catalogue.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import * as XLSX from 'xlsx';
 import { TranslateService } from '@ngx-translate/core';
+import { Carrello } from '@app/models/carrello';
 
 @Component({selector: 'app-cart',
 templateUrl: './cart.component.html',
@@ -45,6 +46,10 @@ export class CartComponent implements OnInit, OnDestroy {
 
     loadingCartError = false;
     loadingCartErrorMessage = false;
+    loadingFromFile = false;
+
+    @ViewChild('loadFromFile')
+    loadFromFile: ElementRef;
 
     constructor(private accountService : AccountService, private cartService : CartService, private modalService: BsModalService, 
         private router: Router, private manageProducts : ManageProducts, private carrelloService: CarrelloService, 
@@ -72,6 +77,7 @@ export class CartComponent implements OnInit, OnDestroy {
                   this.orders = this.cart.orders;
                         this.orders.forEach(o => {
                             if (o.product) {
+                                console.log('cart3');
                                 this.catalogueService.getItem(o.product.code).subscribe(p => {
                                     if (p && p.body && p.body.d) {
                                         o.product.price = p.body.d.Netpr;
@@ -230,7 +236,17 @@ export class CartComponent implements OnInit, OnDestroy {
         
     }
 
+    reset() {
+        this.loadingCartError = false;
+        this.loadingCartErrorMessage = undefined;
+        this.loadFromFile.nativeElement.value = '';
+        this.loadingFromFile = false;
+    }
+
     onFileChange(ev) {
+        this.loadingCartError = false;
+        this.loadingCartErrorMessage = undefined;
+        this.loadingFromFile = true;
         if (!this.cartService.isCartEmpty()) {
             this.loadingCartError = true;
             this.loadingCartErrorMessage = this.translateService.instant('cartIsNotEmpty');
@@ -252,7 +268,17 @@ export class CartComponent implements OnInit, OnDestroy {
                 this.spinner.hide();
                 return;
           }
-          
+          if (this.cart === undefined) {
+            this.cart = {
+                customer : {
+                    lastName : '',
+                    firstName : '',
+                    fiscalCode : ''
+                },
+                orders : []
+            }
+          }
+          const user : User = this.accountService.userValue;
           jsonData = workBook.SheetNames.reduce((initial, name) => {
             const sheet = workBook.Sheets[name];
             initial[name] = XLSX.utils.sheet_to_json(sheet);
@@ -269,26 +295,9 @@ export class CartComponent implements OnInit, OnDestroy {
                 order.product = newProduct;
                 order.quantity = row.Pezzi;
                 if (environment && environment.oData) {
-                    this.catalogueService.getItem(matrn).subscribe(p => {
-                        const sapMessage = p.headers.get('sap-message');
-                        if (sapMessage !== undefined && sapMessage !== null) {
-                            let errorMessage = this.translateService.instant('unknownError');
-                            try {
-                            let sm = JSON.parse(sapMessage);
-                            errorMessage = sm.message;
-                            } catch (error) {
-                            const docSapMessage : Document = (new window.DOMParser()).parseFromString(sapMessage, 'text/xml');
-                            if (docSapMessage.hasChildNodes()) {
-                                if (docSapMessage.firstChild.childNodes.length >= 2) {
-                                errorMessage = docSapMessage.firstChild.childNodes[1].textContent;
-                                }
-                            }
-                            }
-                            order.error = errorMessage;
-                        }
-                        if (matrn === 'A') {
-                            order.error = 'Errore';
-                        }
+                    console.log('cart2');
+                    this.accountService.setUserValueFromUser(user);
+                    this.catalogueService.getItem(matrn, user).subscribe(p => {
                         if (p && p.body && p.body.d) {
                             order.product.price = p.body.d.Netpr;
                             order.product.description = p.body.d.Maktx;
@@ -297,12 +306,50 @@ export class CartComponent implements OnInit, OnDestroy {
                             if (this.currency === undefined) {
                                 this.currency = order.product.currency;
                             }
-                            this.products.push(order.product);
-                            this.totalPrice = this.totalPrice + (order.product.price * order.quantity);
-                            this.totalQuantity = this.totalQuantity + order.quantity;
-                            this.strTotalPrice = this.totalPrice.toFixed(2);
-                            this.orders.push(order);
-                            this.cart.orders = this.orders;
+                            this.accountService.fetchToken().subscribe(
+                                response1 => {
+                                    if (response1.headers) {
+                                        const csrftoken : string = response1.headers.get('X-CSRF-Token');
+                                        if (csrftoken) {
+                                            const carrello : Carrello = new Carrello();
+                                            carrello.Matnr = matrn;
+                                            carrello.Menge = '' + order.quantity;
+                                            this.accountService.setUserValueFromUser(user);
+                                            this.carrelloService.updateCart(csrftoken, carrello).subscribe(d => {
+                                                console.log(' loading from excel update went fine');
+                                                // const sapMessage = d.headers.get('sap-message');
+                                                // console.log('sapMessage:' + sapMessage);
+                                                const sapMessage = 'error';
+                                                if (sapMessage !== undefined && sapMessage !== null) {
+                                                    let errorMessage = this.translateService.instant('unknownError');
+                                                    try {
+                                                        let sm = JSON.parse(sapMessage);
+                                                        errorMessage = sm.message;
+                                                    } catch (error) {
+                                                        const docSapMessage : Document = (new window.DOMParser()).parseFromString(sapMessage, 'text/xml');
+                                                        if (docSapMessage.hasChildNodes()) {
+                                                            if (docSapMessage.firstChild.childNodes.length >= 2) {
+                                                                errorMessage = docSapMessage.firstChild.childNodes[1].textContent;
+                                                            }
+                                                        }
+                                                    }
+                                                    order.error = errorMessage;
+                                                    console.log('order.error:' + order.error);
+                                                }
+                                                this.products.push(order.product);
+                                                this.totalPrice = this.totalPrice + (order.product.price * order.quantity);
+                                                this.totalQuantity = this.totalQuantity + order.quantity;
+                                                this.strTotalPrice = this.totalPrice.toFixed(2);
+                                                this.orders.push(order);
+                                                this.cart.orders = this.orders;
+                                            },
+                                            error => {
+                                                console.log('error update:' + error);
+                                            })
+                                        }
+                                    }
+                                }
+                            )
                         }
                         
                     });

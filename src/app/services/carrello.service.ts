@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { AccountService } from './account.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { User } from '@app/models/user';
 import buildQuery from 'odata-query';
 import { Carrello } from '@app/models/carrello';
@@ -17,6 +17,9 @@ import { environment } from '@environments/environment';
     public getCart() : Observable<any> {
         const u : User = this.accountService.userValue;
         console.log('getCart() -u:' + u);
+        if (u === undefined || u === null) {
+            return of();
+        }
         let username : string = '';
         let token : string = '';
         let lang : string = '';
@@ -38,8 +41,13 @@ import { environment } from '@environments/environment';
             environment.oData_destination + 'CarrelloSet' + outFilter, options);
     }
 
-    public addCart(csrftoken : string, carrello : Carrello) : Observable<any> {
-        const u : User = this.accountService.userValue;
+    public addCart(csrftoken : string, carrello : Carrello, user? : User) : Observable<any> {
+        let u : User = this.accountService.userValue;
+        console.log('addCart() -u1:' + u);
+        if ((u === undefined || u === null) && user !== undefined) {
+            u = user;
+        }
+        console.log('addCart() -u2:' + u);
         let headers = new HttpHeaders({
             'Content-Type': 'application/json',
             'X-CSRF-Token': csrftoken });
@@ -49,6 +57,8 @@ import { environment } from '@environments/environment';
         return this.http.post<HttpResponse<any>>(
             environment.oData_destination +  'CarrelloSet', carrello, options);
     }
+
+
 
     // save === insert or update
     public updateCart(csrftoken : string, carrello : Carrello) : Observable<any> {

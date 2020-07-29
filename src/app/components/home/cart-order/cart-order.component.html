@@ -2,7 +2,7 @@
      <!--<div  class="col-1 description_column" style="padding-top: 0.5%">
          <input type="checkbox" /> 
     </div>-->
-    <div  class="col-5 description_column" style="text-align: left;   margin: auto; padding-left: 2.7%">
+    <div  class="col-4 description_column" style="text-align: left;   margin: auto; padding-left: 2.7%">
         <span>{{ order.product.code}} - {{ order.product.description}}</span>
     </div>
     <div  class="col-2 price_column" style="margin: auto; text-align: right;" >
@@ -19,10 +19,10 @@
     <div  class="col-2 price_column" style="margin: auto; text-align: right;">
         <span>{{ getPrice(totalPrice) }} {{ order.product.currency }}</span>
     </div>
-    <div  class="col-1" style="margin: auto;" >
+    <div  class="col-2" style="margin: auto;" >
         <i *ngIf="isError" class="fa fa-exclamation-triangle" style="color: #856404;"></i>
         <i *ngIf="!isError" class="fa fa-check" style="color: #2196F3;"></i>
-        <span>{{ order.error }}</span>
+        <span style="background-color: #856404;">{{ order.error }}</span>
     </div>
     <div  class="col-1 delete-column" style="margin: auto;">
         <button (click)="onDeleteOrder()" style="background-color: transparent;">

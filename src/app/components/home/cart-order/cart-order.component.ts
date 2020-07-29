@@ -46,6 +46,7 @@ export class CartOrderComponent implements OnInit {
                 this.isError = this.order.error !== undefined;
                 console.log('this.order.product.code:' + this.order.product.code);
                 console.log('this.order.product.price:' + this.order.product.price );
+                console.log('cart-order');
                 this.catalogueService.getItem(this.order.product.code).subscribe(p => {
                     if (p && p.body && p.body.d) {
                         this.order.product.price = p.body.d.Netpr;
