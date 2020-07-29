@@ -100,8 +100,7 @@
     "cartIsNotEmpty":"Impossibile caricare perché il carrello non è vuoto",
     "downloadSampleFile":"Scarica foglio excel di esempio",
     "wrongCartFileFormat":"Il formato del foglio è sbagliato, prego riferirsi al esempio",
-    "itemDetailCategory":"",
-    "customerCode":"",
+    "loadFromCartTitle":"Caricamento carrello da Excel",
     "itemDetail": {
         "category":"Categoria",
         "customerCode":"Cod.Cliente",
@@ -114,5 +113,6 @@
         "generalNote":"Note generali",
         "substituteMaterialNum":"Mat.Sostitutivo"
     }
+    
 
 }

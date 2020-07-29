@@ -33,9 +33,13 @@ export class CatalogueService {
         }
     }
 
-    public getItem(matnr : string) : Observable<any> {
-        const u : User = this.accountService.userValue;
-
+    public getItem(matnr : string, user? : User) : Observable<any> {
+        let u : User = this.accountService.userValue;
+        console.log('getItem() -u1:' + u);
+        if ((u === undefined || u === null) && user !== undefined) {
+            u = user;
+        }
+        console.log('getItem() -u2:' + u);
         const matrn = 'Matnr=' + '\'' + encodeURIComponent(matnr) + '\'';
         const email = 'Email=' + '\'' + (u !== undefined && u !== null ? u.username : '') + '\'';
         const token = 'Token=' + '\'' + (u !== undefined && u !== null ? u.token : '')+ '\'';
