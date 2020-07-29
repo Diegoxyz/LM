@@ -12,7 +12,7 @@
 
   /* Then we define how is distributed the remaining space */
   justify-content: flex-start;
-  height: 500px;
+  height: 200px;
 }
 
 .flex-item {
@@ -30,7 +30,7 @@
   width: 70%;
   margin-right: 0%;
   max-height: fit-content;
-  /*border: solid 1px blueviolet;*/
+  border: solid 1px blueviolet;
 }
 
 .board-panel {
@@ -40,7 +40,7 @@
   padding-top: 2%;
   margin: 0%;
   max-height: fit-content;
-  /* border: solid 1px green; */
+  border: solid 1px green;
  /*  border: solid 1px green; */
 }
 

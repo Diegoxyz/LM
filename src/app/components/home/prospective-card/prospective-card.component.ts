@@ -94,7 +94,7 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
             this.loadData();
         } else {
             // this.thumbnail = 'assets/img/coffeeMachines/tavola2_bigger.gif';
-            this.svgThumbnail = this.svgData;
+            /*this.svgThumbnail = this.svgData;
 
             const b64toBlob = (b64Data, contentType, sliceSize=512) => {
                 const byteCharacters = atob(b64Data);
@@ -121,7 +121,7 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
             const blobUrl = URL.createObjectURL(blob);
     
             this.blobUrl = blobUrl;
-            console.log('blobUrl:' + this.blobUrl);
+            console.log('blobUrl:' + this.blobUrl);*/
 
             /*this.removeEventListener1 = this.renderer.listen(this.objId.nativeElement,'click', (event) => {
                 console.log('event on click1:' + event);
@@ -485,9 +485,9 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
             let pos = window.pageYOffset;
             if (pos > 0) {
                 this.scrollDiv.nativeElement.scrollTo(0, pos - 100); // how far to scroll on each step
-            } /*else {
+            } else {
                 this.scrollDiv.nativeElement.clearInterval(scrollToTop);
-            }*/
+            }
             this.imageDiv.nativeElement.scrollTo(0,0);
         }, 16);
     }
