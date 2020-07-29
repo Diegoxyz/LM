@@ -1,11 +1,10 @@
 <ngx-spinner type="ball-clip-rotate-multiple" size="medium">
     <p class="loading">Loading....</p>
 </ngx-spinner>
-
 <div class="prospective-card">
     <div class="flex-container" style="margin-top: 5%;">
 
-        <div class="flex-item board-image">
+        <div #imageDiv class="flex-item board-image">
 
             <div class="row">
                 <div class="col-md-auto">
@@ -15,7 +14,7 @@
                     </button>
                 </div> 
             </div>
-            {{ newSection }}
+
             <img *ngIf="thumbnail" class="img-fluid card-img-top" id="pic-board" [src]='thumbnail' width="260"
                 height="260" style="width: 100%; max-height:70%;">
             <!-- <object *ngIf="svgThumbnail"
@@ -49,92 +48,8 @@
         
         </div>
 
-        <div class="flex-item board-panel" style="height: 25%;">
-            <!--nascono la scrollbar se un solo elemento presente-->
-            <div *ngIf="items.length === 1" id="no-scroll" class="scroll">
-                <div *ngFor="let item of items" class="row" style="margin-top: 5%; margin-left: 1%;">
-                    <div class="col-md-auto">
-                        <div id="item-code-parent" class="row align-items-center no-gutters justify-content-end"
-                            style="margin-top: 2%;">
-                            <div class="col-md-8" id="item-code-id">
-                                <div id="item-code">{{ item.code }}</div>
-                            </div>
-                        </div>
-
-                        <div class="row" style="margin-top: 2%; ">
-                            <div class="col-md-4">
-                                <img *ngIf="item.thumbnail" class="img-fluid card-img-top" id="pic-panel"
-                                    [src]='thumbnail' width="20" height="20">
-                                <img *ngIf="item.thumbnail === undefined" class="img-fluid card-img-top"
-                                    src="assets/img/items/No_Image_available.png" width="20" height="20">
-                            </div>
-
-                            <div class="col-md-8" id="item-descritption-id">
-                                <div style="display: inline; ">{{ item.description }} </div>
-                                <div>Stock:
-                                    <fa-icon id="circle-red"
-                                        *ngIf="item.stockIndicator === undefined || item.stockIndicator === '' || item.stockIndicator === '3'"
-                                        [icon]="faCircle"></fa-icon>
-                                    <fa-icon id="circle-yellow" *ngIf="item.stockIndicator === '2'" [icon]="faCircle">
-                                    </fa-icon>
-                                    <fa-icon id="circle-green" *ngIf="item.stockIndicator === '1'" [icon]="faCircle">
-                                    </fa-icon>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-4" style="padding-top: 1%; ">
-                                        <div>Position:</div>
-                                    </div>
-                                    <div id="item-num" class="col-md-8">
-                                        <div class="blue-square">{{ item.itemNumBom }}</div>
-                                    </div>
-                                </div>
-
-                                <div class="row align-items-start">
-                                    <div class="col-md-4" id="item-price">
-                                        {{ getPrice(item.price) }}&nbsp;{{item.currency}}</div>
-                                    <div class="col-md-8">
-                                        <form [formGroup]="addProductForm" (ngSubmit)="addProduct(item.code)">
-                                            <div class="row">
-
-                                                <div id="qty-div" class="col-md-auto">
-                                                    <input [id]="Id('qty', item.code)" [formControlName]="item.code"
-                                                        type="number" step="1" min="0" max="9999" name=""
-                                                        value="{{ quantity }}" title="Quantity" size="2"
-                                                        pattern="[0-9]*" inputmode="numeric" aria-labelledby="">
-                                                </div>
-
-                                                <div id="sub" class="col-md-1 ">
-                                                    <button id="btn-sub" class="sub-product">
-                                                        -
-                                                    </button>
-                                                </div>
-
-                                                <div id="add" class="col-md-1">
-                                                    <button id="btn-add" class="add-product">
-                                                        +
-                                                    </button>
-                                                </div>
-
-                                                <div id="icon-btn-div" class="col-md-3">
-                                                    <button id="btn-cart">
-                                                        <fa-icon id="btn-icon" [icon]="faShoppingCart" size="1x">
-                                                        </fa-icon>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" style="border-bottom: solid 1px #d8d6d6; margin-left: 1%;">&nbsp;</div>
-                    </div>
-                </div>
-            </div> <!-- scroll ends up here -->
-
-
-            <div *ngIf="items.length > 1" id="scroll" class="scroll">
+        <div class="flex-item board-panel">
+            <div #scrollDiv id="scroll" class="scroll" (scroll)="scrollHandler($event)">
                 <div *ngFor="let item of items" class="row" style="margin-top: 5%; margin-left: 1%;">
                     <div class="col-md-auto">
                         <div id="item-code-parent" class="row align-items-center no-gutters justify-content-end"

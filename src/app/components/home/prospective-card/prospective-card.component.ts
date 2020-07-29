@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Renderer2, ViewChild, ElementRef, AfterViewInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Renderer2, ViewChild, ElementRef, AfterViewInit, OnDestroy, Output, EventEmitter, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { faShoppingCart, faCircle } from '@fortawesome/free-solid-svg-icons';
 import { BsModalRef } from 'ngx-bootstrap/modal';
@@ -56,6 +56,9 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
 	blobUrl: string;
     @ViewChild("objId", { static: true }) objId: ElementRef;
     @ViewChild("noImage", { static: true }) noImage: ElementRef;
+    @ViewChild('scrollDiv', { static: true }) scrollDiv: ElementRef;
+    @ViewChild('imageDiv', { static: true }) imageDiv: ElementRef;
+
     public removeEventListener1: () => void;
     public removeEventListener2: () => void;
     public removeEventListener3: () => void;
@@ -282,7 +285,7 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
     }
     ngAfterViewInit() {
         console.log('ngAfterViewInit start');
-
+        console.log(this.scrollDiv);
         // Carico l'immagine
         /*if (this.svgData) {
             const b64toBlob = (b64Data, contentType, sliceSize=512) => {
@@ -474,5 +477,18 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
                 found = true;
             }
         }
+    }
+
+    @HostListener('window:scroll', ['$event']) 
+    scrollHandler(event) {
+        let scrollToTop = window.setInterval(() => {
+            let pos = window.pageYOffset;
+            if (pos > 0) {
+                this.scrollDiv.nativeElement.scrollTo(0, pos - 100); // how far to scroll on each step
+            } else {
+                this.scrollDiv.nativeElement.clearInterval(scrollToTop);
+            }
+            this.imageDiv.nativeElement.scrollTo(0,0);
+        }, 16);
     }
 }
