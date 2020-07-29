@@ -484,9 +484,9 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
         let scrollToTop = window.setInterval(() => {
             let pos = window.pageYOffset;
             if (pos > 0) {
-                this.scrollDiv.nativeElement.scrollTo(0, pos - 100); // how far to scroll on each step
+                this.scrollDiv.nativeElement.scrollTo(0, pos * 3); // how far to scroll on each step
             } else {
-                this.scrollDiv.nativeElement.clearInterval(scrollToTop);
+                 this.scrollDiv.nativeElement.clearInterval(scrollToTop); 
             }
             this.imageDiv.nativeElement.scrollTo(0,0);
         }, 16);
