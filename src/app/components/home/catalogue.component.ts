@@ -46,6 +46,7 @@ export class CatalogueComponent implements OnInit, OnDestroy {
     private sub: any;
 
     searchLastProducts? : string;
+    searchKey? : string;
 
     displaySpinner = false;
 
@@ -63,7 +64,10 @@ export class CatalogueComponent implements OnInit, OnDestroy {
             const lastPurchases = this.route.snapshot.paramMap.get('lastPurchases');
             this.searchLastProducts = lastPurchases;
             console.log('lastPurchases:' + lastPurchases);
-            this.catalogueService.getAllItems(lastPurchases).subscribe(resp => {
+            const searchKey = this.route.snapshot.paramMap.get('searchKey');
+            this.searchKey = searchKey;
+            console.log('searchKey:' + searchKey);
+            this.catalogueService.getAllItems(lastPurchases, searchKey).subscribe(resp => {
                 if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
                     resp.body.d.results.forEach(m => {
                         if (m) {
@@ -83,6 +87,9 @@ export class CatalogueComponent implements OnInit, OnDestroy {
             );
         } else {
             console.log('environment = LOCAL');
+            const searchKey = this.route.snapshot.paramMap.get('searchKey');
+            this.searchKey = searchKey;
+            console.log('searchKey:' + searchKey);
             this.sub = this.route.params.subscribe(params => {
                 console.log('environment = LOCAL - popola 1');
                 this.groupId = params['groupId'];
