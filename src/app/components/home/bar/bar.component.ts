@@ -35,6 +35,8 @@ export class BarComponent implements OnInit, OnDestroy {
   qty : number = 0;
   private cartSubscription : Subscription;
   
+  private searchPage : number = 0;
+
   constructor(private accountService : AccountService, private manageProducts : ManageProducts, 
     private cartService : CartService, private modalService: BsModalService,private router: Router, private changePage: ChangePage,
     private carrelloService: CarrelloService, private userDataSetService : UserDataSetService) { }
@@ -169,4 +171,15 @@ export class BarComponent implements OnInit, OnDestroy {
     this.router.navigate(['./home/cart']);
   }
 
+  public onSearch(value : string) {
+    console.log('onSearch:' + value);
+    this.changePage.goToPage(0);
+    if (this.searchPage === 0) {
+      this.searchPage = 1;
+      this.router.navigate(['./home/catalogue_search', { searchKey: value }]);
+    } else {
+      this.searchPage = 0;
+      this.router.navigate(['./home/catalogue', { searchKey: value }]);
+    }
+  }
 }

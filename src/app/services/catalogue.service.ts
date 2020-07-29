@@ -13,10 +13,24 @@ export class CatalogueService {
 
     constructor(private http: HttpClient, private accountService : AccountService) { }
 
-    public getAllItems(lastPurchases? : string) : Observable<any> {
+    public getAllItems(lastPurchases? : string, searchString? : string) : Observable<any> {
         const u : User = this.accountService.userValue;
-        const filter = { Email: (u !== undefined && u !== null ? u.username : ''), 
-            Token: (u !== undefined && u !== null ? u.token : ''), Langu : (u !== undefined && u !== null && u.lang !== undefined ? u.lang.toUpperCase() : '')};
+        let filter =  {};
+        if (searchString) {
+            filter = { 
+                Email: (u !== undefined && u !== null ? u.username : ''), 
+                Token: (u !== undefined && u !== null ? u.token : ''), 
+                Langu : (u !== undefined && u !== null && u.lang !== undefined ? u.lang.toUpperCase() : ''),
+                SearchString : searchString
+            };
+        } else {
+            filter = { 
+                Email: (u !== undefined && u !== null ? u.username : ''), 
+                Token: (u !== undefined && u !== null ? u.token : ''), 
+                Langu : (u !== undefined && u !== null && u.lang !== undefined ? u.lang.toUpperCase() : '')
+            };
+        }
+        
         const format = 'json';
         const outFilter = buildQuery({ filter,format });
         console.log('CatalogueService getAllItems filter:' + outFilter + ',lastPurchases:'+lastPurchases);

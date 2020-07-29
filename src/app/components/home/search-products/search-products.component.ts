@@ -63,10 +63,21 @@ export class SearchProductsComponent implements OnInit {
 
   @Input()
   searchLastProducts? : string;
+
+  @Input()
+  searchKey? : string;
   
+  searchProductValue : string = '';
+
   constructor(private fb: FormBuilder, private productsService: ProductsService, private catalogueService : CatalogueService) { }
 
   ngOnInit(): void {
+    if (this.searchKey) {
+      this.searchProductValue = this.searchKey;
+    } else {
+      this.searchProductValue = '';
+    }
+    
     if (environment && environment.oData) {
       this.catalogueService.getHierarchies().subscribe(resp => {
         if (resp && resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
