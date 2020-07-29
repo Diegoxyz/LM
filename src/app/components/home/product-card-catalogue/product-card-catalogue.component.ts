@@ -15,6 +15,7 @@ import { CatalogueService } from '@app/services/catalogue.service';
 import { TranslateService } from '@ngx-translate/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Materiale } from '@app/models/OData/MacchineSet/macchineset.entity';
 
 @Component({selector: 'app-product-catalogue-card',
 templateUrl: './product-card-catalogue.component.html',
@@ -42,6 +43,8 @@ export class ProductCardCatalogueComponent implements OnInit {
     strPrice = '';
 
     bsModalRef: NgbModalRef;
+
+    itemDetail : Product;
 
     constructor(private fb: FormBuilder,private manageProducts: ManageProducts, 
         private cartService : CartService,
@@ -238,7 +241,62 @@ export class ProductCardCatalogueComponent implements OnInit {
     }
 
     openModal(template) {
-        this.bsModalRef = this.modalService.open(template, { size: 'xl' });
+        if (template) {
+            if (environment && environment.oData) {
+                this.catalogueService.getItem(this.item.code).subscribe(resp => {
+                    if (resp.body && resp.body.d && resp.body.d) {
+                        const p = resp.body.d;
+                        const product = Materiale.fromJSON(p);
+                        /*this.itemDetail.code = product.code;
+                        this.itemDetail.description = product.description;
+                        this.itemDetail.price = p.Netpr;
+                        this.itemDetail.currency = product.currency;
+                        this.itemDetail.stock = product.stock;
+                        this.itemDetail.prodh = product.prodh;
+                        this.itemDetail.prodhx = product.prodhx;
+                        this.itemDetail.preferred = product.preferred;
+                        this.itemDetail.itemNumBom = product.itemNumBom;
+                        this.itemDetail.stockIndicator = product.stockIndicator;
+                        this.itemDetail.noteCliente = product.noteCliente;
+                        this.itemDetail.documentazione = product.documentazione;
+                        this.itemDetail.noteGenerali = product.noteGenerali;
+                        this.itemDetail.matNrSub = product.matNrSub;
+                        this.itemDetail.maktxSub = product.maktxSub;
+                        this.itemDetail.maxQuantity = product.maxQuantity;
+                        this.itemDetail.minQuantity = product.minQuantity;
+                        this.itemDetail.meins = product.meins;*/
+                        this.itemDetail = product;
+
+
+                        this.bsModalRef = this.modalService.open(template, { size: 'xl' });
+                    }
+                    
+                });
+            } else {
+                this.itemDetail = this.item;
+                this.itemDetail.code = this.item.code;
+                this.itemDetail.currency = this.item.currency;
+                this.itemDetail.description = this.item.description;
+                this.itemDetail.documentazione = 'Documentazione';
+                this.itemDetail.family = this.item.family;
+                this.itemDetail.itemNumBom = this.item.itemNumBom;
+                this.itemDetail.maktxSub = this.item.maktxSub;
+                this.itemDetail.matNrSub = this.item.matNrSub;
+                this.itemDetail.maxQuantity = this.item.maxQuantity;
+                this.itemDetail.meins = this.item.meins;
+                this.itemDetail.minQuantity = this.item.minQuantity;
+                this.itemDetail.noteCliente = 'Note cliente';
+                this.itemDetail.noteGenerali = 'Note generali';
+                this.itemDetail.price = this.item.price;
+                this.itemDetail.stock = this.item.stock;
+                this.itemDetail.prodhx = this.item.prodhx;
+                this.itemDetail.kdmat = this.item.kdmat;
+                this.itemDetail.stockIndicator = this.item.stockIndicator;
+                this.bsModalRef = this.modalService.open(template, { size: 'xl' });
+            }
+            
+        }
+        
       }
 /*       openInfoXl(template) {
         this.modalService.open(template, { size: 'xl' });

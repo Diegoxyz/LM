@@ -41,7 +41,7 @@
 
 /* div.scroll { 
   background-color: #ffffff; 
-  overflow-y: scroll; 
+  overflow-y: hidden; 
   overflow-x: hidden; 
   text-align:justify;
   max-height: 30%;

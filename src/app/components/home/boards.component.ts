@@ -41,6 +41,8 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
 
     prospective : Item;
 
+    selectedSection : Item;
+
     constructor(private productsService: ProductsService,private macchineService: MacchineSetService,
         private route: ActivatedRoute,private _router: Router, private sectionService : SectionService,
         private spinner: NgxSpinnerService
@@ -66,7 +68,6 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
            
 
          }); */
-
         if (environment && environment.oData) {
             this.spinner.show();
             this.macchineService.getAllMachines().subscribe(resp => {
@@ -81,6 +82,7 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
             });
         } else {
             this.machines = this.productsService.getAllMachines();
+            
         }
     }
 
@@ -134,6 +136,8 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
     }
 
     openProspective(prosp: Item) {
+        console.log('openProspective:' + prosp.code + '-' + prosp.description);
+        this.selectedSection = prosp;
         this.prospective = prosp;
         this.sectionToBeDisplayed = 2;
     }
@@ -167,4 +171,25 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
         }
     }
 
+    public previousSection($event) {
+        let temp : Item = undefined;
+        this.sections.forEach(s => {
+            temp = s;
+            if (this.selectedSection.code === s.code) {
+                this.openProspective(temp);
+            }             
+        });
+    }
+
+    public nextSection($event) {
+        let found = false;
+        this.sections.forEach(s => {
+            if (this.selectedSection.code === s.code) {
+                found = true;
+            } else if (found) {
+                this.openProspective(s);
+            }
+             
+        })
+    }
 }

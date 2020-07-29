@@ -150,7 +150,7 @@ input[type=number]::-webkit-inner-spin-button {
 
 
 h6{
-  text-align: right;
+  text-align: left;
   /* padding-right: 1rem; */
 }
 

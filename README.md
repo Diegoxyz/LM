@@ -37,6 +37,8 @@ npm install @ngx-translate/http-loader --save
 Import moment (https://medium.com/@jek.bao.choo/steps-to-add-moment-js-to-angular-cli-f9ab28e48bf0#:~:text=Introduction-,Moment.,to%20Angular%20(application%20platform).):
 npm install moment --save
 
+Leggere file excel: npm install --save xlsx
+
 Modifiche fatte dopo user management:
 
 - Aggiunta classe AuthGuard per verificare se l'utente è loggato

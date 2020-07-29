@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Renderer2, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, Renderer2, ViewChild, ElementRef, AfterViewInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { faShoppingCart, faCircle } from '@fortawesome/free-solid-svg-icons';
 import { BsModalRef } from 'ngx-bootstrap/modal';
@@ -26,6 +26,17 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
     @Input()
     item : Item;
 
+    @Input()
+    machine: Item;
+
+    @Input()
+    sections: Item[];
+
+    @Input()
+    section: Item;
+
+    @Output() closeProspective = new EventEmitter<Item>();
+
     quantity : number = 0;
     selectedQuantity : number = 0;
     faShoppingCart=faShoppingCart;
@@ -34,6 +45,9 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
     bsModalRef: BsModalRef;
 
     items : Product[] =[];
+
+    isFirstOne = true;
+    isLastOne = true;
 
     thumbnail: any;
 
@@ -45,6 +59,7 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
     public removeEventListener1: () => void;
     public removeEventListener2: () => void;
     public removeEventListener3: () => void;
+    newSection : string = 'unknown';
 
     // just for test with no odata
     // svgData = 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNy4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iNDcycHgiIGhlaWdodD0iMzkycHgiIHZpZXdCb3g9IjAgMCA0NzIgMzkyIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA0NzIgMzkyIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxnIGlkPSJMYXllcl8zIj4NCgk8cGF0aCBmaWxsPSIjRkZCNTY0IiBkPSJNMjg4LjcsMTg3LjdjLTUzLjctMzIuNi0xMTkuOCwxLTExOS44LDFzMTEuNiw5Mi42LDExLjQsMTIxLjRjLTAuOCwyLTEsNC4xLTAuNCw2LjMNCgkJYy0wLjIsMS4yLTAuNiwxLjctMSwxLjdoMS43YzEuMSwzLDIuOSw0LjMsNS44LDUuM2MxMC45LDQsMjEuNSw2LjgsMzMuMSw3LjdjMy42LDAuMyw3LjEsMC4yLDEwLjUtMC4yYzEuNiwxLjUsNCwyLjQsNy4xLDIuMQ0KCQljMTMuMi0xLjIsMjgtMS45LDM4LjYtMTAuM2MxLjctMS40LDIuNy0yLjcsMy4xLTQuN2gwLjhMMjg4LjcsMTg3Ljd6Ii8+DQoJPHBvbHlnb24gZmlsbD0iIzUyRTJENyIgcG9pbnRzPSIxNzMuMiwxNDYuNCAxODAuNSwxODQgMjA2LjYsMTc3LjIgMjAwLjEsMTQ0IAkiLz4NCgk8cGF0aCBmaWxsPSIjRkZGQkU4IiBkPSJNMjIyLjYsMTMzLjhjMCwwLTE3LjktMTUuNi01LjMsMzkuOWMwLjYsMi41LDE5LjQsMy40LDE5LjQsMy40TDIyMi42LDEzMy44eiIvPg0KCTxwYXRoIGZpbGw9IiNGOUEwMzUiIGQ9Ik0xODguNiwxODEuNGMwLDAtMjAuNiwwLTIwLjYsMTIuNGMwLjEsMTcuMiwxMy40LDEwNS42LDEzLjEsMTE5LjljLTAuMiw5LjMsMTkuMSwxMy42LDE5LjEsMTMuNiIvPg0KCTxwYXRoIGZpbGw9IiNGRkI1NjQiIGQ9Ik0yMDAuMiw5My4zYzAsMCw5LjcsNTAuMiwxMS42LDQ4LjRjMi0xLjgsMTAuOC03LjksMTAuOC03LjlsLTEzLjUtNDAuNUgyMDAuMnoiLz4NCgk8cGF0aCBmaWxsPSIjRkZGQkU4IiBkPSJNMTg0LjEsMTIzLjZjMCwwLTEyLjksMjQuNi0xMC45LDIyLjhjMi0xLjgsMjctMi40LDI3LTIuNEwxODQuMSwxMjMuNnoiLz4NCgk8cGF0aCBmaWxsPSIjRjI1RjY4IiBkPSJNMjU3LjksOTIuOGMtMS41LDItMyw0LjEtNC40LDYuM2MtMS4yLDEuOS0yLjksMi4zLTQuNiwxLjljLTEuNywzLjQtMy41LDYuNy01LjcsOS44DQoJCWMtNi4yLDIyLjQtMC43LDQxLjctOC43LDYzLjhjLTEuMywzLjUsMC4zLDAuMywyLjIsMi41YzUuNi0zLDMxLjEsMy41LDM4LjcsNC4yYzEuNy0yLjMtOS4xLTMuMy0xMC4zLTYuNmMxLjQsMy45LDAuMi01LjIsMC4yLTYuMQ0KCQljMC4zLTIuNiwwLTUuNSwwLjMtOC4xYzAuNy00LjYtMS40LTYuNC0wLjgtMTFjMS45LTE0LjUsMy40LTI5LjQsMy00NC4xYy0yLjItMy45LTQuMS03LjktNS42LTEyLjENCgkJQzI2MSw5Mi45LDI1OS40LDkyLjcsMjU3LjksOTIuOHoiLz4NCjwvZz4NCjxnIGlkPSJMYXllcl8yIj4NCgkNCgkJPHBvbHlsaW5lIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0FGM0E0NiIgc3Ryb2tlLXdpZHRoPSI0Ljk3NjMiIHN0cm9rZS1saW5lY2FwPSJzcXVhcmUiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgcG9pbnRzPSINCgkJMjM4LDE3MS4xIDI0NS4yLDEwOSAyNjAuNCw4Ni45IDI2Ny43LDExMC44IDI2NS4xLDE3NC44IAkiLz4NCgkNCgkJPHBvbHlsaW5lIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0FGM0E0NiIgc3Ryb2tlLXdpZHRoPSI0Ljk3NjMiIHN0cm9rZS1saW5lY2FwPSJzcXVhcmUiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgcG9pbnRzPSINCgkJMTgwLjIsMTgyLjQgMTczLjgsMTQ0IDE4NC4xLDEyMy42IDIwMC4xLDEzOS4yIDIwNi42LDE3Ni4yIAkiLz4NCgkNCgkJPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSIjQUYzQTQ2IiBzdHJva2Utd2lkdGg9IjQuOTc2MyIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBkPSINCgkJTTIxOC4yLDE3NC44YzAsMC00LjUtMTYuNS05LTM2LjRjLTQuOC0yMS4zLTkuNy00My44LTktNDUuMWMxLjMtMi42LDUuNC00LjgsOC45LDBjMiwyLjcsNy45LDIxLjYsMTMuNSw0MC41DQoJCWM2LjMsMjEuMSwxMi4yLDQyLjMsMTEuOSw0MC44Ii8+DQoJPHBhdGggZmlsbD0iI0FGM0E0NiIgc3Ryb2tlPSIjQUYzQTQ2IiBzdHJva2Utd2lkdGg9IjIuNDg4MiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBkPSJNMjAwLjIsOTMuM2MtMTEuNi0xMi4yLTEwLjQtMTkuMi02LjYtMjMNCgkJYzYuNi02LjYtMi44LTE2LjYtMC45LTE2LjhjNi42LTAuNiwyOC42LDkuNiwxNy4zLDM2LjkiLz4NCgkNCgkJPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSIjQUYzQTQ2IiBzdHJva2Utd2lkdGg9IjQuOTc2MyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIGQ9Ig0KCQlNMjQ1LjIsMTA5YzAsMCwxMS4zLTQuOCwyMi41LDEuOSIvPg0KCQ0KCQk8cGF0aCBmaWxsPSIjRkZGQkU4IiBzdHJva2U9IiNBRjNBNDYiIHN0cm9rZS13aWR0aD0iNC45NzYzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgZD0iDQoJCU0yMDAuMSwxMzkuMmMwLDQuNy0xMi4yLDQuNy0xMi4yLDQuN2MtMy4yLDUuMy0xNC4xLDAtMTQuMSwwIi8+DQoJPHBhdGggZmlsbD0iI0FGM0E0NiIgZD0iTTE5MC45LDEzMC4zYzMuNCwzLjMtMTIsMy41LTEyLDMuNWw1LjEtMTAuMkwxOTAuOSwxMzAuM3oiLz4NCgkNCgkJPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSIjQUYzQTQ2IiBzdHJva2Utd2lkdGg9IjQuOTc2MyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIGQ9Ig0KCQlNMjExLjgsMTQxLjZjNy43LDAsMTEuNC02LDExLjQtNiIvPg0KCQ0KCQk8cGF0aCBmaWxsPSJub25lIiBzdHJva2U9IiNBRjNBNDYiIHN0cm9rZS13aWR0aD0iNC45NzYzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgZD0iDQoJCU0xNjksMTg4LjhMMTY5LDE4OC44YzQzLjktMjEuNSw5NC4zLTE2LjYsMTE5LjgtMS4xTDI3NywzMjEuOWMwLDAtMzkuOSwyMy4yLTk1LjItMS4xTDE2OSwxODguOHoiLz4NCgkNCgkJPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSIjQUYzQTQ2IiBzdHJva2Utd2lkdGg9IjQuODIyOCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIGQ9Ig0KCQlNMjU1LjcsMjcwLjRsLTIuMi0zMi42bC0yNC40LTE4LjlMMjA1LDIzNi42YzAuMywxMS44LDEuNCwyMi44LDEuNywzNC42QzIwNi42LDI3MS4yLDIzNiwyNzUuOSwyNTUuNywyNzAuNHoiLz4NCgkNCgkJPGxpbmUgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjQUYzQTQ2IiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB4MT0iMjI5LjUiIHkxPSIyMTkiIHgyPSIyMjkuNSIgeTI9IjI0NiIvPg0KCQ0KCQk8cGF0aCBmaWxsPSJub25lIiBzdHJva2U9IiNBRjNBNDYiIHN0cm9rZS13aWR0aD0iMy44NTgyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgZD0iDQoJCU0yMzMuMiwyNDAuOGMtMS41LDAtMi45LDAuMy02LjgsMC40YzAsMC0xLTAuOS0wLjEsNS45YzIuOSwwLjEsNCwwLjIsNi45LDAuMkMyMzMuMiwyNDcuNCwyMzMuMiwyNDIuNSwyMzMuMiwyNDAuOHoiLz4NCjwvZz4NCjwvc3ZnPg0K';
@@ -73,116 +88,10 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
         this.addProductForm = this.fb.group({});
 
         if (environment && environment.oData) {
-            this.spinner.show();
-            
-        // Carico l'immagine
-        if (this.item.picId) {
-            this.binDataMatnrSetService.getImage(this.item.code,this.item.picId).subscribe((resp : any) => {
-                if (resp.body && resp.body.d && resp.body.d) {
-                    if (resp.body.d.Filename) {
-                        const fileName = resp.body.d.Filename && resp.body.d.Filename.substring(resp.body.d.Filename.lastIndexOf('.') + 1);
-                        // let objectURL = 'data:image/jpeg;base64,' + resp.body.d.BinDoc;
-                        if (fileName && fileName === 'jpg' || fileName === 'png') {
-                            let objectURL = 'data:image/'+fileName+';base64,' + resp.body.d.BinDoc;
-                            this.thumbnail = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-                        } else if (fileName && fileName === 'svg') {
-                            this.svgThumbnail = resp.body.d.BinDoc;
-
-                            const b64toBlob = (b64Data, contentType, sliceSize=512) => {
-                                const byteCharacters = atob(b64Data);
-                                const byteArrays = [];
-                              
-                                for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-                                  const slice = byteCharacters.slice(offset, offset + sliceSize);
-                              
-                                  const byteNumbers = new Array(slice.length);
-                                  for (let i = 0; i < slice.length; i++) {
-                                    byteNumbers[i] = slice.charCodeAt(i);
-                                  }
-                              
-                                  const byteArray = new Uint8Array(byteNumbers);
-                                  byteArrays.push(byteArray);
-                                }
-                              
-                                const blob = new Blob(byteArrays, {type: contentType});
-                                return blob;
-                            }
-                    
-                            const blob = b64toBlob(resp.body.d.BinDoc, 'image/svg+xml');
-                            console.log('blob:' + blob);
-                            const blobUrl = URL.createObjectURL(blob);
-                    
-                            this.blobUrl = blobUrl;
-                            console.log('blobUrl:' + this.blobUrl);
-                                        /* Commentati perché danno errore perché this.bjId è non definito
-                            this.removeEventListener1 = this.renderer.listen(this.objId.nativeElement,'click', (event) => {
-                                console.log('event on click1:' + event);
-                                alert('event on click1');
-                            });
-                            this.removeEventListener2 = this.renderer.listen(this.objId.nativeElement,'mousemove', (event) => {
-                                console.log('event on mousemove2:' + event);
-                                // alert('event on mousemove2');
-                            });
-                            this.removeEventListener3 = this.renderer.listen(this.noImage.nativeElement,'mousemove', (event) => {
-                                console.log('event on mousemove3:' + event);
-                                // alert('event on mousemove3');
-                            });
-                            */
-                        } else {
-                            console.log('no fileName');
-                        }                         
-                    }
-                }
-            });
-            }
-                this.sectionMaterial.getSectionMaterial(this.item.code).subscribe((resp:any) => {
-                    this.items = [];
-                    if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
-                        resp.body.d.results.forEach(m => {
-                            if (m) {
-                                const product = Materiale.fromJSON(m);
-                                if (product.picId) {
-                                    this.binDataMatnrSetService.getImage(product.code,product.picId).subscribe((resp : any) => {
-                                        if (resp.body && resp.body.d && resp.body.d) {
-                                            if (resp.body.d.Filename) {
-                                                const fileName = resp.body.d.Filename && resp.body.d.Filename.substring(resp.body.d.Filename.lastIndexOf('.') + 1);
-                                                // let objectURL = 'data:image/jpeg;base64,' + resp.body.d.BinDoc;
-                                                if (fileName && fileName === 'jpg' || fileName === 'png') {
-                                                    let objectURL = 'data:image/'+fileName+';base64,' + resp.body.d.BinDoc;
-                                                    product.thumbnail = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-                                                } else if (fileName && fileName === 'svg') {
-                                                    let objectURL = 'data:image/svg+xml;base64, ' + resp.body.d.BinDoc;
-                                                    product.thumbnail= this.sanitizer.bypassSecurityTrustResourceUrl(objectURL);
-                                                } else {
-                                                    console.log('no fileName for product:' + product.code);
-                                                }                         
-                                            }
-                                        }
-                                        this.items.push(product);
-                                    });
-                                } else {
-                                    this.items.push(product);
-                                }
-                                this.addProductForm.addControl(product.code,new FormControl(0, Validators.required));
-                                console.log('added control with this code:' + product.code);
-                                this.cartService.getCart().orders.forEach(o => {
-                                    if (o && o.product && o.product.code === product.code) {
-                                        this.setQtyValue(o.product.code, o.quantity);
-                                    }
-                                });
-                            }
-                        }
-                        
-                        );
-                    }
-                    
-                })
-            setTimeout(() => {
-                this.spinner.hide();
-            } , 3000);
+            this.loadData();
         } else {
             // this.thumbnail = 'assets/img/coffeeMachines/tavola2_bigger.gif';
-            this.svgThumbnail = this.svgData;
+            /*this.svgThumbnail = this.svgData;
 
             const b64toBlob = (b64Data, contentType, sliceSize=512) => {
                 const byteCharacters = atob(b64Data);
@@ -209,7 +118,7 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
             const blobUrl = URL.createObjectURL(blob);
     
             this.blobUrl = blobUrl;
-            console.log('blobUrl:' + this.blobUrl);
+            console.log('blobUrl:' + this.blobUrl);*/
 
             /*this.removeEventListener1 = this.renderer.listen(this.objId.nativeElement,'click', (event) => {
                 console.log('event on click1:' + event);
@@ -238,9 +147,139 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
                 this.qty.setValue(10);
             }
 
-        }    
+        } 
+        
+        this.updateButtons();
+        
     }
 
+    private updateButtons() {
+        if (this.sections.length > 1) {
+            this.isFirstOne = false;
+            this.isLastOne = false;
+            for (let i = 0; i < this.sections.length; i++) {
+                if (this.section.code === this.sections[i].code){
+                    if (i === 0) {
+                        this.isFirstOne = true;
+                    } else if (i === this.sections.length - 1) {
+                        this.isLastOne = true;
+                    }
+                }
+            }
+        }
+    }
+    private loadData() {
+        if (environment && environment.oData) {
+            this.spinner.show();
+            this.thumbnail = undefined;
+            this.svgThumbnail = undefined;
+            // Carico l'immagine
+            if (this.item.picId) {
+                this.binDataMatnrSetService.getImage(this.item.code,this.item.picId).subscribe((resp : any) => {
+                    if (resp.body && resp.body.d && resp.body.d) {
+                        if (resp.body.d.Filename) {
+                            const fileName = resp.body.d.Filename && resp.body.d.Filename.substring(resp.body.d.Filename.lastIndexOf('.') + 1);
+                            // let objectURL = 'data:image/jpeg;base64,' + resp.body.d.BinDoc;
+                            if (fileName && fileName === 'jpg' || fileName === 'png') {
+                                let objectURL = 'data:image/'+fileName+';base64,' + resp.body.d.BinDoc;
+                                this.thumbnail = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+                            } else if (fileName && fileName === 'svg') {
+                                this.svgThumbnail = resp.body.d.BinDoc;
+
+                                const b64toBlob = (b64Data, contentType, sliceSize=512) => {
+                                    const byteCharacters = atob(b64Data);
+                                    const byteArrays = [];
+                                
+                                    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+                                    const slice = byteCharacters.slice(offset, offset + sliceSize);
+                                
+                                    const byteNumbers = new Array(slice.length);
+                                    for (let i = 0; i < slice.length; i++) {
+                                        byteNumbers[i] = slice.charCodeAt(i);
+                                    }
+                                
+                                    const byteArray = new Uint8Array(byteNumbers);
+                                    byteArrays.push(byteArray);
+                                    }
+                                
+                                    const blob = new Blob(byteArrays, {type: contentType});
+                                    return blob;
+                                }
+                        
+                                const blob = b64toBlob(resp.body.d.BinDoc, 'image/svg+xml');
+                                console.log('blob:' + blob);
+                                const blobUrl = URL.createObjectURL(blob);
+                        
+                                this.blobUrl = blobUrl;
+                                console.log('blobUrl:' + this.blobUrl);
+                                            /* Commentati perché danno errore perché this.bjId è non definito
+                                this.removeEventListener1 = this.renderer.listen(this.objId.nativeElement,'click', (event) => {
+                                    console.log('event on click1:' + event);
+                                    alert('event on click1');
+                                });
+                                this.removeEventListener2 = this.renderer.listen(this.objId.nativeElement,'mousemove', (event) => {
+                                    console.log('event on mousemove2:' + event);
+                                    // alert('event on mousemove2');
+                                });
+                                this.removeEventListener3 = this.renderer.listen(this.noImage.nativeElement,'mousemove', (event) => {
+                                    console.log('event on mousemove3:' + event);
+                                    // alert('event on mousemove3');
+                                });
+                                */
+                            } else {
+                                console.log('no fileName');
+                            }                         
+                        }
+                    }
+                });
+                }
+                    this.sectionMaterial.getSectionMaterial(this.item.code).subscribe((resp:any) => {
+                        this.items = [];
+                        if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
+                            resp.body.d.results.forEach(m => {
+                                if (m) {
+                                    const product = Materiale.fromJSON(m);
+                                    if (product.picId) {
+                                        this.binDataMatnrSetService.getImage(product.code,product.picId).subscribe((resp : any) => {
+                                            if (resp.body && resp.body.d && resp.body.d) {
+                                                if (resp.body.d.Filename) {
+                                                    const fileName = resp.body.d.Filename && resp.body.d.Filename.substring(resp.body.d.Filename.lastIndexOf('.') + 1);
+                                                    // let objectURL = 'data:image/jpeg;base64,' + resp.body.d.BinDoc;
+                                                    if (fileName && fileName === 'jpg' || fileName === 'png') {
+                                                        let objectURL = 'data:image/'+fileName+';base64,' + resp.body.d.BinDoc;
+                                                        product.thumbnail = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+                                                    } else if (fileName && fileName === 'svg') {
+                                                        let objectURL = 'data:image/svg+xml;base64, ' + resp.body.d.BinDoc;
+                                                        product.thumbnail= this.sanitizer.bypassSecurityTrustResourceUrl(objectURL);
+                                                    } else {
+                                                        console.log('no fileName for product:' + product.code);
+                                                    }                         
+                                                }
+                                            }
+                                            this.items.push(product);
+                                        });
+                                    } else {
+                                        this.items.push(product);
+                                    }
+                                    this.addProductForm.addControl(product.code,new FormControl(0, Validators.required));
+                                    console.log('added control with this code:' + product.code);
+                                    this.cartService.getCart().orders.forEach(o => {
+                                        if (o && o.product && o.product.code === product.code) {
+                                            this.setQtyValue(o.product.code, o.quantity);
+                                        }
+                                    });
+                                }
+                            }
+                            
+                            );
+                        }
+                        
+                    });
+                setTimeout(() => {
+                    this.spinner.hide();
+                } , 3000);
+        }
+    }
     ngAfterViewInit() {
         console.log('ngAfterViewInit start');
 
@@ -396,7 +435,44 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
     }
 
     onBack(){
-        this.router.navigate(['/home']);
+        this.closeProspective.emit(this.machine);
+        // this.router.navigate(['./home/sections',{ machineCode: this.machine.code }]);
     }
 
+    previousSection() {
+        console.log('previousSection');
+        let tmp : Item;
+        for(let i = 0; i < this.sections.length; i++) {
+            const s = this.sections[i];
+            if (tmp && s.code === this.section.code) {
+                this.newSection = tmp.code;
+                this.item = tmp;
+                this.section = tmp;
+                this.loadData();
+                this.updateButtons();
+                return;
+            } else {
+                tmp = s;
+            }
+        }
+    }
+
+    nextSection() {
+        console.log('nextSection');
+        let found : boolean = false;
+        for (let i = 0; i < this.sections.length; i++)  {
+            const s = this.sections[i];
+            if (found) {
+                this.newSection = s.code;
+                this.item = s;
+                this.section = s;
+                this.loadData();
+                this.updateButtons();
+                return;
+            }
+            if (s.code === this.section.code) {
+                found = true;
+            }
+        }
+    }
 }
