@@ -6,6 +6,7 @@ import { LoginComponent } from './login.component';
 import { LostCredentialsComponent } from './lost-credentials.component';
 import { ChangePasswordComponent } from './change-password.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { APP_BASE_HREF, LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 const routes: Routes = [
     {
@@ -21,6 +22,10 @@ const routes: Routes = [
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+    exports: [RouterModule],
+    providers: [
+        { provide: APP_BASE_HREF, useValue: '!' },
+        { provide: LocationStrategy, useClass: HashLocationStrategy },
+      ] 
 })
 export class AccountRoutingModule { }
