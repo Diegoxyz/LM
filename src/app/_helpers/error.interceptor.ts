@@ -24,8 +24,12 @@ export class ErrorInterceptor implements HttpInterceptor {
                 if (event instanceof HttpResponse) {
                     console.log('event--->>>', event);
                     if (event.headers && event.headers.get('sap-message')) {
-                        console.log('sap-message:' + event.headers.get('sap-message'));
-                        this.accountService.logout();
+                        const sapMessage = event.headers.get('sap-message');
+                        console.log('error interceptor sap-message:' + sapMessage);
+                        /*if (sapMessage.code === 'ZSPB2B/000') {
+                            this.accountService.logout();
+                        }*/
+                        this.accountService.checkSession();
                     }
                 }
                 return event;

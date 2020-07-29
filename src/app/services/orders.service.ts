@@ -82,4 +82,61 @@ export class OrdersService {
         return this.http.post<HttpResponse<any>>(
             environment.oData_destination +  'OrdineSet', order, options);
     }
+
+    /**
+     * Get the list of orders
+     * ZSD_SP_SRV/ListaOrdiniSet?$format=json&$filter=Email eq 'roberto.mazzocato@eservices.it' 
+     * and Token eq '000D3A2544DE1EDAB4AD2A801720C28D' and Langu eq 'I' 
+     * and Vbeln eq '' 
+     * and ErdatFrom eq datetime'2020-06-25T00:00:00' 
+     * and ErdatTo eq datetime'2020-07-25T00:00:00'
+     */
+    public getOrders(dateFrom?: string, dateTo?: string) : Observable<any> {
+        const u : User = this.accountService.userValue;
+        let username : string = '';
+        let token : string = '';
+        let lang : string = '';
+        if (u !== undefined && u !== null) {
+            username = u.username;
+            token = u.token;
+            lang = u.lang ? u.lang.toUpperCase() : '';
+        }
+
+        const dateFormat = 'YYYY-MM-DD';
+        let df : string = moment().format(dateFormat);
+        if (dateFrom) {
+            df = dateFrom;
+        } else {
+            df = df + 'T00:00:00';
+        }
+
+        let dt : string = moment().add(30,'days').format(dateFormat);
+        if (dateTo) {
+            dt = dateFrom;
+        } else {
+            dt = dt + 'T00:00:00';
+        }
+        console.log('getOrders: df:' + df + ',dt:' + dt);
+        
+        const format = 'json';
+        const outFilter = buildQuery({ format });
+
+        const email = 'Email eq ' + '\'' + username + '\'';
+        const tkn = 'Token eq ' + '\'' + token + '\'';
+        const langu = 'Langu eq ' + '\'' + lang + '\'';
+        const vbeln = 'Vbeln eq ' + '\'\'';
+        const erdatFrom = 'ErdatFrom eq datetime\'' + df + '\'';
+        const erdatTo = 'ErdatTo eq datetime\'' + dt + '\'';
+        const url = outFilter.concat('&').concat('$filter=').concat(email).concat(' and ').concat(tkn).concat(' and ').concat(langu).concat(' and ')
+                .concat(vbeln).concat(' and ').concat(erdatFrom).concat(' and ').concat(erdatTo);
+
+        console.log('outFilter:' + outFilter, 'url:' + url);
+
+        let headers = new HttpHeaders({
+            'Content-Type': 'application/json' });
+            let options = { headers: headers, observe: "response" as 'body'};
+        
+        return this.http.get<HttpResponse<any>>(
+            environment.oData_destination + 'ListaOrdiniSet' + url, options);
+    }
 }

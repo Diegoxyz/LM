@@ -10,6 +10,8 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ProductCardCatalogueComponent } from './product-card-catalogue/product-card-catalogue.component';
 import { Product } from '@app/models/item';
 import { OrderProductComponent } from './order-product/order-product.component';
+import { environment } from '@environments/environment';
+import { OrdersService } from '@app/services/orders.service';
 
 @Component({
     selector: 'app-orders',
@@ -43,10 +45,17 @@ import { OrderProductComponent } from './order-product/order-product.component';
     };
     bsModalRef: BsModalRef;
     
-    constructor(private accountService : AccountService, private cartService : CartService, private modalService: BsModalService) { }
+    constructor(private accountService : AccountService, private cartService : CartService, 
+      private modalService: BsModalService, private ordersService : OrdersService) { }
 
     ngOnInit(): void {
 
+      if (environment && environment.oData) {
+        this.ordersService.getOrders().subscribe(resp => {
+          console.log('resp:' + resp);
+        })
+      }
+      
       const user : User = this.accountService.userValue;
       const customer : Customer = {
         firstName : user.username,
