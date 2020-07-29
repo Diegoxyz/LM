@@ -489,6 +489,6 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
                  this.scrollDiv.nativeElement.clearInterval(scrollToTop); 
             }
             this.imageDiv.nativeElement.scrollTo(0,0);
-        }, 16);
+        }, 500);
     }
 }

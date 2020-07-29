@@ -29,6 +29,7 @@
 .board-image {
   width: 70%;
   margin-right: 0%;
+/*   height: 700px; */
 /*   max-height: fit-content; */
 /*   border: solid 1px blueviolet; */
 }
@@ -267,4 +268,9 @@ padding-right: 4px;
   padding-right: 2px;
   padding-top: 2px; 
   padding-bottom: 0px;
+}
+
+#btn-back{
+  margin: auto;
+  text-align: center;
 }

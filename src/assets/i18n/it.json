@@ -111,7 +111,8 @@
         "customerNote":"Note cliente",
         "documentation":"Documentazione",
         "generalNote":"Note generali",
-        "substituteMaterialNum":"Mat.Sostitutivo"
+        "substituteMaterialNum":"Mat.Sostitutivo",
+        "closeSection": "chiudi sezione"
     }
     
 

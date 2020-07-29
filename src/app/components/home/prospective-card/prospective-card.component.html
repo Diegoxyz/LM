@@ -38,9 +38,9 @@
                     </button>
                 </div>
 
-                <div class="col-md-4">
+                <div id="btn-back"class="col-md-4">
                     <button class="btn btn-primary"  (click)="onBack()">
-                        CHIUDI SEZIONE
+                        <h5>{{ 'closeSection' | translate }}</h5>
                     </button>
                 </div>
 
@@ -90,7 +90,7 @@
                                         <div>Position:</div>
                                     </div>
                                     <div id="item-num" class="col-md-8">
-                                        <div class="blue-square">{{ item.itemNumBom }}</div>
+                                        <div class="blue-square">{{ item.strItemNumBom }}</div>
                                     </div>
                                 </div>
 

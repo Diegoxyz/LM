@@ -111,7 +111,8 @@
         "customerNote":"Customer note",
         "documentation":"Documentation",
         "generalNote":"General Note",
-        "substituteMaterialNum":"Substitute Material"
+        "substituteMaterialNum":"Substitute Material",
+        "closeSection": "close section"
     }
     
 }
