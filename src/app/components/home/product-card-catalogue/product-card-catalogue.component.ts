@@ -6,7 +6,7 @@ import { CartService } from '@app/services/cart.service';
 import { faShoppingCart, faCircle, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { BinDataMatnrSetService } from '@app/models/OData/BinDataMatnrSet/bindatamatnrset.service';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { environment } from '@environments/environment';
 import { AccountService } from '@app/services/account.service';
 import { CarrelloService } from '@app/services/carrello.service';
@@ -301,4 +301,15 @@ export class ProductCardCatalogueComponent implements OnInit {
 /*       openInfoXl(template) {
         this.modalService.open(template, { size: 'xl' });
       } */
+
+    public getPrice(price : number) : string {
+        if (price) {
+            return price.toFixed(2);
+        }
+        return '0';
+    }
+
+    public getUrl() {
+        return this.sanitizer.bypassSecurityTrustUrl(this.itemDetail.documentazione);
+    }
 }

@@ -91,7 +91,7 @@ export class OrdersService {
      * and ErdatFrom eq datetime'2020-06-25T00:00:00' 
      * and ErdatTo eq datetime'2020-07-25T00:00:00'
      */
-    public getOrders(dateFrom?: string, dateTo?: string) : Observable<any> {
+    public getOrders(dateFrom?: string, dateTo?: string, orderNumber? : string) : Observable<any> {
         const u : User = this.accountService.userValue;
         let username : string = '';
         let token : string = '';
@@ -103,28 +103,30 @@ export class OrdersService {
         }
 
         const dateFormat = 'YYYY-MM-DD';
-        let df : string = moment().format(dateFormat);
+        let df : string = moment().add(-30,'days').format(dateFormat);
         if (dateFrom) {
             df = dateFrom;
-        } else {
-            df = df + 'T00:00:00';
-        }
+        } 
+        df = df + 'T00:00:00';
 
-        let dt : string = moment().add(30,'days').format(dateFormat);
+        let dt : string = moment().format(dateFormat);
         if (dateTo) {
-            dt = dateFrom;
-        } else {
-            dt = dt + 'T00:00:00';
+            dt = dateTo;
         }
-        console.log('getOrders: df:' + df + ',dt:' + dt);
+        dt = dt + 'T00:00:00';
         
+        console.log('getOrders: df:' + df + ',dt:' + dt);
+        let Vbeln = '';
+        if (orderNumber) {
+            Vbeln = orderNumber;
+        }
         const format = 'json';
         const outFilter = buildQuery({ format });
 
         const email = 'Email eq ' + '\'' + username + '\'';
         const tkn = 'Token eq ' + '\'' + token + '\'';
         const langu = 'Langu eq ' + '\'' + lang + '\'';
-        const vbeln = 'Vbeln eq ' + '\'\'';
+        const vbeln = 'Vbeln eq ' + '\'' + Vbeln + '\'';
         const erdatFrom = 'ErdatFrom eq datetime\'' + df + '\'';
         const erdatTo = 'ErdatTo eq datetime\'' + dt + '\'';
         const url = outFilter.concat('&').concat('$filter=').concat(email).concat(' and ').concat(tkn).concat(' and ').concat(langu).concat(' and ')

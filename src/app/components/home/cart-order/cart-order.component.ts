@@ -58,7 +58,7 @@ export class CartOrderComponent implements OnInit {
                     
                 })
             } else {
-                this.isError = false;
+                this.isError = true;
             }
         }
     }
@@ -123,7 +123,7 @@ export class CartOrderComponent implements OnInit {
                             this.manageProducts.changeProduct(this.order.product,0);
                             this.order.quantity = 0;
                             this.totalPrice = this.order.quantity * this.order.product.price;
-                            this.newOrder.emit(this.order);
+                            this.deleteOrder.next(this.order);
                         },
                         error => {
                             console.log('error delete:' + error);
@@ -132,6 +132,6 @@ export class CartOrderComponent implements OnInit {
                 });
         }
         
-        this.deleteOrder.next(this.order);
+        
     }
 }

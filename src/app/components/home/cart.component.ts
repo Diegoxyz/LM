@@ -167,7 +167,6 @@ export class CartComponent implements OnInit, OnDestroy {
                             const csrftoken : string = response1.headers.get('X-CSRF-Token');
                             this.carrelloService.deleteFromCarrello(csrftoken, order.product.code).subscribe(d => {
                                 console.log('delete went fine');
-                                this.manageProducts.changeProduct(order.product,0);
                                 this.deleteOrder(order);
                             },
                             error => {
@@ -211,6 +210,7 @@ export class CartComponent implements OnInit, OnDestroy {
 
     deleteOrder(order) {
         if (order) {
+            this.manageProducts.changeProduct(order.product,0);
             const tempOrders : Order[] = new Array<Order>();
             this.totalQuantity = 0;
             this.totalPrice = 0;

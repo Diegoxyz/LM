@@ -21,8 +21,8 @@
     </div>
     <div  class="col-2" style="margin: auto;" >
         <i *ngIf="isError" class="fa fa-exclamation-triangle" style="color: #dc3545;"></i>
-        <i *ngIf="!isError" class="fa fa-check" style="color: #2196F3;"></i>
-        <span style="background-color: #dc3545;">{{ order.error }}</span>
+        <i *ngIf="!isError" class="fa fa-check" style="color: #2196F3;"></i><br />
+        <span>{{ order.error }}</span>
     </div>
     <div  class="col-1 delete-column" style="margin: auto;">
         <button (click)="onDeleteOrder()" style="background-color: transparent;">

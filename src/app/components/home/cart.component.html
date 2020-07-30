@@ -6,6 +6,7 @@
     <div class="align-items-center justify-content-center">
         <div Id="step" class="col-md-12 text-center" >
             <h5>{{ 'step1' | translate }}</h5>
+        </div>
     </div>
 </div>
 <div style="margin-top: 5%; margin-left: 25%; max-width: 50%;">
@@ -17,7 +18,8 @@
             <span>{{ loadingCartErrorMessage }}</span>
         </div>
         <div style="margin-top: 2%;"><input #loadFromFile type="file" class="btn btn-primary" (change)="onFileChange($event)" />
-            <button *ngIf="loadingFromFile" class="btn" style="background-color: transparent;" (click)="reset()"><i class="fa fa-remove" aria-hidden="true" style="color:#dc3545;"></i></button></div>
+            <button *ngIf="loadingFromFile" class="btn" style="background-color: transparent;" (click)="reset()"><i class="fa fa-remove" aria-hidden="true" style="color:#dc3545;"></i></button>
+        </div>
         <div style="margin-top: 2%;">
             <a id="download" href="../../../assets/files/sampleCart.xlsx" download="sampleCart.xslx">
                 <i class="fa fa-download"></i><span>{{ 'downloadSampleFile' | translate }}</span></a>
@@ -87,4 +89,7 @@
             </div>
         </div>
     </div>
+</div>
+<div>
+    <app-footer></app-footer>
 </div>

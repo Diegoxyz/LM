@@ -113,6 +113,26 @@
         "generalNote":"General Note",
         "substituteMaterialNum":"Substitute Material"
     },
-    "closeSection": "close section"
+    "closeSection": "close section",
+    "ordersPage": {
+        "search":"Search within results",
+        "date":"Date",
+        "code":"Code",
+        "name":"Description",
+        "qty":"Qty",
+        "notes":"Notes",
+        "numOrdine":"Order",
+        "totOrdine":"Total",
+        "destinazione":"Ship-to",
+        "position":"Item",
+        "product":"Product",
+        "price":"Price Unit",
+        "totPos":" Tot.Item",
+        "status":"Status",
+        "searchForOrderNumber":"Order number",
+        "fromDate":"From Date",
+        "toDate":"To Date",
+        "exportAsXslxFile":"Exports orders to Excel file"
+    }
     
 }

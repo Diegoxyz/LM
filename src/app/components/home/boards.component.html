@@ -9,6 +9,9 @@ type="ball-clip-rotate-multiple" size="medium">
             <app-machine-card [item]="m" (openSection)="openSections($event)"></app-machine-card>
         </li>
     </ul>
+    <div>
+        <app-footer></app-footer>
+    </div>
 </div>
 <div *ngIf="sectionToBeDisplayed === 1">
     <div class="row" style="margin-top: 1%">
@@ -26,6 +29,9 @@ type="ball-clip-rotate-multiple" size="medium">
             <app-section-card [item]="s" (openProspective)="openProspective($event)"></app-section-card>
         </li>
     </ul>
+    <div>
+        <app-footer></app-footer>
+    </div>
 </div>
 
   <div *ngIf="sectionToBeDisplayed === 2">

@@ -73,3 +73,18 @@ ul {
 #code, #quantity, #description{
   font-weight: bold;
 }
+
+.search-categories-container {
+  background-color: #ffffff;
+/*   box-shadow: 1px 1px 1px 1px #d8d6d6; */
+  border: solid 1px  #d8d6d6;
+  width: 100%;  
+  margin-left: 0%;
+  margin-right: 0%;
+  margin-top: 5%;
+}
+
+#div-search{
+  text-align: center;
+}
+

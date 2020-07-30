@@ -5,13 +5,10 @@
     <router-outlet (activate)="onActivate($event)"></router-outlet>
 </div>
 
-<div>
-    <div class="scroll-to-top">
-        <button (click)="onScrollTop()" 
-                id="scroll-top-btn" 
-                class="btn btn-primary">
-            <fa-icon id="scroll-top-icon" [icon]="faAngleUp"></fa-icon>
-        </button>
-    </div>
-    <app-footer></app-footer>
+<div class="scroll-to-top" style="padding-bottom: 200px;">
+    <button (click)="onScrollTop()" 
+            id="scroll-top-btn" 
+            class="btn btn-primary">
+        <fa-icon id="scroll-top-icon" [icon]="faAngleUp"></fa-icon>
+    </button>
 </div>

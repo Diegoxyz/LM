@@ -1,37 +1,91 @@
-<div *ngIf="totalQuantity == 0">
-    <div class="row align-items-center justify-content-center" style="margin-top: 20%">
-        <div  class="col-4 col-md-auto h-100" >
-            <h1>{{ 'noItem' | translate }}</h1>
-        </div>
+<ngx-spinner
+    type="ball-clip-rotate-multiple" size="medium">
+    <p class="loading">Loading....</p>
+</ngx-spinner>
+<div style="margin-top: 5%; margin-left: 3%; max-width: 95%;">
+
+    <div class="search-categories-container">
+        <form id="searchForm" [formGroup]="searchForm" (ngSubmit)="onSearch()">
+            <div class="row">
+                <div class="col-6">
+                    <label for="orderNumber" >{{ 'ordersPage.searchForOrderNumber' | translate }}</label>
+                    <input type="text" class="form-control" id="orderNumber" name="orderNumber" formControlName="orderNumber" placeholder="{{ 'ordersPage.numOrdine' | translate }}"></div>
+                <div class="col-6">
+                    <label for="fromDate" >{{ 'ordersPage.fromDate' | translate }}</label>
+                    <input type="date" class="form-control" id="fromDate" name="fromDate" formControlName="fromDate" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+            <div class="row">
+                <div class="col-6">&nbsp;</div>
+                <div class="col-6">
+                    <label for="toDate" >{{ 'ordersPage.toDate' | translate }}</label>
+                    <input type="date" class="form-control" id="toDate" name="toDate" formControlName="toDate" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">&nbsp;</div>
+            </div>
+            <div id="div-search">
+                <button id="search" class="btn btn-primary" type="submit">
+                    {{ 'search' | translate }}&nbsp;&nbsp;&nbsp;
+                    <fa-icon [icon]="faSearch" size="1x"></fa-icon>
+                </button>
+            </div>
+        </form>
     </div>
+    <div style="margin-top: 2%;">
+        <button class="btn btn-primary" (click)="exportAsXLSX()">
+            <i class="fa fa-download"></i><span>{{ 'ordersPage.exportAsXslxFile' | translate }}</span>
+        </button>
+    </div>
+    <div style="margin-top: 5%;">
+        <input #searchField class="form-control" type="search" placeholder="{{ 'ordersPage.search' | translate }}"  (keyup.enter)="search(searchField.value)"/>
+    </div>
+    <div style="margin-top: 5%;">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col" (click)="onSort('vbeln')">{{ 'ordersPage.numOrdine' | translate }}</th>
+                <th scope="col" (click)="onSort('erdat')">{{ 'ordersPage.date' | translate }}</th>
+                <th scope="col"                          >{{ 'ordersPage.totOrdine' | translate }}</th>
+                <th scope="col"                          >{{ 'ordersPage.destinazione' | translate }}</th>
+                <th scope="col" (click)="onSort('posnr')">{{ 'ordersPage.position' | translate }}</th>
+                <th scope="col" (click)="onSort('matnr')">{{ 'ordersPage.product' | translate }}</th>
+                <th scope="col" (click)="onSort('qty')">{{ 'ordersPage.qty' | translate }}</th>
+                <th scope="col" (click)="onSort('netpr')">{{ 'ordersPage.price' | translate }}</th>
+                <th scope="col" (click)="onSort('total_row')">{{ 'ordersPage.totPos' | translate }}</th>
+                <th scope="col" (click)="onSort('status')">{{ 'ordersPage.status' | translate }}</th>
+            </tr>
+        </thead>
+        <div *ngIf="totalQuantity === 0">
+            <div class="row align-items-center justify-content-center" style="margin-top: 20%">
+                <div  class="col-4 col-md-auto h-100" >
+                    <h1>{{ 'noItem' | translate }}</h1>
+                </div>
+            </div>
+        </div>
+        <tbody>
+            <tr *ngFor="let item of items">
+                <td>{{ item.vbeln }}</td>
+                <td>
+                    {{ item.erdat | date:'dd/MM/yyyy' }}
+                </td>
+                <td>{{ item.netwr }} {{ item.waerk }}</td>
+                <td>{{ item.name1 }}<br /><h6 style="font-size: 12px;">{{item.ort01}} {{item.pstlz}} {{item.stras}} {{item.land1}}</h6></td>
+                <td>{{ item.posnr }}</td>
+                <td>{{ item.matnr }}<br />{{ item.maktx }}</td>
+                <td>{{ item.qty }} {{ item.meins }}</td>
+                <td>{{ item.netpr }}-{{ item.waerk }}</td>
+                <td>{{ item.totalRow }}-{{ item.waerk }}</td>
+                <td>{{ item.stateDesc }}</td>
+            </tr>
+            </tbody>
+    </table>
 </div>
-        
-<div *ngIf="totalQuantity != 0">
-    <div><app-search-orders></app-search-orders></div>
-    <div class="flex-container align-items-center">
-        <div class="row flex-item headers-list-orders">
-            <div id="code" class="col-4 h-100 code_column" >
-                <span>{{ 'code' | translate }}</span> 
-            </div>
-            <div id="description" class="col-4 h-100 description_column" >
-                <span>{{ 'description' | translate }}</span>
-            </div>
-            <div  id="quantity" class="col-4 h-100 quantity_column" >
-                <span>{{ 'quantity' | translate }}</span>
-            </div>
-        </div>
-        <div id="order" *ngFor="let item of items" class="row flex-item list-orders" (click)="openProduct(item)">
-            <div  class="col-4 code_column" >
-                <!--<a (click)="openProduct()">{{ item.product.code}}</a>-->
-                <span>{{ item.product.code}}</span>
-            </div>
-            <div  class="col-4 description_column" >
-                <span>{{ item.product.description}}</span>
-            </div>
-            <div  class="col-4 quantity_column" >
-                <span>{{ item.quantity}}</span>
-            </div>
-        </div>
-    </div>
-    
+</div>
+<div>
+    <app-footer></app-footer>
 </div>

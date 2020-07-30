@@ -7,15 +7,15 @@ footer .footer-widget {
 
     bottom: -2%;
     left: 0;
-/*  margin-top: 15%;
-    max-height: 20%;
+/*    margin-top: 15%;
+  max-height: 20%;
  */
 
  /* test full screen e mobile */
-    margin-top: 24%;
+    margin-top: 20%;
     max-height: 30%;
     width: 100%;
-    position: fixed;
+    position: block;
 }
 
 /*   @media only screen and (max-device-width: 480px) {
