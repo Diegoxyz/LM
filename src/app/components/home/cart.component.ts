@@ -317,9 +317,8 @@ export class CartComponent implements OnInit, OnDestroy {
                                             this.accountService.setUserValueFromUser(user);
                                             this.carrelloService.updateCart(csrftoken, carrello).subscribe(d => {
                                                 console.log(' loading from excel update went fine');
-                                                // const sapMessage = d.headers.get('sap-message');
-                                                // console.log('sapMessage:' + sapMessage);
-                                                const sapMessage = 'error';
+                                                const sapMessage = d.headers.get('sap-message');
+                                                console.log('sapMessage:' + sapMessage);
                                                 if (sapMessage !== undefined && sapMessage !== null) {
                                                     let errorMessage = this.translateService.instant('unknownError');
                                                     try {
@@ -336,7 +335,9 @@ export class CartComponent implements OnInit, OnDestroy {
                                                     order.error = errorMessage;
                                                     console.log('order.error:' + order.error);
                                                 }
+                                                console.log('user after checking for sapmessage:' + this.accountService.userValue + ',' + this.accountService.user);
                                                 this.products.push(order.product);
+                                                this.manageProducts.changeProduct(order.product,order.quantity);
                                                 this.totalPrice = this.totalPrice + (order.product.price * order.quantity);
                                                 this.totalQuantity = this.totalQuantity + order.quantity;
                                                 this.strTotalPrice = this.totalPrice.toFixed(2);
@@ -370,8 +371,8 @@ export class CartComponent implements OnInit, OnDestroy {
             // aggiungi chiamata al servizio chiamata per item
             return initial;
           }, {});
-          const dataString = JSON.stringify(jsonData);
-          document.getElementById('output').innerHTML = dataString.slice(0, 300).concat("...");
+          // const dataString = JSON.stringify(jsonData);
+          // document.getElementById('output').innerHTML = dataString.slice(0, 300).concat("...");
         }
         reader.readAsBinaryString(file);
         this.spinner.hide();

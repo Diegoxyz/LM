@@ -19,6 +19,7 @@ const routes: Routes = [
             { path: 'home', component: BoardsComponent },
             { path: 'catalogue/:groupId', component: CatalogueComponent },
             { path: 'catalogue', component: CatalogueComponent },
+            { path: 'catalogue_search', component: CatalogueComponent },
             { path: 'catalogue_last_purchases', component: CatalogueComponent },
            /* { path: 'boards/:machineId', component: BoardsComponent }, */
             { path: 'prospective', component: ProspectiveCardComponent },

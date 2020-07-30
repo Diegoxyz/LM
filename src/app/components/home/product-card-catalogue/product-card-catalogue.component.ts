@@ -277,7 +277,7 @@ export class ProductCardCatalogueComponent implements OnInit {
                 this.itemDetail.code = this.item.code;
                 this.itemDetail.currency = this.item.currency;
                 this.itemDetail.description = this.item.description;
-                this.itemDetail.documentazione = 'Documentazione';
+                this.itemDetail.documentazione = 'http://actv.avmspa.it/sites/default/files/mappa_linee_di_navigazione_23_07_2020_R.pdf';
                 this.itemDetail.family = this.item.family;
                 this.itemDetail.itemNumBom = this.item.itemNumBom;
                 this.itemDetail.maktxSub = this.item.maktxSub;

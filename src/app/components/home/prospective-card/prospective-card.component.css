@@ -12,7 +12,7 @@
 
   /* Then we define how is distributed the remaining space */
   justify-content: flex-start;
-  height: 200px;
+/*   height: 200px; */
 }
 
 .flex-item {
@@ -31,8 +31,9 @@
   top: 25%;
   width: 70%;
   margin-right: 0%;
-  max-height: fit-content;
-  border: solid 1px blueviolet;
+/*   height: 700px; */
+/*   max-height: fit-content; */
+/*   border: solid 1px blueviolet; */
 }
 
 .board-panel {
@@ -42,7 +43,6 @@
   padding-top: 2%;
   margin: 0%;
   max-height: fit-content;
-  border: solid 1px green;
  /*  border: solid 1px green; */
 }
 
@@ -60,7 +60,7 @@ div.scroll {
   overflow-y: hidden;   /* auto */
   overflow-x: hidden; 
   text-align:justify;
-  max-height: 30%;
+/*   max-height: 30%; */
   position: relative;
   left: 70%;
   width:30%;
@@ -70,6 +70,8 @@ div.scroll {
   margin: 0%;
   max-height: fit-content;
  /*  border: solid 1px yellow; */
+  height: 700px;
+/*   border: solid 1px yellow;  */
 }
 
 
@@ -277,4 +279,9 @@ padding-right: 4px;
   padding-right: 2px;
   padding-top: 2px; 
   padding-bottom: 0px;
+}
+
+#btn-back{
+  margin: auto;
+  text-align: center;
 }

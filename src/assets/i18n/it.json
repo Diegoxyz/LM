@@ -112,7 +112,8 @@
         "documentation":"Documentazione",
         "generalNote":"Note generali",
         "substituteMaterialNum":"Mat.Sostitutivo"
-    }
+    },
+    "closeSection": "chiudi sezione"
     
 
 }

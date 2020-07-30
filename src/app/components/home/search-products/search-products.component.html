@@ -19,7 +19,8 @@
                           <input
                             id="productSearch"
                             placeholder="{{ 'searchForProducts' | translate }}"
-                            type = "input">
+                            type = "input"
+                            [value]="searchKey">
 <!--                             #productsInput
                             [formControl]="searchProductControl"
                             [matAutocomplete]="auto"
