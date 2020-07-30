@@ -27,6 +27,8 @@
 }
 
 .board-image {
+  position: fixed;
+  top: 25%;
   width: 70%;
   margin-right: 0%;
   max-height: fit-content;
@@ -53,12 +55,20 @@
 }
  */
 div.scroll { 
+  float: right;
   background-color: #ffffff; 
   overflow-y: hidden;   /* auto */
   overflow-x: hidden; 
   text-align:justify;
   max-height: 30%;
   position: relative;
+  left: 70%;
+  width:30%;
+  padding: 0%;
+  padding-left: 1%;
+  padding-top: 2%;
+  margin: 0%;
+  max-height: fit-content;
  /*  border: solid 1px yellow; */
 }
 

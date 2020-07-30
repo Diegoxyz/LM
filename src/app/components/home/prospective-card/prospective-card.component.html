@@ -17,14 +17,14 @@
 
             <img *ngIf="thumbnail" class="img-fluid card-img-top" id="pic-board" [src]='thumbnail' width="260"
                 height="260" style="width: 100%; max-height:70%;">
-            <!-- <object *ngIf="svgThumbnail"
-                [data]="sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ svgThumbnail)"
-                width="500" height="600" style="width: 100%; max-height:70%;">
-            </object> -->
-
-             <object *ngIf="svgThumbnail" #objId [data]="sanitizer.bypassSecurityTrustResourceUrl(blobUrl)" width="500" height="600"
+            <object #objId
+                [data]="sanitizer.bypassSecurityTrustResourceUrl(blobUrl)"
+                width="250" height="350" style="width: 100%; max-height:70%;">
+            </object> 
+            
+             <!-- <object #objId [data]="sanitizer.bypassSecurityTrustResourceUrl('assets/img/items/image.svg')" width="500" height="600"
                 style="width: 100%; max-height:70%;">
-            </object>
+            </object> -->
 
             <img *ngIf="thumbnail === undefined && svgThumbnail === undefined" class="img-fluid card-img-top"
                 src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px" width="260"
@@ -48,7 +48,7 @@
         
         </div>
 
-        <div class="flex-item board-panel">
+        <!-- <div class="flex-item board-panel"> -->
             <div #scrollDiv id="scroll" class="scroll" (scroll)="scrollHandler($event)">
                 <div *ngFor="let item of items" class="row" style="margin-top: 5%; margin-left: 1%;">
                     <div class="col-md-auto">
@@ -129,11 +129,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" style="border-bottom: solid 1px #d8d6d6; margin-left: 1%;">&nbsp;</div>
+                        <div class="row" style="border-bottom: solid 1px #d8d6d6; margin-left: 1%;">&nbsp;</div> 
                     </div>
                 </div>
             </div> <!-- scroll ends up here -->
-        </div>
+        <!-- </div> -->
     </div>
 
 </div>
+<div class="row" style="border-bottom: solid 1px #d8d6d6; margin-left: 1%;">&nbsp;</div> 
