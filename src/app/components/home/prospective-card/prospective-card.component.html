@@ -34,13 +34,13 @@
             <!--<img #noImage class="img-fluid card-img-top" src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260" style="width: 100%; max-height:70%;">-->
             
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-4" style="text-align: left;">
                     <button class="btn" style="font-size:36px; border: 0px; background-color: transparent;" [disabled]="isFirstOne" (click)="previousSection()">
                         <i class="fa fa-arrow-left" style="font-size:24px;color:#dc3545"></i>
                     </button>
                 </div>
 
-                <div id="btn-back"class="col-md-4">
+                <div id="btn-back" class="col-md-4">
                     <button class="btn btn-primary"  (click)="onBack()">
                         <h5>{{ 'closeSection' | translate }}</h5>
                     </button>
