@@ -17,7 +17,7 @@
         <div *ngIf="loadingCartError === true" class="alert alert-danger">
             <span>{{ loadingCartErrorMessage }}</span>
         </div>
-        <div style="margin-top: 2%;"><input #loadFromFile type="file" class="btn btn-primary" (change)="onFileChange($event)" />
+        <div style="margin-top: 2%;"><input #loadFromFile type="file" class="btn btn-primary" (change)="onFileChange($event)" (click)="reset()" />
             <button *ngIf="loadingFromFile" class="btn" style="background-color: transparent;" (click)="reset()"><i class="fa fa-remove" aria-hidden="true" style="color:#dc3545;"></i></button>
         </div>
         <div style="margin-top: 2%;">
