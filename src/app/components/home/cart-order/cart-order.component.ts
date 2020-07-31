@@ -59,6 +59,7 @@ export class CartOrderComponent implements OnInit {
                 })
             } else {
                 this.isError = true;
+                this.order.error = 'errore';
             }
         }
     }
@@ -113,6 +114,11 @@ export class CartOrderComponent implements OnInit {
     }
 
     onDeleteOrder() {
+        console.log('ondeleteorder');
+        console.log('ondeleteorder - this.order.error:' + this.order.error);
+        if (this.order.error) {
+            this.deleteOrder.next(this.order);
+        }
         if (environment && environment.oData) {
             this.accountService.fetchToken().subscribe(
                 response1 => {

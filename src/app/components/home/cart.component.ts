@@ -159,6 +159,7 @@ export class CartComponent implements OnInit, OnDestroy {
     }
 
     emptyCart(): void {
+        console.log('empty cart');
         if (environment && environment.oData) {
             this.orders.forEach(order => {
                 this.accountService.fetchToken().subscribe(
@@ -190,6 +191,7 @@ export class CartComponent implements OnInit, OnDestroy {
     }
 
     updateOrders(newOrder) {
+        console.log('update orders');
         if (newOrder) {
             this.totalQuantity = 0;
             this.totalPrice = 0;
@@ -209,13 +211,14 @@ export class CartComponent implements OnInit, OnDestroy {
     }
 
     deleteOrder(order) {
+        console.log('delete order');
         if (order) {
             this.manageProducts.changeProduct(order.product,0);
             const tempOrders : Order[] = new Array<Order>();
             this.totalQuantity = 0;
             this.totalPrice = 0;
             this.orders.forEach( o => {
-                if (o.id != order.id) {
+                if ((o.id && order.id && o.id !== order.id) || (o.product && order.product && o.product.code !== order.product.code )) {
                     tempOrders.push(o);
                     this.totalPrice = this.totalPrice + (o.product.price * o.quantity);
                     this.totalQuantity = this.totalQuantity + o.quantity;
