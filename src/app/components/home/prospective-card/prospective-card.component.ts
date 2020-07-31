@@ -125,18 +125,24 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
             this.blobUrl = blobUrl;
             console.log('blobUrl:' + this.blobUrl);
 
-            this.removeEventListener1 = this.renderer.listen(this.objId.nativeElement,'contextmenu', (event) => {
-                console.log('event on click1:' + event);
-                alert('event on click1');
-            });
-            /* this.removeEventListener2 = this.renderer.listen(this.objId.nativeElement,'mousemove', (event) => {
-                console.log('event on mousemove2:' + event);
-                alert('event on mousemove2');
-            });
-            this.removeEventListener3 = this.renderer.listen(this.noImage.nativeElement,'mousemove', (event) => {
-                console.log('event on mousemove3:' + event);
-                alert('event on mousemove3');
-            });*/
+            if (this.objId) {
+                this.removeEventListener1 = this.renderer.listen(this.objId.nativeElement,'contextmenu', (event) => {
+                    console.log('event on click1:' + event);
+                    alert('event on click1');
+                });
+                this.removeEventListener2 = this.renderer.listen(this.objId.nativeElement,'mousemove', (event) => {
+                    console.log('event on mousemove2:' + event);
+                    alert('event on mousemove2');
+                });
+            }
+            
+            if (this.noImage) {
+                this.removeEventListener3 = this.renderer.listen(this.noImage.nativeElement,'mousemove', (event) => {
+                    console.log('event on mousemove3:' + event);
+                    alert('event on mousemove3');
+                })
+            }
+            
 
             this.items = this.productsService.getBoardsProducts();
             this.items.forEach( i => {
