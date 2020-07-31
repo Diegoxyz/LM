@@ -171,7 +171,7 @@ export class AccountService {
   }
 
   public get userLanguage(): string {
-    let currentLanguage = localStorage.getItem("language");
+    let currentLanguage = localStorage.getItem("currentLanguage");
     if (currentLanguage === undefined || currentLanguage === null) {
       currentLanguage = "english";
       localStorage.setItem('currentLanguage', 'english');
