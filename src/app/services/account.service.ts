@@ -180,6 +180,10 @@ export class AccountService {
   }
 
   public setUserLanguage(language : string) {
+    const u : User = this.userValue;
+    if (u) {
+      u.lang = language;
+    }
     localStorage.setItem('currentLanguage', language);
   }
 

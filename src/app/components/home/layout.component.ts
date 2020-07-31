@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { faAngleUp } from '@fortawesome/free-solid-svg-icons';
 import {TranslateService} from '@ngx-translate/core';
 import { AccountService } from '@app/services/account.service';
@@ -8,17 +8,20 @@ import { AccountService } from '@app/services/account.service';
     styleUrls:  ['layout.component.css']
 })
 
-export class LayoutComponent {
+export class LayoutComponent implements OnInit{
     
     faAngleUp=faAngleUp;
 
-    constructor(private accountService: AccountService, translate: TranslateService) {
-        translate.addLangs(['en', 'it'])
-        translate.setDefaultLang('en');
-        const lang = this.accountService.getLanguage();
-        console.log('using this lang:' + lang);
-        translate.use(lang);
+    constructor(private accountService: AccountService, private translate: TranslateService) {
       }
+    
+    ngOnInit(): void {
+        this.translate.addLangs(['en', 'it'])
+        this.translate.setDefaultLang('en');
+        const lang = this.accountService.getLanguage();
+        console.log('LayoutComponent using this lang:' + lang);
+        this.translate.use(lang);
+    }
 
     onActivate(event) {
         window.scroll(0,0);

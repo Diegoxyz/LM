@@ -74,23 +74,38 @@ export class MyAccountComponent implements OnInit {
       console.log('this.translateService.langs[0]:' +this.translateService.langs[0]);
       if (this.translateService.langs[0] === this.getLanguage()) {
         this.translateService.use(this.translateService.langs[1]);
+        this.accountService.setUserLanguage(this.translateService.langs[1]);
+        this.language = this.translateService.langs[1];
       } else {
         this.translateService.use(this.translateService.langs[0]);
+        this.accountService.setUserLanguage(this.translateService.langs[0]);
+        this.language = this.translateService.langs[0];
       }
     } else {
       if (this.language === 'italian') {
         this.language = 'english';
         this.translateService.use('en');
+        this.accountService.setUserLanguage('en');
       } else {
         this.language = 'italian';
         this.translateService.use('it');
+        this.accountService.setUserLanguage('it');
       }
     }
+    
   }
 
   public getLanguage() {
     console.log('this.translateService.currentLang:' + this.translateService.currentLang) ;
 
     return this.translateService.currentLang;
+  }
+
+  public getCurrentLang() {
+    if (this.getLanguage()) {
+      return this.getLanguage();
+    } else {
+      return this.language;
+    }
   }
 }
