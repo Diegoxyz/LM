@@ -118,6 +118,7 @@ export class CartOrderComponent implements OnInit {
         console.log('ondeleteorder - this.order.error:' + this.order.error);
         if (this.order.error) {
             this.deleteOrder.next(this.order);
+            return;
         }
         if (environment && environment.oData) {
             this.accountService.fetchToken().subscribe(

@@ -95,12 +95,14 @@ export class ProductCardCatalogueComponent implements OnInit {
         if (environment && !environment.oData) {
             if (this.item.code === 'Code 1') {
                 this.qty.setValue(10);
+                this.quantity = 10;
             }
         } 
         
         this.cartService.getCart().orders.forEach(o => {
             if (o && this.item && o.product && o.product.code === this.item.code) {
                 this.qty.setValue(o.quantity);
+                this.quantity = o.quantity;
             }
         });
 
@@ -139,6 +141,11 @@ export class ProductCardCatalogueComponent implements OnInit {
             q = this.quantity;
         }
         this.quantityError = false;
+        if (q < 0) {
+            this.quantityError = true;
+            this.quantity = 0;
+            return;
+        }
         if (environment && environment.oData) {
             this.accountService.fetchToken().subscribe(
                 response1 => {
@@ -147,8 +154,9 @@ export class ProductCardCatalogueComponent implements OnInit {
                         if (csrftoken) {
                             if (q === 0) {
                                 this.carrelloService.deleteFromCarrello(csrftoken, this.item.code).subscribe(d => {
-                                    console.log('delete went fine');
+                                    console.log('delete went fine - q:' + q);
                                     this.manageProducts.changeProduct(this.item,q);
+                                    this.quantity = q;
                                 },
                                 error => {
                                     console.log('error delete:' + error);
@@ -158,7 +166,7 @@ export class ProductCardCatalogueComponent implements OnInit {
                                 carrello.Matnr = this.item.code;
                                 carrello.Menge = '' + q;
                                 this.carrelloService.updateCart(csrftoken, carrello).subscribe(d => {
-                                    console.log('update went fine');
+                                    console.log('update went fine - q:' + q);
                                     this.manageProducts.changeProduct(this.item,q);
                                     this.quantity = q;
                                 },
