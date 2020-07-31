@@ -265,7 +265,7 @@
                         </div>
                         <div class="col-md-6" style="text-align: left;">
                             <h6>
-                                <a [href]="getUrl()" target="_blank">
+                                <a *ngIf="itemDetail.documentazione && itemDetail.documentazione !== ''" [href]="getUrl()" target="_blank">
                                     <i class="fa fa-file" aria-hidden="true" style="color: #dc3545;"></i>
                                 </a>
                             </h6>
