@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Renderer2, ViewChild, ElementRef, AfterViewInit, OnDestroy, Output, EventEmitter, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
-import { faShoppingCart, faCircle } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingCart, faCircle, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ProductsService } from '@app/services/products.service';
 import { Product, Item } from '@app/models/item';
@@ -16,6 +16,8 @@ import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms'
 import { CartService } from '@app/services/cart.service';
 import { ManageProducts } from '../services/manage-products.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { CatalogueService } from '@app/services/catalogue.service';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({selector: 'app-prospetive-card',
 templateUrl: './prospective-card.component.html',
@@ -41,7 +43,8 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
     selectedQuantity : number = 0;
     faShoppingCart=faShoppingCart;
     faCircle=faCircle;
-
+    faInfoCircle=faInfoCircle;
+    
     bsModalRef: BsModalRef;
 
     items : Product[] =[];
@@ -55,6 +58,11 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
 	svg : string;
     blobUrl: string;
     safeBlobUrl : SafeUrl;
+    itemDetail : Product;
+    bsInfoModalRef: NgbModalRef;
+
+    thumbnailDet: any;
+    svgThumbnailDet: any;
 
     @ViewChild("objId", { static: true }) objId: ElementRef;
     @ViewChild("noImage", { static: true }) noImage: ElementRef;
@@ -73,7 +81,7 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
     constructor(private renderer: Renderer2, private productsService: ProductsService, private router: Router, private manageProducts: ManageProducts, private cartService : CartService,
         private binDataMatnrSetService: BinDataMatnrSetService, public sanitizer: DomSanitizer, private sectionMaterial: SectionMaterial,
         private carrelloService : CarrelloService, private accountService: AccountService, private fb: FormBuilder,
-        private spinner: NgxSpinnerService) {
+        private spinner: NgxSpinnerService, private catalogueService : CatalogueService, private modalService: NgbModal) {
     }
     ngOnDestroy(): void {
         if (this.removeEventListener1) {
@@ -515,5 +523,87 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
             }
             this.imageDiv.nativeElement.scrollTo(0,0);
         }, 500);
+    }
+
+    openModal(code : string, template) {
+        if (template) {
+            if (environment && environment.oData) {
+                this.catalogueService.getItem(code).subscribe(resp => {
+                    if (resp.body && resp.body.d && resp.body.d) {
+                        const p = resp.body.d;
+                        const product = Materiale.fromJSON(p);
+                        /*this.itemDetail.code = product.code;
+                        this.itemDetail.description = product.description;
+                        this.itemDetail.price = p.Netpr;
+                        this.itemDetail.currency = product.currency;
+                        this.itemDetail.stock = product.stock;
+                        this.itemDetail.prodh = product.prodh;
+                        this.itemDetail.prodhx = product.prodhx;
+                        this.itemDetail.preferred = product.preferred;
+                        this.itemDetail.itemNumBom = product.itemNumBom;
+                        this.itemDetail.stockIndicator = product.stockIndicator;
+                        this.itemDetail.noteCliente = product.noteCliente;
+                        this.itemDetail.documentazione = product.documentazione;
+                        this.itemDetail.noteGenerali = product.noteGenerali;
+                        this.itemDetail.matNrSub = product.matNrSub;
+                        this.itemDetail.maktxSub = product.maktxSub;
+                        this.itemDetail.maxQuantity = product.maxQuantity;
+                        this.itemDetail.minQuantity = product.minQuantity;
+                        this.itemDetail.meins = product.meins;*/
+                        this.itemDetail = product;
+                        this.thumbnailDet = undefined;
+                        this.svgThumbnailDet = undefined;
+
+                        if (product.picId) {
+                            this.binDataMatnrSetService.getImage(product.code,product.picId).subscribe((resp : any) => {
+                                if (resp.body && resp.body.d && resp.body.d) {
+                                    if (resp.body.d.Filename) {
+                                        const fileName = resp.body.d.Filename && resp.body.d.Filename.substring(resp.body.d.Filename.lastIndexOf('.') + 1);
+                                        if (fileName && fileName === 'jpg' || fileName === 'png') {
+                                            let objectURL = 'data:image/'+fileName+';base64,' + resp.body.d.BinDoc;
+                                            this.thumbnailDet = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+                                        } else if (fileName && fileName === 'svg') {
+                                            this.svgThumbnailDet = resp.body.d.BinDoc;
+                                        } else {
+                                            console.log('prospective-card-modal - no fileName or not recognized:' + fileName);
+                                        }                         
+                                    }
+                                }
+                            });
+                        }
+
+                        this.bsInfoModalRef = this.modalService.open(template, { size: 'xl' });
+                    }
+                    
+                });
+            } else {
+                this.itemDetail = new Product(this.item.code,'',0,'eur',false,'','','','');
+                this.itemDetail.code = this.item.code;
+                this.itemDetail.currency = 'EUR';
+                this.itemDetail.description = this.item.description;
+                this.itemDetail.documentazione = 'http://actv.avmspa.it/sites/default/files/mappa_linee_di_navigazione_23_07_2020_R.pdf';
+                this.itemDetail.family = this.item.family;
+                this.itemDetail.itemNumBom = '1';
+                this.itemDetail.maktxSub = '';
+                this.itemDetail.matNrSub = '';
+                this.itemDetail.maxQuantity = 10;
+                this.itemDetail.meins = '';
+                this.itemDetail.minQuantity = 1;
+                this.itemDetail.noteCliente = 'Note cliente';
+                this.itemDetail.noteGenerali = 'Note generali';
+                this.itemDetail.price = 0;
+                this.itemDetail.stock = false;
+                this.itemDetail.prodhx = '';
+                this.itemDetail.kdmat = '';
+                this.itemDetail.stockIndicator = '';
+                this.bsInfoModalRef = this.modalService.open(template, { size: 'xl' });
+            }
+            
+        }
+        
+      }
+
+    public getUrl() {
+        return this.sanitizer.bypassSecurityTrustUrl(this.itemDetail.documentazione);
     }
 }
