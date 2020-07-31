@@ -97,10 +97,10 @@
     "backToLogin":"Back",
     "quantityError":"Value is not correct",
     "numberOfPieces":"Quantity",
-    "cartIsNotEmpty":"Cart can't be loaded because session cart is not empty",
+    "cartIsNotEmpty":"Cart can't be loaded because the cart in session is not empty",
     "downloadSampleFile":"Download sample cart Excel file",
     "wrongCartFileFormat":"The format of the file is wrong, please refer to the sample file",
-    "loadFromCartTitle":"Load by cart",
+    "loadFromCartTitle":"Load cart from Excel",
     "itemDetail": {
         "category":"Category",
         "customerCode":"Cust.Code",
