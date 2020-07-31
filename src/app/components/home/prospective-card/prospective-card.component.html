@@ -24,7 +24,7 @@
                 width="500" height="600" style="width: 100%; max-height:70%;">
             </object> -->
 
-             <object *ngIf="svgThumbnail" #objId [data]="sanitizer.bypassSecurityTrustResourceUrl(blobUrl)" width="250" height="350"
+             <object *ngIf="svgThumbnail" #objId [data]="safeBlobUrl" width="250" height="350"
                 style="width: 60%; max-height:50%;">
             </object>
 

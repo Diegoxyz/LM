@@ -5,7 +5,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ProductsService } from '@app/services/products.service';
 import { Product, Item } from '@app/models/item';
 import { environment } from '@environments/environment';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { BinDataMatnrSetService } from '@app/models/OData/BinDataMatnrSet/bindatamatnrset.service';
 import { SectionMaterial } from '@app/services/section-material.service';
 import { Materiale } from '@app/models/OData/MacchineSet/macchineset.entity';
@@ -53,7 +53,9 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
 
     svgThumbnail: any;
 	svg : string;
-	blobUrl: string;
+    blobUrl: string;
+    safeBlobUrl : SafeUrl;
+
     @ViewChild("objId", { static: true }) objId: ElementRef;
     @ViewChild("noImage", { static: true }) noImage: ElementRef;
     @ViewChild('scrollDiv', { static: true }) scrollDiv: ElementRef;
@@ -123,7 +125,8 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
             const blobUrl = URL.createObjectURL(blob);
     
             this.blobUrl = blobUrl;
-            console.log('blobUrl:' + this.blobUrl);
+            this.safeBlobUrl = this.sanitizer.bypassSecurityTrustResourceUrl(blobUrl);
+            console.log('blobUrl:' + this.blobUrl + ',safeBlobUrl:' + this.safeBlobUrl);
 
             if (this.objId) {
                 this.removeEventListener1 = this.renderer.listen(this.objId.nativeElement,'contextmenu', (event) => {
@@ -222,7 +225,8 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
                                 const blobUrl = URL.createObjectURL(blob);
                         
                                 this.blobUrl = blobUrl;
-                                console.log('blobUrl:' + this.blobUrl);
+                                this.safeBlobUrl = this.sanitizer.bypassSecurityTrustResourceUrl(blobUrl);
+                                console.log('blobUrl:' + this.blobUrl +',safeBlobUrl:' + this.safeBlobUrl);
                                             /* Commentati perché danno errore perché this.bjId è non definito
                                 this.removeEventListener1 = this.renderer.listen(this.objId.nativeElement,'click', (event) => {
                                     console.log('event on click1:' + event);
