@@ -1,6 +1,6 @@
 import { Injectable, ɵɵresolveBody } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { User, UserReq } from '../models/user';
 import { ODataServiceFactory } from 'angular-odata';
 import { LoginSet } from '../models/OData/LoginSet/loginset.entity';
@@ -208,6 +208,9 @@ export class AccountService {
       'Content-Type': 'application/json'
     });
     const u : User = this.userValue;
+    if (u === undefined || u === null) {
+      return of();
+    }
     let url = '';
     const em    = 'Email=' + '\'' + u.username + '\'';
     const token = 'Token=' + '\'' + u.token + '\'';
