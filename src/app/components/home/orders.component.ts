@@ -218,7 +218,8 @@ export class NgbdSortableHeader {
                 so.name1 = s.Name1;
                 so.matnr = s.Matnr;
                 so.maktx = s.Maktx;
-                so.qty = s.Qty;
+                const qty = s.Qty;
+                so.qty = Number.parseFloat(qty).toFixed(2);
                 so.meins = s.Meins;
                 const netPrice = s.Netpr;
                 so.netpr = Number.parseFloat(netPrice).toFixed(2);
@@ -364,7 +365,8 @@ export class NgbdSortableHeader {
                 so.name1 = s.Name1;
                 so.matnr = s.Matnr;
                 so.maktx = s.Maktx;
-                so.qty = s.Qty;
+                const qty = s.Qty;
+                so.qty = Number.parseFloat(qty).toFixed(2);
                 so.meins = s.Meins;
                 const netPrice = s.Netpr;
                 so.netpr = Number.parseFloat(netPrice).toFixed(2);
@@ -410,12 +412,12 @@ export class NgbdSortableHeader {
           NumOrdine: a.vbeln,
           Data: a.erdat,
           Totale: a.netwr + ' ' + a.waerk,
-          Destinazione : a.name1 + '-' + a.ort01 + ' ' + a.pstlz + ' ' + a.stras + ' ' + a.land1,
+          Destinazione : a.name1 + ' ' + a.ort01 + ' ' + a.pstlz + ' ' + a.stras + ' ' + a.land1,
           Pos: a.posnr,
           Prodotto: a.matnr + '-' + a.maktx,
           Qtà: a.qty + ' ' + a.meins,
-          PrUnitario : a.netpr + '-' + a.waerk,
-          PrTotale : a.totalRow + '-' + a.waerk,
+          PrUnitario : a.netpr + ' ' + a.waerk,
+          PrTotale : a.totalRow + ' ' + a.waerk,
           Stato : a.stateDesc
         };
         orders.push(order);

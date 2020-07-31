@@ -15,15 +15,18 @@ type="ball-clip-rotate-multiple" size="medium">
             <div class="w-100"></div>
         </div>
         <div class="row align-items-center justify-content-center">
-            <div *ngIf="loginError === true" class="alert alert-danger">
-                <span>{{ errorMessage }}</span>
-            </div>
-            <div *ngIf="sessionEndedError === true" class="alert alert-danger">
-                <span>{{ 'sessionEnded' | translate }}</span>
-            </div>
-            <div *ngIf="!loginError" class="w-100"></div>
             <div class="col-7">
-                
+                <div *ngIf="loginError === true" class="alert alert-danger">
+                    <span>{{ errorMessage }}</span>
+                </div>
+                <div *ngIf="sessionEndedError === true" class="alert alert-danger">
+                    <span>{{ 'sessionEnded' | translate }}</span>
+                </div>
+                <div *ngIf="!loginError" class="w-100"></div>
+            </div>
+        </div>
+        <div class="row align-items-center justify-content-center">
+            <div class="col-7">
                 <div class="form-group">
                     <label for="email">{{ 'email' | translate }}</label>
                     <input type="email" class="form-control" id="email" formControlName="email" aria-describedby="emailHelp" placeholder="{{ 'emailPlaceholder' | translate }}" required>

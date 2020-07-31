@@ -352,10 +352,13 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
         if (this.addProductForm.controls.length) {
             console.log('this.addProductForm.controls[0].value:' + this.addProductForm.controls[0].value);
         }
-        
+        console.log('setQtyValue - contains:' + this.addProductForm.contains(code));
         if (this.addProductForm.get(code)) {
             console.log('setQtyValue - setting qty to code:' + code + '-' + value);
             this.addProductForm.get(code).setValue(value);
+        } else if (this.addProductForm.contains(code)) {
+            console.log('setQtyValue - contains value:' + this.addProductForm.controls[code].value);
+            this.addProductForm.controls[code].setValue(value);
         }
     }
 
@@ -366,7 +369,7 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
             console.log('getQtyValue - found control with code:' + code + ' and the value is:' + this.addProductForm.get(code).value);
             return this.addProductForm.get(code).value;
         } else if (this.addProductForm.contains(code)) {
-            console.log('getQtyValue - value:' + this.addProductForm.controls[code].value);
+            console.log('getQtyValue - contains value:' + this.addProductForm.controls[code].value);
             return this.addProductForm.controls[code].value;
         }
         return 0;
@@ -384,17 +387,24 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
     }
 
     addOneProduct(code : string) {
-        const q = this.getQtyValue(code);
+        let q = this.getQtyValue(code);
+        console.log('addOneProduct original qty:' + this.getQtyValue(code));
+        if (q === undefined || q === null ) {
+            q = 0;
+        }
         this.setQtyValue(code, q + 1);
+        console.log('addOneProduct new qty:' + this.getQtyValue(code));
         this.addProduct(code);
     }
 
     subOneProduct(code : string) {
         const q = this.getQtyValue(code);
-        if (q === 0) {
+        console.log('subOneProduct original qty:' + this.getQtyValue(code));
+        if (q === undefined || q === null  || q === 0) {
             return;
         }
         this.setQtyValue(code, q - 1);
+        console.log('subOneProduct new qty:' + this.getQtyValue(code));
         this.addProduct(code);
     }
 
@@ -403,6 +413,9 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
         if (environment && environment.oData) {
             const q = this.getQtyValue(code);
             console.log('addProduct - q:' + q);
+            if (q === undefined || q === null) {
+                return;
+            }
             let productToBeAdded = null;
             this.items.forEach(i => {
                 if (i.code === code) {
