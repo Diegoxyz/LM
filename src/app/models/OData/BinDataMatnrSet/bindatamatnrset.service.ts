@@ -22,7 +22,7 @@ export class BinDataMatnrSetService {
 
         let url = '';
         // (Matnr='SC_STRADA-EE',LoioId='000D3A2544DE1EDAADBD72825B3CA28D')
-        const matrn = 'Matnr=' + '\'' + Matnr + '\'';
+        const matrn = 'Matnr=' + '\'' + encodeURIComponent(Matnr) + '\'';
         const loioid = 'LoioId=' + '\'' + LoioId + '\'';
         url = url.concat('(').concat(matrn).concat(',').concat(loioid).concat(')');
         console.log('getImage - url:' + url);
