@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   oData_destination: "/destinations/LFD-ZSD_SP/",
   oData: false,
-  oDataUsername: "WEBAPPRIC",
+  oDataUsername: "WEBAPPRIC2",
   oDataPassword: "ab123456"
 };
 
