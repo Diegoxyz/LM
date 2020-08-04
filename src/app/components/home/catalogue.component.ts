@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, HostListener, Output } from '@angular/core';
 import { ProductsService } from 'src/app/services/products.service';
 import { Group, Product } from 'src/app/models/item';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -14,6 +14,9 @@ import { NgxSpinnerService } from "ngx-spinner";
     styleUrls: ['./catalogue.component.css']
 })
 export class CatalogueComponent implements OnInit, OnDestroy {
+
+    @Output()
+    products: Product[];
 
     groupId: string;
 
@@ -68,11 +71,13 @@ export class CatalogueComponent implements OnInit, OnDestroy {
             this.searchKey = searchKey;
             console.log('searchKey:' + searchKey);
             this.catalogueService.getAllItems(lastPurchases, searchKey).subscribe(resp => {
+                this.products = [];
                 if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
                     resp.body.d.results.forEach(m => {
                         if (m) {
                             this.items.push(Materiale.fromJSON(m));
                             this.cachedItems.push(Materiale.fromJSON(m));
+                            this.products.push(Materiale.fromJSON(m));
                         }
                     });
                 }
@@ -110,7 +115,7 @@ export class CatalogueComponent implements OnInit, OnDestroy {
             }
             console.log('environment = LOCAL - popola 2');
             this.cachedItems = this.productsService.getAllProducts();
-
+            this.products = this.cachedItems;
             try {
                 console.log('environment = LOCAL - prova ciusura');
                 if (document.getElementById('myModal')) {

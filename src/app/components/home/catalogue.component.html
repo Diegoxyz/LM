@@ -3,7 +3,7 @@ type="ball-clip-rotate-multiple" size="medium">
     <p class="loading">Loading....</p>
 </ngx-spinner>
 <div>
-        <app-search-products [searchLastProducts]='searchLastProducts' [searchKey]="searchKey" (outProducts)="filterProducts($event)"></app-search-products>
+        <app-search-products [allProducts]="products" [searchLastProducts]='searchLastProducts' [searchKey]="searchKey" (outProducts)="filterProducts($event)"></app-search-products>
 </div>
 <div>
         <div *ngIf="itemsToView && itemsToView.length > 0">
