@@ -8,7 +8,7 @@ import { HandledProduct } from '../services/handled-product';
 import { CartService } from '@app/services/cart.service';
 import { MyAccountComponent } from '../my-account/my-account.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { ChangePage } from '../services/change-page.service';
 import { Order } from '@app/models/order';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
@@ -36,6 +36,8 @@ export class BarComponent implements OnInit, OnDestroy {
   private cartSubscription : Subscription;
   
   private searchPage : number = 0;
+
+  searchKey :string = null;
 
   constructor(private accountService : AccountService, private manageProducts : ManageProducts, 
     private cartService : CartService, private modalService: BsModalService,private router: Router, private changePage: ChangePage,
@@ -171,15 +173,39 @@ export class BarComponent implements OnInit, OnDestroy {
     this.router.navigate(['./home/cart']);
   }
 
-  public onSearch(value : string) {
-    console.log('onSearch:' + value);
+  public onSearch(value? : string) {
+    console.log('onSearch:' + this.searchKey);
+    if (value) {
+      this.searchKey = value;
+    }
+
     this.changePage.goToPage(0);
+    const commands : any[] = [];
     if (this.searchPage === 0) {
       this.searchPage = 1;
-      this.router.navigate(['./home/catalogue_search', { searchKey: value }]);
+      if (this.searchKey) {
+        this.router.navigate(['./home/catalogue_search',{ searchKey: this.searchKey }]);
+      } else {
+        this.router.navigate(['./home/catalogue_search']);
+      }
+      
     } else {
       this.searchPage = 0;
-      this.router.navigate(['./home/catalogue', { searchKey: value }]);
+      if (this.searchKey) {
+        this.router.navigate(['./home/catalogue',{ searchKey: this.searchKey }]);
+      } else {
+        this.router.navigate(['./home/catalogue']);
+      }
     }
+  }
+
+  onTextChange(value)
+  {
+    this.searchKey = value;
+    if(this.searchKey === null || this.searchKey == '')
+    {
+      this.onSearch();
+    }
+    
   }
 }
