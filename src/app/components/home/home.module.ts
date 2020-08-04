@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MainComponent } from './main.component';
 import { HomeRoutingModule } from './home-routing.module';
@@ -51,6 +51,7 @@ export function createTranslateLoader(http: HttpClient) {
     imports: [
         CommonModule,
         ReactiveFormsModule,
+        FormsModule,
         HomeRoutingModule,
         RouterModule,
         NgbModule,
