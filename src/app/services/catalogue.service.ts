@@ -16,7 +16,7 @@ export class CatalogueService {
     public getAllItems(lastPurchases? : string, searchString? : string) : Observable<any> {
         const u : User = this.accountService.userValue;
         let filter =  {};
-        if (searchString) {
+        if (searchString !== undefined && searchString !== null) {
             filter = { 
                 Email: (u !== undefined && u !== null ? u.username : ''), 
                 Token: (u !== undefined && u !== null ? u.token : ''), 
