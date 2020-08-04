@@ -20,7 +20,8 @@
                             id="productSearch"
                             placeholder="{{ 'searchForProducts' | translate }}"
                             type = "input"
-                            [value]="searchKey">
+                            [value]="searchKey"
+                            (keyup.enter)="search()">
 <!--                             #productsInput
                             [formControl]="searchProductControl"
                             [matAutocomplete]="auto"
@@ -63,11 +64,9 @@
                             [matAutocomplete]="auto2"
                             [matChipInputFor]="chipGroupsList"
                             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                            (matChipInputTokenEnd)="addGroup($event)">
-                            
-
+                            (matChipInputTokenEnd)="addGroup($event)"
+                            >
                         </mat-chip-list>
-
                         <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="selectedGroup($event)">
                           <mat-option *ngFor="let group of filteredGroups | async" [value]="group">
                             <div (click)="optionClickedGroup($event, group);">
@@ -98,10 +97,10 @@
                     ></app-switch-button>
                 </div>
                 <div class="col">
-                    <button id="search" class="btn btn-primary" (click)="search()">
+                    <!--<button id="search" class="btn btn-primary" (click)="search()">
                             <span>{{ 'search' | translate }}&nbsp;&nbsp;&nbsp;</span>  <fa-icon [icon]="faSearch" size="1x">
                             </fa-icon>
-                        </button>
+                        </button>-->
                 </div>
 
                 <div class="col">

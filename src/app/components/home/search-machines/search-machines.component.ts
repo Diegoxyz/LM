@@ -113,7 +113,7 @@ export class SearchMachinesComponent implements OnInit {
       this.selectedMachines.splice(i, 1);
       // this.changeCallback( this.selectedMachines );
     }
-
+    this.search();
   }
 
   remove(item: MachineList) {

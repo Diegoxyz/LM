@@ -40,7 +40,7 @@ export class SearchProductsComponent implements OnInit {
   filteredProducts : Observable<ItemList[]>;
   selectedProducts : ItemList[] = new Array<ItemList>();
   lastProductFilter = '';
-  allProducts : Product[] = [];
+  
 
   searchGroupControl = new FormControl();
   searchOnlySelectedGroup: boolean = false;
@@ -67,17 +67,20 @@ export class SearchProductsComponent implements OnInit {
   @Input()
   searchKey? : string;
   
+  @Input()
+  allProducts : Product[];
+  
   searchProductValue : string = '';
 
   constructor(private fb: FormBuilder, private productsService: ProductsService, private catalogueService : CatalogueService) { }
 
   ngOnInit(): void {
-    if (this.searchKey) {
+    if (this.searchKey !== undefined && this.searchKey !== null) {
       this.searchProductValue = this.searchKey;
     } else {
       this.searchProductValue = '';
     }
-    
+    console.log('searchKey:' + this.searchKey + ',searchProductValue:' + this.searchProductValue);
     if (environment && environment.oData) {
       this.catalogueService.getHierarchies().subscribe(resp => {
         if (resp && resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
@@ -96,7 +99,7 @@ export class SearchProductsComponent implements OnInit {
 
       
       
-      this.catalogueService.getAllItems(this.searchLastProducts).subscribe(resp => {
+      /*this.catalogueService.getAllItems(this.searchLastProducts).subscribe(resp => {
         if (resp && resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
           resp.body.d.results.forEach(p => {
             this.products.push({
@@ -105,7 +108,7 @@ export class SearchProductsComponent implements OnInit {
             this.allProducts.push(Materiale.fromJSON(p));
           });
         }
-      });
+      });*/
       
       this.filteredProducts = this.searchProductControl.valueChanges.pipe(
         startWith(null),
@@ -122,13 +125,13 @@ export class SearchProductsComponent implements OnInit {
         startWith(null),
         map((group: GroupList | null) => group ? this.filterGroup(group) : this.groups.slice()));
 
-      const listOfProducts = this.productsService.getAllProducts();
+      /*const listOfProducts = this.productsService.getAllProducts();
       listOfProducts.forEach(m => {
         this.products.push({
           item : m
         });
         this.allProducts.push(m);
-      });
+      });*/
       this.filteredProducts = this.searchProductControl.valueChanges.pipe(
         startWith(null),
         map((product: ItemList | null) => product ? this.filterProduct(product) : this.products.slice()));
@@ -193,7 +196,7 @@ export class SearchProductsComponent implements OnInit {
 
   }
 
-  toggleSelectionGroup(item: GroupList) {
+ toggleSelectionGroup(item: GroupList) {
     item.selected = !item.selected;
     if (item.selected) {
       this.selectedGroups.push(item);
@@ -203,7 +206,7 @@ export class SearchProductsComponent implements OnInit {
       this.selectedGroups.splice(i, 1);
       // this.changeCallback( this.selectedMachines );
     }
-
+    this.search();
   }
 
   removeProduct(item: ItemList) {
@@ -238,6 +241,7 @@ export class SearchProductsComponent implements OnInit {
   }
 
   addGroup(event: MatChipInputEvent): void {
+    console.log('addGroup');
     const input = event.input;
     const value = event.value;
 
@@ -292,12 +296,16 @@ export class SearchProductsComponent implements OnInit {
 
   public changeOnlySelected(event) {
     this.searchOnlySelected = !this.searchOnlySelected;
+    this.search();
   }
 
   search() {
+    if (this.allProducts === undefined || this.allProducts === null) {
+      this.allProducts = [];
+    }
     let om : Product[] = [];
 
-     let filter = (<HTMLInputElement>document.getElementById('productSearch')).value;
+    let filter = (<HTMLInputElement>document.getElementById('productSearch')).value;
 
     if (filter !== undefined || filter.length > 0 ) {
       om = this.allProducts.filter(
