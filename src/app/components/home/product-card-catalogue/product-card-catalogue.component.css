@@ -191,6 +191,10 @@ h6{
   font-weight: normal;
 }
 
+#item-description{
+  word-wrap: break-word;
+}
+
 .card-description2 {
   text-align: center;
   font-weight: bold;
