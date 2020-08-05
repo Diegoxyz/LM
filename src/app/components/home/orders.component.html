@@ -7,25 +7,25 @@
     <div class="search-categories-container">
         <form id="searchForm" [formGroup]="searchForm" (ngSubmit)="onSearch()">
             <div class="row" style="padding-left: 1%; padding-right: 1%; padding-top: 1%;">
-                <div class="col-6">
+                <div id="orderNumber" class="col-6">
                     <label for="orderNumber" >{{ 'ordersPage.searchForOrderNumber' | translate }}</label>
                     <input type="text" class="form-control" id="orderNumber" name="orderNumber" formControlName="orderNumber" placeholder="{{ 'ordersPage.numOrdine' | translate }}"></div>
-                <div class="col-6">
+                <div id="fromDate" class="col-6">
                     <label for="fromDate" >{{ 'ordersPage.fromDate' | translate }}</label>
                     <input type="date" class="form-control" id="fromDate" name="fromDate" formControlName="fromDate" required>
                 </div>
             </div>
-            <div class="row">
+            <div class="row empty_row">
                 <div class="col-12">&nbsp;</div>
             </div>
             <div class="row" style="padding-left: 1%; padding-right: 1%;">
                 <div class="col-6">&nbsp;</div>
-                <div class="col-6">
+                <div id="toDate" class="col-6">
                     <label for="toDate" >{{ 'ordersPage.toDate' | translate }}</label>
                     <input type="date" class="form-control" id="toDate" name="toDate" formControlName="toDate" required>
                 </div>
             </div>
-            <div class="row">
+            <div class="row empty_row">
                 <div class="col-12">&nbsp;</div>
             </div>
             <div id="div-search">

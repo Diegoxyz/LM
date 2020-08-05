@@ -19,3 +19,15 @@ ul {
   .spacer{
     padding-left: 3%;
   }
+  
+  .col-right{
+    text-align: end;
+    width: 50%;
+    padding-right: 3%;
+  }
+
+  .col-left{
+    text-align: start;
+    width: 50%;
+    padding-left: 3%;
+  }

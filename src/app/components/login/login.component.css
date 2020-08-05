@@ -68,6 +68,11 @@ p{
 }
     
 
+@media all and (max-width: 750px) and (orientation:landscape) {     
+    .footer {
+        position: relative;
+    }
+}
 .footer-widget a {
     color: inherit;
 }

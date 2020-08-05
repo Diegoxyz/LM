@@ -15,7 +15,7 @@
             <div *ngIf="loginError" class="alert alert-danger">{{ errorMessage }}</div>
             <div *ngIf="successMessage" class="alert alert-success">{{ 'registrationRequestSeccessfullySent' | translate }}</div>
             <div class="form-row">
-                <div class="col-md-6">
+                <div class="col">
                     <label for="firstName">{{ 'firstName' | translate }}</label>
                     <input type="text" class="form-control" id="firstName" formControlName="firstName"
                         placeholder="{{ 'firstName' | translate }}" required [readonly]="successMessage" />
@@ -28,7 +28,7 @@
 
                 <!-- <div class="col-md-2"></div> -->
 
-                <div class="col-md-6">
+                <div class="col">
                     <label for="lastName">{{ 'lastName' | translate }}</label>
                     <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="{{ 'lastName' | translate }}"
                         required [readonly]="successMessage" />
@@ -41,7 +41,7 @@
             </div>
 
             <div class="form-row">
-                <div class="col-md-6">
+                <div class="col">
                     <label for="taxNumber">{{ 'taxNumber' | translate }}</label>
                     <input type="text" class="form-control" id="taxNumber" formControlName="taxNumber"
                         placeholder="{{ 'taxNumber' | translate }}" required [readonly]="successMessage" />
@@ -54,7 +54,7 @@
 
                 <!-- <div class="col-md-2"></div> -->
 
-                <div class="col-md-6">
+                <div class="col">
                     <label for="vatNumber">{{ 'vatNumber' | translate }}</label>
                     <input type="text" class="form-control" id="vatNumber" formControlName="vatNumber"
                         placeholder="{{ 'vatNumber' | translate }}" required [readonly]="successMessage" />
@@ -67,7 +67,7 @@
             </div>
 
             <div class="form-row">
-                <div class="col-md-6">
+                <div class="col">
                     <label for="address">{{ 'address' | translate }}</label>
                     <input type="text" class="form-control" id="address" formControlName="address" placeholder="Address"
                         required [readonly]="successMessage" />
@@ -78,7 +78,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col">
                     <label for="email">{{ 'email' | translate }}</label>
                     <input type="email" class="form-control" id="email" formControlName="email" placeholder="{{ 'email' | translate }}" required [readonly]="successMessage" />
                     <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
@@ -94,7 +94,7 @@
             </div>
 
             <div class="form-row">
-                <div class="col-md-4">
+                <div class="col">
                     <label for="city">{{ 'city' | translate }}</label>
                     <input type="text" class="form-control" id="city" formControlName="city" placeholder="{{ 'city' | translate }}" required [readonly]="successMessage" />
                     <div *ngIf="city.invalid && (city.dirty || city.touched)" class="alert alert-danger">
@@ -104,7 +104,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col">
                     <label for="zipCode">{{ 'zip' | translate }}</label>
                     <input type="text" class="form-control" id="zipCode" formControlName="zipCode" placeholder="{{ 'zip' | translate }}"
                         required [readonly]="successMessage" />
@@ -115,7 +115,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col">
                     <label for="phone">{{ 'phone' | translate }}</label>
                     <input type="text" class="form-control" id="phone" formControlName="phone" placeholder="{{ 'phone' | translate }}"
                         required [readonly]="successMessage" />
@@ -128,7 +128,7 @@
             </div>
 
             <div class="form-row">
-                <div class="col-md-6">
+                <div class="col">
                     <label for="country">{{ 'country' | translate }}</label>
                     <select class="custom-select"  formControlName="country" id="country" required (change)="changeCountry($event)" [disabled]="successMessage" >
                         <option value="">{{ 'chooseYourCountry' | translate }}</option>
@@ -142,7 +142,7 @@
               
                 </div>
 
-                <div class="col-md-6">
+                <div class="col">
                     <label for="region">{{ 'region' | translate }}</label>
                     <select class="custom-select"  formControlName="region" id="region" required [disabled]="successMessage">
                         <option value="" [disabled]="disableRegion">{{ 'chooseYourRegion' | translate }}</option>
@@ -158,15 +158,15 @@
             </div>
 
                 <div class="row">
-                    <div class="w-100"></div>
-                    <div class="col-md-6">
+                    <!-- <div class="w-100"></div> -->
+                    <div class="col">
                         <button *ngIf="!successMessage" type="submit" class="btn btn-primary" [disabled]="!registrationForm.valid">{{ 'submit' | translate }}</button>
                         <button *ngIf="successMessage"                class="btn btn-primary" (click)="onCancel()"                >{{ 'backToLogin' | translate }}</button>
                     </div>
-                    <div class="col-md-6  text-right">
+                    <div class="col  text-right">
                         <button *ngIf="!successMessage"               class="btn btn-primary" (click)="onCancel()">{{ 'cancel' | translate }}</button>
                     </div>
-                    <div class="w-100"></div>
+                   <!--  <div class="w-100"></div> -->
                 </div>
 
         </form>

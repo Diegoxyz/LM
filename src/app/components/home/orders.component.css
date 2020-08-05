@@ -88,3 +88,26 @@ ul {
   text-align: center;
 }
 
+
+@media all and (max-width: 750px) and (orientation:portrait) {     
+  .search-categories-container  {
+      margin-top: 40%;
+      width: 100%;
+  }
+
+    .col-6 {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+
+    .empty_row{
+      display: none;
+    }
+}
+
+@media all and (max-width: 750px) and (orientation:landscape) {     
+  .search-categories-container  {
+      margin-top: 25%;
+      border: solid 2px red;
+  }
+}
