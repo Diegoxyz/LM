@@ -208,11 +208,13 @@ h6{
 
 /* Make the image responsive */
 .containerA img {
-  width: 98%;
-  height: 98%;
+/*   width: 98%;
+  height: 98%; */
   padding-top: 2%;
   padding-left: 2%;
   padding-right: 2%;
+  max-width: 260px;
+  max-height: 167px;
 }
 
 .containerA .btn {
