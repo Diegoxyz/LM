@@ -25,17 +25,17 @@
             <div (click)="optionClicked($event, machine);">
                 <mat-checkbox [checked]="machine.selected" (change)="toggleSelection(machine)" 
                 (click)="$event.stopPropagation()">
-                    {{ machine.item.description }}
+                    {{ machine.item?.description }}
                 </mat-checkbox>
             </div>
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
     <div id="div-search">
-        <!--<button id="search" class="btn btn-primary" (click)="search()">
+        <button id="search" class="btn btn-primary" (click)="search()">
             {{ 'search' | translate }}&nbsp;&nbsp;&nbsp;
             <fa-icon [icon]="faSearch" size="1x"></fa-icon>
-        </button>-->
+        </button>
     </div>
 </div>
 
