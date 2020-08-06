@@ -273,9 +273,15 @@ export class ProductCardCatalogueComponent implements OnInit {
                         this.itemDetail.maxQuantity = product.maxQuantity;
                         this.itemDetail.minQuantity = product.minQuantity;
                         this.itemDetail.meins = product.meins;*/
+                        console.log('maxQuantity:' + product.maxQuantity + ', minQuantity:' + product.minQuantity);
+                        product.maxQuantity = product.maxQuantity && product.maxQuantity > 0 ? product.maxQuantity : undefined;
+                        product.minQuantity = product.minQuantity && product.minQuantity > 0 ? product.minQuantity : undefined;
+                        console.log('maxQuantity2:' + product.maxQuantity + ', minQuantity2:' + product.minQuantity);
                         this.itemDetail = product;
-
-
+                        console.log('maxQuantity3:' + this.itemDetail.maxQuantity + ', minQuantity3:' + this.itemDetail.minQuantity);
+                        this.itemDetail.maxQuantity = this.itemDetail.maxQuantity && this.itemDetail.maxQuantity > 0 ? this.itemDetail.maxQuantity : undefined;
+                        this.itemDetail.minQuantity = this.itemDetail.minQuantity && this.itemDetail.minQuantity > 0 ? this.itemDetail.minQuantity : undefined;
+                        console.log('maxQuantity4:' + this.itemDetail.maxQuantity + ', minQuantity4:' + this.itemDetail.minQuantity);
                         this.bsModalRef = this.modalService.open(template, { size: 'xl' });
                     }
                     
@@ -290,9 +296,10 @@ export class ProductCardCatalogueComponent implements OnInit {
                 this.itemDetail.itemNumBom = this.item.itemNumBom;
                 this.itemDetail.maktxSub = this.item.maktxSub;
                 this.itemDetail.matNrSub = this.item.matNrSub;
-                this.itemDetail.maxQuantity = this.item.maxQuantity;
+                // this.itemDetail.maxQuantity = this.item.maxQuantity;
+                this.itemDetail.maxQuantity = this.item.maxQuantity && this.item.maxQuantity > 0 ? this.item.maxQuantity : undefined;
                 this.itemDetail.meins = this.item.meins;
-                this.itemDetail.minQuantity = this.item.minQuantity;
+                this.itemDetail.minQuantity = this.item.minQuantity && this.item.minQuantity > 0 ? this.item.minQuantity : undefined;
                 this.itemDetail.noteCliente = 'Note cliente';
                 this.itemDetail.noteGenerali = 'Note generali';
                 this.itemDetail.price = this.item.price;
