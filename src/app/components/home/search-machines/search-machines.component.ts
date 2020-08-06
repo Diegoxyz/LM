@@ -11,6 +11,7 @@ import { Item } from '@app/models/item';
 import { Macchina } from '@app/models/OData/MacchineSet/macchineset.entity';
 import { environment } from '@environments/environment';
 import { MacchineSetService } from '@app/models/OData/MacchineSet/macchineset.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 export class MachineList {
   constructor(public item: Item, public selected?: boolean) {
@@ -47,26 +48,31 @@ export class SearchMachinesComponent implements OnInit {
   outMacchine : EventEmitter<Item[]> = new EventEmitter<Item[]>();
 
 
-  constructor(private fb: FormBuilder, private productsService: ProductsService, private macchineService: MacchineSetService) { }
+  constructor(private fb: FormBuilder, private productsService: ProductsService, private macchineService: MacchineSetService,
+    private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     
     if (environment && environment.oData) {
+      this.spinner.show();
       this.macchineService.getAllMachines().subscribe(resp => {
+        const macchine : Item[] = [];
         if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
           console.log('search machine - resp.body.d.results.length:' + resp.body.d.results.length);
             resp.body.d.results.forEach(m => {
                 if (m) {
                   const ml : MachineList = new MachineList(Macchina.fromMacchinaJson(m));
                   this.machines.push(ml);
+                  macchine.push(ml.item);
                   this.allMacchinas.push(m);
                 }
             });
         }
-        console.log('this.machines:' + this.machines);
+        this.outMacchine.emit(macchine);
         this.filteredMachines = this.searchMachineControl.valueChanges.pipe(
           startWith(null),
           map((machine: MachineList | null) => machine ? this.filter(machine) : this.machines.slice()));
+        this.spinner.hide();
     });
     } else {
       const listOfMachines = this.productsService.getAllMachines();

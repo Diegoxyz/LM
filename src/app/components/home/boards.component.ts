@@ -69,7 +69,7 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
 
          }); */
         if (environment && environment.oData) {
-            this.spinner.show();
+            /*this.spinner.show();
             this.macchineService.getAllMachines().subscribe(resp => {
                 if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
                     resp.body.d.results.forEach(m => {
@@ -79,7 +79,7 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
                     });
                 }
                 this.spinner.hide();
-            });
+            });*/
         } else {
             this.machines = this.productsService.getAllMachines();
             
