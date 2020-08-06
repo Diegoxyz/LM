@@ -241,3 +241,33 @@ h6{
   padding-left: 10px;
   padding-right: 10px;
 }
+
+
+.col-right{
+  text-align: end;
+  /* border: solid 1px blue; */
+  width: 50%;
+  padding-left: 4%;
+}
+
+.col-left{
+  text-align: start;
+  /* border: solid 1px red; */
+  width: 50%;
+  padding-left: 2%;
+}
+
+/* portrait - landscape */
+@media all and (max-width: 750px){     
+    .col-8 {
+      flex: 100%;
+      max-width: 100%;
+      padding-bottom: 4%;
+    }
+  
+    .col-4 {
+      flex: 100%;
+      max-width: 200%;
+    }
+}
+

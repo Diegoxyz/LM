@@ -147,125 +147,116 @@
         <div class="modal-header">
             <h4 class="modal-title">{{ itemDetail.code }}-{{ itemDetail.description }}</h4>
             <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-              <span aria-hidden="true">&times;</span>
+                <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <div class="modal-body">
-            <!--<div>
-                <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>-->
             <div class="row">
                 <div class="col-8">
                     <img *ngIf="thumbnail" class="img-fluid card-img-top" id='pic' [src]='thumbnail'
-                    sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
+                        sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
 
-                <img *ngIf="svgThumbnail"
-                    [src]="sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ svgThumbnail)"
-                    sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
+                    <img *ngIf="svgThumbnail"
+                        [src]="sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ svgThumbnail)"
+                        sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
 
-                <img *ngIf="thumbnail === undefined && svgThumbnail === undefined" class="img-fluid card-img-top"
-                    src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px" width="260"
-                    height="260">
+                    <img *ngIf="thumbnail === undefined && svgThumbnail === undefined" class="img-fluid card-img-top"
+                        src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px"
+                        width="260" height="260">
                 </div>
+
                 <div class="col-4">
                     <div class="row">
-                        <!--<div class="col-md-6" style="text-align: right;">
-                            <h6>{{'matnr' | translate }}:</h6>
-                        </div>-->
-                        <div class="col-md-12">
-                            <h6><div style="text-align: left;">{{ itemDetail.code }}</div></h6>
+                        <div class="col-right" style="text-align: left;">
+                            <h6>{{ itemDetail.code }}</h6>
                         </div>
                     </div>
 
-
                     <div class="row">
-                        <!--<div class="col-md-6" style="text-align: right;">
-                            <h6>{{'materialDescription' | translate }}:</h6>
-                        </div>-->
-                        <div class="col-md-12">
-                            <h6><div style="text-align: left;">{{ itemDetail.description }}</div></h6>
+                        <div class="col-right" style="text-align: left;">
+                            <h6>{{ itemDetail.description }}</h6>
                         </div>
                     </div>
 
-
                     <div class="row">
-                        <div class="col-md-6" style="text-align: left;">
+                        <div class="col-right" style="text-align: left;">
                             <h6>{{'itemDetail.category' | translate }}:</h6>
                         </div>
-                        <div class="col-md-6" style="text-align: left;">
+                        <div class="col-left" style="text-align: left;">
                             <h6>{{ itemDetail.prodhx }} </h6>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6" style="text-align: left;">
+                        <div class="col-right" style="text-align: left;">
                             <h6>{{ 'itemDetail.customerCode' | translate }}:</h6>
                         </div>
-                        <div class="col-md-6" style="text-align: left;">
+                        <div class="col-left" style="text-align: left;">
                             <h6>{{ itemDetail.kdmat }}</h6>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6" style="text-align: left;">
+                        <div class="col-right" style="text-align: left;">
                             <h6>{{ 'itemDetail.price' | translate }}:</h6>
                         </div>
-                        <div class="col-md-6" style="text-align: left;">
+                        <div class="col-left" style="text-align: left;">
                             <h6>{{ getPrice(itemDetail.price) }}&nbsp;{{itemDetail.currency}}</h6>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6" style="text-align: left;">
+                        <div class="col-right" style="text-align: left;">
                             <h6>{{ 'itemDetail.stock' | translate}}:</h6>
                         </div>
-                        <div class="col-md-6" style="text-align: left;">
+                        <div class="col-left" style="text-align: left;">
                             <h6>
                                 <fa-icon id="circle-red"
                                     *ngIf="itemDetail.stockIndicator === undefined || itemDetail.stockIndicator === '' || itemDetail.stockIndicator === '3'"
                                     [icon]="faCircle"></fa-icon>
-                                <fa-icon id="circle-yellow" *ngIf="itemDetail.stockIndicator === '2'" [icon]="faCircle"></fa-icon>
-                                <fa-icon id="circle-green" *ngIf="itemDetail.stockIndicator === '1'" [icon]="faCircle"></fa-icon>
+                                <fa-icon id="circle-yellow" *ngIf="itemDetail.stockIndicator === '2'" [icon]="faCircle">
+                                </fa-icon>
+                                <fa-icon id="circle-green" *ngIf="itemDetail.stockIndicator === '1'" [icon]="faCircle">
+                                </fa-icon>
                             </h6>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6" style="text-align: left;">
+                        <div class="col-right" style="text-align: left;">
                             <h6>{{ 'itemDetail.minDeliveryQty' | translate }}:</h6>
                         </div>
-                        <div class="col-md-6" style="text-align: left;">
+                        <div class="col-left" style="text-align: left;">
                             <h6>{{ itemDetail.minQuantity }}</h6>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6" style="text-align: left;">
+                        <div class="col-right" style="text-align: left;">
                             <h6>{{ 'itemDetail.maxDeliveryQty' | translate }}:</h6>
                         </div>
-                        <div class="col-md-6" style="text-align: left;">
+                        <div class="col-left" style="text-align: left;">
                             <h6>{{ itemDetail.maxQuantity }}</h6>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6" style="text-align: left;">
+                        <div class="col-right" style="text-align: left;">
                             <h6>{{ 'itemDetail.customerNote' | translate }}:</h6>
                         </div>
-                        <div class="col-md-6" style="text-align: left;">
+                        <div class="col-left" style="text-align: left;">
                             <h6>{{ itemDetail.noteCliente }}</h6>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6" style="text-align: left;">
+                        <div class="col-right" style="text-align: left;">
                             <h6>{{ 'itemDetail.documentation' | translate }}:</h6>
                         </div>
-                        <div class="col-md-6" style="text-align: left;">
+                        <div class="col-left" style="text-align: left;">
                             <h6>
-                                <a *ngIf="itemDetail.documentazione && itemDetail.documentazione !== ''" [href]="getUrl()" target="_blank">
+                                <a *ngIf="itemDetail.documentazione && itemDetail.documentazione !== ''"
+                                    [href]="getUrl()" target="_blank">
                                     <i class="fa fa-file" aria-hidden="true" style="color: #dc3545;"></i>
                                 </a>
                             </h6>
@@ -273,21 +264,22 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6" style="text-align: left;">
+                        <div class="col-right" style="text-align: left;">
                             <h6>{{ 'itemDetail.generalNote' | translate }}:</h6>
                         </div>
-                        <div class="col-md-6" style="text-align: left;">
+                        <div class="col-left" style="text-align: left;">
                             <h6>{{ itemDetail.noteGenerali }}</h6>
                         </div>
                     </div>
 
 
                     <div class="row">
-                        <div class="col-md-6" style="text-align: left;">
+                        <div class="col-right" style="text-align: left;">
                             <h6>{{ 'itemDetail.substituteMaterialNum' | translate }}:</h6>
                         </div>
-                        <div class="col-md-6" style="text-align: left;">
-                            <h6>{{ itemDetail.matNrSub }} <span *ngIf="itemDetail.maktxSub">-</span> {{ itemDetail.maktxSub }}</h6>
+                        <div class="col-left" style="text-align: left;">
+                            <h6>{{ itemDetail.matNrSub }} <span *ngIf="itemDetail.maktxSub">-</span>
+                                {{ itemDetail.maktxSub }}</h6>
                         </div>
                     </div>
                 </div>
