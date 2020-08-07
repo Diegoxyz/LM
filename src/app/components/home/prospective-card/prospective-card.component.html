@@ -95,13 +95,12 @@
                                         <div class="blue-square">{{ item.strItemNumBom }}</div>
                                     </div>
                                 </div>
-
+                                <form [formGroup]="addProductForm" (ngSubmit)="addProduct(item.code)">
                                 <div class="row align-items-start">
-                                    <div class="col-md-4" id="item-price">
-                                        {{ getPrice(item.price) }}&nbsp;{{item.currency}}</div>
-                                    <div class="col-md-8">
-                                        <form [formGroup]="addProductForm" (ngSubmit)="addProduct(item.code)">
-                                            <div class="row">
+                                    <div class="col-md-auto" id="item-price">
+                                        {{ getPrice(item.price) }}&nbsp;{{item.currency}}
+                                    </div>
+                                        
 
                                                 <div id="qty-div" class="col-md-auto">
                                                     <input [id]="Id('qty', item.code)" [formControlName]="item.code"
@@ -110,32 +109,29 @@
                                                         pattern="[0-9]*" inputmode="numeric" aria-labelledby="">
                                                 </div>
 
-                                                <div id="sub" class="col-md-2">
+                                                <div id="sub" class="col-md-auto">
                                                     <button id="btn-sub" class="sub-product"
                                                         (click)="subOneProduct(item.code)">
                                                         <i class="fa fa-minus" aria-hidden="true"></i>
                                                     </button>
                                                 </div>
 
-                                                <div id="add" class="col-md-2">
+                                                <div id="add" class="col-md-auto">
                                                     <button id="btn-add" class="add-product"
                                                         (click)="addOneProduct(item.code)">
                                                         <i class="fa fa-plus" aria-hidden="true"></i>
                                                     </button>
                                                 </div>
 
-                                                <div id="icon-btn-div" class="col-md-3">
+                                                <div id="icon-btn-div" class="col-md-auto">
                                                     <button id="btn-cart">
                                                         <fa-icon id="btn-icon" [icon]="faShoppingCart" size="1x">
                                                         </fa-icon>
                                                     </button>
                                                 </div>
-
-                                            </div>
-                                        </form>
-
-                                    </div>
+                                        
                                 </div>
+                                </form>
                                 <div class="row align-items-start">
                                     <div id="btn-info" class="col-md-4" style="padding-top: 1%; ">
                                         <button style="background-color: 
