@@ -14,6 +14,7 @@ import {NgbModule, NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
 import { BoardsComponent } from './boards.component';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
+import {MatIconModule} from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
@@ -57,6 +58,7 @@ export function createTranslateLoader(http: HttpClient) {
         NgbModule,
         NgxPaginationModule,
         NgbDropdownModule,
+        MatIconModule,
         MatInputModule,
         MatSelectModule,
         MatFormFieldModule,

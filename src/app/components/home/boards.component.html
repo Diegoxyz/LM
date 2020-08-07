@@ -2,7 +2,7 @@
 type="ball-clip-rotate-multiple" size="medium">
     <p class="loading">Loading....</p>
 </ngx-spinner>
-<div *ngIf="sectionToBeDisplayed != 2"><app-search-machines (outMacchine)="filterMacchine($event)"></app-search-machines></div>
+<div *ngIf="sectionToBeDisplayed != 2"><app-search-machines [sectionToBeDisplayed]="sectionToBeDisplayed" (outMacchine)="filterMacchine($event)"></app-search-machines></div>
 <div *ngIf="sectionToBeDisplayed != 1 && sectionToBeDisplayed != 2">
     <ul id="machines-container" class="flex-container">
         <li id="machines-item" *ngFor="let m of machines" class="flex-item">

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { ProductsService } from '@app/services/products.service';
 import { faSearch, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
@@ -44,6 +44,9 @@ export class SearchMachinesComponent implements OnInit {
   removable = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
 
+  @Input()
+  sectionToBeDisplayed: number = 0;
+
   @Output()
   outMacchine : EventEmitter<Item[]> = new EventEmitter<Item[]>();
 
@@ -68,7 +71,10 @@ export class SearchMachinesComponent implements OnInit {
                 }
             });
         }
-        this.outMacchine.emit(macchine);
+        if (this.sectionToBeDisplayed !== 1) {
+          this.outMacchine.emit(macchine);
+        }
+        
         this.filteredMachines = this.searchMachineControl.valueChanges.pipe(
           startWith(null),
           map((machine: MachineList | null) => machine ? this.filter(machine) : this.machines.slice()));
