@@ -18,6 +18,7 @@ import { ManageProducts } from '../services/manage-products.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CatalogueService } from '@app/services/catalogue.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { MatIconRegistry } from '@angular/material/icon';
 
 @Component({selector: 'app-prospetive-card',
 templateUrl: './prospective-card.component.html',
@@ -81,7 +82,8 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
     constructor(private renderer: Renderer2, private productsService: ProductsService, private router: Router, private manageProducts: ManageProducts, private cartService : CartService,
         private binDataMatnrSetService: BinDataMatnrSetService, public sanitizer: DomSanitizer, private sectionMaterial: SectionMaterial,
         private carrelloService : CarrelloService, private accountService: AccountService, private fb: FormBuilder,
-        private spinner: NgxSpinnerService, private catalogueService : CatalogueService, private modalService: NgbModal) {
+        private spinner: NgxSpinnerService, private catalogueService : CatalogueService, private modalService: NgbModal,
+        private matIconRegistry: MatIconRegistry) {
     }
     ngOnDestroy(): void {
         if (this.removeEventListener1) {
@@ -96,6 +98,20 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
     }
     
     public addProductForm: FormGroup;
+
+    onClickMe(event,padre) {
+        console.log('onCLickMe:' + padre + ',children:' + padre.children);
+        if (padre) {
+            console.log('padre.children:' + padre.children);
+            if (padre.children) {
+                console.log('padre.children.length:' + padre.children.length);
+                if (padre.children.length >= 2) {
+                    alert(padre.children[2].innerHTML);
+                }
+            }
+        }
+        this.renderer.setStyle(event.parentElement, 'fill', 'green');
+    }
 
     ngOnInit(): void {
         this.addProductForm = this.fb.group({});
@@ -134,6 +150,10 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
     
             this.blobUrl = blobUrl;
             this.safeBlobUrl = this.sanitizer.bypassSecurityTrustResourceUrl(blobUrl);
+            this.matIconRegistry.addSvgIcon(
+                "img",
+                this.sanitizer.bypassSecurityTrustResourceUrl(blobUrl)
+              );
             console.log('blobUrl:' + this.blobUrl + ',safeBlobUrl:' + this.safeBlobUrl);
 
             if (this.objId) {
@@ -237,6 +257,10 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
                                 this.blobUrl = blobUrl;
                                 this.safeBlobUrl = this.sanitizer.bypassSecurityTrustResourceUrl(blobUrl);
                                 console.log('blobUrl:' + this.blobUrl +',safeBlobUrl:' + this.safeBlobUrl);
+                                this.matIconRegistry.addSvgIcon(
+                                    "img",
+                                    this.sanitizer.bypassSecurityTrustResourceUrl(blobUrl)
+                                  );
                                             /* Commentati perché danno errore perché this.bjId è non definito
                                 this.removeEventListener1 = this.renderer.listen(this.objId.nativeElement,'click', (event) => {
                                     console.log('event on click1:' + event);
@@ -556,7 +580,12 @@ export class ProspectiveCardComponent implements OnInit, AfterViewInit, OnDestro
                         this.itemDetail.maxQuantity = product.maxQuantity;
                         this.itemDetail.minQuantity = product.minQuantity;
                         this.itemDetail.meins = product.meins;*/
+                        product.maxQuantity = product.maxQuantity && product.maxQuantity > 0 ? product.maxQuantity : undefined;
+                        product.minQuantity = product.minQuantity && product.minQuantity > 0 ? product.minQuantity : undefined;
                         this.itemDetail = product;
+                        this.itemDetail.maxQuantity = this.itemDetail.maxQuantity && this.itemDetail.maxQuantity > 0 ? this.itemDetail.maxQuantity : undefined;
+                        this.itemDetail.minQuantity = this.itemDetail.minQuantity && this.itemDetail.minQuantity > 0 ? this.itemDetail.minQuantity : undefined;
+
                         this.thumbnailDet = undefined;
                         this.svgThumbnailDet = undefined;
 

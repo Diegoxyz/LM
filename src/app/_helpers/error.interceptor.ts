@@ -57,7 +57,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                 }*/
                 
                 errorMessage = this.translateService.instant('unknownError');
-                window.alert(errorMessage);
+                // window.alert(errorMessage);
                 this.spinner.hide();
                 return throwError(errorMessage);
             }))
