@@ -193,7 +193,7 @@ h6{
 
 #item-description{
  word-wrap: break-word;
- max-width: 100%;
+ max-width: 260px;
 }
 
 .card-description2 {
