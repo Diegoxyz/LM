@@ -162,11 +162,11 @@
 
             <div class="row">
                 <div class="col-8">
-                    <img *ngIf="thumbnailDet" class="img-fluid card-img-top" id='pic' [src]='thumbnail'
+                    <img *ngIf="thumbnailDet" class="img-fluid card-img-top" id='pic' [src]='thumbnailDet'
                     sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
 
                 <img *ngIf="svgThumbnailDet"
-                    [src]="sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ svgThumbnail)"
+                    [src]="sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ svgThumbnailDet)"
                     sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
 
                 <img *ngIf="thumbnailDet === undefined && svgThumbnailDet === undefined" class="img-fluid card-img-top"
