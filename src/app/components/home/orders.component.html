@@ -49,10 +49,10 @@
         <thead>
             <tr>
                 <th scope="col" (click)="onSort('vbeln')">{{ 'ordersPage.numOrdine' | translate }}</th>
+                <th scope="col" (click)="onSort('posnr')">{{ 'ordersPage.position' | translate }}</th>
                 <th scope="col" (click)="onSort('erdat')">{{ 'ordersPage.date' | translate }}</th>
                 <th scope="col"                          >{{ 'ordersPage.totOrdine' | translate }}</th>
                 <th scope="col"                          >{{ 'ordersPage.destinazione' | translate }}</th>
-                <th scope="col" (click)="onSort('posnr')">{{ 'ordersPage.position' | translate }}</th>
                 <th scope="col" (click)="onSort('matnr')">{{ 'ordersPage.product' | translate }}</th>
                 <th scope="col" (click)="onSort('qty')">{{ 'ordersPage.qty' | translate }}</th>
                 <th scope="col" (click)="onSort('netpr')">{{ 'ordersPage.price' | translate }}</th>
@@ -70,12 +70,12 @@
         <tbody>
             <tr *ngFor="let item of items">
                 <td>{{ item.vbeln }}</td>
+                <td>{{ item.posnr }}</td>
                 <td>
                     {{ item.erdat | date:'dd/MM/yyyy' }}
                 </td>
                 <td>{{ item.netwr }} {{ item.waerk }}</td>
                 <td>{{ item.name1 }}<br /><h6 style="font-size: 12px;">{{item.ort01}} {{item.pstlz}} {{item.stras}} {{item.land1}}</h6></td>
-                <td>{{ item.posnr }}</td>
                 <td>{{ item.matnr }}<br />{{ item.maktx }}</td>
                 <td>{{ item.qty }} {{ item.meins }}</td>
                 <td>{{ item.netpr }} {{ item.waerk }}</td>

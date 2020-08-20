@@ -24,7 +24,7 @@ export class ProductsService {
 
   getAllMachines() : Item[] {
     const items : Item[] = Array(23).fill(0).map((x, i) => (
-      new Item(`Code ${i + 1}`,`Machine ${i + 1}`)
+      new Item(`Code ${i + 1}`,`Machine ${i + 1}`,`F1`)
       ));
     return items;
   }
@@ -45,7 +45,7 @@ export class ProductsService {
 
   getBoardsProducts() : Product[] {
     const items : Product[] = Array(14).fill(0).map((x, i) => (
-      new Product(`Code ${i + 1}`,`Product ${i + 1}`, (i+1 * 10), 'EUR', (i%2 === 0), `Gr${i + 1}`, 'Gerarchia', (i%2 === 0)?'X':'','PZ',undefined,undefined,undefined,'00001')
+      new Product(`Code ${i + 1}`,`Product ${i + 1}`, (i+1 * 10), 'EUR', (i%2 === 0), `Gr${i + 1}`, 'Gerarchia', (i%2 === 0)?'X':'','PZ',undefined,undefined,undefined,'0000' + (i+1))
       ));
     return items;
   }

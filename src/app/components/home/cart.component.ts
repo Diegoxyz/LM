@@ -60,7 +60,7 @@ export class CartComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         const user : User = this.accountService.userValue;
         console.log('showing spinner');
-        this.spinner.show();
+        
         if (!this.accountService.isSessionStillValid()) {
             this.accountService.logout();
             setTimeout(
@@ -69,62 +69,12 @@ export class CartComponent implements OnInit, OnDestroy {
             );
           }
         if (environment && environment.oData && this.accountService.user !== undefined && this.accountService.user !== null) {
-            this.carrelloService.getCart().subscribe(resp => {
-                console.log('cart.component - this.carrelloService.getCart -' + resp);
-                if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
-                  this.cart = Cart.fromCarrello(resp.body.d.results, this.userDataSetService.userDataSetValue);
-                  this.cartService.setCart(this.cart);
-                  this.orders = this.cart.orders;
-                        this.orders.forEach(o => {
-                            if (o.product) {
-                                console.log('cart3');
-                                this.catalogueService.getItem(o.product.code).subscribe(p => {
-                                    if (p && p.body && p.body.d) {
-                                        o.product.price = p.body.d.Netpr;
-                                        console.log('o.product.code:' + o.product.code + ',p.body.d.Netpr:' + p.body.d.Netpr + ',o.product.price:' + o.product.price);
-                                        o.product.currency = p.body.d.Waers;
-                                        if (this.currency === undefined) {
-                                            this.currency = o.product.currency;
-                                        }
-                                        this.products.push(o.product);
-                                        this.totalPrice = this.totalPrice + (o.product.price * o.quantity);
-                                        this.totalQuantity = this.totalQuantity + o.quantity;
-                                        this.strTotalPrice = this.totalPrice.toFixed(2);
-                                    }
-                                    
-                                });
-                                
-                            }
-                            
-                        });
-                }
-                this.spinner.hide();
-              });
+            this.translateService.onLangChange.subscribe(l => {
+                console.log('cart changed language');
+                this.loadData();
+            });
+            this.loadData();
               
-              /*if (this.accountService.isSessionStillValid()) {
-                console.log('cart.component - cart2:' + this.cartService.loadCart());
-                this.cartService.cart$.subscribe((o : Order) => {
-                  console.log('cart.component - this.cartService.cart$ : o:' + o);
-                  if (o) {
-                    this.carrelloService.getCart().subscribe(resp => {
-                      console.log('cart.component - this.carrelloService.getCart2 -' + resp);
-                      if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
-                        this.cart = Cart.fromCarrello(resp.body.d.results, this.userDataSetService.userDataSetValue);
-                        this.cartService.setCart(this.cart);
-                        this.orders = this.cart.orders;
-                        this.orders.forEach(o => {
-                            if (o.product) {
-                                this.products.push(o.product);
-                                this.totalPrice = this.totalPrice + (o.product.price * o.quantity);
-                            }
-                            this.totalQuantity = this.totalQuantity + o.quantity;
-                        })
-                      }
-                    });
-                  }
-                });
-          
-              } */
         } else {
             
             setTimeout(() => {
@@ -158,30 +108,83 @@ export class CartComponent implements OnInit, OnDestroy {
         
     }
 
+    loadData(): void {
+        this.spinner.show();
+        this.carrelloService.getCart().subscribe(resp => {
+            console.log('cart.component - this.carrelloService.getCart -' + resp);
+            if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
+                this.cart = Cart.fromCarrello(resp.body.d.results, this.userDataSetService.userDataSetValue);
+                this.cartService.setCart(this.cart);
+                this.orders = this.cart.orders;
+                console.log('cart- this.orders.length:' + this.orders.length);
+                if (this.orders === undefined || this.orders.length === 0) {
+                    this.spinner.hide();
+                }
+                let i = 0;
+                this.orders.forEach(o => {
+                    i++;
+                    if (o.product) {
+                        console.log('cart3');
+                        this.catalogueService.getItem(o.product.code).subscribe(p => {
+                            if (p && p.body && p.body.d) {
+                                o.product.price = p.body.d.Netpr;
+                                console.log('o.product.code:' + o.product.code + ',p.body.d.Netpr:' + p.body.d.Netpr + ',o.product.price:' + o.product.price);
+                                o.product.currency = p.body.d.Waers;
+                                if (this.currency === undefined) {
+                                    this.currency = o.product.currency;
+                                }
+                                this.products.push(o.product);
+                                this.totalPrice = this.totalPrice + (o.product.price * o.quantity);
+                                this.totalQuantity = this.totalQuantity + o.quantity;
+                                this.strTotalPrice = this.totalPrice.toFixed(2);
+                            }
+                            if (this.orders === undefined || i === this.orders.length) {
+                                this.spinner.hide();
+                            }
+                        });
+                        
+                    }
+                    
+                });
+            } else {
+                this.spinner.hide();
+            }
+            
+            });
+    }
     emptyCart(): void {
         console.log('empty cart');
+        this.spinner.show();
         if (environment && environment.oData) {
+            let i = 0;
+            const length = this.orders.length;
             this.orders.forEach(order => {
+                i++;
                 this.accountService.fetchToken().subscribe(
                     response1 => {
                         if (response1.headers) {
                             const csrftoken : string = response1.headers.get('X-CSRF-Token');
                             this.carrelloService.deleteFromCarrello(csrftoken, order.product.code).subscribe(d => {
                                 console.log('delete went fine');
-                                this.deleteOrder(order);
+                                this.deleteOrder(order, (i === length));
                             },
                             error => {
                                 console.log('error delete:' + error);
+                                this.spinner.hide();
                             });
                         }
                     });
                 });
+            
         } else {
             this.cartService.emptyCart();
             this.orders = [];
             this.totalQuantity = 0;
             this.totalPrice = 0;
             this.strTotalPrice = '0.00';
+        }
+        if (this.orders === undefined || this.orders.length === 0) {
+            this.spinner.hide();
         }
     }
 
@@ -210,7 +213,7 @@ export class CartComponent implements OnInit, OnDestroy {
         }
     }
 
-    deleteOrder(order) {
+    deleteOrder(order, disableSpinner?: boolean) {
         console.log('delete order');
         if (order) {
             this.manageProducts.changeProduct(order.product,0);
@@ -227,6 +230,9 @@ export class CartComponent implements OnInit, OnDestroy {
             this.orders = tempOrders;
             this.cartService.setOrders(this.orders);
             this.strTotalPrice = this.totalPrice.toFixed(2);
+        }
+        if (disableSpinner) {
+            this.spinner.hide();
         }
     }
 
@@ -292,7 +298,7 @@ export class CartComponent implements OnInit, OnDestroy {
                     this.spinner.hide();
                     return;
                 }
-                const matrn = row.CodiceProdotto;
+                const matrn : string = '' + row.CodiceProdotto;
                 const order : Order = new Order();
                 const newProduct : Product = new Product(matrn,'',0,'EUR',false,'','','','');
                 order.product = newProduct;
@@ -349,6 +355,14 @@ export class CartComponent implements OnInit, OnDestroy {
                                             },
                                             error => {
                                                 console.log('error update:' + error);
+                                                order.error = error;
+                                                this.products.push(order.product);
+                                                this.manageProducts.changeProduct(order.product,order.quantity);
+                                                this.totalPrice = this.totalPrice + (order.product.price * order.quantity);
+                                                this.totalQuantity = this.totalQuantity + order.quantity;
+                                                this.strTotalPrice = this.totalPrice.toFixed(2);
+                                                this.orders.push(order);
+                                                this.cart.orders = this.orders;
                                             })
                                         }
                                     }

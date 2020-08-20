@@ -12,7 +12,7 @@
                     </li>
                     <li class="menu-item menu-item-type-post_type menu-item-object-page nav-item text-center" style="margin-left: 8%; margin-right: 10%;">
                         <div><input class="form-control mr-sm-2 search" 
-                            type="search" placeholder="SEARCH"
+                            type="search" placeholder="{{ 'searchMenu' | translate }}"
                             #searchBox (keyup.enter)="onSearch(searchBox.value)" [(ngModel)]="searchKey"  (ngModelChange)="onTextChange($event)"
                             aria-label="SEARCH"></div>
                     </li>

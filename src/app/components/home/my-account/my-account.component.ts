@@ -6,6 +6,7 @@ import { UserDataSetService } from '@app/models/OData/UserDataSet/userdataset.se
 import { environment } from '@environments/environment';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import {TranslateService} from '@ngx-translate/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-my-account',
@@ -16,7 +17,7 @@ export class MyAccountComponent implements OnInit {
 
   constructor(private accountService : AccountService,private router: Router,
     public bsModalRef: BsModalRef, private userDataSetService : UserDataSetService,
-    private translateService: TranslateService) { }
+    private translateService: TranslateService, private spinner: NgxSpinnerService) { }
   language : string;
   name : string;
   address : string;
@@ -25,6 +26,7 @@ export class MyAccountComponent implements OnInit {
   postalCode: string;
   email: string;
   country: string;
+  businessName : string;
 
   faUserCircle=faUserCircle;
 
@@ -40,6 +42,7 @@ export class MyAccountComponent implements OnInit {
       this.email = this.userDataSetService.userDataSetValue.Email;
       this.country = this.userDataSetService.userDataSetValue.Land1;
       this.language = this.userDataSetService.userDataSetValue.Langu;
+      this.businessName = this.userDataSetService.userDataSetValue.Kunnrx;
     } else {
       this.name = 'Test';
       this.address =' Via La Torre 14/H';
@@ -49,6 +52,7 @@ export class MyAccountComponent implements OnInit {
       this.email = 'store@lamarzocco.com';
       this.country = 'ITALY';
       this.language = 'italian';
+      this.businessName = 'Ragione Sociale';
     }
     
   }
@@ -68,17 +72,18 @@ export class MyAccountComponent implements OnInit {
   }
 
   public changeLanguage() {
+    this.spinner.show();
     console.log('changeLanguage:' + this.language);
     console.log('this.translateService.langs:' + this.translateService.langs);
     if (this.translateService.langs && this.translateService.langs.length > 0) {
       console.log('this.translateService.langs[0]:' +this.translateService.langs[0]);
       if (this.translateService.langs[0] === this.getLanguage()) {
-        this.translateService.use(this.translateService.langs[1]);
         this.accountService.setUserLanguage(this.translateService.langs[1]);
+        this.translateService.use(this.translateService.langs[1]);
         this.language = this.translateService.langs[1];
       } else {
-        this.translateService.use(this.translateService.langs[0]);
         this.accountService.setUserLanguage(this.translateService.langs[0]);
+        this.translateService.use(this.translateService.langs[0]);
         this.language = this.translateService.langs[0];
       }
     } else {
@@ -92,12 +97,13 @@ export class MyAccountComponent implements OnInit {
         this.accountService.setUserLanguage('it');
       }
     }
-    
+    /*setTimeout(
+      () => this.spinner.hide(),
+      5000
+    );*/
   }
 
   public getLanguage() {
-    console.log('this.translateService.currentLang:' + this.translateService.currentLang) ;
-
     return this.translateService.currentLang;
   }
 

@@ -17,6 +17,7 @@ export class AccountService {
 
   private userSubject: BehaviorSubject<User>;
   public user: Observable<User>;
+  public currentPage = 1;
 
   constructor(private factory: ODataServiceFactory,
     private http: HttpClient, private cartService : CartService,private translateService: TranslateService,

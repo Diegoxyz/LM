@@ -19,11 +19,13 @@ const routes: Routes = [
             { path: 'home', component: BoardsComponent },
             { path: 'catalogue/:groupId', component: CatalogueComponent },
             { path: 'catalogue', component: CatalogueComponent },
+            { path: 'catalogue2', component: CatalogueComponent },
             { path: 'catalogue_search', component: CatalogueComponent },
             { path: 'catalogue_last_purchases', component: CatalogueComponent },
            /* { path: 'boards/:machineId', component: BoardsComponent }, */
             { path: 'prospective', component: ProspectiveCardComponent },
             { path: 'boards', component: BoardsComponent},
+            { path: 'boards2', component: BoardsComponent},
             { path: 'orders', component: OrdersComponent },
             { path: 'cart', component: CartComponent },
             { path: 'cart/ship-to-set', component: ShipToSetComponent },

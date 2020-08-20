@@ -8,6 +8,8 @@ import { Macchina, Section } from '@app/models/OData/MacchineSet/macchineset.ent
 import { environment } from '@environments/environment';
 import { SectionService } from '@app/services/section.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { TranslateService } from '@ngx-translate/core';
+import { AccountService } from '@app/services/account.service';
 
 @Component({selector: 'app-boards',
 templateUrl: './boards.component.html',
@@ -38,6 +40,7 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
     sectionToBeDisplayed : number = 0;
 
     machine : Item;
+    currentMatr: string;
 
     prospective : Item;
 
@@ -45,7 +48,7 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
 
     constructor(private productsService: ProductsService,private macchineService: MacchineSetService,
         private route: ActivatedRoute,private _router: Router, private sectionService : SectionService,
-        private spinner: NgxSpinnerService
+        private spinner: NgxSpinnerService, private translateService : TranslateService, private accountService : AccountService
     ) {
        /*  this.groups = this.productsService.getAllGroups(); */
     }
@@ -80,9 +83,12 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
                 }
                 this.spinner.hide();
             });*/
+            this.translateService.onLangChange.subscribe(l => {
+                this.loadData();
+            });
+            this.accountService.currentPage = 1;
         } else {
             this.machines = this.productsService.getAllMachines();
-            
         }
     }
 
@@ -105,6 +111,22 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
         this._router.navigate(['./home/sections/machine']);
     } */
 
+    private loadData() {
+        if (this.sectionToBeDisplayed === 0) {
+
+        } else if (this.accountService.currentPage === 1 && this.sectionToBeDisplayed === 1) {
+            this.sectionService.getMachineServices(this.currentMatr).subscribe(resp => {
+                if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
+                    resp.body.d.results.forEach(s => {
+                        if (s) {
+                            this.sections.push(Section.fromJSON(s.MatnrMacchina, s.MatnrSezione, s.Maktx, s.Langu, s.LoioId, s.Email, s.Token));
+                        }
+                    });
+                }
+            });
+        }
+    }
+
     openSections(mach: Item) {
         this.sectionToBeDisplayed = 1;
         this.machines = [];
@@ -120,15 +142,8 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
             if (code.length > 1) {
                 matrn = code[1];
             }
-            this.sectionService.getMachineServices(matrn).subscribe(resp => {
-                if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
-                    resp.body.d.results.forEach(s => {
-                        if (s) {
-                            this.sections.push(Section.fromJSON(s.MatnrMacchina, s.MatnrSezione, s.Maktx, s.Langu, s.LoioId, s.Email, s.Token));
-                        }
-                    });
-                }
-            });
+            this.currentMatr = matrn;
+            this.loadData();
         } else {
             this.sections = this.productsService.getAllSections();
         }

@@ -21,7 +21,7 @@
             <button *ngIf="loadingFromFile" class="btn" style="background-color: transparent;" (click)="reset()"><i class="fa fa-remove" aria-hidden="true" style="color:#dc3545;"></i></button>
         </div>
         <div style="margin-top: 2%;">
-            <a id="download" href="../../../assets/files/sampleCart.xlsx" download="sampleCart.xslx">
+            <a id="download" href="../../../assets/files/sampleCart.xlsx" download="sampleCart.xlsx">
                 <i class="fa fa-download"></i><span>{{ 'downloadSampleFile' | translate }}</span></a>
         </div>
     </div>
@@ -85,7 +85,7 @@
             </div>
 
             <div id="submit" class="col-md-6 text-right">
-                <button class="btn btn-primary" (click)="goToShipToSet()">{{ 'goToDeliveryAddr' | translate }}</button> <!-- Go to delivery address -->
+                <button class="btn btn-primary" (click)="goToShipToSet()" [disabled]="orders.length === 0">{{ 'goToDeliveryAddr' | translate }}</button> <!-- Go to delivery address -->
             </div>
         </div>
     </div>

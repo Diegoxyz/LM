@@ -17,18 +17,19 @@ export class ExcelService {
   public exportAsExcelFile(json: any[], excelFileName: string): void {
     
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
-    
-    if ( this.accountService.userLanguage === undefined || this.accountService.userLanguage === null || (this.accountService.userLanguage === 'en' && this.translateService.currentLang === 'en')) {
+    const language : string = this.accountService.getLanguage();
+    console.log('exportAsExcelFile language:' + language);
+    if ( language === undefined || language.toLocaleLowerCase() === 'en') {
       delete worksheet['A1'].w; 
       worksheet['A1'].v = "Order";
       delete worksheet['B1'].w; 
-      worksheet['B1'].v = "Date";
+      worksheet['B1'].v = "Item";
       delete worksheet['C1'].w; 
-      worksheet['C1'].v = "Total";
+      worksheet['C1'].v = "Date";
       delete worksheet['D1'].w; 
-      worksheet['D1'].v = "Ship-to";
+      worksheet['D1'].v = "Total";
       delete worksheet['E1'].w; 
-      worksheet['E1'].v = "Item";
+      worksheet['E1'].v = "Ship-to";
       delete worksheet['F1'].w; 
       worksheet['F1'].v = "Product";
       delete worksheet['G1'].w; 
@@ -43,15 +44,15 @@ export class ExcelService {
       delete worksheet['A1'].w; 
       worksheet['A1'].v = "Num.Ordine";
       delete worksheet['B1'].w; 
-      worksheet['B1'].v = "Data";
+      worksheet['B1'].v = "Prodotto";
       delete worksheet['C1'].w; 
-      worksheet['C1'].v = "Tot.Ordine";
+      worksheet['C1'].v = "Data";
       delete worksheet['D1'].w; 
-      worksheet['D1'].v = "Destinazione";
+      worksheet['D1'].v = "Tot.Ordine";
       delete worksheet['E1'].w; 
-      worksheet['E1'].v = "Pos.";
+      worksheet['E1'].v = "Destinazione";
       delete worksheet['F1'].w; 
-      worksheet['F1'].v = "Prodotto";
+      worksheet['F1'].v = "Pos.";
       delete worksheet['G1'].w; 
       worksheet['G1'].v = "Qtà";
       delete worksheet['H1'].w; 

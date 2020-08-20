@@ -32,6 +32,7 @@ export class MenuComponent implements OnInit {
  currentPage : number = 0;
 
  reloadBoards = true;
+ reloadCatalogue = true;
 
  constructor(private productsService: ProductsService,
   private fb : FormBuilder,
@@ -60,7 +61,14 @@ export class MenuComponent implements OnInit {
 
   goToCatalogue() {
     this.currentPage = 1;
-    this.router.navigate(['./home/catalogue']);
+    if (this.reloadCatalogue) {
+      this.reloadCatalogue = false;
+      this.router.navigate(['./home/catalogue2']);
+    } else {
+      this.reloadCatalogue = true;
+      this.router.navigate(['./home/catalogue']);
+    }
+    
   }
 
   goToBoards() {

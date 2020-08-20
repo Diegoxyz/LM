@@ -7,6 +7,8 @@ import { CatalogueService } from '@app/services/catalogue.service';
 import { environment } from '@environments/environment';
 import { Materiale } from '@app/models/OData/MacchineSet/macchineset.entity';
 import { NgxSpinnerService } from "ngx-spinner";
+import { TranslateService } from '@ngx-translate/core';
+import { AccountService } from '@app/services/account.service';
 
 @Component({
     selector: 'app-catalogue',
@@ -48,14 +50,15 @@ export class CatalogueComponent implements OnInit, OnDestroy {
 
     private sub: any;
 
-    searchLastProducts? : string;
-    searchKey? : string;
+    searchLastProducts?: string;
+    searchKey?: string;
 
     displaySpinner = false;
 
     constructor(private productsService: ProductsService,
         private fb: FormBuilder,
-        private route: ActivatedRoute, private catalogueService: CatalogueService, private spinner: NgxSpinnerService
+        private route: ActivatedRoute, private catalogueService: CatalogueService, private spinner: NgxSpinnerService,
+        private translateService: TranslateService, private accountService: AccountService
     ) {
 
     }
@@ -63,33 +66,22 @@ export class CatalogueComponent implements OnInit, OnDestroy {
     ngOnInit() {
 
         if (environment && environment.oData) {
-            this.spinner.show();
             const lastPurchases = this.route.snapshot.paramMap.get('lastPurchases');
             this.searchLastProducts = lastPurchases;
             console.log('lastPurchases:' + lastPurchases);
             const searchKey = this.route.snapshot.paramMap.get('searchKey');
             this.searchKey = searchKey;
             console.log('searchKey:' + searchKey);
-            this.catalogueService.getAllItems(lastPurchases, searchKey).subscribe(resp => {
-                this.products = [];
-                if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
-                    resp.body.d.results.forEach(m => {
-                        if (m) {
-                            this.items.push(Materiale.fromJSON(m));
-                            this.cachedItems.push(Materiale.fromJSON(m));
-                            this.products.push(Materiale.fromJSON(m));
-                        }
-                    });
-                }
-                const imagesForRow = this.items.length > this.imagesToView ? this.imagesToView : this.items.length;
-                console.log('catalogue - imagesForRow:' + imagesForRow);
-                for (let i = 0; i < imagesForRow; i++) {
-                    this.itemsToView.push(this.items[i]);
-                }
-                // document.getElementById('myModal').style.display = "none"
-                this.spinner.hide(); 
-            }
-            );
+            this.accountService.currentPage = 2;
+            this.translateService.onLangChange.subscribe(l => {
+                console.log('product catalogue changed language');
+                this.loadData();
+            });
+            this.translateService.onLangChange.subscribe(l => {
+                console.log('Product catalogue - changed language');
+                this.accountService.userValue.lang = l.lang;
+            });
+            this.loadData();
         } else {
             console.log('environment = LOCAL');
             const searchKey = this.route.snapshot.paramMap.get('searchKey');
@@ -119,8 +111,9 @@ export class CatalogueComponent implements OnInit, OnDestroy {
             try {
                 console.log('environment = LOCAL - prova ciusura');
                 if (document.getElementById('myModal')) {
-                    setTimeout(function () { 
-                        document.getElementById('myModal').style.display = "none"; }, 3000);
+                    setTimeout(function () {
+                        document.getElementById('myModal').style.display = "none";
+                    }, 3000);
                 }
             } catch (Error) {
                 // alert(Error.message);
@@ -129,6 +122,35 @@ export class CatalogueComponent implements OnInit, OnDestroy {
 
     }
 
+    private loadData() {
+        if (this.accountService.currentPage === 2) {
+            console.log('catalogue - show spinner');
+            this.spinner.show();
+            this.catalogueService.getAllItems(this.searchLastProducts, this.searchKey).subscribe(resp => {
+                this.products = [];
+                this.itemsToView = [];
+                this.items = [];
+                if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
+                    resp.body.d.results.forEach(m => {
+                        if (m) {
+                            this.items.push(Materiale.fromJSON(m));
+                            this.cachedItems.push(Materiale.fromJSON(m));
+                            this.products.push(Materiale.fromJSON(m));
+                        }
+                    });
+                }
+                const imagesForRow = this.items.length > this.imagesToView ? this.imagesToView : this.items.length;
+                console.log('catalogue - imagesForRow:' + imagesForRow);
+                for (let i = 0; i < imagesForRow; i++) {
+                    this.itemsToView.push(this.items[i]);
+                }
+                // document.getElementById('myModal').style.display = "none"
+                this.spinner.hide();
+                console.log('catalogue - hide spinner');
+            }
+            );
+        }
+    }
     @HostListener('window:scroll', ['$event']) // for window scroll events
     onScroll(event) {
         if (this.imagesToView < this.items.length) {

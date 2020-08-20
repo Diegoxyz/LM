@@ -11,6 +11,8 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { CatalogueService } from '@app/services/catalogue.service';
 import { environment } from '@environments/environment';
 import { Materiale } from '@app/models/OData/MacchineSet/macchineset.entity';
+import { AccountService } from '@app/services/account.service';
+import { TranslateService } from '@ngx-translate/core';
 
 export class GroupList {
   constructor(public group: Group, public selected?:boolean) {
@@ -72,7 +74,8 @@ export class SearchProductsComponent implements OnInit {
   
   searchProductValue : string = '';
 
-  constructor(private fb: FormBuilder, private productsService: ProductsService, private catalogueService : CatalogueService) { }
+  constructor(private fb: FormBuilder, private productsService: ProductsService, private catalogueService : CatalogueService,
+    private accountService : AccountService, private translateService: TranslateService) { }
 
   ngOnInit(): void {
     if (this.searchKey !== undefined && this.searchKey !== null) {
@@ -82,37 +85,13 @@ export class SearchProductsComponent implements OnInit {
     }
     console.log('searchKey:' + this.searchKey + ',searchProductValue:' + this.searchProductValue);
     if (environment && environment.oData) {
-      this.catalogueService.getHierarchies().subscribe(resp => {
-        if (resp && resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
-          resp.body.d.results.forEach(g => {
-            const gr : Group = new Group(g.Prodh,g.Prodhx);
-            this.groups.push({
-              group : gr
-            });
-            this.allGroups.push(g);
-          });
-          this.filteredGroups = this.searchGroupControl.valueChanges.pipe(
-            startWith(null),
-            map((group: GroupList | null) => group ? this.filterGroup(group) : this.groups.slice()));
-        }
+      this.accountService.currentPage = 2;
+      this.translateService.onLangChange.subscribe(l => {
+        console.log('SearchProductsComponent - changed language');
+        this.loadData();
+        this.selectedGroups = [];
       });
-
-      
-      
-      /*this.catalogueService.getAllItems(this.searchLastProducts).subscribe(resp => {
-        if (resp && resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
-          resp.body.d.results.forEach(p => {
-            this.products.push({
-              item : Materiale.fromJSON(p)
-            });
-            this.allProducts.push(Materiale.fromJSON(p));
-          });
-        }
-      });*/
-      
-      this.filteredProducts = this.searchProductControl.valueChanges.pipe(
-        startWith(null),
-        map((product: ItemList | null) => product ? this.filterProduct(product) : this.products.slice()));
+      this.loadData();
     } else {
       const listOfGroups = this.productsService.getAllGroups();
       listOfGroups.forEach(g => {
@@ -139,6 +118,30 @@ export class SearchProductsComponent implements OnInit {
     
   }
 
+  private loadData() {
+    if (this.accountService.currentPage === 2) {
+      this.groups = [];
+      this.allGroups = [];
+      this.catalogueService.getHierarchies().subscribe(resp => {
+        if (resp && resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
+          resp.body.d.results.forEach(g => {
+            const gr : Group = new Group(g.Prodh,g.Prodhx);
+            this.groups.push({
+              group : gr
+            });
+            this.allGroups.push(g);
+          });
+          this.filteredGroups = this.searchGroupControl.valueChanges.pipe(
+            startWith(null),
+            map((group: GroupList | null) => group ? this.filterGroup(group) : this.groups.slice()));
+        }
+      });
+      
+      this.filteredProducts = this.searchProductControl.valueChanges.pipe(
+        startWith(null),
+        map((product: ItemList | null) => product ? this.filterProduct(product) : this.products.slice()));
+    }
+  }
   filterProduct(filter: any): ItemList[] {
     this.lastProductFilter = filter.item;
     if (filter) {

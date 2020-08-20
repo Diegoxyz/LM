@@ -67,7 +67,7 @@ export class BarComponent implements OnInit, OnDestroy {
         }
       });
       
-      if (this.accountService.isSessionStillValid()) {
+      /*if (this.accountService.isSessionStillValid()) {
         console.log('loadCart:' + this.cartService.loadCart());
         this.cartService.cart$.subscribe((o : Order) => {
           if (this.accountService.isSessionStillValid()) {
@@ -92,7 +92,7 @@ export class BarComponent implements OnInit, OnDestroy {
           }
         });
   
-      }
+      }*/
       
         
     } else if (environment && !environment.oData) {

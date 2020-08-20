@@ -207,6 +207,7 @@ export class ProductCardCatalogueComponent implements OnInit {
                 } else {
                     this.quantity = qty;
                     this.quantityError = false;
+                    this.addProduct();
                 }
             } catch (error) {
                 this.quantity = 0;

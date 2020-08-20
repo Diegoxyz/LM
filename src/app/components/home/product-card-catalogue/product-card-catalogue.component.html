@@ -77,7 +77,6 @@
                     <form [formGroup]="addProductForm">
                         <div class="row align-items-center no-gutters">
                             <div class="col-md-2"></div>
-
                             <div class="col-md-auto">
                                 <input name="qty" type="number" #selectedQuantity
                                     class="input-number input-number-adaptive" step="1" min="0" max="" name=""
@@ -89,7 +88,7 @@
                             <div class="col-md-auto">&nbsp;</div>
 
                             <div class="col-md-auto">
-                                <button class="sub-product" (click)="removeProduct()">
+                                <button type="button" class="sub-product" (click)="removeProduct()">
                                     <!-- - -->
                                     <i class="fa fa-minus" aria-hidden="true"></i>
                                     <!--<i class="fa fa-star-o" style="font-size:24px;color:#dc3545"></i>-->
@@ -99,7 +98,7 @@
                             <div class="col-md-auto">&nbsp;</div>
 
                             <div class="col-md-auto">
-                                <button id="btn-add-product" class="add-product" (click)="addOneProduct()">
+                                <button type="button" id="btn-add-product" class="add-product" (click)="addOneProduct()">
                                     <!-- + -->
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                 </button>
@@ -107,7 +106,7 @@
                             <div class="col-md-auto">&nbsp;</div>
 
                             <div class="col-md-auto">
-                                <button style="background-color: 
+                                <button type="button" style="background-color: 
                                                 transparent; border: solid 1px #dc3545;
                                                 padding-top: 2px;padding-bottom: 1px;" (click)="addProduct()">
                                     <fa-icon id="btn-icon" [icon]="faShoppingCart" size="1x">
@@ -118,7 +117,7 @@
                             <div class="col-md-auto">&nbsp;</div>
 
                             <div class="col-md-auto">
-                                <button style="background-color: 
+                                <button type="button" style="background-color: 
                                                 transparent; border: solid 1px #dc3545;
                                                 padding-top: 2px; padding-bottom: 1px;
                                                 padding-left: 7px; padding-right: 7px;" (click)="openModal(template)">

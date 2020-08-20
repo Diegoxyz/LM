@@ -71,6 +71,14 @@
                                                 </path>
                                             </svg> </a></div>
                                 </div>
+                                <div class="textwidget">
+                                    <div>&nbsp;</div>
+                                    <div class="entry_content">
+                                        {{ language }}
+                                        <a *ngIf="language === 'it'" href="http://international.lamarzocco.com/it/privacy/" target="_blank"><p style="text-decoration:underline;">{{ 'privacyPolicy' | translate }}</p></a>
+                                        <a *ngIf="language != 'it'" href="http://international.lamarzocco.com/en/privacy-en/" target="_blank"><p style="text-decoration:underline;">{{ 'privacyPolicy' | translate }}</p></a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

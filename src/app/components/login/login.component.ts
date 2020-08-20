@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
   sessionEndedError : boolean = false;
   returnUrl: string;
   errorMessage : string;
+  public language : string;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private accountService: AccountService, 
     private userDataSetService : UserDataSetService, private translateService : TranslateService,
@@ -43,6 +44,8 @@ export class LoginComponent implements OnInit {
       email: ['', Validators.required],
       password: ['', Validators.required],
     });
+
+    this.language = this.accountService.getLanguage();
   }
 
   get email() {

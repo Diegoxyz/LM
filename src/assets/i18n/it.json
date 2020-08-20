@@ -9,9 +9,13 @@
     "lastName": "Cognome",
     "lastNameRequired": "Il cognome è obbligatorio.",
     "taxNumber":"Codice Fiscale",
-    "taxNumberRequired":"Il codice fiscale è obbligatorio.",
+    "taxNumberRequired":"La partita iva o il codice fiscale sono obbligatori.",
+    "taxNumberInvalid":"Il codice fiscale non è corretto.",
+    "taxNumberTooLong":"Il numero massimo di caratteri è 16.",
     "vatNumber":"Partita IVA",
-    "vatNumberRequired":"La partita iva è obbligatoria.",
+    "vatNumberRequired":"La partita iva o il codice fiscale sono obbligatori.",
+    "vatNumberInvalid":"La partita iva non è valida.",
+    "vatNumberTooLong":"Il numero massimo di caratteri è 11.",
     "address":"Indirizzo",
     "addressRequired":"Indirizzo è obbligatorio.",
     "email":"Email",
@@ -114,6 +118,7 @@
         "substituteMaterialNum":"Mat.Sostitutivo"
     },
     "closeSection": "chiudi sezione",
+    "searchMenu":"CERCA",
     "ordersPage": {
         "search":"Ricerca tra i risultati",
         "date":"Data",
@@ -133,7 +138,8 @@
         "fromDate":"Data Da",
         "toDate":"Data A",
         "exportAsXslxFile":"Esporta gli ordini in formato Excel"
-    }
+    },
+    "privacyPolicy":"Privacy Policy"
     
 
 }

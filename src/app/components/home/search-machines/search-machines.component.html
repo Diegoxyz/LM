@@ -6,7 +6,7 @@
             [selectable]="selectable"
             [removable]="removable"
             (removed)="remove(machine)">
-            {{ machine.item.description }}
+            {{ machine.item?.description }} &#32;&#40; {{ machine.item?.family }} &#41;
             <mat-icon matChipRemove *ngIf="removable"><fa-icon [icon]="faTimesCircle" 
             size="1x">
                 </fa-icon></mat-icon>
@@ -25,7 +25,7 @@
             <div (click)="optionClicked($event, machine);">
                 <mat-checkbox [checked]="machine.selected" (change)="toggleSelection(machine)" 
                 (click)="$event.stopPropagation()">
-                    {{ machine.item?.description }}
+                    {{ machine.item?.description }} &#32;&#40; {{ machine.item?.family }} &#41;
                 </mat-checkbox>
             </div>
           </mat-option>

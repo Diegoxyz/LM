@@ -36,11 +36,11 @@ class ShippedOrder {
 
 class XSLXOrder {
   NumOrdine : string;
+  Prodotto : string;
   Data : string;
   Totale : string;
   Destinazione : string;
   Pos : string;
-  Prodotto : string;
   Qtà : string;
   PrUnitario : string;
   PrTotale : string;
@@ -157,7 +157,58 @@ export class NgbdSortableHeader {
       this.toDate.setValue(defaultToDate);
     
       if (environment && environment.oData) {
-        this.spinner.show();
+        this.translateService.onLangChange.subscribe(l => {
+          console.log('orders changed language');
+          this.loadData();
+        });
+        this.loadData();
+      } else {
+        for(let i = 0; i < 10; i++) {
+          const so : ShippedOrder = new ShippedOrder();
+                
+          so.erdatFrom = "\/Date(1593043200000)\/";
+          so.erdatTo = "\/Date(1595635200000)\/";
+          so.vbeln = "20000368";
+          so.erdat = "\/Date(1594857600000)\/";
+          const s : string = "\/Date(1595289600000)\/";
+          const start = s.indexOf('(');
+          const end = s.lastIndexOf(')');
+          const slicedS = s.slice(start+1, end);
+          const date : Date = new Date();
+          
+          date.setTime(Number.parseInt(slicedS));
+          //so.vdatu = s.slice(start+1, end);
+          so.erdat = date.toDateString();
+          so.vdatu = "\/Date(1594857600000)\/";
+          so.note = "Nota 1Prova";
+          so.netwr = "180.000";
+          so.waerk = "EUR";
+          so.name1 = "ESSE";
+          so.matnr = "900";
+          so.maktx = "ELETTROPOMPA 150L/H 220V 50Hz";
+          so.qty = "  1.000";
+          so.meins = "PC";
+          const netPrice = "100.000";
+          so.netpr = Number.parseFloat(netPrice).toFixed(2);;
+          so.ort01 = "LIVORNO";
+          so.pstlz = "57121";
+          so.stras = "VIA PROVINCIALE PISANA 583 C-D";
+          so.land1 = "IT";
+          so.posnr = "000050";
+          const priceTotal = "20.700";
+          so.totalRow = Number.parseFloat(priceTotal).toFixed(2);
+          so.stateDesc = "Confermato";
+
+          this.items.push(so);
+          this.allItems.push(so);
+        }
+        this.totalQuantity = this.allItems.length;
+      }
+
+    }
+
+    private loadData() {
+      this.spinner.show();
         this.ordersService.getOrders().subscribe(resp => {
           console.log('resp:' + resp);
           const sapMessage = resp.headers.get('sap-message');
@@ -243,51 +294,7 @@ export class NgbdSortableHeader {
           }
           this.spinner.hide(); 
         });
-      } else {
-        for(let i = 0; i < 10; i++) {
-          const so : ShippedOrder = new ShippedOrder();
-                
-          so.erdatFrom = "\/Date(1593043200000)\/";
-          so.erdatTo = "\/Date(1595635200000)\/";
-          so.vbeln = "20000368";
-          so.erdat = "\/Date(1594857600000)\/";
-          const s : string = "\/Date(1595289600000)\/";
-          const start = s.indexOf('(');
-          const end = s.lastIndexOf(')');
-          const slicedS = s.slice(start+1, end);
-          const date : Date = new Date();
-          
-          date.setTime(Number.parseInt(slicedS));
-          //so.vdatu = s.slice(start+1, end);
-          so.erdat = date.toDateString();
-          so.vdatu = "\/Date(1594857600000)\/";
-          so.note = "Nota 1Prova";
-          so.netwr = "180.000";
-          so.waerk = "EUR";
-          so.name1 = "ESSE";
-          so.matnr = "900";
-          so.maktx = "ELETTROPOMPA 150L/H 220V 50Hz";
-          so.qty = "  1.000";
-          so.meins = "PC";
-          const netPrice = "100.000";
-          so.netpr = Number.parseFloat(netPrice).toFixed(2);;
-          so.ort01 = "LIVORNO";
-          so.pstlz = "57121";
-          so.stras = "VIA PROVINCIALE PISANA 583 C-D";
-          so.land1 = "IT";
-          so.posnr = "000050";
-          const priceTotal = "20.700";
-          so.totalRow = Number.parseFloat(priceTotal).toFixed(2);
-          so.stateDesc = "Confermato";
-
-          this.items.push(so);
-          this.allItems.push(so);
-        }
-        this.totalQuantity = this.allItems.length;
-      }
-
     }
-
     get fromDate() { return this.searchForm.get('fromDate') };
 
     get toDate() { return this.searchForm.get('toDate') };
@@ -410,11 +417,11 @@ export class NgbdSortableHeader {
       this.allItems.forEach(a => {
         const order = {
           NumOrdine: a.vbeln,
+          Prodotto: a.matnr + '-' + a.maktx,
           Data: a.erdat,
           Totale: a.netwr + ' ' + a.waerk,
           Destinazione : a.name1 + ' ' + a.ort01 + ' ' + a.pstlz + ' ' + a.stras + ' ' + a.land1,
           Pos: a.posnr,
-          Prodotto: a.matnr + '-' + a.maktx,
           Qtà: a.qty + ' ' + a.meins,
           PrUnitario : a.netpr + ' ' + a.waerk,
           PrTotale : a.totalRow + ' ' + a.waerk,

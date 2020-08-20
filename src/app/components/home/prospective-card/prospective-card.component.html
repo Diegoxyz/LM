@@ -19,17 +19,10 @@
             </div>
             <img *ngIf="thumbnail" class="img-fluid card-img-top" id="pic-board" [src]='thumbnail' width="260"
                 height="260" style="width: 60%; max-height:50%;">
-            <!-- <object *ngIf="svgThumbnail"
-                [data]="sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ svgThumbnail)"
-                width="500" height="600" style="width: 100%; max-height:70%;">
-            </object> -->
-
-             <object *ngIf="svgThumbnail" #objId [data]="safeBlobUrl" width="250" height="350"
-                style="width: 60%; max-height:50%;">
-            </object>
-
-            <!-- TODO: SVG: Da verificare se mettendo le dimensioni l'immagine è caricata o se il problema è dovuto al caricamento dell'immagine -->
-            <!--<mat-icon class="img" [inline]="true" svgIcon="img" (click)="onClickMe($event.target , $event.target.parentElement )"></mat-icon>-->
+            <mat-icon *ngIf="svgThumbnail" class="img" [inline]="true" svgIcon="img" width="250" height="350"
+            style="width: 60%; max-height:50%;"
+            (click)="onScroll($event.target , $event.target.parentElement )">
+            </mat-icon>
 
             <img *ngIf="thumbnail === undefined && svgThumbnail === undefined" class="img-fluid card-img-top"
                 src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px" width="100"
@@ -61,7 +54,7 @@
 
         <!--<div class="flex-item board-panel">-->
             <div #scrollDiv id="scroll" class="scroll" (scroll)="scrollHandler($event)">
-                <div *ngFor="let item of items" class="row" style="margin-top: 5%; margin-left: 1%;">
+                <div *ngFor="let item of items" [id]="item.htmlPosition" class="row" style="margin-top: 5%; margin-left: 1%;">
                     <div class="col-md-auto">
                         <div id="item-code-parent" class="row align-items-center no-gutters justify-content-end"
                             style="margin-top: 2%;">
@@ -118,14 +111,14 @@
                                     </div>
 
                                     <div id="add" class="col-md-auto" style="padding-left: 0px; padding-right: 1%;">
-                                        <button id="btn-add" class="add-product"
+                                        <button id="btn-add" class="add-product" type="button"
                                             (click)="addOneProduct(item.code)">
                                             <i class="fa fa-plus" aria-hidden="true"></i>
                                         </button>
                                     </div>
 
                                     <div id="icon-btn-div" class="col-md-auto" style="padding-left: 0px;">
-                                        <button id="btn-cart">
+                                        <button id="btn-cart" type="submit">
                                             <fa-icon id="btn-icon" [icon]="faShoppingCart" size="1x">
                                             </fa-icon>
                                         </button>
@@ -136,7 +129,9 @@
                                     <div id="btn-info" class="col-md-4" style="padding-top: 1%; ">
                                         <button style="background-color: 
                                                         transparent; border: solid 1px #dc3545;
-                                                        padding-top: 1px; padding-bottom: 1px;padding-right: 3px;padding-left: 3px;" (click)="openModal(item.code, template)">
+                                                        padding-top: 1px; padding-bottom: 1px;padding-right: 3px;padding-left: 3px;" 
+                                                (click)="openModal(item.code, template)"
+                                                type="button">
                                             <fa-icon id="btn-icon" [icon]="faInfoCircle" size="1x">
                                             </fa-icon>
                                         </button>

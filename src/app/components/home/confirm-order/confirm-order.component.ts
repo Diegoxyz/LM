@@ -37,7 +37,7 @@ export class ConfirmOrderComponent implements OnInit {
 
     this.confirmOrderForm = this.fb.group(
       {
-        note:  ['', Validators.required],
+        note:  [''],
         deliverydate:  ['', Validators.required]
     } 
     , 

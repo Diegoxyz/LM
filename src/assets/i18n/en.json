@@ -9,9 +9,13 @@
     "lastName": "Last Name",
     "lastNameRequired": "Last name is required.",
     "taxNumber":"Tax Number",
-    "taxNumberRequired":"Tax number is required.",
+    "taxNumberRequired":"Tax number or VAT number are required.",
+    "taxNumberInvalid":"Tax number is invalid.",
+    "taxNumberTooLong":"The maximum number of characters is 16.",
     "vatNumber":"VAT Number",
-    "vatNumberRequired":"VAT number is required.",
+    "vatNumberRequired":"Tax number or VAT number are required.",
+    "vatNumberInvalid":"VAT number is invalid.",
+    "vatNumberTooLong":"The maximum number of characters is 11.",
     "address":"Address",
     "addressRequired":"Address is required.",
     "email":"Email",
@@ -114,6 +118,7 @@
         "substituteMaterialNum":"Substitute Material"
     },
     "closeSection": "close section",
+    "searchMenu":"SEARCH",
     "ordersPage": {
         "search":"Search within results",
         "date":"Date",
@@ -133,6 +138,7 @@
         "fromDate":"From Date",
         "toDate":"To Date",
         "exportAsXslxFile":"Exports orders to Excel file"
-    }
+    },
+    "privacyPolicy":"Privacy Policy"
     
 }

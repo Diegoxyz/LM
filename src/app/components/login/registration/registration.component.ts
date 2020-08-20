@@ -22,6 +22,7 @@ export class RegistrationComponent implements OnInit {
   successMessage : boolean = false;
   returnUrl: string;
   errorMessage? : string;
+  public language : string;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private accountService: AccountService, 
     private utilityService : UtilityService, private translateService : TranslateService) { }
@@ -37,18 +38,20 @@ export class RegistrationComponent implements OnInit {
   
   disableRegion: boolean = true;
 
+  taxNumberOrVATNumberAreMandatory : boolean = false;
+
   ngOnInit(): void {
     if (this.accountService.userValue) {
       this.router.navigate(['/home']);
     }
-
+    this.language = this.accountService.getLanguage();
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home/boards';
     
     this.registrationForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName:  ['', Validators.required],
-      taxNumber: ['', Validators.required],
-      vatNumber: ['', Validators.required],
+      taxNumber: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9]*'), Validators.maxLength(16)])],
+      vatNumber: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9]*'), Validators.maxLength(11)])],
       address:   ['', Validators.required],
       email:     [null, Validators.compose([Validators.email, Validators.required])],
       city:      ['', Validators.required],
@@ -120,6 +123,16 @@ export class RegistrationComponent implements OnInit {
     return this.registrationForm.get('email');
   }
 
+  isTaxNumberOrVATNumberRequiredAndTouched() {
+    if (!this.taxNumber.touched && !this.vatNumber.touched) {
+      return false;
+    }
+    return ((this.taxNumber.value === undefined || this.taxNumber.value === '') && (this.vatNumber.value === undefined || this.vatNumber.value === ''));
+  }
+  isTaxNumberOrVATNumberRequired(){
+    return ((this.taxNumber.value === undefined || this.taxNumber.value === '') && (this.vatNumber.value === undefined || this.vatNumber.value === ''));
+  }
+
   changeCountry(event) {
     if (event) {
       this.regions = [];
@@ -148,6 +161,13 @@ export class RegistrationComponent implements OnInit {
   onSubmit(): void {
     this.successMessage = false;
     this.loginError = false;
+    this.taxNumberOrVATNumberAreMandatory = false;
+    if (this.isTaxNumberOrVATNumberRequired()) {
+      this.taxNumber.markAsTouched;
+      this.vatNumber.markAsTouched;
+      this.taxNumberOrVATNumberAreMandatory = true;
+      return;
+    }
     if (!this.registrationForm.valid) {
       return;
     }
@@ -175,13 +195,19 @@ export class RegistrationComponent implements OnInit {
                   if (resp.headers) {
                     const sapMessage = resp.headers.get('sap-message');
                     if (sapMessage !== undefined && sapMessage !== null) {
-                      const docSapMessage : Document = (new window.DOMParser()).parseFromString(sapMessage, 'text/xml');
-                      this.errorMessage = this.translateService.instant('unknownError');
-                      if (docSapMessage.hasChildNodes()) {
-                        if (docSapMessage.firstChild.childNodes.length >= 2) {
-                          this.errorMessage = docSapMessage.firstChild.childNodes[1].textContent;
-                        }
+                      let errorMessage = this.translateService.instant('unknownError');
+                      try {
+                          let sm = JSON.parse(sapMessage);
+                          errorMessage = sm.message;
+                      } catch (error) {
+                          const docSapMessage : Document = (new window.DOMParser()).parseFromString(sapMessage, 'text/xml');
+                          if (docSapMessage.hasChildNodes()) {
+                              if (docSapMessage.firstChild.childNodes.length >= 2) {
+                                  errorMessage = docSapMessage.firstChild.childNodes[1].textContent;
+                              }
+                          }
                       }
+                      this.errorMessage = errorMessage;
                     }
                     console.log('errorMessage:' + this.errorMessage);
                   }
