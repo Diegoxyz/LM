@@ -44,7 +44,7 @@ export class ExcelService {
       delete worksheet['A1'].w; 
       worksheet['A1'].v = "Num.Ordine";
       delete worksheet['B1'].w; 
-      worksheet['B1'].v = "Prodotto";
+      worksheet['B1'].v = "Pos.";
       delete worksheet['C1'].w; 
       worksheet['C1'].v = "Data";
       delete worksheet['D1'].w; 
@@ -52,7 +52,7 @@ export class ExcelService {
       delete worksheet['E1'].w; 
       worksheet['E1'].v = "Destinazione";
       delete worksheet['F1'].w; 
-      worksheet['F1'].v = "Pos.";
+      worksheet['F1'].v = "Prodotto";
       delete worksheet['G1'].w; 
       worksheet['G1'].v = "Qtà";
       delete worksheet['H1'].w; 

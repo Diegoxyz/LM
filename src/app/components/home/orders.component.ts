@@ -419,11 +419,11 @@ export class NgbdSortableHeader {
       this.allItems.forEach(a => {
         const order = {
           NumOrdine: a.vbeln,
-          Prodotto: a.matnr + '-' + a.maktx,
+          Pos: a.posnr,
           Data: a.erdat,
           Totale: a.netwr + ' ' + a.waerk,
           Destinazione : a.name1 + ' ' + a.ort01 + ' ' + a.pstlz + ' ' + a.stras + ' ' + a.land1,
-          Pos: a.posnr,
+          Prodotto: a.matnr + '-' + a.maktx,
           Qtà: a.qty + ' ' + a.meins,
           PrUnitario : a.netpr + ' ' + a.waerk,
           PrTotale : a.totalRow + ' ' + a.waerk,
