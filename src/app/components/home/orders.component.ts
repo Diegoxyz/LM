@@ -209,6 +209,8 @@ export class NgbdSortableHeader {
 
     private loadData() {
       this.spinner.show();
+      this.items = [];
+      this.allItems = [];
         this.ordersService.getOrders().subscribe(resp => {
           console.log('resp:' + resp);
           const sapMessage = resp.headers.get('sap-message');
