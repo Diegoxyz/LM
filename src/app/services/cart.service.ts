@@ -18,7 +18,10 @@ import { Subject } from 'rxjs';
     public addAnOrder(product : Product, quantity : number) : Cart {
         // simple way, we just add a product as soon as we receive it
         let cart : Cart = this.getCart();
-        if (product && quantity > 0 && cart != undefined && cart != null) {
+        console.log('addAnOrder-product:' +product + '-quantity:' + quantity + '-cart:' + cart);
+        
+        if (product && cart != undefined && cart != null) {
+          const tempOrders : Order[] = [];
           const order : Order = {
             id: product.code,
             product : product,
@@ -26,20 +29,26 @@ import { Subject } from 'rxjs';
           }
           let index : number = -1;
           let found : boolean = false;
+          console.log('addAnOrder - product.code:' + product.code);
           cart.orders.forEach(o => {
             index = index + 1;
+            console.log('addAnOrder - comparing with code:' + o.product.code);
             if (o && o.product && o.product.code === product.code) {
+              console.log('addAnOrder-code:' +product.code + '-found');
               found = true;
+            } else {
+              tempOrders.push(order);
             }
           })
           if (found && index > -1) {
-            cart.orders.splice(index);
-            order.quantity = order.quantity + quantity;
+            console.log('set order adding quantity:' + quantity + ' to ' + order.quantity);
+            order.quantity = quantity;
+            console.log('set order quantity to:' + order.quantity);
           }
           if (order.quantity > 0) {
-            cart.orders.push(order);
+            tempOrders.push(order);
           }
-          
+          cart.orders = tempOrders;
         }
         localStorage.setItem(this.cartId, JSON.stringify(cart));
         this._cart.next();

@@ -147,6 +147,9 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
         } else {
             this.sections = this.productsService.getAllSections();
         }
+        const sectionsPosition = document.getElementById('sections-position');
+        // check the position before using it, it was scrolling too down, it may be due to different screen sizes
+        setTimeout(function() {window.scrollTo(0, 0);},1);
         // this._router.navigate(['./home/sections/machine']);
     }
 

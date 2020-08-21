@@ -54,92 +54,96 @@
 
         <!--<div class="flex-item board-panel">-->
             <div #scrollDiv id="scroll" class="scroll" (scroll)="scrollHandler($event)">
-                <div *ngFor="let item of items" [id]="item.htmlPosition" class="row" style="margin-top: 5%; margin-left: 1%;">
-                    <div class="col-md-auto">
-                        <div id="item-code-parent" class="row align-items-center no-gutters justify-content-end"
-                            style="margin-top: 2%;">
-                            <div class="col-md-8" id="item-code-id">
-                                <div id="item-code">{{ item.code }}</div>
-                            </div>
-                        </div>
-
-                        <div class="row" style="margin-top: 2%; ">
-                            <div class="col-md-4">
-                                <img *ngIf="item.thumbnail" class="img-fluid card-img-top" id="pic-panel"
-                                    [src]='item.thumbnail' width="20" height="20">
-                                <img *ngIf="item.thumbnail === undefined" class="img-fluid card-img-top"
-                                    src="assets/img/items/No_Image_available.png" width="20" height="20">
+                <div *ngFor="let item of items" class="row">
+                    <div [id]="item.htmlPosition">&nbsp;</div>
+                    <div style="margin-top: 5%; margin-left: 1%;">
+                        <div class="col-md-auto">
+                            <div id="item-code-parent" class="row align-items-center no-gutters justify-content-end"
+                                style="margin-top: 2%;">
+                                <div class="col-md-8" id="item-code-id">
+                                    <div id="item-code">{{ item.code }}</div>
+                                </div>
                             </div>
 
-                            <div class="col-md-8" id="item-descritption-id">
-                                <div style="display: inline; ">{{ item.description }} </div>
-                                <div>Stock:
-                                    <fa-icon id="circle-red"
-                                        *ngIf="item.stockIndicator === undefined || item.stockIndicator === '' || item.stockIndicator === '3'"
-                                        [icon]="faCircle"></fa-icon>
-                                    <fa-icon id="circle-yellow" *ngIf="item.stockIndicator === '2'" [icon]="faCircle">
-                                    </fa-icon>
-                                    <fa-icon id="circle-green" *ngIf="item.stockIndicator === '1'" [icon]="faCircle">
-                                    </fa-icon>
+                            <div class="row" style="margin-top: 2%; ">
+                                <div class="col-md-4">
+                                    <img *ngIf="item.thumbnail" class="img-fluid card-img-top" id="pic-panel"
+                                        [src]='item.thumbnail' width="20" height="20">
+                                    <img *ngIf="item.thumbnail === undefined" class="img-fluid card-img-top"
+                                        src="assets/img/items/No_Image_available.png" width="20" height="20">
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div>Position:<span>{{ item.strItemNumBom }}</span></div>
-                                    </div>
-                                    <div>
-                                        &nbsp;
-                                    </div>
-                                </div>
-                                <form [formGroup]="addProductForm" (ngSubmit)="addProduct(item.code)">
-                                <div class="row" style="padding-left: 15px;">
-                                    <div class="col-md-auto" id="item-price" style="padding-left: 1%; padding-right: 1%;">
-                                        {{ getPrice(item.price) }}&nbsp;{{item.currency}}
-                                    </div>
-                                    <div id="qty-div" class="col-md-auto" style="padding-left: 0px; padding-right: 1%;margin-left: 0%;">
-                                        <input [id]="Id('qty', item.code)" [formControlName]="item.code"
-                                            type="number" step="1" min="0" max="9999" name=""
-                                            value="{{ quantity }}" title="Quantity" size="2"
-                                            pattern="[0-9]*" inputmode="numeric" aria-labelledby="">
+                                <div class="col-md-8" id="item-descritption-id">
+                                    <div style="display: inline; ">{{ item.description }} </div>
+                                    <div>Stock:
+                                        <fa-icon id="circle-red"
+                                            *ngIf="item.stockIndicator === undefined || item.stockIndicator === '' || item.stockIndicator === '3'"
+                                            [icon]="faCircle"></fa-icon>
+                                        <fa-icon id="circle-yellow" *ngIf="item.stockIndicator === '2'" [icon]="faCircle">
+                                        </fa-icon>
+                                        <fa-icon id="circle-green" *ngIf="item.stockIndicator === '1'" [icon]="faCircle">
+                                        </fa-icon>
                                     </div>
 
-                                    <div id="sub" class="col-md-auto" style="padding-left: 0px; padding-right: 1%;">
-                                        <button id="btn-sub" class="sub-product"
-                                            (click)="subOneProduct(item.code)">
-                                            <i class="fa fa-minus" aria-hidden="true"></i>
-                                        </button>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div>Position:<span>{{ item.strItemNumBom }}</span></div>
+                                        </div>
+                                        <div>
+                                            &nbsp;
+                                        </div>
                                     </div>
+                                    <form [formGroup]="addProductForm" (ngSubmit)="addProduct(item.code)">
+                                    <div class="row" style="padding-left: 15px;">
+                                        <div class="col-md-auto" id="item-price" style="padding-left: 1%; padding-right: 1%;">
+                                            {{ getPrice(item.price) }}&nbsp;{{item.currency}}
+                                        </div>
+                                        <div id="qty-div" class="col-md-auto" style="padding-left: 0px; padding-right: 1%;margin-left: 0%;">
+                                            <input [id]="Id('qty', item.code)" [formControlName]="item.code"
+                                                type="number" step="1" min="0" max="9999" name=""
+                                                value="{{ quantity }}" title="Quantity" size="2"
+                                                pattern="[0-9]*" inputmode="numeric" aria-labelledby="">
+                                        </div>
 
-                                    <div id="add" class="col-md-auto" style="padding-left: 0px; padding-right: 1%;">
-                                        <button id="btn-add" class="add-product" type="button"
-                                            (click)="addOneProduct(item.code)">
-                                            <i class="fa fa-plus" aria-hidden="true"></i>
-                                        </button>
-                                    </div>
-
-                                    <div id="icon-btn-div" class="col-md-auto" style="padding-left: 0px;">
-                                        <button id="btn-cart" type="submit">
-                                            <fa-icon id="btn-icon" [icon]="faShoppingCart" size="1x">
-                                            </fa-icon>
-                                        </button>
-                                    </div>
-                                </div>
-                                </form>
-                                <div class="row align-items-start">
-                                    <div id="btn-info" class="col-md-4" style="padding-top: 1%; ">
-                                        <button style="background-color: 
-                                                        transparent; border: solid 1px #dc3545;
-                                                        padding-top: 1px; padding-bottom: 1px;padding-right: 3px;padding-left: 3px;" 
-                                                (click)="openModal(item.code, template)"
+                                        <div class="col-md-auto sub" style="padding-left: 0px; padding-right: 1%;">
+                                            <button class="btn-sub sub-product"
+                                                (click)="subOneProduct(item.code)"
                                                 type="button">
-                                            <fa-icon id="btn-icon" [icon]="faInfoCircle" size="1x">
-                                            </fa-icon>
-                                        </button>
+                                                <i class="fa fa-minus" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+
+                                        <div class="col-md-auto add" style="padding-left: 0px; padding-right: 1%;">
+                                            <button class="btn-add add-product" type="button"
+                                                (click)="addOneProduct(item.code)">
+                                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+
+                                        <div class="col-md-auto icon-btn-div" style="padding-left: 0px;">
+                                            <button class="btn-cart" type="submit">
+                                                <fa-icon id="btn-icon" [icon]="faShoppingCart" size="1x">
+                                                </fa-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    </form>
+                                    <div class="row align-items-start">
+                                        <div id="btn-info" class="col-md-4" style="padding-top: 1%; ">
+                                            <button style="background-color: 
+                                                            transparent; border: solid 1px #dc3545;
+                                                            padding-top: 1px; padding-bottom: 1px;padding-right: 3px;padding-left: 3px;" 
+                                                    (click)="openModal(item.code, template)"
+                                                    type="button">
+                                                <fa-icon id="btn-icon" [icon]="faInfoCircle" size="1x">
+                                                </fa-icon>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="row" style="border-bottom: solid 1px #d8d6d6; margin-left: 1%;">&nbsp;</div>
                         </div>
-                        <div class="row" style="border-bottom: solid 1px #d8d6d6; margin-left: 1%;">&nbsp;</div>
                     </div>
                 </div>
             </div> <!-- scroll ends up here -->

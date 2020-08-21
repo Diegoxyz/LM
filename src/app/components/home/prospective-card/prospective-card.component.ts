@@ -151,6 +151,13 @@ export class ProspectiveCardComponent implements OnInit, OnDestroy {
             console.log('blobUrl:' + this.blobUrl + ',safeBlobUrl:' + this.safeBlobUrl);            
 
             this.items = this.productsService.getBoardsProducts();
+            this.items[0].strItemNumBom = '1';
+            let j = 1;
+            for(j = 1; j < this.items.length-1; j++) {
+                this.items[j].strItemNumBom = '2';
+            }
+            this.items[this.items.length-1].strItemNumBom = '3';
+
             let lastPos : string = '';
             let counter : number = 1;
             this.items.forEach( i => {
@@ -275,7 +282,6 @@ export class ProspectiveCardComponent implements OnInit, OnDestroy {
                                     } else {
                                         product.htmlPosition = 'B'.concat(product.strItemNumBom);
                                     }
-                                    
                                     this.items.push(product);
                                     if (product.picId) {
                                         this.binDataMatnrSetService.getImage(product.code,product.picId).subscribe((resp : any) => {
@@ -308,11 +314,19 @@ export class ProspectiveCardComponent implements OnInit, OnDestroy {
                                     }
                                     this.addProductForm.addControl(product.code,new FormControl(0, Validators.required));
                                     console.log('added control with this code:' + product.code);
-                                    this.cartService.getCart().orders.forEach(o => {
+                                    /*this.cartService.getCart().orders.forEach(o => {
                                         if (o && o.product && o.product.code === product.code) {
                                             this.setQtyValue(o.product.code, o.quantity);
                                         }
+                                    });*/
+                                    this.items.forEach(i => {
+                                        this.cartService.getCart().orders.forEach(o => {
+                                            if (o && o.product && o.product.code === i.code) {
+                                                this.setQtyValue(i.code,o.quantity);
+                                            }
+                                        });
                                     });
+                                    
                                 }
                             }
                             
@@ -335,8 +349,17 @@ export class ProspectiveCardComponent implements OnInit, OnDestroy {
         return this.addProductForm.get(this.item.code);
     }
 
+    public getQuantity(code : string) {
+        this.cartService.getCart().orders.forEach(o => {
+            if (o && o.product && o.product.code === code) {
+                return o.quantity;
+            }
+        });
+        return 22;
+    }
+
     public setQtyValue(code : string, value : number) {
-        console.log('setQtyValue - code:' + code);
+        console.log('setQtyValue - code:' + code + '-value:' + value);
         console.log('this.addProductForm.controls.length:' + this.addProductForm.controls.length);
         if (this.addProductForm.controls.length) {
             console.log('this.addProductForm.controls[0].value:' + this.addProductForm.controls[0].value);
@@ -519,20 +542,40 @@ export class ProspectiveCardComponent implements OnInit, OnDestroy {
             } catch (error) {
                 return;
             }*/
-            const str = 'A';
-            id = str.concat(id);
+            const strA = 'A';
+            const strB = 'B';
+            const pos = Number(id) - 1;
+
+            const elementId = strA.concat(id);
             console.log('onScroll -scrollingTo id:' + id);
-            let el = document.getElementById(id);
+
+            const id1 = strA.concat('' + pos);
+            const id2 = strB.concat('' + pos);
+            // let el = document.getElementById(id);
             if (this.scrollDiv.nativeElement.children) {
                 let i;
+                let item;
                 for (i = 0; i < this.scrollDiv.nativeElement.children.length; i++) {
                     const el = this.scrollDiv.nativeElement.children[i];
-                    if (el.id && el.id === id) {
-                        el.scrollIntoView();
+                    if (el) {
+                        this.renderer.removeStyle(el, 'background-color');
+                    }
+                    if (el && el.firstChild && (el.firstChild.id === id1 || el.firstChild.id === id2)) {
+                        item = el;
+                        // el.scrollIntoView();
                     }
                 }
+                if (item && item.children && item.children.length >= 2) {
+                    item.scrollIntoView();
+                }
+                if (pos < 1) {
+                    setTimeout(function() {window.scrollTo(0, 0);},1);
+                }
             }
-            
+            const currentItem = document.getElementById(elementId);
+            if (currentItem && currentItem.parentElement) {
+                this.renderer.setStyle(currentItem.parentElement, 'background-color', 'lightgrey');
+            }
             /*if (el) {
                 //let pos = el.offsetTop;
                 // el.scrollIntoView({ behavior: "smooth", block: "start" });

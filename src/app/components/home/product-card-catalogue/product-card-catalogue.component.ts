@@ -101,8 +101,10 @@ export class ProductCardCatalogueComponent implements OnInit {
         
         this.cartService.getCart().orders.forEach(o => {
             if (o && this.item && o.product && o.product.code === this.item.code) {
-                this.qty.setValue(o.quantity);
+                console.log('setting quantity:' + o.quantity);
+                // this.qty.setValue(o.quantity);
                 this.quantity = o.quantity;
+                console.log('setting this.quantity:' + this.quantity);
             }
         });
 

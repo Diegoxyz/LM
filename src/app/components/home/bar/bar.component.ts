@@ -31,7 +31,7 @@ export class BarComponent implements OnInit, OnDestroy {
   bsModalRef: BsModalRef;
   faShoppingCart = faShoppingCart;
   orders : Order[] = [];
-
+  itemsQuantity = 0;
   qty : number = 0;
   private cartSubscription : Subscription;
   
@@ -59,14 +59,8 @@ export class BarComponent implements OnInit, OnDestroy {
       );
     }
     if (environment && environment.oData && this.accountService.user !== undefined && this.accountService.user !== null) {
-      this.carrelloService.getCart().subscribe(resp => {
-        console.log('this.carrelloService.getCart -' + resp);
-        if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
-          this.cart = Cart.fromCarrello(resp.body.d.results, this.userDataSetService.userDataSetValue);
-          this.cartService.setCart(this.cart);
-        }
-      });
-      
+      console.log('updateItemsQuantity - oninit');
+      this.updateItemsQuantity();
       /*if (this.accountService.isSessionStillValid()) {
         console.log('loadCart:' + this.cartService.loadCart());
         this.cartService.cart$.subscribe((o : Order) => {
@@ -133,24 +127,40 @@ export class BarComponent implements OnInit, OnDestroy {
             this.cartService.setCart(this.cart);
 
       this.cartService.cart$.subscribe((o : Order) => {
+        console.log('updateItemsQuantity - subscribe');
         this.cart = this.cartService.getCart(this.customer);
       });
     }
 
     this.manageProducts.manageProducts$.subscribe((h : HandledProduct) => {
-        this.cart = this.cartService.addAnOrder(h.product, h.quantity);
+      this.updateItemsQuantity();
     });
-
   }
 
-  public get cartQuantity() : number {
-    // console.log('get cartQuantity:' + this.cart + ',' + (this.cart ? this.cart.orders : 'no cart') + ',' + (this.cart && this.cart.orders ? this.cart.orders.length : 'no orders'));
-    this.cart = this.cartService.getCart();
-    // console.log('get cartQuantity2:' + this.cart + ',' + (this.cart ? this.cart.orders : 'no cart') + ',' + (this.cart && this.cart.orders ? this.cart.orders.length : 'no orders'));
-    if (this.cart && this.cart.orders) {
-      this.orders = this.cart.orders;
-      return this.cart.orders.length;
+  public updateItemsQuantity() {
+    if (environment && environment.oData) {
+      
+      this.carrelloService.getCart().subscribe(resp => {
+        console.log('updateItemsQuantity carrelloService.getCart -' + resp);
+        if (resp.body && resp.body.d && resp.body.d.results) {
+          console.log('updateItemsQuantity carrelloService.getCart -' + resp.body.d.results);
+          this.itemsQuantity =  resp.body.d.results.length;
+          console.log('updateItemsQuantity carrelloService.getCart -' + resp.body.d.results.length);
+        } else {
+          this.itemsQuantity = 0;
+        }
+        console.log('updateItemsQuantity carrelloService.getCart -' + resp + '-itemsQuantity:' + this.itemsQuantity);
+      });
+    } else {
+      // console.log('get cartQuantity:' + this.cart + ',' + (this.cart ? this.cart.orders : 'no cart') + ',' + (this.cart && this.cart.orders ? this.cart.orders.length : 'no orders'));
+      this.cart = this.cartService.getCart();
+      // console.log('get cartQuantity2:' + this.cart + ',' + (this.cart ? this.cart.orders : 'no cart') + ',' + (this.cart && this.cart.orders ? this.cart.orders.length : 'no orders'));
+      if (this.cart && this.cart.orders) {
+        this.orders = this.cart.orders;
+        this.itemsQuantity = this.cart.orders.length;
+      }
     }
+
     return 0;
   }
 

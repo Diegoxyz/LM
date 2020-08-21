@@ -252,7 +252,7 @@ padding-left: 5px;
 padding-right: 4px;
 } */
 
-#sub, #add, #icon-btn-div {
+.sub, .add, .icon-btn-div {
   padding-left: 1%;
 }
 
@@ -261,7 +261,7 @@ padding-right: 4px;
 }
 
 
-#btn-sub, #btn-add {
+.btn-sub, .btn-add {
   color:#dc3545;
   background-color: #fff;
   border-color:#dc3545;
@@ -271,7 +271,7 @@ padding-right: 4px;
 }
 
 
-#btn-cart{
+.btn-cart{
   background-color: transparent; 
   border: solid 1px #dc3545;
   padding-left: 2px; 
