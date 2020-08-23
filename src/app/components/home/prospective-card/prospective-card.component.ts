@@ -546,7 +546,8 @@ export class ProspectiveCardComponent implements OnInit, OnDestroy {
             const strB = 'B';
             const pos = Number(id) - 1;
 
-            const elementId = strA.concat(id);
+            const elementId1 = strA.concat(id);
+            const elementId2 = strB.concat(id);
             console.log('onScroll -scrollingTo id:' + id);
 
             const id1 = strA.concat('' + pos);
@@ -572,9 +573,12 @@ export class ProspectiveCardComponent implements OnInit, OnDestroy {
                     setTimeout(function() {window.scrollTo(0, 0);},1);
                 }
             }
-            const currentItem = document.getElementById(elementId);
-            if (currentItem && currentItem.parentElement) {
-                this.renderer.setStyle(currentItem.parentElement, 'background-color', 'lightgrey');
+            let i;
+            for (i = 0; i < this.scrollDiv.nativeElement.children.length; i++) {
+                const el = this.scrollDiv.nativeElement.children[i];
+                if (el && el.firstChild && (el.firstChild.id === elementId1 || el.firstChild.id === elementId2)) {
+                    this.renderer.setStyle(el, 'background-color', 'lightgrey');
+                }
             }
             /*if (el) {
                 //let pos = el.offsetTop;

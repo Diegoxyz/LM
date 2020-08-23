@@ -3,12 +3,13 @@
         <div id="section-card" class="card align-items-center justify-content-center hoverWrapper" style="width: 18rem;">
               <a class="nav-link" (click)="openSpecificProspective()">
                 <!--<img class="img-fluid card-img-top" src="assets/img/items/SectionNoBorder.PNG" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">-->
-                <img *ngIf="thumbnail" class="img-fluid card-img-top" id='pic' [src]='thumbnail' sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
+                <!--<img id="genericPic{{item.code}}{{item.family}}" *ngIf="thumbnail" class="img-fluid card-img-top" id='pic' [src]='thumbnail' sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">-->
                 <!-- <ng-template #other_content>"No picture" image to be added here</ng-template> -->
-                <div *ngIf="svgThumbnail">
-                  <img [src]="sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ svgThumbnail)" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
-                </div>
-                <img *ngIf="thumbnail === undefined && svgThumbnail === undefined" class="img-fluid card-img-top" src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
+                <!--<div *ngIf="svgThumbnail">
+                  <img id="svg{{item.code}}{{item.family}}" [src]="sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ svgThumbnail)" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
+                </div>-->
+                <img id="genericPic{{item.code}}{{item.family}}">
+                <img *ngIf="displayNoImage" class="img-fluid card-img-top" src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
                 <div class="card-body">
                     <h6 class="card-title">{{ item.description }}</h6>
                     <h6 id="code-card-title-id">({{ item.code }})</h6>
