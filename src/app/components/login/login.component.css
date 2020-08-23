@@ -50,7 +50,7 @@ p{
 
 
 .footer {
-      position: fixed;
+      position: relative;
       left: 0;
       bottom: 0;
       width: 100%;
@@ -58,14 +58,9 @@ p{
       color: #fff;
       /* text-align: center; */
       font-size: 1.4rem;
+      top: 10px;
 }
 
-/* Small screens */
-@media all and (max-width: 500px) {
-    .footer {
-        position: relative;
-    }
-}
     
 
 @media all and (max-width: 750px) and (orientation:landscape) {     
