@@ -1,3 +1,48 @@
+<!-- Top Navigation Menu -->
+<div class="topnav">
+    <ul class="nav">
+        <li><a class="active" (click)="goHome()">
+                <img src="assets/img/logo/globo-leone-white.png" alt="" class="img-logo-horizontal img-fluid" data-rjs="2">
+            </a>
+        </li>
+        <li>
+            <div>
+                <input class="form-control mr-sm-2 search" style="width: 150px"
+                type="search" placeholder="{{ 'searchMenu' | translate }}"
+                #searchBox (keyup.enter)="onSearch(searchBox.value)" [(ngModel)]="searchKey"  (ngModelChange)="onTextChange($event)"
+                aria-label="SEARCH">
+            </div>
+        </li>
+        <li>
+            <div>
+                <a (click)="goCart()"> 
+                    <fa-icon id="btn-icon" [icon]="faShoppingCart"  size="1x">
+                </fa-icon></a>
+            </div>
+        </li>
+        <li class="text-center">
+            <div style="margin-top: 10px;"><p id="rcorners1">{{ itemsQuantity }}</p></div>
+        </li>
+    </ul>
+    
+    
+    
+    
+    <!-- Navigation links (hidden by default) -->
+    <div id="myLinks">
+        <a class="nav-link" (click)="openMyAccount()">{{ 'myAccount' | translate }}</a>
+        <a class="nav-link" (click)="goWishlist()">{{ 'wishlist' | translate }}</a>
+        <a class="nav-link" (click)="goToBoards()">{{ 'boards' | translate }}</a>
+        <a class="nav-link" (click)="goToCatalogue()">{{ 'catalog' | translate }}</a>
+        <a class="nav-link" (click)="goToOrders()">{{ 'orders' | translate }}</a>
+    </div>
+    <!-- "Hamburger menu" / "Bar icon" to toggle the navigation links -->
+    <!-- onclick="myFunction()" -->
+    <a href="javascript:void(0);" class="icon" (click)="displayMobileMenu()">
+      <i class="fa fa-bars"></i>
+    </a>
+</div>
+
 <div id="nav-menu" class="cart-menu">
     <div class="container">
         <div class="row" style="background-color: #414141;">

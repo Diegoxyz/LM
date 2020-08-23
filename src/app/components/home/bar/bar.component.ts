@@ -39,6 +39,11 @@ export class BarComponent implements OnInit, OnDestroy {
 
   searchKey :string = null;
 
+  currentPage : number = 0;
+
+  reloadBoards = true;
+  reloadCatalogue = true;
+  
   constructor(private accountService : AccountService, private manageProducts : ManageProducts, 
     private cartService : CartService, private modalService: BsModalService,private router: Router, private changePage: ChangePage,
     private carrelloService: CarrelloService, private userDataSetService : UserDataSetService) { }
@@ -209,6 +214,35 @@ export class BarComponent implements OnInit, OnDestroy {
     }
   }
 
+  goToCatalogue() {
+    this.currentPage = 1;
+    if (this.reloadCatalogue) {
+      this.reloadCatalogue = false;
+      this.router.navigate(['./home/catalogue2']);
+    } else {
+      this.reloadCatalogue = true;
+      this.router.navigate(['./home/catalogue']);
+    }
+    
+  }
+
+  goToBoards() {
+    this.currentPage = 2;
+    if (this.reloadBoards) {
+      this.reloadBoards = false;
+      this.router.navigate(['./home/boards2']);
+    } else {
+      this.reloadBoards = true;
+      this.router.navigate(['./home/boards']);
+    }
+    
+  }
+
+  goToOrders() {
+    this.currentPage = 3;
+    this.router.navigate(['./home/orders']);
+  }
+
   onTextChange(value)
   {
     this.searchKey = value;
@@ -217,5 +251,14 @@ export class BarComponent implements OnInit, OnDestroy {
       this.onSearch();
     }
     
+  }
+
+  displayMobileMenu() {
+    let x = document.getElementById("myLinks");
+    if (x.style.display === "block") {
+      x.style.display = "none";
+    } else {
+      x.style.display = "block";
+    }
   }
 }
