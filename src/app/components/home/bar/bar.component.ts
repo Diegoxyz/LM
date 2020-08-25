@@ -171,21 +171,25 @@ export class BarComponent implements OnInit, OnDestroy {
 
   public openMyAccount() {
     this.bsModalRef = this.modalService.show(MyAccountComponent, { ignoreBackdropClick: true });
+    this.displayMobileMenu();
   }
 
   public goHome() {
     this.changePage.goToPage(0);
     this.router.navigate(['./home']);
+    this.displayMobileMenu();
   }
 
   public goWishlist() {
     this.changePage.goToPage(0);
     this.router.navigate(['./home/catalogue_last_purchases', { lastPurchases: 'true' }]);
+    this.displayMobileMenu();
   }
 
   public goCart() {
     this.changePage.goToPage(0);
     this.router.navigate(['./home/cart']);
+    this.displayMobileMenu();
   }
 
   public onSearch(value? : string) {
@@ -212,6 +216,7 @@ export class BarComponent implements OnInit, OnDestroy {
         this.router.navigate(['./home/catalogue']);
       }
     }
+    this.displayMobileMenu();
   }
 
   goToCatalogue() {
@@ -223,7 +228,7 @@ export class BarComponent implements OnInit, OnDestroy {
       this.reloadCatalogue = true;
       this.router.navigate(['./home/catalogue']);
     }
-    
+    this.displayMobileMenu();
   }
 
   goToBoards() {
@@ -235,12 +240,13 @@ export class BarComponent implements OnInit, OnDestroy {
       this.reloadBoards = true;
       this.router.navigate(['./home/boards']);
     }
-    
+    this.displayMobileMenu();
   }
 
   goToOrders() {
     this.currentPage = 3;
     this.router.navigate(['./home/orders']);
+    this.displayMobileMenu();
   }
 
   onTextChange(value)
@@ -255,10 +261,12 @@ export class BarComponent implements OnInit, OnDestroy {
 
   displayMobileMenu() {
     let x = document.getElementById("myLinks");
-    if (x.style.display === "block") {
-      x.style.display = "none";
-    } else {
-      x.style.display = "block";
+    if (x) {
+      if (x.style.display === "block") {
+        x.style.display = "none";
+      } else {
+        x.style.display = "block";
+      }
     }
   }
 }

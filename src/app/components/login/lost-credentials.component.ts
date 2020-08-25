@@ -17,6 +17,7 @@ export class LostCredentialsComponent implements OnInit {
   loginError : boolean = false;
   successMessage : boolean = false;
   response2 : any;
+  public language : string;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute,private router: Router, 
     private accountService: AccountService, private translateService : TranslateService
@@ -26,6 +27,8 @@ export class LostCredentialsComponent implements OnInit {
     this.loginForm = this.fb.group({
       email: ['', Validators.compose([Validators.email, Validators.required])]
     });
+
+    this.language = this.accountService.getLanguage();
   }
 
   get email() {

@@ -1,4 +1,5 @@
-<div class="content" style="margin-bottom: 2%;">
+<div><app-login-bar></app-login-bar></div>
+<div class="content" style="padding-bottom: 5%; background-color: #ffffff;">
     <div class="container">
         <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
             <div class="row align-items-center justify-content-center">
@@ -174,18 +175,21 @@
                 </div>
             </div>
 
-                <div class="row">
-                    <!-- <div class="w-100"></div> -->
-                    <div class="col">
-                        <button *ngIf="!successMessage" type="submit" class="btn btn-primary" [disabled]="!registrationForm.valid && !isTaxNumberOrVATNumberRequired()">{{ 'submit' | translate }}</button>
-                        <button *ngIf="successMessage"                class="btn btn-primary" (click)="onCancel()"                >{{ 'backToLogin' | translate }}</button>
-                    </div>
-                    <div class="col  text-right">
-                        <button *ngIf="!successMessage"               class="btn btn-primary" (click)="onCancel()">{{ 'cancel' | translate }}</button>
-                    </div>
-                   <!--  <div class="w-100"></div> -->
+            <div class="row">
+                <!-- <div class="w-100"></div> -->
+                <div class="col">
+                    <button *ngIf="!successMessage" type="submit" class="btn btn-primary" [disabled]="!registrationForm.valid && !isTaxNumberOrVATNumberRequired()">{{ 'submit' | translate }}</button>
+                    <button *ngIf="successMessage"                class="btn btn-primary" (click)="onCancel()"                >{{ 'backToLogin' | translate }}</button>
                 </div>
-
+                <div class="col  text-right">
+                    <button *ngIf="!successMessage"               class="btn btn-primary" (click)="onCancel()">{{ 'cancel' | translate }}</button>
+                </div>
+                <!--  <div class="w-100"></div> -->
+            </div>
+            <div class="showDoubleErrorMessage">
+                <div *ngIf="loginError" class="alert alert-danger">{{ errorMessage }}</div>
+                <div *ngIf="successMessage" class="alert alert-success">{{ 'registrationRequestSeccessfullySent' | translate }}</div>
+            </div>
         </form>
     </div>
 </div>
@@ -228,7 +232,7 @@
                             </div>
                         </div>
 
-                        <div class="col-10 col-sm-6 col-lg-2 my-3">
+                        <div class="last_footer_column col-10 col-sm-6 col-lg-2 my-3">
                             <div id="custom_html-2" class="widget_text widget widget_custom_html">
                                 <h3 class="widget_title">Join us on</h3>
                                 <div class="textwidget custom-html-widget">

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-bar',
@@ -7,9 +8,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginBarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
+  goRegistration() {
+    this.displayMobileMenu();
+  }
+
+  goLostCredentials() {
+    // this.router.navigate(['lostCredentials']);
+    this.displayMobileMenu();
+  }
+
+  displayMobileMenu() {
+    let x = document.getElementById("myLinks");
+    if (x) {
+      if (x.style.display === "block") {
+        x.style.display = "none";
+      } else {
+        x.style.display = "block";
+      }
+    }
+  }
 }

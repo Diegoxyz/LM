@@ -1,8 +1,9 @@
+<div><app-login-bar></app-login-bar></div>
 <ngx-spinner
 type="ball-clip-rotate-multiple" size="medium">
     <p class="loading">Loading....</p>
 </ngx-spinner>
-<div class="content" style="margin-bottom: 2%;">
+<div class="content" style="margin-bottom: 2%; background-color: #ffffff;">
     <div class="container">
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="row align-items-center justify-content-center">
@@ -14,7 +15,7 @@ type="ball-clip-rotate-multiple" size="medium">
             </div>
             <div class="w-100"></div>
         </div>
-        <div class="row align-items-center justify-content-center">
+        <div class="row form-row">
             <div class="col-7">
                 <div *ngIf="loginError === true" class="alert alert-danger">
                     <span>{{ errorMessage }}</span>
@@ -25,8 +26,8 @@ type="ball-clip-rotate-multiple" size="medium">
                 <div *ngIf="!loginError" class="w-100"></div>
             </div>
         </div>
-        <div class="row align-items-center justify-content-center">
-            <div class="col-7">
+        <div class="row form-row">
+            <div class="form-column">
                 <div class="form-group">
                     <label for="email">{{ 'email' | translate }}</label>
                     <input type="email" class="form-control" id="email" formControlName="email" aria-describedby="emailHelp" placeholder="{{ 'emailPlaceholder' | translate }}" required>
@@ -56,9 +57,9 @@ type="ball-clip-rotate-multiple" size="medium">
         <div class="row">
             <div class="w-100"></div>
             <div class="col-2">&nbsp;</div>
-            <div class="col-2"><div style="padding-left: 30%;"><button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">{{ 'submit' | translate }}</button></div></div>
+            <div class="col-2"><div class="form-row"><button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">{{ 'submit' | translate }}</button></div></div>
             <div class="col-4">&nbsp;</div>
-            <div class="col-2">
+            <div class="col-2" class="otherButtons">
                 <div><a routerLink="../register">{{ 'register' | translate }}</a></div>
                 <div><a routerLink="../lostCredentials">{{ 'lostCredentials' | translate }}</a></div>
             </div>
@@ -66,8 +67,8 @@ type="ball-clip-rotate-multiple" size="medium">
         </div>
         </form>
     </div>
+    <div style="background-color: white;">&nbsp;</div>
 </div>
-
 <footer class="footer"> 
     <div class="footer-widget">
         <div class="container">
@@ -106,7 +107,7 @@ type="ball-clip-rotate-multiple" size="medium">
                             </div>
                         </div>
 
-                        <div class="col-10 col-sm-6 col-lg-2 my-3">
+                        <div class="last_footer_column col-10 col-sm-6 col-lg-2 my-3">
                             <div id="custom_html-2" class="widget_text widget widget_custom_html">
                                 <h3 class="widget_title">Join us on</h3>
                                 <div class="textwidget custom-html-widget">

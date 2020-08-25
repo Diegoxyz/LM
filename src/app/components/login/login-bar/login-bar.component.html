@@ -1,18 +1,15 @@
-<div class="cart-menu" >
-    <div class="container" style="background-color: #414141;">
-        <div class="navbar-menu navbar_bg">
-            <div class="container pb-1 pt-1">
-                <div class="row align-items-center justify-content-center">
-                    <div class="w-100 spacer-20 spacer-md-0"></div>
-                    <div class="col-4 col-md-auto">
-                        <a href="#">
-                            <img src="assets/img/logo/globo-leone-white.png" alt="logo" class="img-logo-horizontal">
-                        </a>
-                    </div>
-                    <div class="w-100 spacer-20 spacer-md-0"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div>
+  <div class="topnav">
+    <span>&nbsp;</span>
+      <!-- Navigation links (hidden by default) -->
+      <div id="myLinks">
+          <a class="nav-link" routerLink="../register">{{ 'register' | translate }}</a>
+          <a class="nav-link" routerLink="../lostCredentials">{{ 'lostCredentials' | translate }}</a>
+      </div>
+      <!-- "Hamburger menu" / "Bar icon" to toggle the navigation links -->
+      <!-- onclick="myFunction()" -->
+      <a href="javascript:void(0);" class="icon" (click)="displayMobileMenu()">
+        <i class="fa fa-bars"></i>
+      </a>
+  </div>
 </div>
-<div class="w-100 spacer-40 spacer-md-0">&nbsp;</div>
