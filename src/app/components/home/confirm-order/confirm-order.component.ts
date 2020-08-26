@@ -11,6 +11,9 @@ import * as moment from 'moment';
 import { CustomValidators } from './custom-validators';
 import { CartService } from '@app/services/cart.service';
 import { Cart } from '@app/models/cart';
+import { ManageProducts } from '../services/manage-products.service';
+import { Product } from '@app/models/item';
+import { UserDataSetService } from '@app/models/OData/UserDataSet/userdataset.service';
 
 @Component({
   selector: 'app-confirm-order',
@@ -21,7 +24,8 @@ import { Cart } from '@app/models/cart';
 export class ConfirmOrderComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private accountService: AccountService,
-    private ordersService : OrdersService, private translateService : TranslateService, private cartService : CartService) { }
+    private ordersService : OrdersService, private translateService : TranslateService, private cartService : CartService, 
+    private manageProducts : ManageProducts, private userDataSetService : UserDataSetService) { }
 
   public confirmOrderForm: FormGroup;
   private recipientId : string;
@@ -103,9 +107,21 @@ export class ConfirmOrderComponent implements OnInit {
                 if ((this.errorMessage === undefined || this.errorMessage === null) && (orderNumber !== undefined && orderNumber !== null && orderNumber !== '')) {
                   console.log('emptyCart');
                   successfullySent = 'true';
+                  // this.manageProducts.emptyCart();
+                  if (environment && environment.oData) {
+                    const cart : Cart = this.cartService.getCart();
+                    const orders = cart.orders;
+                    console.log('confirm-order - orders:' + orders);
+                    orders.forEach(order => {
+                      this.manageProducts.changeProduct(order.product,0);
+                    })
+                  }
+                  const product : Product = new Product('testchange','testchange',0,'',false,'','','','',0);
+                  this.manageProducts.changeProduct(product,0);
                   this.cartService.emptyCart();
                   const cart : Cart = this.cartService.getCart();
                   cart.orders = [];
+                  // this.cartService.setOrders(cart.orders);
                   this.cartService.setCart(cart);
                 }
                 

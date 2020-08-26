@@ -19,4 +19,10 @@ export class ManageProducts {
       this._product.next(handledProduct);
     }
   }
+
+  emptyCart() {
+    console.log('ManageProducts - empty cart');
+    this._product = new Subject();
+    this.manageProducts$ = this._product.asObservable();
+  }
 }
