@@ -119,7 +119,7 @@ p{
     }
 }
 .form-column {
-    width: 70%;
+    width: 65%;
 }
 
 .last_footer_column {
@@ -140,6 +140,9 @@ p{
 @media all and (min-device-width: 481px) and (max-device-width: 1024px) {
     .last_footer_column {
         padding-left: 10%;
+    }
+    .form-column {
+        width: 90%;
     }
 }
 
