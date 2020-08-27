@@ -153,17 +153,23 @@ p{
 }
 
 /* IPAD */
-@media all and (min-device-width: 481px) and (max-device-width: 1024px) {
+@media all and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation: portrait) {
     .last_footer_column {
         padding-left: 15%;
     }
 
     .text-right {
-        text-align: left;
+        text-align: left !important;
     }
 
     img.img-logo-horizontal {
         width: 50%;
         margin-left: 30%;
+    }
+}
+
+@media all and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation: landscape) {
+    .text-right {
+        text-align: right !important;
     }
 }

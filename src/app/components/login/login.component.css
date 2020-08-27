@@ -138,6 +138,11 @@ p{
 
 /* IPAD */
 @media all and (min-device-width: 481px) and (max-device-width: 1024px) {
+    .form-column {
+        width: 90%;
+    }
+}
+@media all and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation: portrait) {
     .last_footer_column {
         padding-left: 10%;
     }

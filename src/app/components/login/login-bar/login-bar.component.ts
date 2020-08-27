@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./login-bar.component.css']
 })
 export class LoginBarComponent implements OnInit {
+
+  @Input() pageToShow = 1;
 
   constructor(private router: Router) { }
 
