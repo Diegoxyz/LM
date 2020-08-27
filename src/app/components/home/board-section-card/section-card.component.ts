@@ -63,16 +63,18 @@ export class SectionCardComponent implements OnInit {
                                 const el : HTMLElement = document.getElementById(imgId);
                                 const src : SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/'+fileName+';base64,' + resp.body.d.BinDoc);
                                 el.setAttribute('src',this.sanitizer.sanitize(SecurityContext.RESOURCE_URL,src));
-                                el.setAttribute('width','260');
-                                el.setAttribute('heigth','260');
+                                el.setAttribute('width','260px');
+                                el.setAttribute('height','auto');
+                                el.setAttribute('style','max-weigth: 260px; max-height: 260px;');
                             } else if (fileName && fileName.toLowerCase() === 'svg') {
                                 this.svgThumbnail= resp.body.d.BinDoc;
                                 const imgId = 'genericPic'.concat(this.item.code).concat(this.item.family);
                                 const el : HTMLElement = document.getElementById(imgId);
                                 const src : SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ this.svgThumbnail);
                                 el.setAttribute('src',this.sanitizer.sanitize(SecurityContext.RESOURCE_URL,src));
-                                el.setAttribute('width','260');
-                                el.setAttribute('heigth','260');
+                                el.setAttribute('width','260px');
+                                el.setAttribute('height','auto');
+                                el.setAttribute('style','max-weigth: 260px; max-height: 260px;');
                             } else {
                                 console.log('section ' + this.item.code + '- no fileName or not recognized:' + fileName);
                                 this.displayNoImage = true;

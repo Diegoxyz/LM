@@ -69,6 +69,7 @@ export class ProspectiveCardComponent implements OnInit, OnDestroy {
     @ViewChild("objId", { static: true }) objId: ElementRef;
     @ViewChild("noImage", { static: true }) noImage: ElementRef;
     @ViewChild('scrollDiv', { static: true }) scrollDiv: ElementRef;
+    @ViewChild('scrollDiv2', { static: true }) scrollDiv2: ElementRef;
     @ViewChild('imageDiv', { static: true }) imageDiv: ElementRef;
 
     public removeEventListener1: () => void;
@@ -573,9 +574,38 @@ export class ProspectiveCardComponent implements OnInit, OnDestroy {
                     setTimeout(function() {window.scrollTo(0, 0);},1);
                 }
             }
+
+            const pos2 = Number(id);
+            const id3 = strA.concat('' + pos2);
+            if (this.scrollDiv2.nativeElement.children) {
+                let i;
+                let item;
+                for (i = 0; i < this.scrollDiv2.nativeElement.children.length; i++) {
+                    const el = this.scrollDiv2.nativeElement.children[i];
+                    if (el) {
+                        this.renderer.removeStyle(el, 'background-color');
+                    }
+                    if (el && el.firstChild && el.firstChild.id === id3) {
+                        item = el;
+                        // el.scrollIntoView();
+                    }
+                }
+                if (item && item.children && item.children.length >= 2) {
+                    item.scrollIntoView();
+                }
+                if (pos < 1) {
+                    setTimeout(function() {window.scrollTo(0, 0);},1);
+                }
+            }
             let i;
             for (i = 0; i < this.scrollDiv.nativeElement.children.length; i++) {
                 const el = this.scrollDiv.nativeElement.children[i];
+                if (el && el.firstChild && (el.firstChild.id === elementId1 || el.firstChild.id === elementId2)) {
+                    this.renderer.setStyle(el, 'background-color', 'lightgrey');
+                }
+            }
+            for (i = 0; i < this.scrollDiv2.nativeElement.children.length; i++) {
+                const el = this.scrollDiv2.nativeElement.children[i];
                 if (el && el.firstChild && (el.firstChild.id === elementId1 || el.firstChild.id === elementId2)) {
                     this.renderer.setStyle(el, 'background-color', 'lightgrey');
                 }

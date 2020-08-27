@@ -117,6 +117,10 @@ p{
     .form-row {
         justify-content: center;
     }
+
+    .footer {
+        width: 90%;
+    }
 }
 .form-column {
     width: 65%;

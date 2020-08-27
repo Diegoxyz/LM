@@ -71,3 +71,27 @@ footer .footer-widget a {
 .mr-1{
     margin-right: 5% !important;
 }
+
+.last_footer_column {
+    padding-left: 0%;
+}
+
+/* IPHONE */
+@media all and (max-device-width: 481px) {
+    .last_footer_column {
+        padding-left: 5%;
+    }
+}
+
+/* IPAD */
+@media all and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation: portrait) {
+    .last_footer_column {
+        padding-left: 10%;
+    }
+}
+
+@media all and (max-width: 768px) {
+    .footer {
+        left: 5%;
+    }
+}

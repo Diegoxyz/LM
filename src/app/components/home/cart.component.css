@@ -8,18 +8,19 @@
     background-color: #f3f1f1;
     text-align: center;
     border: 1px solid #ffffff;
+    column-count: 6;
 }
 
 .code_column, 
 .price_column, .quantity_column, 
 .total_column, .grand_total_column{
-    font-weight: bold;
+    font-weight: normal;
     padding-top: 1%;
     padding-bottom: 1%;
 }
 
 .description_column{
-    font-weight: bold;
+    font-weight: normal;
 }
 
 #empty, #submit, #remove{
@@ -42,4 +43,52 @@ h5{
 
 .col-md-11 {
     text-align: right;
+}
+
+div.scroll { 
+    overflow-y: hidden;   /* auto */
+    overflow-x: hidden; 
+  }
+  
+@media all and (max-width: 750px) {
+    div.scroll { 
+        overflow-y: hidden;   /* auto */
+        overflow-x: scroll; 
+    }
+}
+
+.loadingHeader {
+    margin-top: 5%; 
+    margin-left: 25%; 
+    max-width: 50%;
+}
+
+.errorClass {
+    margin-left: 30%;
+}
+
+@media all and (max-device-width: 481px) {
+    .loadingHeader {
+        margin-left: 0%; 
+        max-width: 70%;
+    }
+
+    .errorClass {
+        margin-left: 0%;
+    }
+
+    .text-right {
+        text-align: left !important;
+    }
+
+    #download {
+        margin-left: 5%
+    }
+}
+
+.list-orders {
+    background-color: #f3f1f1;
+    text-align: center;
+    font-weight: 200;
+    border: 2px solid #ffffff;
 }

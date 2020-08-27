@@ -26,6 +26,14 @@
   width: 100%;
 }
 
+@media all and (max-width: 768px) {
+  .prospective-card {
+    padding: 0%;
+    margin-left: 0%;
+    width: 100%;
+  }
+}
+
 .board-image {
   position: fixed;
   top: 25%;
@@ -34,6 +42,19 @@
 /*   height: 700px; */
 /*   max-height: fit-content; */
 /*   border: solid 1px blueviolet; */
+}
+
+@media all and (max-width: 768px) {
+  .board-image {
+    position: relative;
+    width: 100%;
+  }
+}
+@media all and (max-width: 768px)  and (orientation:landscape) {
+  .board-image {
+    width: 100%;
+    top: 15%;
+  }
 }
 
 .board-panel {
@@ -55,24 +76,44 @@
 }
  */
 div.scroll { 
-  float: right;
   background-color: #ffffff; 
-  overflow-y: hidden;   /* auto */
-  overflow-x: hidden; 
-  text-align:justify;
-/*   max-height: 30%; */
-  position: relative;
-  left: 70%;
-  width:30%;
-  padding: 0%;
-  padding-left: 1%;
-  padding-top: 2%;
-  margin: 0%;
-  max-height: fit-content;
- /*  border: solid 1px yellow; */
-/*   border: solid 1px yellow;  */
 }
 
+div.scroll2 {
+  display: none;
+}
+
+@media all and (max-width: 768px) {
+  div.scroll {
+      display: none;
+  }
+
+  div.scroll2 {
+    display: block;
+  }
+}
+
+@media all and (min-width: 768px) and (orientation:landscape) {
+  div.scroll { 
+    display: block;
+    float: right;
+    background-color: #ffffff; 
+    overflow-y: hidden;   /* auto */
+    overflow-x: hidden; 
+    text-align:justify;
+  /*   max-height: 30%; */
+    position: relative;
+    left: 70%;
+    width:30%;
+    padding: 0%;
+    padding-left: 1%;
+    padding-top: 2%;
+    margin: 0%;
+    max-height: fit-content;
+   /*  border: solid 1px yellow; */
+  /*   border: solid 1px yellow;  */
+  }
+}
 
 .element-number-container {
   text-align: center;
@@ -316,4 +357,17 @@ padding-right: 4px;
       flex: 100%;
       max-width: 200%;
     }
+}
+
+/* IPHONE */
+@media all and (max-device-width: 481px) {
+  .priceRow {
+    text-align: center;
+  }
+}
+/* IPAD */
+@media all and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation: portrait) {
+  .priceRow {
+    padding-left: 40%;
+  }
 }

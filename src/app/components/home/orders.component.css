@@ -91,7 +91,7 @@ ul {
 
 @media all and (max-width: 750px) and (orientation:portrait) {     
   .search-categories-container  {
-      margin-top: 40%;
+      margin-top: 1%;
       width: 100%;
   }
 
@@ -107,7 +107,19 @@ ul {
 
 @media all and (max-width: 750px) and (orientation:landscape) {     
   .search-categories-container  {
-      margin-top: 25%;
+      margin-top: 1%;
       border: solid 2px red;
+  }
+}
+
+div.scroll { 
+  overflow-y: hidden;   /* auto */
+  overflow-x: hidden; 
+}
+
+@media all and (max-width: 750px) {
+  div.scroll { 
+    overflow-y: hidden;   /* auto */
+    overflow-x: scroll; 
   }
 }

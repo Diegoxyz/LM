@@ -143,7 +143,7 @@ p{
     }
 
     .text-right {
-        text-align: left;
+        text-align: left !important;
     }
 
     img.img-logo-horizontal {

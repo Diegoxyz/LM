@@ -139,7 +139,8 @@
         "toDate":"Data A",
         "exportAsXslxFile":"Esporta gli ordini in formato Excel"
     },
-    "privacyPolicy":"Privacy Policy"
+    "privacyPolicy":"Privacy Policy",
+    "login":"login"
     
 
 }

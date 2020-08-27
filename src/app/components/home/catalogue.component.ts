@@ -142,6 +142,7 @@ export class CatalogueComponent implements OnInit, OnDestroy {
                 const imagesForRow = this.items.length > this.imagesToView ? this.imagesToView : this.items.length;
                 console.log('catalogue - imagesForRow:' + imagesForRow);
                 for (let i = 0; i < imagesForRow; i++) {
+                    console.log('pushing item:' + i);
                     this.itemsToView.push(this.items[i]);
                 }
                 // document.getElementById('myModal').style.display = "none"
@@ -153,10 +154,13 @@ export class CatalogueComponent implements OnInit, OnDestroy {
     }
     @HostListener('window:scroll', ['$event']) // for window scroll events
     onScroll(event) {
+        console.log('onScroll - this.imagesToView:' + this.imagesToView + ',this.items.length:' + this.items.length);
         if (this.imagesToView < this.items.length) {
             this.imagesToView += 3;
             const imagesForRow = this.items.length > this.imagesToView ? this.imagesToView : this.items.length;
+            console.log('onScroll - imagesForRow:' + imagesForRow);
             for (let i = this.imagesToView - 3; i < imagesForRow; i++) {
+                console.log('onScroll - pusing item:' + i);
                 this.itemsToView.push(this.items[i]);
             }
         }

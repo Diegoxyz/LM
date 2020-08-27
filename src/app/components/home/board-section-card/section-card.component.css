@@ -90,7 +90,11 @@
  font-style: italic;
 }
 
- #pic{
+.card-title {
+  height: 56px;
+}
+
+#pic{
   margin-top:23%;
   padding-bottom: 24.5%;
 } 

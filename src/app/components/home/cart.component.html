@@ -9,10 +9,10 @@
         </div>
     </div>
 </div>
-<div style="margin-top: 5%; margin-left: 25%; max-width: 50%;">
+<div class="loadingHeader">
     <div class="align-items-center justify-content-center">
         <div class="alert alert-dark">
-            <div class="align-items-center justify-content-center" style="margin-left: 30%;"><strong>{{ 'loadFromCartTitle' | translate }}</strong></div>
+            <div class="align-items-center justify-content-center errorClass"><strong>{{ 'loadFromCartTitle' | translate }}</strong></div>
         </div>
         <div *ngIf="loadingCartError === true" class="alert alert-danger">
             <span>{{ loadingCartErrorMessage }}</span>
@@ -27,9 +27,104 @@
     </div>
     
 </div>
-<div style="margin-top: 5%; margin-left: 5%; max-width: 90%;">
+<div class="scroll" style="margin-top: 2%;">
+    <div *ngIf="orders.length > 0">
+    <table class="table headers-list-orders align-items-center justify-content-center">
+        <thead>
+            <th>
+                <div class="h-100 code_column" style= "text-align: left; margin: auto; padding-left: 2.7%;">
+                    <span>{{ 'products' | translate }} </span>   <!-- PRODUCTS -->
+                </div>
+            </th>
+            <th>
+                <div class="h-100 price_column" style= "text-align: right;">
+                    <span>{{ 'price' | translate }}</span>  <!-- PRICE -->
+                </div>
+            </th>
+            <th>
+                <div class="h-100 quantity_column">
+                    <span>{{ 'quantity' | translate }}</span>   <!-- QUANTITY -->
+                </div>
+            </th>
+            <th>
+                <div class="h-100 total_column" style= "text-align: right;">
+                    <span>{{ 'total' | translate }}</span>  <!--  TOTAL -->
+                </div>
+            </th>
+            <th>
+                <div class="h-100">
+                    <span>&nbsp;</span>   <!-- ERROR -->
+                </div>
+            </th>
+            <th>
+                <div class="h-100 description_column">
+                    <span>&nbsp;</span>
+                </div>
+            </th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let order of orders" class="list-orders">
+                <td>
+                    <div  class="description_column" style="text-align: left;   margin: auto; padding-left: 2.7%">
+                        <span>{{ order.product.code}} - {{ order.product.description}}</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="price_column" style="margin: auto; text-align: right;" >
+                        <span>{{ getPrice(order.product.price) }} {{ order.product.currency }}</span>
+                    </div>
+                </td>
+                <td>
+                    <div  class="quantity_column" style="margin: auto;" >
+                    <span><input type="number" 
+                        id="qty"
+                        step="1" min="0" max="9999" name=""
+                        value="{{ order.quantity }}" title="Quantity" size="2" pattern="[0-9]*"
+                        inputmode="numeric" aria-labelledby=""
+                        (input)="onChangeQuantity(order.product.code, $event.target.value)"> {{ order.product.meins }}</span>
+                    </div>
+                </td>
+                <td>
+                    <div  class="price_column" style="margin: auto; text-align: right;">
+                        <span>{{ getTotalPrice(order.product.code) }} {{ order.product.currency }}</span>
+                    </div>
+                </td>
+                <td>
+                    <div style="width: 100px; text-align: right;">
+                        <i *ngIf="order.error !== undefined" class="fa fa-exclamation-triangle" style="color: #dc3545;"></i>
+                        <i *ngIf="order.error === undefined" class="fa fa-check" style="color: #2196F3;"></i><br />
+                        <span>{{ order.error }}</span>
+                    </div>
+                </td>
+                <td>
+                    <div  class="delete-column" style="width: 100px; text-align: right;">
+                        <button (click)="onDeleteOrder(order.product.code)" style="background-color: transparent;">
+                            <fa-icon [icon]="faTrash" 
+                                size="1x">
+                            </fa-icon>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot class="headers-list-orders">
+            <tr>
+                <td><span>&nbsp;</span></td>
+                <td><span>&nbsp;</span></td>
+                <td><span>&nbsp;</span></td>
+                <td><span>&nbsp;</span></td>
+                <td><span>&nbsp;</span></td>
+                <td>
+                    <div class="grand_total_column">
+                        <div id="grand-total">{{ 'grandTotal' | translate }} {{strTotalPrice}} {{currency}}</div> <!-- Grand total -->
+                        </div>
+                </td>
+            </tr>
+          </tfoot>
+        </table>
+    </div>
     <div class="align-items-center justify-content-center">
-        <div class="row headers-list-orders">
+        <div *ngIf="orders.length === 0" class="row headers-list-orders">
 <!--             <div class="col-1 h-100 description_column" >
                 <span>&nbsp;</span>
             </div> -->
@@ -53,20 +148,15 @@
             </div>
         </div>
 
-       <div id="order" *ngFor="let order of orders">
-            <app-cart-order [order]="order" (newOrder)="updateOrders($event)" (deleteOrder)="deleteOrder($event)">
-            </app-cart-order>
-        </div>
-
-        <div *ngIf="orders.length === 0">
+        <div>
             <!--  No item -->
-            <div class="row align-items-center justify-content-center no-item">
+            <div *ngIf="orders.length === 0" class="row align-items-center justify-content-center no-item">
                 <div class="col-12 col-md-auto h-100">
                     <h1>{{ 'noitem' | translate }}</h1>  
                 </div>
             </div>
         </div>
-        <div class="row headers-list-orders" style="margin-bottom: 2%;">
+        <div *ngIf="orders.length === 0" class="row headers-list-orders" style="margin-bottom: 2%;">
 <!--             <div class="col-9 h-100">
                 <span>&nbsp;</span>
             </div> -->
@@ -75,16 +165,16 @@
             </div>
         </div>
 
-        <div class="row" style="margin-bottom: 5%;">
+        <div class="row" style="margin: 5%;">
 <!--              <div id="remove" class="col-md-4 text-left">
                 <button class="btn btn-primary" (click)="removeSelected()">Remove Selected</button>
             </div> -->
 
-            <div id="empty" class="col-md-6 text-left">
+            <div id="empty" class="col text-left">
                 <button class="btn btn-primary" (click)="emptyCart()" [disabled]="orders.length === 0">{{ 'emptyCart' | translate }}</button><!--  Empty Cart -->
             </div>
 
-            <div id="submit" class="col-md-6 text-right">
+            <div id="submit" class="col text-right">
                 <button class="btn btn-primary" (click)="goToShipToSet()" [disabled]="orders.length === 0">{{ 'goToDeliveryAddr' | translate }}</button> <!-- Go to delivery address -->
             </div>
         </div>

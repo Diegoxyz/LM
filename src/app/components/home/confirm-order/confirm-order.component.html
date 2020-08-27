@@ -43,18 +43,16 @@
                 </div>
 
                 <div class="form-row">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-4 text-left">
+                    <div class="col-md-2">&nbsp;</div>
+                    <div class="col text-left">
                         <button class="btn btn-primary" (click)="onCancel()">{{ 'back' | translate }}</button>
                     </div>
 
-                    <div class="col-md-4 text-right">
+                    <div class="col text-right">
                         <button type="submit" class="btn btn-primary"
                             [disabled]="!confirmOrderForm.valid">{{ 'goToStep4' | translate }}</button>
                     </div>
-
-                    <div class="w-100"></div>
-                    <div class="w-100"></div>
+                    <div class="col-md-2">&nbsp;</div>
                 </div>
             </form>
         </div>

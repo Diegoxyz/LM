@@ -18,42 +18,132 @@
                 <div class="col-12 step" style="text-align: center"><h5>{{ section.description }}</h5></div>
             </div>
             <img *ngIf="thumbnail" class="img-fluid card-img-top" id="pic-board" [src]='thumbnail' width="260"
-                height="260" style="width: 60%; max-height:50%;">
+                height="260" style="width: 60%; max-height:50%; padding-bottom: 10%;">
             <mat-icon *ngIf="svgThumbnail" class="img" [inline]="true" svgIcon="img" width="250" height="350"
-            style="width: 60%; max-height:50%;"
+            style="width: 60%; max-height:50%; padding-bottom: 10%;"
             (click)="onScroll($event.target , $event.target.parentElement )">
             </mat-icon>
 
             <img *ngIf="thumbnail === undefined && svgThumbnail === undefined" class="img-fluid card-img-top"
                 src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px" width="100"
-                height="260" style="width: 50%; max-height:50%;">
+                height="260" style="width: 50%; max-height:50%; padding-bottom: 10%;">
             <!--<img #noImage class="img-fluid card-img-top" src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260" style="width: 100%; max-height:70%;">-->
             
             <div class="row">
-                <div class="col-md-4" style="text-align: left;">
+                <div class="col" style="text-align: left;">
                     <button class="btn" style="font-size:36px; border: 0px; background-color: transparent;" [disabled]="isFirstOne" (click)="previousSection()">
                         <i class="fa fa-arrow-left" style="font-size:24px;color:#dc3545"></i>
                     </button>
                 </div>
 
-                <div id="btn-back" class="col-md-4">
+                <div id="btn-back" class="col">
                     <button class="btn btn-primary"  (click)="onBack()">
                         <h5>{{ 'closeSection' | translate }}</h5>
                     </button>
                 </div>
 
-                <div class="col-md-4" style="text-align: right;">
+                <div class="col" style="text-align: right;">
                     <button class="btn" style="font-size:36px; border: 0px; background-color: transparent;" [disabled]="isLastOne" (click)="nextSection()">
                         <i class="fa fa-arrow-right" style="font-size:24px;color:#dc3545"></i>
                     </button>
-                </div> 
+                </div>
             </div> 
-        
+            <div #scrollDiv2 id="scroll2" class="scroll2">
+                <div *ngFor="let item of items">
+                    <div [id]="item.htmlPosition">&nbsp;</div>
+                    <div style="margin-top: 5%; margin-left: 1%;">
+                        <div>
+                            <div id="item-code-parent" class="row align-items-center no-gutters justify-content-end"
+                                style="margin-top: 2%;">
+                                <div class="col-md-12" id="item-code-id">
+                                    <div id="item-code">{{ item.code }}</div>
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top: 2%; padding-top: 1%; ">
+                                <div class="col-md-4">
+                                    <img *ngIf="item.thumbnail" class="img-fluid card-img-top" id="pic-panel"
+                                        [src]='item.thumbnail' width="20" height="20">
+                                    <img *ngIf="item.thumbnail === undefined" class="img-fluid card-img-top"
+                                        src="assets/img/items/No_Image_available.png" width="20" height="20">
+                                </div>
+
+                                <div class="col-md-6" id="item-descritption-id">
+                                    <div style="text-align: center;">{{ item.description }} </div>
+                                    <div style="text-align: center;">Stock:
+                                        <fa-icon id="circle-red"
+                                            *ngIf="item.stockIndicator === undefined || item.stockIndicator === '' || item.stockIndicator === '3'"
+                                            [icon]="faCircle"></fa-icon>
+                                        <fa-icon id="circle-yellow" *ngIf="item.stockIndicator === '2'" [icon]="faCircle">
+                                        </fa-icon>
+                                        <fa-icon id="circle-green" *ngIf="item.stockIndicator === '1'" [icon]="faCircle">
+                                        </fa-icon>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col" style="text-align: center;">
+                                            <div>Position:<span>{{ item.strItemNumBom }}</span></div>
+                                        </div>
+                                    </div>
+                                    <form [formGroup]="addProductForm" (ngSubmit)="addProduct(item.code)">
+                                    <div class="row priceRow" style="text-align: center;">
+                                        <div class="col-md-auto" id="item-price" style="padding-left: 1%; padding-right: 1%;">
+                                            {{ getPrice(item.price) }}&nbsp;{{item.currency}}
+                                        </div>
+                                        <div id="qty-div" class="col-md-auto" style="padding-left: 0px; padding-right: 1%;margin-left: 0%;">
+                                            <input [id]="Id('qty', item.code)" [formControlName]="item.code"
+                                                type="number" step="1" min="0" max="9999" name=""
+                                                value="{{ quantity }}" title="Quantity" size="2"
+                                                pattern="[0-9]*" inputmode="numeric" aria-labelledby="">
+                                        </div>
+                                    </div>
+                                    <div class="row" style="padding-left: 40%;">
+                                        <div class="col-auto sub" style="padding-left: 0px; padding-right: 1%;">
+                                            <button class="btn-sub sub-product"
+                                                (click)="subOneProduct(item.code)"
+                                                type="button">
+                                                <i class="fa fa-minus" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+
+                                        <div class="col-auto add" style="padding-left: 0px; padding-right: 1%;">
+                                            <button class="btn-add add-product" type="button"
+                                                (click)="addOneProduct(item.code)">
+                                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+
+                                        <div class="col-auto icon-btn-div" style="padding-left: 0px; padding-right: 1%;">
+                                            <button class="btn-cart" type="submit">
+                                                <fa-icon id="btn-icon" [icon]="faShoppingCart" size="1x">
+                                                </fa-icon>
+                                            </button>
+                                        </div>
+                                        <div class="col-auto icon-btn-div" style="padding-left: 0px;">
+                                            <button type="button"
+                                                    style="background-color: 
+                                                            transparent; border: solid 1px #dc3545;
+                                                            padding-top: 1px; padding-bottom: 1px;padding-right: 3px;padding-left: 3px;" 
+                                                    (click)="openModal(item.code, template)"
+                                                    type="button">
+                                                <fa-icon id="btn-icon" [icon]="faInfoCircle" size="1x">
+                                                </fa-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="row" style="border-bottom: solid 1px #d8d6d6; margin-left: 1%;">&nbsp;</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         
         </div>
 
         <!--<div class="flex-item board-panel">-->
-            <div #scrollDiv id="scroll" class="scroll" (scroll)="scrollHandler($event)">
+            <div #scrollDiv id="scroll" class="flex-item scroll" (scroll)="scrollHandler($event)">
                 <div *ngFor="let item of items" class="row">
                     <div [id]="item.htmlPosition">&nbsp;</div>
                     <div style="margin-top: 5%; margin-left: 1%;">
@@ -65,7 +155,7 @@
                                 </div>
                             </div>
 
-                            <div class="row" style="margin-top: 2%; ">
+                            <div class="row" style="margin-top: 2%; padding-top: 1%; ">
                                 <div class="col-md-4">
                                     <img *ngIf="item.thumbnail" class="img-fluid card-img-top" id="pic-panel"
                                         [src]='item.thumbnail' width="20" height="20">
@@ -73,9 +163,9 @@
                                         src="assets/img/items/No_Image_available.png" width="20" height="20">
                                 </div>
 
-                                <div class="col-md-8" id="item-descritption-id">
-                                    <div style="display: inline; ">{{ item.description }} </div>
-                                    <div>Stock:
+                                <div class="col-md-6" id="item-descritption-id">
+                                    <div style="display: inline; padding-top: 1%;">{{ item.description }} </div>
+                                    <div style="padding-top: 1%;">Stock:
                                         <fa-icon id="circle-red"
                                             *ngIf="item.stockIndicator === undefined || item.stockIndicator === '' || item.stockIndicator === '3'"
                                             [icon]="faCircle"></fa-icon>
@@ -85,7 +175,7 @@
                                         </fa-icon>
                                     </div>
 
-                                    <div class="row">
+                                    <div class="row" style="padding-top: 1%;">
                                         <div class="col-md-4">
                                             <div>Position:<span>{{ item.strItemNumBom }}</span></div>
                                         </div>
@@ -94,7 +184,7 @@
                                         </div>
                                     </div>
                                     <form [formGroup]="addProductForm" (ngSubmit)="addProduct(item.code)">
-                                    <div class="row" style="padding-left: 15px;">
+                                    <div class="row" style="padding-left: 15px;padding-top: 1%;">
                                         <div class="col-md-auto" id="item-price" style="padding-left: 1%; padding-right: 1%;">
                                             {{ getPrice(item.price) }}&nbsp;{{item.currency}}
                                         </div>
@@ -104,7 +194,8 @@
                                                 value="{{ quantity }}" title="Quantity" size="2"
                                                 pattern="[0-9]*" inputmode="numeric" aria-labelledby="">
                                         </div>
-
+                                    </div>
+                                    <div class="row" style="padding-left: 15px;padding-top: 1%;">
                                         <div class="col-md-auto sub" style="padding-left: 0px; padding-right: 1%;">
                                             <button class="btn-sub sub-product"
                                                 (click)="subOneProduct(item.code)"
@@ -120,15 +211,26 @@
                                             </button>
                                         </div>
 
-                                        <div class="col-md-auto icon-btn-div" style="padding-left: 0px;">
+                                        <div class="col-md-auto icon-btn-div" style="padding-left: 0px; padding-right: 1%;">
                                             <button class="btn-cart" type="submit">
                                                 <fa-icon id="btn-icon" [icon]="faShoppingCart" size="1x">
                                                 </fa-icon>
                                             </button>
                                         </div>
+                                        <div class="col-md-auto icon-btn-div" style="padding-left: 0px;">
+                                            <button type="button"
+                                                    style="background-color: 
+                                                            transparent; border: solid 1px #dc3545;
+                                                            padding-top: 1px; padding-bottom: 1px;padding-right: 3px;padding-left: 3px;" 
+                                                    (click)="openModal(item.code, template)"
+                                                    type="button">
+                                                <fa-icon id="btn-icon" [icon]="faInfoCircle" size="1x">
+                                                </fa-icon>
+                                            </button>
+                                        </div>
                                     </div>
                                     </form>
-                                    <div class="row align-items-start">
+                                    <!--<div class="row align-items-start">
                                         <div id="btn-info" class="col-md-4" style="padding-top: 1%; ">
                                             <button style="background-color: 
                                                             transparent; border: solid 1px #dc3545;
@@ -139,7 +241,7 @@
                                                 </fa-icon>
                                             </button>
                                         </div>
-                                    </div>
+                                    </div>-->
                                 </div>
                             </div>
                             <div class="row" style="border-bottom: solid 1px #d8d6d6; margin-left: 1%;">&nbsp;</div>
@@ -150,7 +252,7 @@
         <!--</div> -->
     </div>
 </div>
-<div class="row" style="border-bottom: solid 1px #d8d6d6; margin-left: 1%;">&nbsp;</div> 
+<div style="border-bottom: solid 1px #d8d6d6; margin-left: 1%;">&nbsp;</div> 
 
 <ng-template #template let-modal>
     <div class="">

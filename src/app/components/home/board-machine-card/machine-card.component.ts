@@ -87,12 +87,14 @@ export class MachineCardComponent implements OnInit {
         } else {
             this.svgThumbnail = this.svgData;
             this.displayNoImage = false;
-            const imgId = 'genericPic'.concat(this.item.code).concat(this.item.family);
+            /*const imgId = 'genericPic'.concat(this.item.code).concat(this.item.family);
             const el : HTMLElement = document.getElementById(imgId);
             const src : SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ this.svgThumbnail);
-            el.setAttribute('src',this.sanitizer.sanitize(SecurityContext.RESOURCE_URL,src));
-            el.setAttribute('width','260');
-            el.setAttribute('heigth','260');
+            if (el) {
+                el.setAttribute('src',this.sanitizer.sanitize(SecurityContext.RESOURCE_URL,src));
+                el.setAttribute('width','260');
+                el.setAttribute('heigth','260');
+            }*/
         }
         
     }

@@ -1,11 +1,10 @@
-import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { Product } from '@app/models/item';
 import { Cart } from '@app/models/cart';
 import { Order } from '@app/models/order';
 import { AccountService } from '@app/services/account.service';
 import { CartService } from '@app/services/cart.service';
 import { User } from '@app/models/user';
-import { Customer } from '@app/models/customer';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { environment } from '@environments/environment';
 import { Router } from '@angular/router';
@@ -18,6 +17,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import * as XLSX from 'xlsx';
 import { TranslateService } from '@ngx-translate/core';
 import { Carrello } from '@app/models/carrello';
+import { ProductsService } from '@app/services/products.service';
+import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 
 @Component({selector: 'app-cart',
 templateUrl: './cart.component.html',
@@ -51,10 +52,15 @@ export class CartComponent implements OnInit, OnDestroy {
     @ViewChild('loadFromFile')
     loadFromFile: ElementRef;
 
+    @Output() newOrderEmitter = new EventEmitter<Order>();
+    @Output() deleteOrderEmitter = new EventEmitter<Order>();
+
+    faTrash = faTrashAlt;
+    
     constructor(private accountService : AccountService, private cartService : CartService, private modalService: BsModalService, 
         private router: Router, private manageProducts : ManageProducts, private carrelloService: CarrelloService, 
         private userDataSetService : UserDataSetService, private catalogueService : CatalogueService, private spinner: NgxSpinnerService,
-        private translateService : TranslateService) {
+        private translateService : TranslateService, private productsService: ProductsService) {
 
     }
     ngOnInit(): void {
@@ -76,8 +82,8 @@ export class CartComponent implements OnInit, OnDestroy {
             this.loadData();
               
         } else {
-            
-            setTimeout(() => {
+            this.currency = 'EUR';
+            /*setTimeout(() => {
                 const customer : Customer = {
                     firstName : user.username,
                     lastName : user.username,
@@ -92,9 +98,20 @@ export class CartComponent implements OnInit, OnDestroy {
                     }
                     this.totalQuantity = this.totalQuantity + o.quantity;
                 });
-                this.currency = 'EUR';
                 this.spinner.hide();
-            } , 2000);
+            } , 1);*/
+            const items = this.productsService.getAllProducts();
+            items.forEach( i => {
+                this.products.push(i);
+                const order : Order = {
+                    id : '1',
+                    product : i,
+                    quantity : 1
+                };
+                this.orders.push(order);
+                this.totalPrice = this.totalPrice + (i.price  * 1) ;
+                this.totalQuantity = this.totalQuantity + 1;
+            })
         }
 
         this.strTotalPrice = this.totalPrice.toFixed(2);
@@ -377,6 +394,7 @@ export class CartComponent implements OnInit, OnDestroy {
                     if (this.currency === undefined) {
                         this.currency = order.product.currency;
                     }
+                    order.quantity = 2;
                     this.products.push(order.product);
                     this.totalPrice = this.totalPrice + (order.product.price * order.quantity);
                     this.totalQuantity = this.totalQuantity + order.quantity;
@@ -402,4 +420,149 @@ export class CartComponent implements OnInit, OnDestroy {
           el.setAttribute("download", 'xlsxtojson.json');
         }, 1000)
     }*/
+
+    public getPrice(price : number) : string {
+        if (price) {
+            return Number(price).toFixed(2);
+        }
+        return '0.00';
+    }
+
+    public getTotalPrice(productCode : string) : string {
+        console.log('getTotalPrice:' + productCode);
+        let order = new Order();
+        let totalePrice = 0.00;
+        this.orders.forEach(o => {
+            if (o.product.code === productCode) {
+                order = o;
+                totalePrice = Number(order.product.price * order.quantity);
+            }
+        })
+        return totalePrice.toFixed(2);
+    }
+
+    onChangeQuantity(productCode: any, value : any) {
+        console.log('onChangeQuantity - productCode:' + productCode + ',value:' + value);
+        const qty = value;
+        if (environment && environment.oData) {
+            let order = new Order();
+            let i = 0;
+            for(i = 0; i< this.orders.length; i++) {
+                const o = this.orders[i];
+                if (o.product.code === productCode) {
+                    order = o;
+                }
+            }
+            this.accountService.fetchToken().subscribe(
+                response1 => {
+                    if (response1.headers) {
+                        const csrftoken : string = response1.headers.get('X-CSRF-Token');
+                        if (qty > 0) { // Update
+                            const carrello : Carrello = new Carrello();
+                            carrello.Matnr = order.product.code;
+                            carrello.Menge = '' + qty;
+                            this.carrelloService.updateCart(csrftoken, carrello).subscribe(d => {
+                                console.log('update went fine');
+                                this.manageProducts.changeProduct(order.product,qty);
+                                order.quantity = qty;
+                                this.totalPrice = 0;
+                                this.orders.forEach(o => {
+                                    if (o.product.code === productCode) {
+                                        this.totalPrice = this.totalPrice + qty * order.product.price;
+                                    } else {
+                                        this.totalPrice = this.totalPrice + order.quantity * order.product.price;
+                                    }
+                                });
+                                this.strTotalPrice = this.totalPrice.toFixed(2);
+                                this.newOrderEmitter.emit(order);
+                            },
+                            error => {
+                                console.log('error update:' + error);
+                            })
+                        } else { // delete
+                            this.carrelloService.deleteFromCarrello(csrftoken, order.product.code).subscribe(d => {
+                                console.log('delete went fine');
+                                this.manageProducts.changeProduct(order.product,qty);
+                                order.quantity = 0;
+                                this.totalPrice = 0;
+                                i = i -1;
+                                console.log('delete i:' + i);
+                                const deletedElement = this.orders.splice(i);
+                                console.log('deleted element:' + +deletedElement.length + ',' + deletedElement[0].product.code);
+                                console.log('this.orders:' + this.orders.length);
+                                this.orders.forEach(o => {
+                                    this.totalPrice = this.totalPrice + o.quantity * o.product.price;
+                                });
+                                this.strTotalPrice = this.totalPrice.toFixed(2);
+                                this.deleteOrderEmitter.emit(order);
+                                
+                            },
+                            error => {
+                                console.log('error delete:' + error);
+                            });
+                        }
+                    }
+                    
+                }, error => {
+                    console.log('error:' + error);
+                });
+            
+        } else {
+            let order = new Order();
+            this.orders.forEach(o => {
+                if (o.product.code === value) {
+                    order = o;
+                }
+            })
+            order.quantity = value;
+            this.totalPrice = order.quantity * order.product.price;
+            this.newOrderEmitter.emit(order);
+        }
+    }
+
+    onDeleteOrder(productCode: any) {
+        console.log('ondeleteorder - productCode:' + productCode);
+        if (environment && environment.oData) {
+            let order = new Order();
+            let i = 0;
+            for(i = 0; i< this.orders.length; i++) {
+                const o = this.orders[i];
+                if (o.product.code === productCode) {
+                    order = o;
+                }
+            }
+            console.log('ondeleteorder - order.error:' + order.error);
+            if (order.error) {
+                this.deleteOrderEmitter.next(order);
+                return;
+            }
+            this.accountService.fetchToken().subscribe(
+                response1 => {
+                    if (response1.headers) {
+                        const csrftoken : string = response1.headers.get('X-CSRF-Token');
+                        this.carrelloService.deleteFromCarrello(csrftoken, order.product.code).subscribe(d => {
+                            console.log('delete went fine');
+                            this.manageProducts.changeProduct(order.product,0);
+                            order.quantity = 0;
+                            this.totalPrice = 0;
+                            i = i -1;
+                            console.log('delete i:' + i);
+                            const deletedElement = this.orders.splice(i);
+                            console.log('deleted element:' + +deletedElement.length + ',' + deletedElement[0].product.code);
+                            console.log('this.orders:' + this.orders.length);
+                            this.orders.forEach(o => {
+                                this.totalPrice = this.totalPrice + o.quantity * order.product.price;
+                            });
+                            this.strTotalPrice = this.totalPrice.toFixed(2);
+                            this.deleteOrderEmitter.next(order);
+                        },
+                        error => {
+                            console.log('error delete:' + error);
+                        });
+                    }
+                });
+        }
+        
+        
+    }
 }

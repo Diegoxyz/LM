@@ -3,7 +3,7 @@ ul {
    display: inline;
 }
 
-.container {
+.boardContainer {
    display: flex;
    justify-content: space-between;
  }
@@ -22,6 +22,7 @@ ul {
  
    /* Then we define how is distributed the remaining space */
    justify-content: space-between;
+   margin-left: 6%;
  }
 
    /* Medium screens */
@@ -58,10 +59,13 @@ ul {
  #machines-container{
   margin-left: 10%;  /* 4% */
   margin-right: 10%;
-  padding-left: 2%;
-  padding-right: 2%;
-    padding-left: 0px;
-    padding-right: 0px;
+  /*    padding-left: 0.5%;
+   padding-right: 0.5%;*/
+
+   padding-left: 0px;
+   padding-right: 0px;
+   
+   justify-content: space-between;
 }
 
 #machines-item{
@@ -88,4 +92,6 @@ h5, h6{
 #section-item{
   padding-left: 0px;
   padding-right: 0px;
+  margin-left: 0%;
+  margin-right: 0%;
 }

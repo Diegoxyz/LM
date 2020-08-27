@@ -139,6 +139,7 @@
         "toDate":"To Date",
         "exportAsXslxFile":"Exports orders to Excel file"
     },
-    "privacyPolicy":"Privacy Policy"
+    "privacyPolicy":"Privacy Policy",
+    "login":"login"
     
 }
