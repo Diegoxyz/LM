@@ -177,13 +177,13 @@ export class BarComponent implements OnInit, OnDestroy {
   public goHome() {
     this.changePage.goToPage(0);
     this.router.navigate(['./home']);
-    this.displayMobileMenu();
+    this.displayMobileMenu(true);
   }
 
   public goWishlist() {
     this.changePage.goToPage(0);
     this.router.navigate(['./home/catalogue_last_purchases', { lastPurchases: 'true' }]);
-    this.displayMobileMenu();
+    this.displayMobileMenu(true);
   }
 
   public goCart() {
@@ -228,7 +228,7 @@ export class BarComponent implements OnInit, OnDestroy {
       this.reloadCatalogue = true;
       this.router.navigate(['./home/catalogue']);
     }
-    this.displayMobileMenu();
+    this.displayMobileMenu(true);
   }
 
   goToBoards() {
@@ -240,13 +240,13 @@ export class BarComponent implements OnInit, OnDestroy {
       this.reloadBoards = true;
       this.router.navigate(['./home/boards']);
     }
-    this.displayMobileMenu();
+    this.displayMobileMenu(true);
   }
 
   goToOrders() {
     this.currentPage = 3;
     this.router.navigate(['./home/orders']);
-    this.displayMobileMenu();
+    this.displayMobileMenu(true);
   }
 
   onTextChange(value)
@@ -259,12 +259,12 @@ export class BarComponent implements OnInit, OnDestroy {
     
   }
 
-  displayMobileMenu() {
+  displayMobileMenu(openMenu? : boolean) {
     let x = document.getElementById("myLinks");
     if (x) {
       if (x.style.display === "block") {
         x.style.display = "none";
-      } else {
+      } else if (openMenu) {
         x.style.display = "block";
       }
     }
