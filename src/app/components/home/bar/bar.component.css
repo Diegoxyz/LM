@@ -51,13 +51,13 @@ ul.nav li a {
     color: white;
 }
 
-@media all and (max-width: 750px) {
+@media all and (max-width: 1024px) {
     .cart-menu {
         display: none;
     }
 }
 
-@media all and (min-width: 750px) {
+@media all {
     .cart-menu {
         background-color: #414141;
         color: #fff;
@@ -126,11 +126,18 @@ input:focus {
     overflow: hidden;
     background-color: #414141;
     position: relative;
+    display: none;
   }
   
-@media all and (min-width: 750px) {
+@media all and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation: portrait) {
     .topnav {
         display: none;
+    }
+}
+
+@media all and (max-device-width: 1024px) {
+    .topnav {
+        display: block;
     }
 }
 

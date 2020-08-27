@@ -30,3 +30,17 @@
     display: none;
     /* border: 10px; */
 }
+
+.contentBody {
+    padding-top: 11.5%; 
+    margin-top: 5;
+}
+
+/* IPAD */
+@media all and (max-width: 1024px) {
+    .contentBody {
+        padding-top: 1%; 
+        margin-top: 1;
+    }
+    
+}
