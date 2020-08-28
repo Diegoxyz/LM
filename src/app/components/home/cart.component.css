@@ -82,7 +82,14 @@ div.scroll {
     }
 
     #download {
-        margin-left: 5%
+        margin-left: 2%;
+    }
+}
+
+/* IPAD */
+@media all and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation: portrait) {
+    .errorClass {
+        margin-left: 0%;
     }
 }
 

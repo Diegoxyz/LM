@@ -12,7 +12,7 @@
 <div class="loadingHeader">
     <div class="align-items-center justify-content-center">
         <div class="alert alert-dark">
-            <div class="align-items-center justify-content-center errorClass"><strong>{{ 'loadFromCartTitle' | translate }}</strong></div>
+            <div class="errorClass"><strong>{{ 'loadFromCartTitle' | translate }}</strong></div>
         </div>
         <div *ngIf="loadingCartError === true" class="alert alert-danger">
             <span>{{ loadingCartErrorMessage }}</span>
@@ -164,21 +164,20 @@
                 <div id="grand-total">{{ 'grandTotal' | translate }} {{strTotalPrice}} {{currency}}</div> <!-- Grand total -->
             </div>
         </div>
-
-        <div class="row" style="margin: 5%;">
-<!--              <div id="remove" class="col-md-4 text-left">
-                <button class="btn btn-primary" (click)="removeSelected()">Remove Selected</button>
-            </div> -->
-
-            <div id="empty" class="col text-left">
-                <button class="btn btn-primary" (click)="emptyCart()" [disabled]="orders.length === 0">{{ 'emptyCart' | translate }}</button><!--  Empty Cart -->
-            </div>
-
-            <div id="submit" class="col text-right">
-                <button class="btn btn-primary" (click)="goToShipToSet()" [disabled]="orders.length === 0">{{ 'goToDeliveryAddr' | translate }}</button> <!-- Go to delivery address -->
-            </div>
-        </div>
     </div>
+</div>
+<div class="row" style="margin: 5%;">
+    <!--              <div id="remove" class="col-md-4 text-left">
+                    <button class="btn btn-primary" (click)="removeSelected()">Remove Selected</button>
+                </div> -->
+    
+                <div id="empty" class="col text-left">
+                    <button class="btn btn-primary" (click)="emptyCart()" [disabled]="orders.length === 0">{{ 'emptyCart' | translate }}</button><!--  Empty Cart -->
+                </div>
+    
+                <div id="submit" class="col text-right">
+                    <button class="btn btn-primary" (click)="goToShipToSet()" [disabled]="orders.length === 0">{{ 'goToDeliveryAddr' | translate }}</button> <!-- Go to delivery address -->
+                </div>
 </div>
 <div>
     <app-footer></app-footer>

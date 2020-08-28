@@ -175,3 +175,14 @@ input:focus {
   background-color: #414141;
   color: white;
 }
+
+.search-class {
+    margin-right: 0;
+}
+
+/* IPAD */
+@media all and (min-device-width: 481px) and (max-device-width: 1024px) {
+    .search-class {
+        margin-right: 50%;
+    }
+}

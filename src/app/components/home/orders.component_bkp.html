@@ -1,0 +1,37 @@
+<div *ngIf="totalQuantity == 0">
+    <div class="row align-items-center justify-content-center" style="margin-top: 20%">
+        <div  class="col-4 col-md-auto h-100" >
+            <h1>{{ 'noItem' | translate }}</h1>
+        </div>
+    </div>
+</div>
+        
+<div *ngIf="totalQuantity != 0">
+    <div><app-search-orders></app-search-orders></div>
+    <div class="flex-container align-items-center">
+        <div class="row flex-item headers-list-orders">
+            <div id="code" class="col-4 h-100 code_column" >
+                <span>{{ 'code' | translate }}</span> 
+            </div>
+            <div id="description" class="col-4 h-100 description_column" >
+                <span>{{ 'description' | translate }}</span>
+            </div>
+            <div  id="quantity" class="col-4 h-100 quantity_column" >
+                <span>{{ 'quantity' | translate }}</span>
+            </div>
+        </div>
+        <div id="order" *ngFor="let item of items" class="row flex-item list-orders" (click)="openProduct(item)">
+            <div  class="col-4 code_column" >
+                <!--<a (click)="openProduct()">{{ item.product.code}}</a>-->
+                <span>{{ item.product.code}}</span>
+            </div>
+            <div  class="col-4 description_column" >
+                <span>{{ item.product.description}}</span>
+            </div>
+            <div  class="col-4 quantity_column" >
+                <span>{{ item.quantity}}</span>
+            </div>
+        </div>
+    </div>
+    
+</div>
