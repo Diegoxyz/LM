@@ -345,6 +345,10 @@ padding-right: 4px;
   padding-left: 2%;
 }
 
+.items-class {
+  text-align: center;
+}
+
 /* portrait - landscape */
 @media all and (max-width: 750px){     
     .col-8 {
@@ -374,7 +378,11 @@ padding-right: 4px;
 /* IPAD */
 @media all and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation: portrait) {
   .priceRow {
-    padding-left: 40%;
+    padding-left: 0%;
+  }
+
+  .items-class {
+    text-align: left;
   }
 }
 

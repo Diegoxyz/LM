@@ -58,7 +58,7 @@
                             </div>
 
                             <div class="row" style="margin-top: 2%; padding-top: 1%; ">
-                                <div class="col-md-4">
+                                <div class="col-md-4" style="margin-bottom: 1%;">
                                     <img *ngIf="item.thumbnail" class="img-fluid card-img-top" id="pic-panel"
                                         [src]='item.thumbnail' width="20" height="20">
                                     <img *ngIf="item.thumbnail === undefined" class="img-fluid card-img-top"
@@ -66,8 +66,8 @@
                                 </div>
 
                                 <div class="col-md-6" id="item-descritption-id">
-                                    <div style="text-align: center;">{{ item.description }} </div>
-                                    <div style="text-align: center;">Stock:
+                                    <div class="items-class">{{ item.description }} </div>
+                                    <div class="items-class">Stock:
                                         <fa-icon id="circle-red"
                                             *ngIf="item.stockIndicator === undefined || item.stockIndicator === '' || item.stockIndicator === '3'"
                                             [icon]="faCircle"></fa-icon>
@@ -78,54 +78,56 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col" style="text-align: center;">
+                                        <div class="col items-class">
                                             <div>Position:<span>{{ item.strItemNumBom }}</span></div>
                                         </div>
                                     </div>
                                     <form [formGroup]="addProductForm" (ngSubmit)="addProduct(item.code)">
-                                    <div class="row priceRow" style="text-align: center;">
-                                        <div class="col-md-auto" id="item-price" style="padding-left: 1%; padding-right: 1%;">
+                                    <div class="priceRow items-class">
+                                        <div id="item-price">
                                             {{ getPrice(item.price) }}&nbsp;{{item.currency}}
                                         </div>
-                                        <div id="qty-div" class="col-md-auto" style="padding-left: 0px; padding-right: 1%;margin-left: 0%;">
-                                            <input [id]="Id('qty', item.code)" [formControlName]="item.code"
-                                                type="number" step="1" min="0" max="9999" name=""
-                                                value="{{ quantity }}" title="Quantity" size="2"
-                                                pattern="[0-9]*" inputmode="numeric" aria-labelledby="">
-                                        </div>
                                     </div>
-                                    <div class="row" style="padding-left: 40%;">
-                                        <div class="col-auto sub" style="padding-left: 0px; padding-right: 1%;">
-                                            <button class="btn-sub sub-product"
-                                                (click)="subOneProduct(item.code)"
-                                                type="button">
-                                                <i class="fa fa-minus" aria-hidden="true"></i>
-                                            </button>
-                                        </div>
-
-                                        <div class="col-auto add" style="padding-left: 0px; padding-right: 1%;">
-                                            <button class="btn-add add-product" type="button"
-                                                (click)="addOneProduct(item.code)">
-                                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                            </button>
-                                        </div>
-
-                                        <div class="col-auto icon-btn-div" style="padding-left: 0px; padding-right: 1%;">
-                                            <button class="btn-cart" type="submit">
-                                                <fa-icon id="btn-icon" [icon]="faShoppingCart" size="1x">
-                                                </fa-icon>
-                                            </button>
-                                        </div>
-                                        <div class="col-auto icon-btn-div" style="padding-left: 0px;">
-                                            <button type="button"
-                                                    style="background-color: 
-                                                            transparent; border: solid 1px #dc3545;
-                                                            padding-top: 1px; padding-bottom: 1px;padding-right: 3px;padding-left: 3px;" 
-                                                    (click)="openModal(item.code, template)"
+                                    <div>
+                                        <div class="row" style="padding-left: 4%;">
+                                            <div id="qty-div" class="col-md-auto" style="padding-left: 0px; padding-right: 1%;margin-left: 0%;">
+                                                <input [id]="Id('qty', item.code)" [formControlName]="item.code"
+                                                    type="number" step="1" min="0" max="9999" name=""
+                                                    value="{{ quantity }}" title="Quantity" size="2"
+                                                    pattern="[0-9]*" inputmode="numeric" aria-labelledby="">
+                                            </div>
+                                            <div class="col sub" style="padding-left: 0px; padding-right: 1%;">
+                                                <button class="btn-sub sub-product"
+                                                    (click)="subOneProduct(item.code)"
                                                     type="button">
-                                                <fa-icon id="btn-icon" [icon]="faInfoCircle" size="1x">
-                                                </fa-icon>
-                                            </button>
+                                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                                </button>
+                                            </div>
+
+                                            <div class="col add" style="padding-left: 0px; padding-right: 1%;">
+                                                <button class="btn-add add-product" type="button"
+                                                    (click)="addOneProduct(item.code)">
+                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                </button>
+                                            </div>
+
+                                            <div class="col icon-btn-div" style="padding-left: 0px; padding-right: 1%;">
+                                                <button class="btn-cart" type="submit">
+                                                    <fa-icon id="btn-icon" [icon]="faShoppingCart" size="1x">
+                                                    </fa-icon>
+                                                </button>
+                                            </div>
+                                            <div class="col icon-btn-div" style="padding-left: 0px;">
+                                                <button type="button"
+                                                        style="background-color: 
+                                                                transparent; border: solid 2px #dc3545;
+                                                                padding-top: 1px; padding-bottom: 1px;padding-right: 3px;padding-left: 3px;" 
+                                                        (click)="openModal(item.code, template)"
+                                                        type="button">
+                                                    <fa-icon id="btn-icon" [icon]="faInfoCircle" size="1x">
+                                                    </fa-icon>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                     </form>
