@@ -308,13 +308,13 @@ padding-right: 4px;
   border-color:#dc3545;
   font-size: 12px;
   border-radius: 0px;
-  border: solid 1px;
+  border: solid 2px;
 }
 
 
 .btn-cart{
   background-color: transparent; 
-  border: solid 1px #dc3545;
+  border: solid 2px #dc3545;
   padding-left: 2px; 
   padding-right: 2px;
   padding-top: 2px; 

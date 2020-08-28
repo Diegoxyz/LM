@@ -17,10 +17,10 @@
             <div class="row" style="margin-top: 5%;">
                 <div class="col-12 step" style="text-align: center"><h5>{{ section.description }}</h5></div>
             </div>
-            <img *ngIf="thumbnail" class="img-fluid card-img-top" id="pic-board" [src]='thumbnail' width="260"
-                height="260" style="width: 60%; max-height:50%; padding-bottom: 10%;">
-            <mat-icon *ngIf="svgThumbnail" class="img" [inline]="true" svgIcon="img" width="250" height="350"
-            style="width: 60%; max-height:50%; padding-bottom: 10%;"
+            <img *ngIf="thumbnail" class="img-fluid card-img-top" id="pic-board" [src]='thumbnail'
+                style="width: 60%; max-height:50%; padding-bottom: 1%;">
+            <mat-icon *ngIf="svgThumbnail" class="img" [inline]="true" svgIcon="img"
+                style="width: 60%; max-height:50%; padding-bottom: 1%;"
             (click)="onScroll($event.target , $event.target.parentElement )">
             </mat-icon>
 
@@ -184,18 +184,19 @@
                                         </div>
                                     </div>
                                     <form [formGroup]="addProductForm" (ngSubmit)="addProduct(item.code)">
-                                    <div class="row" style="padding-left: 15px;padding-top: 1%;">
+                                    <div class="row" style="padding-left: 15px;padding-top: 1%;padding-bottom: 1%;">
                                         <div class="col-md-auto" id="item-price" style="padding-left: 1%; padding-right: 1%;">
                                             {{ getPrice(item.price) }}&nbsp;{{item.currency}}
                                         </div>
+                                    </div>
+                                    <div class="row" style="padding-left: 15px;padding-top: 1%;padding-bottom: 1%;">
                                         <div id="qty-div" class="col-md-auto" style="padding-left: 0px; padding-right: 1%;margin-left: 0%;">
                                             <input [id]="Id('qty', item.code)" [formControlName]="item.code"
                                                 type="number" step="1" min="0" max="9999" name=""
                                                 value="{{ quantity }}" title="Quantity" size="2"
                                                 pattern="[0-9]*" inputmode="numeric" aria-labelledby="">
                                         </div>
-                                    </div>
-                                    <div class="row" style="padding-left: 15px;padding-top: 1%;">
+
                                         <div class="col-md-auto sub" style="padding-left: 0px; padding-right: 1%;">
                                             <button class="btn-sub sub-product"
                                                 (click)="subOneProduct(item.code)"
@@ -220,7 +221,7 @@
                                         <div class="col-md-auto icon-btn-div" style="padding-left: 0px;">
                                             <button type="button"
                                                     style="background-color: 
-                                                            transparent; border: solid 1px #dc3545;
+                                                            transparent; border: solid 2px #dc3545;
                                                             padding-top: 1px; padding-bottom: 1px;padding-right: 3px;padding-left: 3px;" 
                                                     (click)="openModal(item.code, template)"
                                                     type="button">
