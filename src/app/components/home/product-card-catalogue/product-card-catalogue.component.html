@@ -15,7 +15,7 @@
                     src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px" width="260"
                     height="260">-->
                 
-                <img id="genericPic{{item.code}}{{item.family}}">
+                <img id="genericPic{{item.code}}{{item.family}}" style="display: none;">
                 <img *ngIf="displayNoImage" class="img-fluid card-img-top" src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
 
                 <button *ngIf="item.preferred === true;else other_content" (click)="addToFavorite()" class="btn"

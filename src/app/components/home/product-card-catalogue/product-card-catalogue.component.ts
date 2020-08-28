@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, SecurityContext } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, SecurityContext, Renderer2, AfterViewInit } from '@angular/core';
 import { Product } from 'src/app/models/item';
 import { Order } from '@app/models/order';
 import { ManageProducts } from '../services/manage-products.service';
@@ -53,7 +53,7 @@ export class ProductCardCatalogueComponent implements OnInit {
         private accountService: AccountService, private carrelloService : CarrelloService, 
         private binDataMatnrSetService: BinDataMatnrSetService, public sanitizer: DomSanitizer,
         private catalogueService : CatalogueService, private translateService : TranslateService,
-        private modalService: NgbModal
+        private modalService: NgbModal, private renderer: Renderer2
         ) {
     }
     
@@ -78,6 +78,7 @@ export class ProductCardCatalogueComponent implements OnInit {
                                 el.setAttribute('src',this.sanitizer.sanitize(SecurityContext.RESOURCE_URL,src));
                                 el.setAttribute('width','260');
                                 el.setAttribute('heigth','260');
+                                this.renderer.setStyle(el, 'display', 'block');
                             } else if (fileName && fileName.toLowerCase() === 'svg') {
                                 this.svgThumbnail= resp.body.d.BinDoc;
                                 const imgId = 'genericPic'.concat(this.item.code).concat(this.item.family);
@@ -86,6 +87,7 @@ export class ProductCardCatalogueComponent implements OnInit {
                                 el.setAttribute('src',this.sanitizer.sanitize(SecurityContext.RESOURCE_URL,src));
                                 el.setAttribute('width','260');
                                 el.setAttribute('heigth','260');
+                                this.renderer.setStyle(el, 'display', 'block');
                             } else {
                                 console.log('catalogue - no fileName or not recognized:' + fileName);
                                 this.displayNoImage = true;

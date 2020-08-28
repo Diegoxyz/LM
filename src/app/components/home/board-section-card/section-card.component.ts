@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, TemplateRef, SecurityContext } from '@angular/core';
+import { Component, OnInit, Input, TemplateRef, SecurityContext, Renderer2 } from '@angular/core';
 import { ManageProducts } from '../services/manage-products.service';
 import { Item } from '@app/models/item';
 import { Router } from '@angular/router';
@@ -43,7 +43,7 @@ export class SectionCardComponent implements OnInit {
     displayNoImage : boolean;
 
     constructor(private router: Router,private modalService: BsModalService,
-        private binDataMatnrSetService: BinDataMatnrSetService, public sanitizer: DomSanitizer) {
+        private binDataMatnrSetService: BinDataMatnrSetService, public sanitizer: DomSanitizer, private renderer: Renderer2) {
     }
     
     ngOnInit(): void {
@@ -66,6 +66,7 @@ export class SectionCardComponent implements OnInit {
                                 el.setAttribute('width','260px');
                                 el.setAttribute('height','auto');
                                 el.setAttribute('style','max-weigth: 260px; max-height: 260px;');
+                                this.renderer.setStyle(el, 'display', 'block');
                             } else if (fileName && fileName.toLowerCase() === 'svg') {
                                 this.svgThumbnail= resp.body.d.BinDoc;
                                 const imgId = 'genericPic'.concat(this.item.code).concat(this.item.family);
@@ -75,6 +76,7 @@ export class SectionCardComponent implements OnInit {
                                 el.setAttribute('width','260px');
                                 el.setAttribute('height','auto');
                                 el.setAttribute('style','max-weigth: 260px; max-height: 260px;');
+                                this.renderer.setStyle(el, 'display', 'block');
                             } else {
                                 console.log('section ' + this.item.code + '- no fileName or not recognized:' + fileName);
                                 this.displayNoImage = true;

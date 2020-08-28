@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, TemplateRef, Output, EventEmitter, SecurityContext } from '@angular/core';
+import { Component, OnInit, Input, TemplateRef, Output, EventEmitter, SecurityContext, Renderer2 } from '@angular/core';
 import { ManageProducts } from '../services/manage-products.service';
 import { Item } from '@app/models/item';
 import { Router } from '@angular/router';
@@ -43,7 +43,7 @@ export class MachineCardComponent implements OnInit {
     };
 
     constructor(private router: Router,private modalService: BsModalService,
-        private binDataMatnrSetService: BinDataMatnrSetService, public sanitizer: DomSanitizer) {
+        private binDataMatnrSetService: BinDataMatnrSetService, public sanitizer: DomSanitizer, private renderer: Renderer2) {
 
     }
     
@@ -65,6 +65,7 @@ export class MachineCardComponent implements OnInit {
                                 el.setAttribute('src',this.sanitizer.sanitize(SecurityContext.RESOURCE_URL,src));
                                 el.setAttribute('width','260');
                                 el.setAttribute('heigth','260');
+                                this.renderer.setStyle(el, 'display', 'block');
                             } else if (fileName && fileName.toLowerCase() === 'svg') {
                                 this.svgThumbnail= resp.body.d.BinDoc;
                                 const imgId = 'genericPic'.concat(this.item.code).concat(this.item.family);
@@ -73,6 +74,7 @@ export class MachineCardComponent implements OnInit {
                                 el.setAttribute('src',this.sanitizer.sanitize(SecurityContext.RESOURCE_URL,src));
                                 el.setAttribute('width','260');
                                 el.setAttribute('heigth','260');
+                                this.renderer.setStyle(el, 'display', 'block');
                             } else {
                                 console.log('machine ' + this.item.code + '- no fileName or not recognized:' + fileName);
                                 this.displayNoImage = true;
