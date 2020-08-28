@@ -177,12 +177,12 @@
 
             <div class="row">
                 <!-- <div class="w-100"></div> -->
-                <div class="col">
+                <div class="col-6">
                     <button *ngIf="!successMessage" type="submit" class="btn btn-primary" [disabled]="!registrationForm.valid && !isTaxNumberOrVATNumberRequired()">{{ 'submit' | translate }}</button>
                     <button *ngIf="successMessage"                class="btn btn-primary" (click)="onCancel()"                >{{ 'backToLogin' | translate }}</button>
                 </div>
-                <div class="col  text-right">
-                    <button *ngIf="!successMessage"               class="btn btn-primary" (click)="onCancel()">{{ 'cancel' | translate }}</button>
+                <div class="col-6">
+                    <button *ngIf="!successMessage"               class="btn btn-primary float-right" (click)="onCancel()">{{ 'cancel' | translate }}</button>
                 </div>
                 <!--  <div class="w-100"></div> -->
             </div>
@@ -270,7 +270,6 @@
                                 <div class="textwidget">
                                     <div>&nbsp;</div>
                                     <div class="entry_content">
-                                        {{ language }}
                                         <a *ngIf="language === 'it'" href="http://international.lamarzocco.com/it/privacy/" target="_blank"><p style="text-decoration:underline;">{{ 'privacyPolicy' | translate }}</p></a>
                                         <a *ngIf="language != 'it'" href="http://international.lamarzocco.com/en/privacy-en/" target="_blank"><p style="text-decoration:underline;">{{ 'privacyPolicy' | translate }}</p></a>
                                     </div>
