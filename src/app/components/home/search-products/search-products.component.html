@@ -84,9 +84,9 @@
     </div>
 
     <div class="flex-item">
-        <div style="padding-left: 35%">
+        <div>
             <div class="row">
-                <div class="col">
+                <div class="col preferredClass">
                     <label class="form-label">
                         {{ 'preferred' | translate }}
                     </label>
@@ -96,7 +96,7 @@
                         (changeValue)="changeOnlySelected($event)"
                     ></app-switch-button>
                 </div>
-                <div class="col">
+                <div class="col searchButton">
                     <button id="search" class="btn btn-primary" (click)="search()">
                             <span>{{ 'search' | translate }}&nbsp;&nbsp;&nbsp;</span>  <fa-icon [icon]="faSearch" size="1x">
                             </fa-icon>

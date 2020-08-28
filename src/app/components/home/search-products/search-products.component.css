@@ -84,3 +84,22 @@ ul {
      width: 100%;
    }
 }
+
+.preferredClass {
+  padding-left: 25%;
+}
+
+.searchButton {
+  padding-left: 0%;
+}
+
+/* IPHONE */
+@media all and (max-device-width: 481px) {
+  .preferredClass {
+    padding-left: 0%;
+  }
+
+  .searchButton {
+    padding-left: 25%;
+  }
+}
