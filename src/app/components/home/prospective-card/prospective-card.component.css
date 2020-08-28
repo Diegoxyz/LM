@@ -357,6 +357,12 @@ padding-right: 4px;
       flex: 100%;
       max-width: 200%;
     }
+
+    .sizesImg {
+      width: 100% !important; 
+      height: auto; 
+      padding-bottom: 0%;
+    }
 }
 
 /* IPHONE */
@@ -371,3 +377,4 @@ padding-right: 4px;
     padding-left: 40%;
   }
 }
+
