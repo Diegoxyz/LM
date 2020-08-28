@@ -2,8 +2,8 @@
     <div class="flex-item">
         <div>
             <div class="row">
-                <div class="col-6" style="margin: 0%;">
-                    <mat-form-field class="autocomplete-search-list">
+                <div class="col" style="margin: 0%;">
+                    <mat-form-field class="search-products autocomplete-search-list">
                         <mat-chip-list #chipList aria-label="Remove Product">
                           <mat-chip
                             *ngFor="let product of selectedProducts"
@@ -43,7 +43,7 @@
                         </mat-autocomplete>
                       </mat-form-field>
                 </div>
-                <div class="col-6" style="margin: 0%; padding: 0%">
+                <div class="col" style="margin: 0%; padding: 0%">
                     <mat-form-field class="autocomplete-search-list">
                         <mat-chip-list #chipGroupsList aria-label="Remove Groups">
                           <mat-chip
