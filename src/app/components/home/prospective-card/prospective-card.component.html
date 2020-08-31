@@ -17,12 +17,12 @@
             <div class="row" style="margin-top: 5%;">
                 <div class="col-12 step" style="text-align: center"><h5>{{ section.description }}</h5></div>
             </div>
-            <img *ngIf="thumbnail" class="sizes img-fluid card-img-top sizesImg" id="pic-board" [src]='thumbnail'>
-            <mat-icon *ngIf="svgThumbnail" class="sizes img sizesImg" [inline]="true" svgIcon="img"
+            <img *ngIf="thumbnail" class="sizesImg img-fluid card-img-top " id="pic-board" [src]='thumbnail'>
+            <mat-icon *ngIf="svgThumbnail" class="sizesImg img" [inline]="true" svgIcon="img"
             (click)="onScroll($event.target , $event.target.parentElement )">
             </mat-icon>
 
-            <img *ngIf="thumbnail === undefined && svgThumbnail === undefined" class="sizes img-fluid card-img-top img"
+            <img *ngIf="thumbnail === undefined && svgThumbnail === undefined" class="sizesImg img-fluid card-img-top img"
                 src="assets/img/items/No_Image_available.png" >
             <!--<img #noImage class="img-fluid card-img-top" src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260" style="width: 100%; max-height:70%;">-->
             

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy, HostListener, Output } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, HostListener, Output, AfterViewInit } from '@angular/core';
 import { ProductsService } from 'src/app/services/products.service';
 import { Group, Product } from 'src/app/models/item';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -15,7 +15,7 @@ import { AccountService } from '@app/services/account.service';
     templateUrl: './catalogue.component.html',
     styleUrls: ['./catalogue.component.css']
 })
-export class CatalogueComponent implements OnInit, OnDestroy {
+export class CatalogueComponent implements OnInit, OnDestroy, AfterViewInit {
 
     @Output()
     products: Product[];
@@ -61,6 +61,9 @@ export class CatalogueComponent implements OnInit, OnDestroy {
         private translateService: TranslateService, private accountService: AccountService
     ) {
 
+    }
+    ngAfterViewInit(): void {
+        window.dispatchEvent(new Event('resize'));
     }
 
     ngOnInit() {
@@ -145,6 +148,7 @@ export class CatalogueComponent implements OnInit, OnDestroy {
                     console.log('pushing item:' + i);
                     this.itemsToView.push(this.items[i]);
                 }
+                window.dispatchEvent(new Event('resize'));
                 // document.getElementById('myModal').style.display = "none"
                 this.spinner.hide();
                 console.log('catalogue - hide spinner');

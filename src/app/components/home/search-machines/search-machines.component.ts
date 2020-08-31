@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, Input, Renderer2 } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { ProductsService } from '@app/services/products.service';
 import { faSearch, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
@@ -55,7 +55,7 @@ export class SearchMachinesComponent implements OnInit {
 
 
   constructor(private fb: FormBuilder, private productsService: ProductsService, private macchineService: MacchineSetService,
-    private spinner: NgxSpinnerService, private translateService : TranslateService, private accountService: AccountService) { }
+    private spinner: NgxSpinnerService, private translateService : TranslateService, private accountService: AccountService, private renderer: Renderer2) { }
 
   ngOnInit(): void {
     
@@ -101,6 +101,19 @@ export class SearchMachinesComponent implements OnInit {
                 }
             });
         }
+        if (this.machines.length > 0) {
+          const numberOfElements = this.machines.length / 3;
+          console.log('numberOfElements:' + numberOfElements + ',numberOfElements % 1:' + numberOfElements % 1);
+          if (numberOfElements % 1 !== 0) {
+            console.log('adding empty element');
+            const item : Item = new Item();
+            item.emptyItem = true;
+            const ml : MachineList = new MachineList(item);
+            this.machines.push(ml);
+            macchine.push(ml.item);
+          }
+        }
+        window.dispatchEvent(new Event('resize'));
         if (this.sectionToBeDisplayed !== 1) {
           this.outMacchine.emit(macchine);
         }

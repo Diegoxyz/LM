@@ -1,5 +1,5 @@
 <div id="section-card-comp"class="align-items-center justify-content-center rounded">
-    <div id="section-container"class="container">
+    <div id="section-container"class="container" *ngIf="displayItem">
         <div id="section-card" class="card align-items-center justify-content-center hoverWrapper" style="width: 18rem;">
               <a class="nav-link" (click)="openSpecificProspective()">
                 <!--<img class="img-fluid card-img-top" src="assets/img/items/SectionNoBorder.PNG" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">-->

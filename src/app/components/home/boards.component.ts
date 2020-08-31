@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, OnChanges, AfterViewInit, HostListener } from '@angular/core';
 import { ProductsService } from 'src/app/services/products.service';
 import { Group, Product, Item} from 'src/app/models/item';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,7 +15,7 @@ import { AccountService } from '@app/services/account.service';
 templateUrl: './boards.component.html',
 styleUrls: ['./boards.component.css']
 })
-export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
+export class BoardsComponent implements OnInit,OnDestroy, OnChanges, AfterViewInit {
 
     machineId?: string;
 
@@ -51,6 +51,10 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
         private spinner: NgxSpinnerService, private translateService : TranslateService, private accountService : AccountService
     ) {
        /*  this.groups = this.productsService.getAllGroups(); */
+    }
+    ngAfterViewInit(): void {
+        console.log('after view init');
+        window.dispatchEvent(new Event('resize'));
     }
     ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
         console.log('boards - ngOnChanges');
@@ -101,6 +105,10 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
         
     }
 
+    @HostListener('window:resize', ['$event'])
+    sizeChange(event) {
+    console.log('size changed.', event);
+    }
     /* openSections(machine) {
         this.machines = [];
         this.section = "section";
@@ -123,6 +131,17 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
                         }
                     });
                 }
+                if (this.sections.length > 0) {
+                    const numberOfElements = this.sections.length / 3;
+                    console.log('numberOfElementsSection:' + numberOfElements + ',numberOfElements % 1:' + numberOfElements % 1);
+                    if (numberOfElements % 1 !== 0) {
+                      console.log('adding empty element');
+                      const item : Item = new Item();
+                      item.emptyItem = true;
+                      this.sections.push(item);
+                    }
+                  }
+                window.dispatchEvent(new Event('resize'));
             });
         }
     }
@@ -148,6 +167,7 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges {
             this.sections = this.productsService.getAllSections();
         }
         const sectionsPosition = document.getElementById('sections-position');
+        
         // check the position before using it, it was scrolling too down, it may be due to different screen sizes
         setTimeout(function() {window.scrollTo(0, 0);},1);
         // this._router.navigate(['./home/sections/machine']);

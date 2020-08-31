@@ -23,6 +23,7 @@ ul {
    /* Then we define how is distributed the remaining space */
    justify-content: space-between;
    margin-left: 6%;
+   align-items: center;
  }
 
    /* Medium screens */
@@ -52,7 +53,8 @@ ul {
    padding: 2%;
    margin-top: 2%;
    text-align: center;
-   min-width: 25%;
+   min-width: 33.33%;
+   max-width: 40%;
   /*  justify-content: space-between; */
  }
 
@@ -65,7 +67,7 @@ ul {
    padding-left: 0px;
    padding-right: 0px;
    
-   justify-content: space-between;
+   /*justify-content: space-between;*/
 }
 
 #machines-item{

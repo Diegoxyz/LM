@@ -38,6 +38,7 @@
   position: fixed;
   top: 25%;
   width: 70%;
+  height: 70%;
   margin-right: 0%;
 /*   height: 700px; */
 /*   max-height: fit-content; */
@@ -347,6 +348,12 @@ padding-right: 4px;
 
 .items-class {
   text-align: center;
+}
+
+.sizesImg {
+  max-width: 70%; 
+  max-height: 70%; 
+  padding-bottom: 0%;
 }
 
 /* portrait - landscape */

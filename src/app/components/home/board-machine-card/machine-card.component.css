@@ -132,15 +132,3 @@
 .card{
   min-height: 300px;
 }
-
-#machines-container{
-  margin-left: 10%;  
-  margin-right: 10%;
-/*    padding-left: 0.5%;
-  padding-right: 0.5%;*/
-
-  padding-left: 0px;
-  padding-right: 0px;
-  
-  justify-content: space-between;
-}

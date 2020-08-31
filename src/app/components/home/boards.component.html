@@ -3,34 +3,35 @@ type="ball-clip-rotate-multiple" size="medium">
     <p class="loading">Loading....</p>
 </ngx-spinner>
 <div *ngIf="sectionToBeDisplayed != 2"><app-search-machines [sectionToBeDisplayed]="sectionToBeDisplayed" (outMacchine)="filterMacchine($event)"></app-search-machines></div>
-<div *ngIf="sectionToBeDisplayed != 1 && sectionToBeDisplayed != 2">
-    <ul id="machines-container" class="flex-container">
-        <li id="machines-item" *ngFor="let m of machines" class="flex-item">
-            <app-machine-card [item]="m" (openSection)="openSections($event)"></app-machine-card>
-        </li>
-    </ul>
-    <div>
-        <app-footer></app-footer>
+<div class="align-items-center justify-content-center">
+    <div id="machineList" *ngIf="sectionToBeDisplayed != 1 && sectionToBeDisplayed != 2" class="align-items-center">
+        <ul id="machines-container" class="flex-container">
+            <li id="machines-item" *ngFor="let m of machines" class="flex-item" style="min-width: 33.33%">
+                <app-machine-card [item]="m" (openSection)="openSections($event)"></app-machine-card>
+            </li>
+        </ul>
+        <div>
+            <app-footer></app-footer>
+        </div>
+        <div id="sections-position" style="background-color: #414141;">&nbsp;</div>
     </div>
-    <div id="sections-position" style="background-color: #414141;">&nbsp;</div>
+    <div id="sectionList" *ngIf="sectionToBeDisplayed === 1" class="align-items-center">
+        <div class="row" style="margin-top: 1%; max-width: 100%;">
+            <div class="col text-center step"><h5>{{ machine.description }}</h5></div>
+        </div>
+        <div class="row" style="margin-top: 1%; max-width: 100%;">
+            <div class="col text-center step"><h6>{{ machine.family }}</h6></div>
+        </div>
+        <ul id="sections-container" class="flex-container">
+            <li id="section-item" *ngFor="let s of sections" class="flex-item" style="min-width: 33.33%">
+                <app-section-card [item]="s" (openProspective)="openProspective($event)"></app-section-card>
+            </li>
+        </ul>
+        <div>
+            <app-footer></app-footer>
+        </div>
+    </div>
 </div>
-<div *ngIf="sectionToBeDisplayed === 1">
-    <div class="row" style="margin-top: 1%; max-width: 100%;">
-        <div class="col text-center step"><h5>{{ machine.description }}</h5></div>
-    </div>
-    <div class="row" style="margin-top: 1%; max-width: 100%;">
-        <div class="col text-center step"><h6>{{ machine.family }}</h6></div>
-    </div>
-    <ul id="sections-container" class="flex-container">
-        <li id="section-item" *ngFor="let s of sections" class="flex-item">
-            <app-section-card [item]="s" (openProspective)="openProspective($event)"></app-section-card>
-        </li>
-    </ul>
-    <div>
-        <app-footer></app-footer>
-    </div>
-</div>
-
   <div *ngIf="sectionToBeDisplayed === 2">
     <div>
         <app-prospetive-card [item]="prospective" [machine]="machine" [sections]="sections" [section]="selectedSection" (closeProspective)="openSections($event)"></app-prospetive-card>

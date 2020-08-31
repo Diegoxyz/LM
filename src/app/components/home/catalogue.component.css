@@ -30,19 +30,15 @@ ul {
    flex-flow: row wrap;
  
    /* Then we define how is distributed the remaining space */
-   justify-content: space-between;
+   /*justify-content: space-between;*/
    margin-left: 6%;
  }
 
-   /* Medium screens */
-@media all and (max-width: 800px) {
+/* Medium screens */
+@media all and (max-width: 1024px) {
    .flex-container {
      /* When on medium sized screens, we center it by evenly distributing empty space around items */
      justify-content: space-around;
-   }
-
-   .flex-item {
-    min-width: 33.33%;
    }
  }
  
@@ -63,7 +59,7 @@ ul {
    padding: 0px;
    margin-top: 10px;
    text-align: center;
-   min-width: 25%;   /* min-width: 33.33%;  25%*/   
+   min-width: 33.33%;   /* min-width: 33.33%;  25%*/   
 
  }
  
@@ -76,7 +72,7 @@ ul {
    padding-left: 0px;
    padding-right: 0px;
    
-   justify-content: space-between;
+   justify-content: space-evenly;
 }
 
 
