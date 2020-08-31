@@ -56,7 +56,8 @@ p{
 
 
 .footer {
-      position: relative;
+      position: absolute;
+      /* top: 0; */
       left: 0;
       bottom: 0;
       width: 100%;
@@ -64,7 +65,7 @@ p{
       color: #fff;
       /* text-align: center; */
       font-size: 1.4rem;
-      top: 0;
+      margin-top: 30%;
 }
 
 
@@ -119,7 +120,9 @@ p{
     }
 
     .footer {
-        width: 90%;
+        width: 100%;
+        margin-top: 0%;
+        position: relative;
     }
 }
 .form-column {
@@ -145,6 +148,11 @@ p{
     .form-column {
         width: 90%;
     }
+    .footer {
+        width: 100%;
+        margin-top: 0%;
+        position: absolute;
+    }
 }
 @media all and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation: portrait) {
     .last_footer_column {
@@ -155,8 +163,10 @@ p{
     }
 }
 
-@media all and (max-width: 768px) {
+@media all and (max-height: 728px) {
     .footer {
-        left: 5%;
+        left: 0%;
+        position: relative;
+        margin-top: 0%;
     }
 }

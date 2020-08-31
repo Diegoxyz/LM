@@ -21,6 +21,7 @@ export class ChangePasswordComponent implements OnInit {
   returnUrl: string;
   errorMessage : string = undefined;
   email: string;
+  public language : string;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private accountService: AccountService, 
     private translateService : TranslateService) { }
@@ -44,6 +45,8 @@ export class ChangePasswordComponent implements OnInit {
     }  
     );
     this.email =this.route.snapshot.paramMap.get('email');
+
+    this.language = this.accountService.getLanguage();
   }
 
   get password() {
