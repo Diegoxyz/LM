@@ -50,7 +50,7 @@
     "password": "Password",
     "passwordRequired":"Password is required.",
     "passwordPlaceholder":"Add your password",
-    "submit":"Conferma",
+    "submit":"Submit",
     "register":"Register",
     "lostCredentials":"Lost credentials",
     "receiverID": "Receiver ID",
