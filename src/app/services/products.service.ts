@@ -9,7 +9,7 @@ export class ProductsService {
   constructor() { }
 
   getAllProducts() : Product[] {
-    const items : Product[] = Array(100).fill(0).map((x, i) => (
+    const items : Product[] = Array(11).fill(0).map((x, i) => (
       new Product(`Code ${i + 1}`,`KIT RETROFIT PERFORMANCE TOUCH STRADA ${i + 1}`,  (i+1 * 10.11), 'EUR', (i%2 === 0), `Gr${i + 1}`, 'Gerarchia', (i%2 === 0)?'X':'','PZ', undefined, undefined, undefined, '00001')
       ));
     return items;

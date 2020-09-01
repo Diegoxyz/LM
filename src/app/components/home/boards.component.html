@@ -4,7 +4,7 @@ type="ball-clip-rotate-multiple" size="medium">
 </ngx-spinner>
 <div *ngIf="sectionToBeDisplayed != 2"><app-search-machines [sectionToBeDisplayed]="sectionToBeDisplayed" (outMacchine)="filterMacchine($event)"></app-search-machines></div>
 <div class="align-items-center justify-content-center">
-    <div id="machineList" *ngIf="sectionToBeDisplayed != 1 && sectionToBeDisplayed != 2" class="align-items-center">
+    <div id="machineList" *ngIf="sectionToBeDisplayed != 1 && sectionToBeDisplayed != 2" class="align-items-center" style="min-width: 100%; max-width: 100%;">
         <ul id="machines-container" class="flex-container">
             <li id="machines-item" *ngFor="let m of machines" class="flex-item" style="min-width: 33.33%">
                 <app-machine-card [item]="m" (openSection)="openSections($event)"></app-machine-card>
@@ -15,7 +15,7 @@ type="ball-clip-rotate-multiple" size="medium">
         </div>
         <div id="sections-position" style="background-color: #414141;">&nbsp;</div>
     </div>
-    <div id="sectionList" *ngIf="sectionToBeDisplayed === 1" class="align-items-center">
+    <div id="sectionList" *ngIf="sectionToBeDisplayed === 1" class="align-items-center" style="min-width: 100%; max-width: 100%;">
         <div class="row" style="margin-top: 1%; max-width: 100%;">
             <div class="col text-center step"><h5>{{ machine.description }}</h5></div>
         </div>

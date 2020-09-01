@@ -101,7 +101,7 @@ export class SearchMachinesComponent implements OnInit {
                 }
             });
         }
-        if (this.machines.length > 0) {
+        /*if (this.machines.length > 0) {
           const numberOfElements = this.machines.length / 3;
           console.log('numberOfElements:' + numberOfElements + ',numberOfElements % 1:' + numberOfElements % 1);
           if (numberOfElements % 1 !== 0) {
@@ -112,7 +112,7 @@ export class SearchMachinesComponent implements OnInit {
             this.machines.push(ml);
             macchine.push(ml.item);
           }
-        }
+        }*/
         window.dispatchEvent(new Event('resize'));
         if (this.sectionToBeDisplayed !== 1) {
           this.outMacchine.emit(macchine);

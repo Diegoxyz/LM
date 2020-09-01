@@ -101,9 +101,11 @@ export class SectionCardComponent implements OnInit {
                             }                         
                         }
                     }
+                    window.dispatchEvent(new Event('resize'));
                 });
             } else {
                 this.displayNoImage = true;
+                window.dispatchEvent(new Event('resize'));
             }
         } else {
             this.svgThumbnail = this.svgData;

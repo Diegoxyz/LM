@@ -75,7 +75,7 @@ export class MachineCardComponent implements OnInit {
                                 if (el) {
                                     el.setAttribute('src',this.sanitizer.sanitize(SecurityContext.RESOURCE_URL,src));
                                     el.setAttribute('width','254px');
-                                    el.setAttribute('height','254px');
+                                    el.setAttribute('height','auto');
                                     this.renderer.setStyle(el, 'max-weigth:', '254px');
                                     this.renderer.setStyle(el, 'max-height:', '254px');
                                     this.renderer.setStyle(el, 'display', 'block');
@@ -92,7 +92,7 @@ export class MachineCardComponent implements OnInit {
                                 if (el) {
                                     el.setAttribute('src',this.sanitizer.sanitize(SecurityContext.RESOURCE_URL,src));
                                     el.setAttribute('width','254px');
-                                    el.setAttribute('height','254px');
+                                    el.setAttribute('height','auto');
                                     this.renderer.setStyle(el, 'max-weigth:', '254px');
                                     this.renderer.setStyle(el, 'max-height:', '254px');
                                     this.renderer.setStyle(el, 'display', 'block');
@@ -104,9 +104,11 @@ export class MachineCardComponent implements OnInit {
                         }
                     }
                     this.fullResp = resp;
+                    window.dispatchEvent(new Event('resize'));
                 });
             } else {
                 this.displayNoImage = true;
+                window.dispatchEvent(new Event('resize'));
             }
         } else {
             this.svgThumbnail = this.svgData;

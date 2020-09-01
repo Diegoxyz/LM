@@ -115,9 +115,11 @@ export class ProductCardCatalogueComponent implements OnInit {
                         }
                     }
                     this.fullResp = resp;
+                    window.dispatchEvent(new Event('resize'));
                 });
             } else {
                 this.displayNoImage = true;
+                window.dispatchEvent(new Event('resize'));
             }
         } else {
             this.thumbnail = undefined;

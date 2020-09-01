@@ -6,7 +6,7 @@ type="ball-clip-rotate-multiple" size="medium">
         <app-search-products [allProducts]="products" [searchLastProducts]='searchLastProducts' [searchKey]="searchKey" (outProducts)="filterProducts($event)"></app-search-products>
 </div>
 <div>
-        <div id="productCatalogue" *ngIf="itemsToView && itemsToView.length > 0">
+        <div id="productCatalogue" *ngIf="itemsToView && itemsToView.length > 0" style="min-width: 100%; max-width: 100%;">
                 <ul id="cat-container" class="flex-container">
                         <li *ngFor="let item of itemsToView" class="flex-item" style="min-width: 33.33%">
                                 <app-product-catalogue-card [item]="item"></app-product-catalogue-card>

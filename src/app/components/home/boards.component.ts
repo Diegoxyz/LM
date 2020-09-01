@@ -131,7 +131,7 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges, AfterViewIn
                         }
                     });
                 }
-                if (this.sections.length > 0) {
+                /*if (this.sections.length > 0) {
                     const numberOfElements = this.sections.length / 3;
                     console.log('numberOfElementsSection:' + numberOfElements + ',numberOfElements % 1:' + numberOfElements % 1);
                     if (numberOfElements % 1 !== 0) {
@@ -140,7 +140,7 @@ export class BoardsComponent implements OnInit,OnDestroy, OnChanges, AfterViewIn
                       item.emptyItem = true;
                       this.sections.push(item);
                     }
-                  }
+                  }*/
                 window.dispatchEvent(new Event('resize'));
             });
         }

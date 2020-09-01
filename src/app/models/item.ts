@@ -7,6 +7,7 @@ export class Item {
     /* ID dell'immagine, non sempre è presente */
     picId?: string;
     /* itemNumBom: string; */
+    emptyItem?: boolean;
 
     constructor(code?: string, description?: string, family?: string, LoioId?: string /* , ItemNumBom? :string  */ )  {
         // some logic may be required
@@ -14,6 +15,7 @@ export class Item {
         this.description = description;
         this.family = family;
         this.picId = LoioId;
+        this.emptyItem = false;
         /* this.itemNumBom =  parseInt(ItemNumBom).toString(); */
     } 
 }

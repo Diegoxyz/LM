@@ -21,7 +21,7 @@ ul {
    flex-flow: row wrap;
  
    /* Then we define how is distributed the remaining space */
-   justify-content: space-between;
+   justify-content: space-evenly;
    margin-left: 6%;
    align-items: center;
  }
@@ -96,4 +96,28 @@ h5, h6{
   padding-right: 0px;
   margin-left: 0%;
   margin-right: 0%;
+}
+
+/* IPAD */
+@media all and (min-device-width: 481px) and (max-device-width: 1024px) {
+  #machines-container{
+    margin-left: 6%; 
+  }
+
+  #sections-container{
+    margin-left: 6%;
+  }
+}
+
+/* IPHONE */
+@media all and (max-device-width: 481px) {
+  #machines-container{
+    margin-left: 0%;
+    margin-right: 60%;
+  }
+
+  #sections-container{
+    margin-left: 0%;
+    margin-right: 60%;
+  }
 }
