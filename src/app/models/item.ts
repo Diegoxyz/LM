@@ -46,6 +46,8 @@ export class Product extends Item {
     maktxSub?: string;
     kdmat?: string;
     htmlPosition? : string; // usato solo per fare lo scroll a video
+    invalidQuantity? : boolean;
+    invalidQuantityFormat? : boolean;
     
     constructor(code: string, description: string, price: number, currency: string, 
                 stock: boolean, prodh: string, prodhx: string, pref : string, 

@@ -220,6 +220,10 @@ padding-right: 0px;
 }
 
 
+input {
+  width: 70px;
+}
+
 /* elimina spin button */
 input[type=number]::-webkit-outer-spin-button {
 -webkit-appearance: none;
@@ -227,7 +231,7 @@ margin: 0;
 }
 
 input[type=number]::-webkit-inner-spin-button {
--webkit-appearance: none;
+/*-webkit-appearance: none;*/
 margin: 0;
 }
 
@@ -315,7 +319,7 @@ padding-right: 4px;
 
 .btn-cart{
   background-color: transparent; 
-  border: solid 2px #dc3545;
+  border: none 2px #dc3545;
   padding-left: 2px; 
   padding-right: 2px;
   padding-top: 2px; 

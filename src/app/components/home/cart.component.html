@@ -81,7 +81,20 @@
                         step="1" min="0" max="9999" name=""
                         value="{{ order.quantity }}" title="Quantity" size="2" pattern="[0-9]*"
                         inputmode="numeric" aria-labelledby=""
-                        (input)="onChangeQuantity(order.product.code, $event.target.value)"> {{ order.product.meins }}</span>
+                        (input)="onChangeQuantity(order.product.code, $event.target.value)"
+                        [ngStyle]="{'border-color': (order.invalidQuantity || order.invalidQuantityFormat) ? 'red' : null }"> </span>
+                        <span *ngIf="order.product.meins">{{ order.product.meins }}</span>
+                        <span *ngIf="!order.product.meins">&nbsp;  &nbsp;</span>
+                    </div>
+                    <div *ngIf="order.invalidQuantity" class="alert alert-danger">
+                        <div class="row align-items-center no-gutters">
+                            <div class="col-md-auto">{{ 'quantityError' | translate }}</div>
+                        </div>
+                    </div>
+                    <div *ngIf="order.invalidQuantityFormat" class="alert alert-danger">
+                        <div class="row align-items-center no-gutters">
+                            <div class="col-md-auto">{{ 'quantityFormatError' | translate }}</div>
+                        </div>
                     </div>
                 </td>
                 <td>
@@ -177,7 +190,7 @@
                 
                 <div class="col">&nbsp;</div>
                 <div id="submit" class="col text-right">
-                    <button class="btn btn-primary" (click)="goToShipToSet()" [disabled]="orders.length === 0">{{ 'goToDeliveryAddr' | translate }}</button> <!-- Go to delivery address -->
+                    <button class="btn btn-primary" (click)="goToShipToSet()" [disabled]="orders.length === 0 || haveOrdersErrors()">{{ 'goToDeliveryAddr' | translate }}</button> <!-- Go to delivery address -->
                 </div>
 </div>
 <div>

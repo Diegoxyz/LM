@@ -22,6 +22,9 @@ type="ball-clip-rotate-multiple" size="medium">
         <div class="row" style="margin-top: 1%; max-width: 100%;">
             <div class="col text-center step"><h6>{{ machine.family }}</h6></div>
         </div>
+        <div *ngIf="pdfDocument" class="row" id="pdfLink" style="margin-top: 1%; max-width: 100%;">
+            <div class="col text-center step"><button class="btn btn-primary" type="button" (click)="downloadFile()">{{ pdfDocument.description }}</button></div>
+        </div>
         <ul id="sections-container" class="flex-container">
             <li id="section-item" *ngFor="let s of sections" class="flex-item" style="min-width: 33.33%">
                 <app-section-card [item]="s" (openProspective)="openProspective($event)"></app-section-card>

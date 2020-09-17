@@ -45,19 +45,13 @@
                     <div class="col-md-2"></div>
                 </div>
 
-                <!--
-                <div class="form-row">
+                <div *ngIf="successfullySent" class="form-row">
                     <div class="col-md-2"></div>
                     <div class="col-md-8">
-                        <label for="note" i18n>Note</label>
-                        <textarea class="form-control" id="note" maxlength = "140"  required></textarea>                            
-                        <div *ngIf="note.invalid && (note.dirty || note.touched)" class="alert alert-danger">
-                            <div *ngIf="note.errors.required">
-                                <div i18n>Note is required</div>
-                            </div>
-                        </div>
+                        {{ 'successfullySentOrder' | translate }}
                     </div>
-                </div> -->
+                    <div class="col-md-2"></div>
+                </div>
 
 
                 <div class="form-row" *ngIf="!successfullySent">

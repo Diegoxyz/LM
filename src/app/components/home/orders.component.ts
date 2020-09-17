@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, Directive, ViewChildren, QueryList, PipeTransform } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Directive, ViewChildren, QueryList, PipeTransform, ViewChild } from '@angular/core';
 import { Cart } from '@app/models/cart';
 import { environment } from '@environments/environment';
 import { OrdersService } from '@app/services/orders.service';
@@ -93,6 +93,8 @@ export class NgbdSortableHeader {
     faSearch = faSearch;
 
     @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
+
+    page = 1;
     
     search(text: string) {
       this.items = this.allItems.filter(item => {
@@ -163,12 +165,12 @@ export class NgbdSortableHeader {
         });
         this.loadData();
       } else {
-        for(let i = 0; i < 10; i++) {
+        for(let i = 0; i < 40; i++) {
           const so : ShippedOrder = new ShippedOrder();
                 
           so.erdatFrom = "\/Date(1593043200000)\/";
           so.erdatTo = "\/Date(1595635200000)\/";
-          so.vbeln = "20000368";
+          so.vbeln = "20000368-" + ('' + i);
           so.erdat = "\/Date(1594857600000)\/";
           const s : string = "\/Date(1595289600000)\/";
           const start = s.indexOf('(');
@@ -421,12 +423,15 @@ export class NgbdSortableHeader {
           NumOrdine: a.vbeln,
           Pos: a.posnr,
           Data: a.erdat,
-          Totale: a.netwr + ' ' + a.waerk,
+          Totale: a.netwr,
+          Currency: a.waerk,
           Destinazione : a.name1 + ' ' + a.ort01 + ' ' + a.pstlz + ' ' + a.stras + ' ' + a.land1,
-          Prodotto: a.matnr + '-' + a.maktx,
-          Qtà: a.qty + ' ' + a.meins,
-          PrUnitario : a.netpr + ' ' + a.waerk,
-          PrTotale : a.totalRow + ' ' + a.waerk,
+          PartNumber: a.matnr,
+          Prodotto: a.maktx,
+          Qtà: a.qty,
+          UM: a.meins,
+          PrUnitario : a.netpr,
+          PrTotale : a.totalRow,
           Stato : a.stateDesc
         };
         orders.push(order);

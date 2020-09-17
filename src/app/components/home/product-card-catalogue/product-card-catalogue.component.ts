@@ -4,7 +4,7 @@ import { Order } from '@app/models/order';
 import { ManageProducts } from '../services/manage-products.service';
 import { CartService } from '@app/services/cart.service';
 import { faShoppingCart, faCircle, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BinDataMatnrSetService } from '@app/models/OData/BinDataMatnrSet/bindatamatnrset.service';
 import { DomSanitizer, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
 import { environment } from '@environments/environment';
@@ -48,6 +48,8 @@ export class ProductCardCatalogueComponent implements OnInit {
     bsModalRef: NgbModalRef;
 
     itemDetail : Product;
+
+    invalidFormat = false;
 
     constructor(private fb: FormBuilder,private manageProducts: ManageProducts, 
         private cartService : CartService,
@@ -131,7 +133,7 @@ export class ProductCardCatalogueComponent implements OnInit {
         this.addProductForm = this.fb.group({
             qty: ['0']
           });
-
+        this.qty.setValidators(Validators.pattern('[0-9]{2}'));
         // this.qty.setValue(0);
         
         if (environment && !environment.oData) {
@@ -177,7 +179,9 @@ export class ProductCardCatalogueComponent implements OnInit {
     }
 
     addProduct(addOrSubtract? : number) {
-
+        if (this.quantityError || this.invalidFormat) {
+            return;
+        }
         let q = 0;
         if (addOrSubtract) {
             q = this.quantity + addOrSubtract;
@@ -209,6 +213,7 @@ export class ProductCardCatalogueComponent implements OnInit {
                                 const carrello : Carrello = new Carrello();
                                 carrello.Matnr = this.item.code;
                                 carrello.Menge = '' + q;
+                                carrello.Meins = this.item.meins;
                                 this.carrelloService.updateCart(csrftoken, carrello).subscribe(d => {
                                     console.log('update went fine - q:' + q);
                                     this.manageProducts.changeProduct(this.item,q);
@@ -242,12 +247,27 @@ export class ProductCardCatalogueComponent implements OnInit {
     }
 
     updateQty(event) {
+        console.log('updateQty');
         if (event && event.target && event.target.value) {
+            this.invalidFormat = false;
+            this.qty.setErrors(undefined);
+            this.item.invalidQuantityFormat = false;
+            this.item.invalidQuantity = false;
             try {
-                const qty = Number(event.target.value);
+                let qty = Number(event.target.value);
+                console.log('updateQty - qty:' + qty);
+                if (this.item.meins && (this.item.meins === 'PZ' || this.item.meins === 'NR')) {
+                    if (!Number.isInteger(qty)) {
+                        console.log('updateQty - qty incorrect');
+                        this.qty.setErrors({'incorrect': true});
+                        this.invalidFormat = true;
+                        this.item.invalidQuantityFormat = true;
+                        return;
+                    }
+                }
                 if (qty < 0) {
                     this.quantity = 0;
-                    this.quantityError = true;
+                    this.item.invalidQuantity = true;
                 } else {
                     this.quantity = qty;
                     this.quantityError = false;

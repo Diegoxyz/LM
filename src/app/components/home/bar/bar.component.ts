@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { AccountService } from 'src/app/services/account.service';
 import { Customer } from '@app/models/customer';
 import { Cart } from '@app/models/cart';
@@ -43,6 +43,8 @@ export class BarComponent implements OnInit, OnDestroy {
 
   reloadBoards = true;
   reloadCatalogue = true;
+
+  @ViewChild("searchField", { static: true }) searchField: ElementRef;
   
   constructor(private accountService : AccountService, private manageProducts : ManageProducts, 
     private cartService : CartService, private modalService: BsModalService,private router: Router, private changePage: ChangePage,
@@ -199,7 +201,6 @@ export class BarComponent implements OnInit, OnDestroy {
     }
 
     this.changePage.goToPage(0);
-    const commands : any[] = [];
     if (this.searchPage === 0) {
       this.searchPage = 1;
       if (this.searchKey) {
@@ -216,6 +217,7 @@ export class BarComponent implements OnInit, OnDestroy {
         this.router.navigate(['./home/catalogue']);
       }
     }
+    this.searchKey = null;
     this.displayMobileMenu();
   }
 

@@ -122,6 +122,14 @@ p{
     margin-right: 5% !important;
 }
 
+.confirmRegistration {
+    float: right;
+}
+
+.backToLogin {
+    float:right;
+}
+
 .showDoubleErrorMessage {
     display: none;
 }

@@ -28,13 +28,14 @@
     "zipRequired":"ZIP/Postal code is required.",
     "phone":"Phone",
     "phoneRequired":"Phone is required.",
+    "phoneInvalid":"Invalid phone format.",
     "country":"Country",
     "countryRequired":"Country is required.",
     "chooseYourCountry":"Choose your country",
     "region":"State",
     "regionRequired":"State is required.",
     "chooseYourRegion":"Choose your state",
-    "registrationRequestSeccessfullySent":"Your request has been successfully sent",
+    "registrationRequestSeccessfullySent":"Your request has been forwarded correctly",
     "unknownError":"Internal error, please contact customer service",
     "chooseTheLanguage":"Choose your language",
     "clickToChangeTheLanguage":"Click to change the language",
@@ -97,9 +98,10 @@
     "noMatchPassword": "Passwords do not match",
     "noRecipientFound":"No recipient found, please set at least a recipient before proceeding with orders",
     "sessionEnded":"Session expired, please log in again",
-    "orderNumber":"Numero ordine",
+    "orderNumber":"Order number",
     "backToLogin":"Back",
     "quantityError":"Value is not correct",
+    "quantityFormatError":"Only integer values",
     "numberOfPieces":"Quantity",
     "cartIsNotEmpty":"Cart can't be loaded because the cart in session is not empty",
     "downloadSampleFile":"Download sample cart Excel file",
@@ -140,6 +142,9 @@
         "exportAsXslxFile":"Exports orders to Excel file"
     },
     "privacyPolicy":"Privacy Policy",
-    "login":"login"
+    "login":"login",
+    "previousPage":"Previous",
+    "nextPage":"Next",
+    "successfullySentOrder":"You will receive an email shortly, with the summary of your request."
     
 }

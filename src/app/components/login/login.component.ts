@@ -33,7 +33,6 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/home']);
     }
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home/boards';
-
     const error = this.route.snapshot.paramMap.get('sessionEnded');
     if (error) {
       // this.errorMessage = this.translateService.instant('sessionEnded');

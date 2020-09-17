@@ -85,54 +85,41 @@
                         <fa-icon id="circle-green" *ngIf="item.stockIndicator === '1'" [icon]="faCircle"></fa-icon></h6>
                     </div>
                 </div>
-
-                <div class="quantity">
-                    <form [formGroup]="addProductForm">
-                        <div class="row align-items-center no-gutters">
-                            <div class="col-md-auto" style="margin-bottom: 2%;margin-left: 3%;">
-                                <input name="qty" type="number" #selectedQuantity
-                                    class="input-number input-number-adaptive" step="1" min="0" max="" name=""
-                                    value="{{ quantity }}" title="{{ 'numberOfPieces' | translate }}" size="2"
-                                    pattern="[0-9]*" inputmode="numeric" aria-labelledby=""
-                                    (change)="updateQty($event)">
-                            </div>
-                            <div class="col" style="margin-left: 1%; margin-bottom: 2%;">
-                                <button type="button" class="sub-product" (click)="removeProduct()">
-                                    <!-- - -->
-                                    <i class="fa fa-minus" aria-hidden="true"></i>
-                                    <!--<i class="fa fa-star-o" style="font-size:24px;color:#dc3545"></i>-->
-                                </button>
-                            </div>
-
-                            <div class="col" style="margin-left: 1%; margin-bottom: 2%;">
-                                <button type="button" id="btn-add-product" class="add-product" (click)="addOneProduct()">
-                                    <!-- + -->
-                                    <i class="fa fa-plus" aria-hidden="true"></i>
-                                </button>
-                            </div>
-
-                            <div class="col" style="margin-left: 1%; margin-bottom: 2%;">
-                                <button type="button" style="background-color: 
-                                                transparent; border: solid 1px #dc3545;
-                                                padding-top: 2px;padding-bottom: 1px;" (click)="addProduct()">
-                                    <fa-icon id="btn-icon" [icon]="faShoppingCart" size="1x">
-                                    </fa-icon>
-                                </button>
-                            </div>
-
-                            <div class="col" style="margin-left: 1%; margin-bottom: 2%;">
-                                <button type="button" style="background-color: 
-                                                transparent; border: solid 1px #dc3545;
-                                                padding-top: 2px; padding-bottom: 1px;
-                                                padding-left: 7px; padding-right: 7px;" (click)="openModal(template)">
-                                    <fa-icon id="btn-icon" [icon]="faInfoCircle" size="1x">
-                                    </fa-icon>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                <form [formGroup]="addProductForm">
+                <div class="row align-items-center no-gutters justify-content-between">
+                    <div class="col">
+                        <input formControlName="qty" name="qty" type="number" #selectedQuantity
+                                class="input-number input-number-adaptive" step="1" min="0" max="" name=""
+                                value="{{ quantity }}" title="{{ 'numberOfPieces' | translate }}" size="2"
+                                pattern="[0-9]*" inputmode="numeric" aria-labelledby=""
+                                (keydown.enter)="updateQty($event)"
+                                [ngStyle]="{'border-color': (item.invalidQuantity || item.invalidQuantityFormat) ? 'red' : null }">
+                        <button type="button" class="sub-product" (click)="removeProduct()" style="display: none;">
+                            <!-- - -->
+                            <i class="fa fa-arrow-circle-down fa-lg" aria-hidden="true"></i>
+                            <!--<i class="fa fa-star-o" style="font-size:24px;color:#dc3545"></i>-->
+                        </button>
+                        <button type="button" id="btn-add-product" class="add-product" (click)="addOneProduct()" style="display: none;">
+                            <!-- + -->
+                            <i class="fa fa-arrow-circle-up fa-lg" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" style="background-color: 
+                                transparent; border: none 1px #dc3545;
+                                padding-top: 2px;padding-bottom: 1px;" (click)="addProduct()">
+                                <fa-icon id="btn-icon" [icon]="faShoppingCart" size="1x">
+                                </fa-icon>
+                        </button>
+                        <button type="button" style="background-color: 
+                                transparent; border: none 1px #dc3545;
+                                padding-top: 2px; padding-bottom: 1px;
+                                padding-left: 7px; padding-right: 7px;" (click)="openModal(template)">
+                                <fa-icon id="btn-icon" [icon]="faInfoCircle" size="1x">
+                                </fa-icon>
+                        </button>
+                    </div>
                 </div>
-
+                </form>
+                
                 <div *ngIf="quantityError" class="row align-items-center no-gutters justify-content-between">
                     <div class="col-md-8">
                         <div class="alert alert-danger">
@@ -172,49 +159,49 @@
                 <div class="col-4">
                     <div class="row">
                         <div class="col-right" style="text-align: left;">
-                            <h6>{{ itemDetail.code }}</h6>
+                            <h6 style="text-align: left;">{{ itemDetail.code }}</h6>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-right" style="text-align: left;">
-                            <h6>{{ itemDetail.description }}</h6>
+                        <div class="col-right" style="text-align: left; width: 100%;">
+                            <h6 style="text-align: left;">{{ itemDetail.description }}</h6>
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" *ngIf="itemDetail.prodhx">
                         <div class="col-right" style="text-align: left;">
-                            <h6>{{'itemDetail.category' | translate }}:</h6>
+                            <h6 style="text-align: left;">{{'itemDetail.category' | translate }}:</h6>
                         </div>
                         <div class="col-left" style="text-align: left;">
-                            <h6>{{ itemDetail.prodhx }} </h6>
+                            <h6 style="text-align: left;">{{ itemDetail.prodhx }} </h6>
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" *ngIf="itemDetail.kdmat">
                         <div class="col-right" style="text-align: left;">
-                            <h6>{{ 'itemDetail.customerCode' | translate }}:</h6>
+                            <h6 style="text-align: left;">{{ 'itemDetail.customerCode' | translate }}:</h6>
                         </div>
                         <div class="col-left" style="text-align: left;">
-                            <h6>{{ itemDetail.kdmat }}</h6>
+                            <h6 style="text-align: left;">{{ itemDetail.kdmat }}</h6>
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" *ngIf="itemDetail.price">
                         <div class="col-right" style="text-align: left;">
-                            <h6>{{ 'itemDetail.price' | translate }}:</h6>
+                            <h6 style="text-align: left;">{{ 'itemDetail.price' | translate }}:</h6>
                         </div>
                         <div class="col-left" style="text-align: left;">
-                            <h6>{{ getPrice(itemDetail.price) }}&nbsp;{{itemDetail.currency}}</h6>
+                            <h6 style="text-align: left;">{{ getPrice(itemDetail.price) }}&nbsp;{{itemDetail.currency}}</h6>
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row"> 
                         <div class="col-right" style="text-align: left;">
-                            <h6>{{ 'itemDetail.stock' | translate}}:</h6>
+                            <h6 style="text-align: left;">{{ 'itemDetail.stock' | translate}}:</h6>
                         </div>
                         <div class="col-left" style="text-align: left;">
-                            <h6>
+                            <h6 style="text-align: left;">
                                 <fa-icon id="circle-red"
                                     *ngIf="itemDetail.stockIndicator === undefined || itemDetail.stockIndicator === '' || itemDetail.stockIndicator === '3'"
                                     [icon]="faCircle"></fa-icon>
@@ -226,39 +213,39 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" *ngIf="itemDetail.minQuantity">
                         <div class="col-right" style="text-align: left;">
-                            <h6>{{ 'itemDetail.minDeliveryQty' | translate }}:</h6>
+                            <h6 style="text-align: left;">{{ 'itemDetail.minDeliveryQty' | translate }}:</h6>
                         </div>
                         <div class="col-left" style="text-align: left;">
-                            <h6>{{ itemDetail.minQuantity }}</h6>
+                            <h6 style="text-align: left;">{{ itemDetail.minQuantity }}</h6>
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" *ngIf="itemDetail.maxQuantity">
                         <div class="col-right" style="text-align: left;">
-                            <h6>{{ 'itemDetail.maxDeliveryQty' | translate }}:</h6>
+                            <h6 style="text-align: left;">{{ 'itemDetail.maxDeliveryQty' | translate }}:</h6>
                         </div>
                         <div class="col-left" style="text-align: left;">
-                            <h6>{{ itemDetail.maxQuantity }}</h6>
+                            <h6 style="text-align: left;">{{ itemDetail.maxQuantity }}</h6>
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" *ngIf="itemDetail.noteCliente">
                         <div class="col-right" style="text-align: left;">
-                            <h6>{{ 'itemDetail.customerNote' | translate }}:</h6>
+                            <h6 style="text-align: left;">{{ 'itemDetail.customerNote' | translate }}:</h6>
                         </div>
                         <div class="col-left" style="text-align: left;">
-                            <h6>{{ itemDetail.noteCliente }}</h6>
+                            <h6 style="text-align: left;">{{ itemDetail.noteCliente }}</h6>
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" *ngIf="itemDetail.documentazione">
                         <div class="col-right" style="text-align: left;">
-                            <h6>{{ 'itemDetail.documentation' | translate }}:</h6>
+                            <h6 style="text-align: left;">{{ 'itemDetail.documentation' | translate }}:</h6>
                         </div>
                         <div class="col-left" style="text-align: left;">
-                            <h6>
+                            <h6 style="text-align: left;">
                                 <a *ngIf="itemDetail.documentazione && itemDetail.documentazione !== ''"
                                     [href]="getUrl()" target="_blank">
                                     <i class="fa fa-file" aria-hidden="true" style="color: #dc3545;"></i>
@@ -267,22 +254,22 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" *ngIf="itemDetail.noteGenerali">
                         <div class="col-right" style="text-align: left;">
-                            <h6>{{ 'itemDetail.generalNote' | translate }}:</h6>
+                            <h6 style="text-align: left;">{{ 'itemDetail.generalNote' | translate }}:</h6>
                         </div>
                         <div class="col-left" style="text-align: left;">
-                            <h6>{{ itemDetail.noteGenerali }}</h6>
+                            <h6 style="text-align: left;">{{ itemDetail.noteGenerali }}</h6>
                         </div>
                     </div>
 
 
-                    <div class="row">
+                    <div class="row" *ngIf="itemDetail.matNrSub">
                         <div class="col-right" style="text-align: left;">
-                            <h6>{{ 'itemDetail.substituteMaterialNum' | translate }}:</h6>
+                            <h6 style="text-align: left;">{{ 'itemDetail.substituteMaterialNum' | translate }}:</h6>
                         </div>
                         <div class="col-left" style="text-align: left;">
-                            <h6>{{ itemDetail.matNrSub }} <span *ngIf="itemDetail.maktxSub">-</span>
+                            <h6 style="text-align: left;">{{ itemDetail.matNrSub }} <span *ngIf="itemDetail.maktxSub">-</span>
                                 {{ itemDetail.maktxSub }}</h6>
                         </div>
                     </div>

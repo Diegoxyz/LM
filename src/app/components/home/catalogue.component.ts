@@ -17,8 +17,10 @@ import { AccountService } from '@app/services/account.service';
 })
 export class CatalogueComponent implements OnInit, OnDestroy, AfterViewInit {
 
-    @Output()
     products: Product[];
+
+    @Output()
+    allProducts: Product[];
 
     groupId: string;
 
@@ -129,19 +131,32 @@ export class CatalogueComponent implements OnInit, OnDestroy, AfterViewInit {
         if (this.accountService.currentPage === 2) {
             console.log('catalogue - show spinner');
             this.spinner.show();
-            this.catalogueService.getAllItems(this.searchLastProducts, this.searchKey).subscribe(resp => {
+            this.catalogueService.getAllItems(this.searchLastProducts).subscribe(resp => {
                 this.products = [];
                 this.itemsToView = [];
                 this.items = [];
                 if (resp.body && resp.body.d && resp.body.d.results && resp.body.d.results.length > 0) {
                     resp.body.d.results.forEach(m => {
                         if (m) {
-                            this.items.push(Materiale.fromJSON(m));
                             this.cachedItems.push(Materiale.fromJSON(m));
                             this.products.push(Materiale.fromJSON(m));
                         }
                     });
                 }
+                if (this.searchKey) {
+                    let i : number;
+                    for(i = 0; i < this.products.length; i++)  {
+                        const tmp = this.products[i];
+                        if ((tmp.code.toLowerCase().indexOf(this.searchKey.toLowerCase()) >= 0 || tmp.description.toLowerCase().indexOf(this.searchKey.toLowerCase()) >= 0)) {
+                            this.items.push(tmp);
+                        }
+                        
+                    }
+                } else {
+                    this.items = this.products;
+                }
+                this.allProducts = this.products;
+
                 const imagesForRow = this.items.length > this.imagesToView ? this.imagesToView : this.items.length;
                 console.log('catalogue - imagesForRow:' + imagesForRow);
                 for (let i = 0; i < imagesForRow; i++) {

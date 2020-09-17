@@ -273,11 +273,6 @@ export class CartComponent implements OnInit, OnDestroy {
         this.loadingCartError = false;
         this.loadingCartErrorMessage = undefined;
         this.loadingFromFile = true;
-        if (!this.cartService.isCartEmpty()) {
-            this.loadingCartError = true;
-            this.loadingCartErrorMessage = this.translateService.instant('cartIsNotEmpty');
-            return;
-        }
         let workBook = null;
         let jsonData = null;
         const reader = new FileReader();
@@ -320,9 +315,24 @@ export class CartComponent implements OnInit, OnDestroy {
                 const newProduct : Product = new Product(matrn,'',0,'EUR',false,'','','','');
                 order.product = newProduct;
                 order.quantity = row.Pezzi;
+                let position = -1;
+                let i = 0;
+                let orderToBeDeleted = undefined;
+                for(i = 0; i< this.orders.length; i++) {
+                    const o = this.orders[i];
+                    if (o.product.code === row.CodiceProdotto) {
+                        position = i;
+                        orderToBeDeleted = o;
+                    }
+                }
+                if (position > -1 && orderToBeDeleted) {
+                    console.log('deleting order:' + row.CodiceProdotto);
+                    this.deleteOrder(orderToBeDeleted);
+                }
                 if (environment && environment.oData) {
                     console.log('cart2');
                     this.accountService.setUserValueFromUser(user);
+                    console.log("reading element: matrn:" + matrn);
                     this.catalogueService.getItem(matrn, user).subscribe(p => {
                         if (p && p.body && p.body.d) {
                             order.product.price = p.body.d.Netpr;
@@ -331,6 +341,22 @@ export class CartComponent implements OnInit, OnDestroy {
                             order.product.currency = p.body.d.Waers;
                             if (this.currency === undefined) {
                                 this.currency = order.product.currency;
+                            }
+                            order.product.meins = p.body.d.Meins;
+                            let qty : number = undefined;
+                            try {
+                                qty = Number(order.quantity);
+                            } catch (error) {
+                                console.log('onChangeQuantity - error in casting:' + error);
+                                order.invalidQuantity = true;
+                            }
+                            if (qty && order.product.meins && (order.product.meins === 'PZ' || order.product.meins === 'NR')) {
+                                if (!Number.isInteger(qty)) {
+                                    order.invalidQuantityFormat = true;
+                                }
+                            }
+                            if (order.invalidQuantity || order.invalidQuantityFormat) {
+                                order.quantity = 0;
                             }
                             this.accountService.fetchToken().subscribe(
                                 response1 => {
@@ -433,17 +459,62 @@ export class CartComponent implements OnInit, OnDestroy {
         let order = new Order();
         let totalePrice = 0.00;
         this.orders.forEach(o => {
-            if (o.product.code === productCode) {
+            if (!o.error && !o.invalidQuantity && !o.invalidQuantityFormat && o.product.code === productCode) {
+                console.log("checking order:" + productCode);
                 order = o;
                 totalePrice = Number(order.product.price * order.quantity);
             }
         })
+        console.log("return totalPrice:" + totalePrice);
         return totalePrice.toFixed(2);
     }
 
+    public haveOrdersErrors() : boolean {
+        let errors = 0;
+        this.orders.forEach(o => {
+            if (o.invalidQuantity || o.invalidQuantityFormat) {
+                errors = errors + 1;
+            }
+        });
+        return (errors != 0);
+    }
     onChangeQuantity(productCode: any, value : any) {
         console.log('onChangeQuantity - productCode:' + productCode + ',value:' + value);
-        const qty = value;
+        let order : Order = undefined;
+        this.orders.forEach(o => {
+            if (o.product.code === productCode) {
+                order = o;
+            }
+        })
+        order.invalidQuantity = false;
+        order.invalidQuantityFormat = false;
+        // Non dovebbe mai succedere
+        if (order === undefined || order === null) {
+            return;
+        }
+        if (value === '') {
+            order.invalidQuantity = true;
+            return;
+        }
+        let qty : number = undefined;
+        try {
+            qty = Number(value);
+        } catch (error) {
+            console.log('onChangeQuantity - error in casting:' + error);
+            order.invalidQuantity = true;
+            return;
+        }
+        if (qty && order.product.meins && (order.product.meins === 'PZ' || order.product.meins === 'NR')) {
+            if (!Number.isInteger(qty)) {
+                order.invalidQuantityFormat = true;
+                return;
+            }
+        }
+        this.orders.forEach(o => {
+            if (o.product.code === productCode) {
+                o.invalidQuantity = false;
+            }
+        })
         if (environment && environment.oData) {
             let order = new Order();
             let i = 0;
@@ -453,60 +524,58 @@ export class CartComponent implements OnInit, OnDestroy {
                     order = o;
                 }
             }
-            this.accountService.fetchToken().subscribe(
-                response1 => {
-                    if (response1.headers) {
-                        const csrftoken : string = response1.headers.get('X-CSRF-Token');
-                        if (qty > 0) { // Update
-                            const carrello : Carrello = new Carrello();
-                            carrello.Matnr = order.product.code;
-                            carrello.Menge = '' + qty;
-                            this.carrelloService.updateCart(csrftoken, carrello).subscribe(d => {
-                                console.log('update went fine');
-                                this.manageProducts.changeProduct(order.product,qty);
-                                order.quantity = qty;
-                                this.totalPrice = 0;
-                                this.orders.forEach(o => {
-                                    if (o.product.code === productCode) {
-                                        this.totalPrice = this.totalPrice + qty * order.product.price;
-                                    } else {
-                                        this.totalPrice = this.totalPrice + order.quantity * order.product.price;
-                                    }
-                                });
-                                this.strTotalPrice = this.totalPrice.toFixed(2);
-                                this.newOrderEmitter.emit(order);
-                            },
-                            error => {
-                                console.log('error update:' + error);
-                            })
-                        } else { // delete
-                            this.carrelloService.deleteFromCarrello(csrftoken, order.product.code).subscribe(d => {
-                                console.log('delete went fine');
-                                this.manageProducts.changeProduct(order.product,qty);
-                                order.quantity = 0;
-                                this.totalPrice = 0;
-                                i = i -1;
-                                console.log('delete i:' + i);
-                                const deletedElement = this.orders.splice(i);
-                                console.log('deleted element:' + +deletedElement.length + ',' + deletedElement[0].product.code);
-                                console.log('this.orders:' + this.orders.length);
-                                this.orders.forEach(o => {
-                                    this.totalPrice = this.totalPrice + o.quantity * o.product.price;
-                                });
-                                this.strTotalPrice = this.totalPrice.toFixed(2);
-                                this.deleteOrderEmitter.emit(order);
-                                
-                            },
-                            error => {
-                                console.log('error delete:' + error);
-                            });
+            console.log('onChangeQuantity - qty:' + qty + ';qty > 0:' + (qty > 0) + '-qty === 0:' + (qty === 0));
+            if (qty > 0) { // Update
+                this.accountService.fetchToken().subscribe(
+                    response1 => {
+                        if (response1.headers) {
+                            const csrftoken : string = response1.headers.get('X-CSRF-Token');
+                                const carrello : Carrello = new Carrello();
+                                carrello.Matnr = order.product.code;
+                                carrello.Menge = '' + qty;
+                                carrello.Meins = order.product.meins;
+                                this.carrelloService.updateCart(csrftoken, carrello).subscribe(d => {
+                                    console.log('update went fine');
+                                    this.manageProducts.changeProduct(order.product,qty);
+                                    order.quantity = qty;
+                                    this.totalPrice = 0;
+                                    this.orders.forEach(o => {
+                                        if (o.product.code === productCode) {
+                                            console.log('o.product.code === productCode qty:' + qty + ',order.product.price:' + order.product.price);
+                                            this.totalPrice = this.totalPrice + qty * order.product.price;
+                                            console.log('o.product.code === productCode totalPrice:' + this.totalPrice);
+                                        } else {
+                                            console.log('o.product.code != productCode o.quantity:' + o.quantity + ',o.product.code:' + o.product.code + ',o.product.price:' + o.product.price);
+                                            this.totalPrice = this.totalPrice + o.quantity * o.product.price;
+                                            console.log('o.product.code != productCode totalPrice:' + this.totalPrice);
+                                        }
+                                    });
+                                    console.log('update - productCode:' + productCode + ',totalePrice:' + this.totalPrice);
+                                    this.strTotalPrice = this.totalPrice.toFixed(2);
+                                    this.newOrderEmitter.emit(order);
+                                },
+                                error => {
+                                    console.log('error update:' + error);
+                                })
                         }
+                        
+                    }, error => {
+                        console.log('error:' + error);
+                    });
+            } else if (qty === 0) { // delete
+                console.log('qty === 0;productCode:' + productCode);
+                this.totalPrice = 0;
+                this.orders.forEach(o => {
+                    if (o.product.code !== productCode) {
+                        console.log('o.product.code !== productCode');
+                        this.totalPrice = this.totalPrice + order.quantity * order.product.price;
+                    } else {
+                        o.quantity = 0;
                     }
-                    
-                }, error => {
-                    console.log('error:' + error);
                 });
-            
+                console.log('delete - totalePrice:' + this.totalPrice);
+                this.strTotalPrice = this.totalPrice.toFixed(2);
+            }
         } else {
             let order = new Order();
             this.orders.forEach(o => {
@@ -520,16 +589,32 @@ export class CartComponent implements OnInit, OnDestroy {
         }
     }
 
+    focusOutFunction(productCode: any, value : any) {
+        console.log('focusOutFunction productCode:' + productCode + '-value:' + value );
+        try {
+            if (Number(value).toFixed(0) === '0') {
+                this.onDeleteOrder(productCode);
+            } 
+        } catch (error) {
+            console.log('focusOutFunction error ' + error);
+        }
+    }
+
     onDeleteOrder(productCode: any) {
         console.log('ondeleteorder - productCode:' + productCode);
         if (environment && environment.oData) {
             let order = new Order();
             let i = 0;
+            let position = -1;
             for(i = 0; i< this.orders.length; i++) {
                 const o = this.orders[i];
                 if (o.product.code === productCode) {
                     order = o;
+                    position = i;
                 }
+            }
+            if (position < 0) {
+                return;
             }
             console.log('ondeleteorder - order.error:' + order.error);
             if (order.error) {
@@ -545,9 +630,8 @@ export class CartComponent implements OnInit, OnDestroy {
                             this.manageProducts.changeProduct(order.product,0);
                             order.quantity = 0;
                             this.totalPrice = 0;
-                            i = i -1;
-                            console.log('delete i:' + i);
-                            const deletedElement = this.orders.splice(i);
+                            console.log('delete i:' + position);
+                            const deletedElement = this.orders.splice(position, 1);
                             console.log('deleted element:' + +deletedElement.length + ',' + deletedElement[0].product.code);
                             console.log('this.orders:' + this.orders.length);
                             this.orders.forEach(o => {

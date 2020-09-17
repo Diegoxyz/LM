@@ -41,7 +41,8 @@ export class SaveOrderComponent implements OnInit {
     this.receiverID.setValue(this.orderNumber);
     this.notes =this.route.snapshot.paramMap.get('notes');
     this.note.setValue(this.notes);
-    const isSuccessfullySent = this.route.snapshot.paramMap.get('successfullySent');
+    // const isSuccessfullySent = this.route.snapshot.paramMap.get('successfullySent');
+    const isSuccessfullySent = true;
     console.log('isSuccessfullySent:' + isSuccessfullySent);
     
     if (isSuccessfullySent) {

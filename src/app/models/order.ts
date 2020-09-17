@@ -6,6 +6,8 @@ export class Order {
     product     : Product;
     quantity    : number;
     error?      : string;
+    invalidQuantity? : boolean;
+    invalidQuantityFormat? : boolean;
 }
 
 /*

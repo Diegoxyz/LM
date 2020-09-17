@@ -14,7 +14,7 @@
                     </button>
                 </div> 
             </div> -->
-            <div class="row" style="margin-top: 5%;">
+            <div class="row" style="margin-top: 7%;">
                 <div class="col-12 step" style="text-align: center"><h5>{{ section.description }}</h5></div>
             </div>
             <img *ngIf="thumbnail" class="sizesImg img-fluid card-img-top " id="pic-board" [src]='thumbnail'>
@@ -96,31 +96,31 @@
                                                     value="{{ quantity }}" title="Quantity" size="2"
                                                     pattern="[0-9]*" inputmode="numeric" aria-labelledby="">
                                             </div>
-                                            <div class="col sub" style="padding-left: 0px; padding-right: 1%;">
+                                            <div class="col sub" style="padding-left: 0px; padding-right: 1%; display:none;">
                                                 <button class="btn-sub sub-product"
                                                     (click)="subOneProduct(item.code)"
                                                     type="button">
-                                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                                    <i class="fa fa-arrow-circle-down" aria-hidden="true"></i>
                                                 </button>
                                             </div>
 
-                                            <div class="col add" style="padding-left: 0px; padding-right: 1%;">
+                                            <div class="col add" style="padding-left: 0px; padding-right: 1%; display:none;">
                                                 <button class="btn-add add-product" type="button"
                                                     (click)="addOneProduct(item.code)">
-                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                    <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
                                                 </button>
                                             </div>
 
-                                            <div class="col icon-btn-div" style="padding-left: 0px; padding-right: 1%;">
+                                            <div class="col-md-auto icon-btn-div">
                                                 <button class="btn-cart" type="submit">
                                                     <fa-icon id="btn-icon" [icon]="faShoppingCart" size="1x">
                                                     </fa-icon>
                                                 </button>
                                             </div>
-                                            <div class="col icon-btn-div" style="padding-left: 0px;">
+                                            <div class="col-md-auto icon-btn-div">
                                                 <button type="button"
                                                         style="background-color: 
-                                                                transparent; border: solid 2px #dc3545;
+                                                                transparent; border: none 2px #dc3545;
                                                                 padding-top: 1px; padding-bottom: 1px;padding-right: 3px;padding-left: 3px;" 
                                                         (click)="openModal(item.code, template)"
                                                         type="button">
@@ -128,6 +128,11 @@
                                                     </fa-icon>
                                                 </button>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="item.invalidQuantity" class="alert alert-danger">
+                                        <div class="row align-items-center no-gutters">
+                                            <div class="col-md-auto">{{ 'quantityFormatError' | translate }}</div>
                                         </div>
                                     </div>
                                     </form>
@@ -193,21 +198,22 @@
                                             <input [id]="Id('qty', item.code)" [formControlName]="item.code"
                                                 type="number" step="1" min="0" max="9999" name=""
                                                 value="{{ quantity }}" title="Quantity" size="2"
-                                                pattern="[0-9]*" inputmode="numeric" aria-labelledby="">
+                                                pattern="[0-9]*" inputmode="numeric" aria-labelledby=""
+                                                [ngStyle]="{'border-color': (item.invalidQuantity) ? 'red' : null }">
                                         </div>
 
-                                        <div class="col-md-auto sub" style="padding-left: 0px; padding-right: 1%;">
+                                        <div class="col-md-auto sub" style="padding-left: 0px; padding-right: 1%; display:none;">
                                             <button class="btn-sub sub-product"
                                                 (click)="subOneProduct(item.code)"
                                                 type="button">
-                                                <i class="fa fa-minus" aria-hidden="true"></i>
+                                                <i class="fa fa-arrow-circle-down fa-lg" aria-hidden="true"></i>
                                             </button>
                                         </div>
 
-                                        <div class="col-md-auto add" style="padding-left: 0px; padding-right: 1%;">
+                                        <div class="col-md-auto add" style="padding-left: 0px; padding-right: 1%; display:none;">
                                             <button class="btn-add add-product" type="button"
                                                 (click)="addOneProduct(item.code)">
-                                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                                <i class="fa fa-arrow-circle-up fa-lg" aria-hidden="true"></i>
                                             </button>
                                         </div>
 
@@ -220,13 +226,18 @@
                                         <div class="col-md-auto icon-btn-div" style="padding-left: 0px;">
                                             <button type="button"
                                                     style="background-color: 
-                                                            transparent; border: solid 2px #dc3545;
+                                                            transparent; border: none 2px #dc3545;
                                                             padding-top: 1px; padding-bottom: 1px;padding-right: 3px;padding-left: 3px;" 
                                                     (click)="openModal(item.code, template)"
                                                     type="button">
                                                 <fa-icon id="btn-icon" [icon]="faInfoCircle" size="1x">
                                                 </fa-icon>
                                             </button>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="item.invalidQuantity" class="alert alert-danger">
+                                        <div class="row align-items-center no-gutters">
+                                            <div class="col-md-auto">{{ 'quantityFormatError' | translate }}</div>
                                         </div>
                                     </div>
                                     </form>
@@ -286,12 +297,12 @@
 
 
                     <div class="row">
-                        <div class="col-right" style="text-align: left;">
+                        <div class="col-right" style="text-align: left; width: 100%;">
                             <h6>{{ itemDetail.description }}</h6>
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" *ngIf="itemDetail.prodhx">
                         <div class="col-right" style="text-align: left;">
                             <h6>{{'itemDetail.category' | translate }}:</h6>
                         </div>
@@ -300,7 +311,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" *ngIf="itemDetail.kdmat">
                         <div class="col-right" style="text-align: left;">
                             <h6>{{ 'itemDetail.customerCode' | translate }}:</h6>
                         </div>
@@ -309,7 +320,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" *ngIf="itemDetail.price">
                         <div class="col-right" style="text-align: left;">
                             <h6>{{ 'itemDetail.price' | translate }}:</h6>
                         </div>
@@ -333,7 +344,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" *ngIf="itemDetail.minQuantity">
                         <div class="col-right" style="text-align: left;">
                             <h6>{{ 'itemDetail.minDeliveryQty' | translate }}:</h6>
                         </div>
@@ -342,7 +353,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" *ngIf="itemDetail.maxQuantity">
                         <div class="col-right" style="text-align: left;">
                             <h6>{{ 'itemDetail.maxDeliveryQty' | translate }}:</h6>
                         </div>
@@ -351,7 +362,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" *ngIf="itemDetail.noteCliente">
                         <div class="col-right" style="text-align: left;">
                             <h6>{{ 'itemDetail.customerNote' | translate }}:</h6>
                         </div>
@@ -360,7 +371,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" *ngIf="itemDetail.documentazione">
                         <div class="col-right" style="text-align: left;">
                             <h6>{{ 'itemDetail.documentation' | translate }}:</h6>
                         </div>
@@ -373,7 +384,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" *ngIf="itemDetail.noteGenerali">
                         <div class="col-right" style="text-align: left;">
                             <h6>{{ 'itemDetail.generalNote' | translate }}:</h6>
                         </div>
@@ -383,7 +394,7 @@
                     </div>
 
 
-                    <div class="row">
+                    <div class="row" *ngIf="itemDetail.matNrSub">
                         <div class="col-right" style="text-align: left;">
                             <h6>{{ 'itemDetail.substituteMaterialNum' | translate }}:</h6>
                         </div>

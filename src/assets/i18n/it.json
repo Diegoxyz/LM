@@ -28,6 +28,7 @@
     "zipRequired":"Il cap è obbligatorio.",
     "phone":"Telefono",
     "phoneRequired":"Il telefono è obbligatorio.",
+    "phoneInvalid":"Il formato del numero di telefono non è corretto.",
     "country":"Stato",
     "countryRequired":"Stato è obbligatorio.",
     "chooseYourCountry":"Scegli lo stato",
@@ -39,7 +40,7 @@
     "chooseTheLanguage":"Scegli la lingua",
     "clickToChangeTheLanguage":"Premi per cambiare la lingua",
     "cancel":"Cancella",
-    "logout":"Esci",
+    "logout":"Logout",
     "businessName":"Ragione sociale",
     "recipient":"Destinatari merci",
     "recipientRequired": "Destinatari merci è obbligatorio",
@@ -100,6 +101,7 @@
     "orderNumber":"Numero ordine",
     "backToLogin":"Indietro",
     "quantityError":"Valore non valido",
+    "quantityFormatError":"Decimali non possibili",
     "numberOfPieces":"Quantità",
     "cartIsNotEmpty":"Impossibile caricare perché il carrello non è vuoto",
     "downloadSampleFile":"Scarica foglio excel di esempio",
@@ -140,7 +142,10 @@
         "exportAsXslxFile":"Esporta gli ordini in formato Excel"
     },
     "privacyPolicy":"Privacy Policy",
-    "login":"login"
+    "login":"login",
+    "previousPage":"Pagina precedente",
+    "nextPage":"Pagina successiva",
+    "successfullySentOrder":"A breve riceverai per email una notifica con il materiale richiesto"
     
 
 }

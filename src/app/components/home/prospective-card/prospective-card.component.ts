@@ -422,10 +422,28 @@ export class ProspectiveCardComponent implements OnInit, OnDestroy {
     }
 
     addProduct(code : string) {
+        const q = this.getQtyValue(code);
+        console.log('addProduct - q:' + q);
+        let item : Product = undefined;
+        this.items.forEach(i => {
+            if (i.code === code) {
+                item = i;
+            }
+        }) 
+        if (q === null) {
+            item.invalidQuantity = true;
+        } else {
+            item.invalidQuantity = false;
+        }
+
+        if (q && item.meins && (item.meins === 'PZ' || item.meins === 'NR')) {
+            if (!Number.isInteger(q)) {
+                item.invalidQuantity = true;
+                return;
+            }
+        }
 
         if (environment && environment.oData) {
-            const q = this.getQtyValue(code);
-            console.log('addProduct - q:' + q);
             if (q === undefined || q === null) {
                 return;
             }
@@ -453,6 +471,7 @@ export class ProspectiveCardComponent implements OnInit, OnDestroy {
                                 const carrello : Carrello = new Carrello();
                                 carrello.Matnr = code;
                                 carrello.Menge = '' + q;
+                                carrello.Meins = item.meins;
                                 this.carrelloService.updateCart(csrftoken, carrello).subscribe(d => {
                                     console.log('update went fine');
                                     this.manageProducts.changeProduct(productToBeAdded,q);
@@ -466,8 +485,6 @@ export class ProspectiveCardComponent implements OnInit, OnDestroy {
                     }
                 })
             ;
-        } else {
-            const q = this.qty.value;
         }
     }
 

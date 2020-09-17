@@ -68,7 +68,7 @@
             </div>
         </div>
         <tbody>
-            <tr *ngFor="let item of items">
+            <tr *ngFor="let item of items | paginate: { itemsPerPage: 20, currentPage: page }">
                 <td>{{ item.vbeln }}</td>
                 <td>{{ item.posnr }}</td>
                 <td>
@@ -84,6 +84,8 @@
             </tr>
             </tbody>
     </table>
+    <pagination-controls (pageChange)="page = $event" previousLabel="{{ 'previousPage' | translate }}"
+    nextLabel="{{ 'nextPage' | translate }}"></pagination-controls>
 </div>
 </div>
 <div>
