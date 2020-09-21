@@ -158,6 +158,10 @@ p{
         width: 50%;
         margin-left: 30%;
     }
+
+    .form-column-back-to-login {
+        margin-top: 1%;
+    }
 }
 
 /* IPAD */
@@ -173,6 +177,10 @@ p{
     img.img-logo-horizontal {
         width: 50%;
         margin-left: 30%;
+    }
+
+    .form-column-back-to-login {
+        margin-top: 1%;
     }
 }
 

@@ -22,5 +22,11 @@ export interface UserDataSet {
     Ruolo: string,
     ErdatChangePsw: string,
     UzeitChangePsw: string,
-    Token: string
+    Token: string,
+    Name1: string,
+    Name2: string,
+    Stcd1: string,
+    Stcd2: string,
+    Telf1: string
+
 }

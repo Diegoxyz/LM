@@ -4,18 +4,24 @@
         <!--style="width: 18rem; -->
         <div class="hoverWrapper">
             <div class="containerA">
-                <!--<img *ngIf="thumbnail" class="img-fluid card-img-top" id='pic' [src]='thumbnail'
-                    sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
-
-                <img *ngIf="svgThumbnail"
-                    [src]="sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ svgThumbnail)"
-                    sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
-
-                <img *ngIf="thumbnail === undefined && svgThumbnail === undefined" class="img-fluid card-img-top"
-                    src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px" width="260"
-                    height="260">-->
-                
-                <img id="genericPic{{item.code}}{{item.family}}" style="display: none;">
+                <mdb-carousel [animation]="'slide'" [isControls]="true" [interval]="'0'" *ngIf="!displayNoImage">
+                    <mdb-carousel-item *ngIf="firstSrc">
+                        <img class="d-block w-100" src="{{ firstSrc }}" alt="First picutre">
+                    </mdb-carousel-item>
+                    <mdb-carousel-item *ngIf="secondSrc">
+                        <img class="d-block w-100" src="{{ secondSrc }}" alt="Second picture">
+                    </mdb-carousel-item>
+                    <mdb-carousel-item *ngIf="thirdSrc">
+                        <img class="d-block w-100" src="{{ thirdSrc }}" alt="Third picture">
+                    </mdb-carousel-item>
+                    <mdb-carousel-item *ngIf="fourthSrc">
+                        <img class="d-block w-100" src="{{ fourthSrc }}" alt="Second fourth">
+                    </mdb-carousel-item>
+                    <mdb-carousel-item *ngIf="fifthSrc">
+                        <img class="d-block w-100" src="{{ fifthSrc }}" alt="Third picture">
+                    </mdb-carousel-item>
+                </mdb-carousel>
+                <!--<img id="genericPic{{item.code}}{{item.family}}" style="display: none;">-->
                 <img *ngIf="displayNoImage" class="img-fluid card-img-top" src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
 
                 <button *ngIf="item.preferred === true;else other_content" (click)="addToFavorite()" class="btn"
@@ -144,16 +150,24 @@
         <div class="modal-body">
             <div class="row">
                 <div class="col-8">
-                    <img *ngIf="thumbnail" class="img-fluid card-img-top" id='pic' [src]='thumbnail'
-                        sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
-
-                    <img *ngIf="svgThumbnail"
-                        [src]="sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ svgThumbnail)"
-                        sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
-
-                    <img *ngIf="thumbnail === undefined && svgThumbnail === undefined" class="img-fluid card-img-top"
-                        src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px"
-                        width="260" height="260">
+                    <mdb-carousel [animation]="'slide'" [isControls]="true" [interval]="'0'" *ngIf="!displayNoImageDetail">
+                        <mdb-carousel-item *ngIf="firstSrcDetail">
+                            <img class="d-block w-100" src="{{ firstSrcDetail }}" alt="First picutre">
+                        </mdb-carousel-item>
+                        <mdb-carousel-item *ngIf="secondSrcDetail">
+                            <img class="d-block w-100" src="{{ secondSrcDetail }}" alt="Second picture">
+                        </mdb-carousel-item>
+                        <mdb-carousel-item *ngIf="thirdSrcDetail">
+                            <img class="d-block w-100" src="{{ thirdSrcDetail }}" alt="Third picture">
+                        </mdb-carousel-item>
+                        <mdb-carousel-item *ngIf="fourthSrcDetail">
+                            <img class="d-block w-100" src="{{ fourthSrcDetail }}" alt="Second fourth">
+                        </mdb-carousel-item>
+                        <mdb-carousel-item *ngIf="fifthSrcDetail">
+                            <img class="d-block w-100" src="{{ fifthSrcDetail }}" alt="Third picture">
+                        </mdb-carousel-item>
+                    </mdb-carousel>
+                    <img *ngIf="displayNoImageDetail" class="img-fluid card-img-top" src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
                 </div>
 
                 <div class="col-4">

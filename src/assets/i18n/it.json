@@ -42,6 +42,8 @@
     "cancel":"Cancella",
     "logout":"Logout",
     "businessName":"Ragione sociale",
+    "user":"User",
+    "phoneNumber":"Telefono",
     "recipient":"Destinatari merci",
     "recipientRequired": "Destinatari merci è obbligatorio",
     "shipTo": "Destinatario",

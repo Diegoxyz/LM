@@ -74,7 +74,12 @@ export class UserDataSetService {
           "Ruolo" : resp.body.d.results[0].Ruolo,
           "ErdatChangePsw" : resp.body.d.results[0].ErdatChangePsw,
           "UzeitChangePsw" : resp.body.d.results[0].UzeitChangePsw,
-          "Token" : resp.body.d.results[0].Token
+          "Token" : resp.body.d.results[0].Token,
+          "Name1" : resp.body.d.results[0].Name1,
+          "Name2" : resp.body.d.results[0].Name2,
+          "Stcd1" : resp.body.d.results[0].Stcd1,
+          "Stcd2" : resp.body.d.results[0].Stcd2,
+          "Telf1" : resp.body.d.results[0].Telf1,
         }
         localStorage.setItem('userDataSet', JSON.stringify(u));
         this.userDataSetSubject.next(u);

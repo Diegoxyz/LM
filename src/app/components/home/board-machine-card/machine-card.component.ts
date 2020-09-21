@@ -62,7 +62,7 @@ export class MachineCardComponent implements OnInit {
                     if (resp.body && resp.body.d && resp.body.d) {
                         if (resp.body.d.Filename) {
                             const fileName = resp.body.d.Filename && resp.body.d.Filename.substring(resp.body.d.Filename.lastIndexOf('.') + 1);
-                            if (fileName && fileName.toLowerCase() === 'jpg' || fileName.toLowerCase() === 'png') {
+                            if (fileName && (fileName.toLowerCase() === 'jpg' || fileName.toLowerCase() === 'png' || fileName.toLowerCase() === 'jpeg')) {
                                 let objectURL = 'data:image/'+fileName+';base64,' + resp.body.d.BinDoc;
                                 this.thumbnail = this.sanitizer.bypassSecurityTrustUrl(objectURL);
                                 let itemFamily = this.item.family;

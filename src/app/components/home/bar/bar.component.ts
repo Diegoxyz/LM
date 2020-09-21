@@ -126,7 +126,12 @@ export class BarComponent implements OnInit, OnDestroy {
             "Pstlz": "30100",
             "Ort01": "Venezia",
             "Regio": "VE",
-            "Land1": "IT"
+            "Land1": "IT",
+            "Name1": "Name1",
+            "Name2": "Name2",
+            "Stcd1": "Stcd1",
+            "Stcd2": "Stcd2",
+            "Telf1": "Telf1"
       };
 
       this.cart = Cart.fromCarrello(carrello, userDataSet);

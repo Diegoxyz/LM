@@ -42,6 +42,8 @@
     "cancel":"Cancel",
     "logout":"Logout",
     "businessName":"Business name",
+    "user":"User",
+    "phoneNumber":"Phone",
     "recipient":"Recipient",
     "recipientRequired": "Recipient is required",
     "shipTo": "Ship to",

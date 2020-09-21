@@ -88,6 +88,10 @@ export class Materiale {
     ItemNumBom: string;
     MatnrSezione: string;
     LoioId: string;
+    LoioId1: string;
+    LoioId2: string;
+    LoioId3: string;
+    LoioId4: string;
     NoteCliente: string;
     Documentazione: string;
     NoteGenerali: string;
@@ -118,6 +122,10 @@ export class Materiale {
                                     maxQuantity,
                                     minQuantity
                                     ,m.LoioId
+                                    ,m.LoioId1
+                                    ,m.LoioId2
+                                    ,m.LoioId3
+                                    ,m.LoioId4
                                     ,m.ItemNumBom /*  itNumB */
                                     ,m.StockIndicator,
                                     m.NoteCliente,

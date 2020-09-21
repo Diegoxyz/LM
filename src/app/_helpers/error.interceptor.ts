@@ -29,7 +29,9 @@ export class ErrorInterceptor implements HttpInterceptor {
                         /*if (sapMessage.code === 'ZSPB2B/000') {
                             this.accountService.logout();
                         }*/
-                        this.accountService.checkSession();
+                        this.accountService.checkSession().subscribe(sess => {
+                            console.log('error interceptor sess:' + sess);
+                        });
                     }
                 }
                 return event;

@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, Renderer2, ViewChild, ElementRef, AfterViewInit, OnDestroy, Output, EventEmitter, HostListener } from '@angular/core';
+import { Component, OnInit, Input, Renderer2, ViewChild, ElementRef, AfterViewInit, OnDestroy, Output, EventEmitter, HostListener, SecurityContext } from '@angular/core';
 import { Router } from '@angular/router';
 import { faShoppingCart, faCircle, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ProductsService } from '@app/services/products.service';
 import { Product, Item } from '@app/models/item';
 import { environment } from '@environments/environment';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
 import { BinDataMatnrSetService } from '@app/models/OData/BinDataMatnrSet/bindatamatnrset.service';
 import { SectionMaterial } from '@app/services/section-material.service';
 import { Materiale } from '@app/models/OData/MacchineSet/macchineset.entity';
@@ -103,6 +103,13 @@ export class ProspectiveCardComponent implements OnInit, OnDestroy {
     
     public addProductForm: FormGroup;
     public previousParentElement : any;
+
+    displayNoImageDetail : boolean = true;
+    firstSrcDetail? : string;
+    secondSrcDetail? : string;
+    thirdSrcDetail? : string;
+    fourthSrcDetail? : string;
+    fifthSrcDetail? : string;
 
     ngOnInit(): void {
         this.addProductForm = this.fb.group({});
@@ -220,7 +227,7 @@ export class ProspectiveCardComponent implements OnInit, OnDestroy {
                         if (resp.body.d.Filename) {
                             const fileName = resp.body.d.Filename && resp.body.d.Filename.substring(resp.body.d.Filename.lastIndexOf('.') + 1);
                             console.log('caricamento immagine2:' + fileName);
-                            if (fileName && fileName.toLowerCase() === 'jpg' || fileName.toLowerCase() === 'png') {
+                            if (fileName && (fileName.toLowerCase() === 'jpg' || fileName.toLowerCase() === 'png' || fileName.toLowerCase() === 'jpeg')) {
                                 let objectURL = 'data:image/'+fileName+';base64,' + resp.body.d.BinDoc;
                                 this.thumbnail = this.sanitizer.bypassSecurityTrustUrl(objectURL);
                             } else if (fileName && fileName.toLowerCase() === 'svg') {
@@ -545,21 +552,6 @@ export class ProspectiveCardComponent implements OnInit, OnDestroy {
         this.renderer.setStyle(event.parentElement, 'fill', 'lightgrey');
         this.previousParentElement = event.parentElement;
         if (id) {
-            /*try {
-                let tmp = Number(id);
-                if (tmp > 1) {
-                    tmp = tmp -1 ;
-                    id = '' + tmp;
-                } else {
-                    let pos = window.pageYOffset;
-                    if (pos > 0) {
-                        this.scrollDiv.nativeElement.scrollTo(0, pos * 3); // how far to scroll on each step
-                    }
-                    this.imageDiv.nativeElement.scrollTo(0,0);
-                }
-            } catch (error) {
-                return;
-            }*/
             const strA = 'A';
             const strB = 'B';
             const pos = Number(id) - 1;
@@ -581,7 +573,6 @@ export class ProspectiveCardComponent implements OnInit, OnDestroy {
                     }
                     if (el && el.firstChild && (el.firstChild.id === id1 || el.firstChild.id === id2)) {
                         item = el;
-                        // el.scrollIntoView();
                     }
                 }
                 if (item && item.children && item.children.length >= 2) {
@@ -604,7 +595,6 @@ export class ProspectiveCardComponent implements OnInit, OnDestroy {
                     }
                     if (el && el.firstChild && el.firstChild.id === id3) {
                         item = el;
-                        // el.scrollIntoView();
                     }
                 }
                 if (item && item.children && item.children.length >= 2) {
@@ -660,24 +650,6 @@ export class ProspectiveCardComponent implements OnInit, OnDestroy {
                     if (resp.body && resp.body.d && resp.body.d) {
                         const p = resp.body.d;
                         const product = Materiale.fromJSON(p);
-                        /*this.itemDetail.code = product.code;
-                        this.itemDetail.description = product.description;
-                        this.itemDetail.price = p.Netpr;
-                        this.itemDetail.currency = product.currency;
-                        this.itemDetail.stock = product.stock;
-                        this.itemDetail.prodh = product.prodh;
-                        this.itemDetail.prodhx = product.prodhx;
-                        this.itemDetail.preferred = product.preferred;
-                        this.itemDetail.itemNumBom = product.itemNumBom;
-                        this.itemDetail.stockIndicator = product.stockIndicator;
-                        this.itemDetail.noteCliente = product.noteCliente;
-                        this.itemDetail.documentazione = product.documentazione;
-                        this.itemDetail.noteGenerali = product.noteGenerali;
-                        this.itemDetail.matNrSub = product.matNrSub;
-                        this.itemDetail.maktxSub = product.maktxSub;
-                        this.itemDetail.maxQuantity = product.maxQuantity;
-                        this.itemDetail.minQuantity = product.minQuantity;
-                        this.itemDetail.meins = product.meins;*/
                         product.maxQuantity = product.maxQuantity && product.maxQuantity > 0 ? product.maxQuantity : undefined;
                         product.minQuantity = product.minQuantity && product.minQuantity > 0 ? product.minQuantity : undefined;
                         this.itemDetail = product;
@@ -688,31 +660,147 @@ export class ProspectiveCardComponent implements OnInit, OnDestroy {
                         this.svgThumbnailDet = undefined;
 
                         if (product.picId) {
+                            console.log('found picId');
                             this.binDataMatnrSetService.getImage(product.code,product.picId).subscribe((resp : any) => {
                                 if (resp.body && resp.body.d && resp.body.d) {
                                     if (resp.body.d.Filename) {
                                         const fileName = resp.body.d.Filename && resp.body.d.Filename.substring(resp.body.d.Filename.lastIndexOf('.') + 1);
-                                        if (fileName && fileName === 'jpg' || fileName === 'png') {
+                                        if (fileName && (fileName.toLowerCase() === 'jpg' || fileName.toLowerCase() === 'png' || fileName.toLowerCase() === 'jpeg')) {
+                                            console.log('loading image with filename:' + fileName);
                                             let objectURL = 'data:image/'+fileName+';base64,' + resp.body.d.BinDoc;
-                                            this.thumbnailDet = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-                                        } else if (fileName && fileName === 'svg') {
-                                            this.svgThumbnailDet = resp.body.d.BinDoc;
+                                            this.thumbnail = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+                                            let itemFamily = this.item.family;
+                                            if (itemFamily === undefined || itemFamily === undefined) {
+                                                itemFamily = '';
+                                            }
+                                            const src : SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/'+fileName+';base64,' + resp.body.d.BinDoc);
+                                            this.firstSrcDetail = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL,src);
+                                            this.displayNoImageDetail = false;
+                                        } else if (fileName && fileName.toLowerCase() === 'svg') {
+                                            this.svgThumbnail= resp.body.d.BinDoc;
+                                            const src : SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ this.svgThumbnail);
+                                            this.firstSrcDetail = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL,src);
+                                            this.displayNoImageDetail = false;
                                         } else {
-                                            console.log('prospective-card-modal - no fileName or not recognized:' + fileName);
+                                            console.log('catalogue - no fileName or not recognized:' + fileName);
+                                            this.displayNoImageDetail = true;
                                         }                         
                                     }
                                 }
+                                window.dispatchEvent(new Event('resize'));
                             });
                         }
-
-                        const fileName = resp.body.d.Filename && resp.body.d.Filename.substring(resp.body.d.Filename.lastIndexOf('.') + 1);
-                        if (fileName && fileName === 'jpg' || fileName === 'png') {
-                            let objectURL = 'data:image/'+fileName+';base64,' + resp.body.d.BinDoc;
-                            this.thumbnailDet = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-                        } else if (fileName && fileName === 'svg') {
-                            this.svgThumbnailDet = resp.body.d.BinDoc;
-                        } else {
-                            console.log('prospective-card-modal - no fileName or not recognized:' + fileName);
+                        if (product.picId1) {
+                            console.log('found picId1');
+                            this.binDataMatnrSetService.getImage(product.code,product.picId1).subscribe((resp : any) => {
+                                if (resp.body && resp.body.d && resp.body.d) {
+                                    if (resp.body.d.Filename) {
+                                        const fileName = resp.body.d.Filename && resp.body.d.Filename.substring(resp.body.d.Filename.lastIndexOf('.') + 1);
+                                        if (fileName && (fileName.toLowerCase() === 'jpg' || fileName.toLowerCase() === 'png' || fileName.toLowerCase() === 'jpeg')) {
+                                            console.log('loading image with filename:' + fileName);
+                                            let objectURL = 'data:image/'+fileName+';base64,' + resp.body.d.BinDoc;
+                                            this.thumbnail = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+                                            let itemFamily = this.item.family;
+                                            if (itemFamily === undefined || itemFamily === undefined) {
+                                                itemFamily = '';
+                                            }
+                                            const src : SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/'+fileName+';base64,' + resp.body.d.BinDoc);
+                                            this.secondSrcDetail = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL,src);
+                                            this.displayNoImageDetail = false;
+                                        } else if (fileName && fileName.toLowerCase() === 'svg') {
+                                            this.svgThumbnail= resp.body.d.BinDoc;
+                                            const src : SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ this.svgThumbnail);
+                                            this.secondSrcDetail = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL,src);
+                                            this.displayNoImageDetail = false;
+                                        }                       
+                                    }
+                                }
+                                window.dispatchEvent(new Event('resize'));
+                            });
+                        }
+                        if (product.picId2) {
+                            console.log('found picId2');
+                            this.binDataMatnrSetService.getImage(product.code,product.picId2).subscribe((resp : any) => {
+                                if (resp.body && resp.body.d && resp.body.d) {
+                                    if (resp.body.d.Filename) {
+                                        const fileName = resp.body.d.Filename && resp.body.d.Filename.substring(resp.body.d.Filename.lastIndexOf('.') + 1);
+                                        if (fileName && (fileName.toLowerCase() === 'jpg' || fileName.toLowerCase() === 'png' || fileName.toLowerCase() === 'jpeg')) {
+                                            console.log('loading image with filename:' + fileName);
+                                            let objectURL = 'data:image/'+fileName+';base64,' + resp.body.d.BinDoc;
+                                            this.thumbnail = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+                                            let itemFamily = this.item.family;
+                                            if (itemFamily === undefined || itemFamily === undefined) {
+                                                itemFamily = '';
+                                            }
+                                            const src : SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/'+fileName+';base64,' + resp.body.d.BinDoc);
+                                            this.thirdSrcDetail = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL,src);
+                                            this.displayNoImageDetail = false;
+                                        } else if (fileName && fileName.toLowerCase() === 'svg') {
+                                            this.svgThumbnail= resp.body.d.BinDoc;
+                                            const src : SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ this.svgThumbnail);
+                                            this.thirdSrcDetail = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL,src);
+                                            this.displayNoImageDetail = false;
+                                        }                   
+                                    }
+                                }
+                                window.dispatchEvent(new Event('resize'));
+                            });
+                        }
+                        if (product.picId3) {
+                            console.log('found picId3');
+                            this.binDataMatnrSetService.getImage(product.code,product.picId3).subscribe((resp : any) => {
+                                if (resp.body && resp.body.d && resp.body.d) {
+                                    if (resp.body.d.Filename) {
+                                        const fileName = resp.body.d.Filename && resp.body.d.Filename.substring(resp.body.d.Filename.lastIndexOf('.') + 1);
+                                        if (fileName && (fileName.toLowerCase() === 'jpg' || fileName.toLowerCase() === 'png' || fileName.toLowerCase() === 'jpeg')) {
+                                            console.log('loading image with filename:' + fileName);
+                                            let objectURL = 'data:image/'+fileName+';base64,' + resp.body.d.BinDoc;
+                                            this.thumbnail = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+                                            let itemFamily = this.item.family;
+                                            if (itemFamily === undefined || itemFamily === undefined) {
+                                                itemFamily = '';
+                                            }
+                                            const src : SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/'+fileName+';base64,' + resp.body.d.BinDoc);
+                                            this.fourthSrcDetail = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL,src);
+                                            this.displayNoImageDetail = false;
+                                        } else if (fileName && fileName.toLowerCase() === 'svg') {
+                                            this.svgThumbnail= resp.body.d.BinDoc;
+                                            const src : SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ this.svgThumbnail);
+                                            this.fourthSrcDetail = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL,src);
+                                            this.displayNoImageDetail = false;
+                                        }                      
+                                    }
+                                }
+                                window.dispatchEvent(new Event('resize'));
+                            });
+                        }
+                        if (product.picId4) {
+                            console.log('found picId4');
+                            this.binDataMatnrSetService.getImage(product.code,product.picId4).subscribe((resp : any) => {
+                                if (resp.body && resp.body.d && resp.body.d) {
+                                    if (resp.body.d.Filename) {
+                                        const fileName = resp.body.d.Filename && resp.body.d.Filename.substring(resp.body.d.Filename.lastIndexOf('.') + 1);
+                                        if (fileName && (fileName.toLowerCase() === 'jpg' || fileName.toLowerCase() === 'png' || fileName.toLowerCase() === 'jpeg')) {
+                                            console.log('loading image with filename:' + fileName);
+                                            let objectURL = 'data:image/'+fileName+';base64,' + resp.body.d.BinDoc;
+                                            this.thumbnail = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+                                            let itemFamily = this.item.family;
+                                            if (itemFamily === undefined || itemFamily === undefined) {
+                                                itemFamily = '';
+                                            }
+                                            const src : SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/'+fileName+';base64,' + resp.body.d.BinDoc);
+                                            this.fifthSrcDetail = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL,src);
+                                            this.displayNoImageDetail = false;
+                                        } else if (fileName && fileName.toLowerCase() === 'svg') {
+                                            this.svgThumbnail= resp.body.d.BinDoc;
+                                            const src : SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ this.svgThumbnail);
+                                            this.fifthSrcDetail = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL,src);
+                                            this.displayNoImageDetail = false;
+                                        }                        
+                                    }
+                                }
+                                window.dispatchEvent(new Event('resize'));
+                            });
                         }
                         this.bsInfoModalRef = this.modalService.open(template, { size: 'xl' });
                     }

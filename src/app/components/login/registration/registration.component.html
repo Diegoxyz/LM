@@ -183,15 +183,15 @@
                 <div class="col">
                     &nbsp;
                 </div>
-                <div class="col">
+                <div class="col form-column-back-to-login">
                     <div>
-                        <button *ngIf="!successMessage" type="submit" class="btn btn-primary confirmRegistration" [disabled]="!registrationForm.valid && !isTaxNumberOrVATNumberRequired()">{{ 'submit' | translate }}</button>
+                        <button *ngIf="successMessage"                class="btn btn-primary backToLogin" (click)="onCancel()">{{ 'backToLogin' | translate }}</button>
+                        <button *ngIf="!successMessage"               class="btn btn-primary backToLogin" (click)="onCancel()">{{ 'cancel' | translate }}</button>
                     </div>
                 </div>
                 <div class="col">
                     <div>
-                        <button *ngIf="successMessage"                class="btn btn-primary backToLogin" (click)="onCancel()">{{ 'backToLogin' | translate }}</button>
-                        <button *ngIf="!successMessage"               class="btn btn-primary backToLogin" (click)="onCancel()">{{ 'cancel' | translate }}</button>
+                        <button *ngIf="!successMessage" type="submit" class="btn btn-primary confirmRegistration" [disabled]="!registrationForm.valid && !isTaxNumberOrVATNumberRequired()">{{ 'submit' | translate }}</button>
                     </div>
                 </div>
                 <!--  <div class="w-100"></div> -->

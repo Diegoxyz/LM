@@ -216,8 +216,8 @@ h6{
   padding-top: 2%;
   padding-left: 2%;
   padding-right: 2%;
-  max-width: 260px;
-  max-height: 167px;
+  max-width: 300px;
+  max-height: 200px;
 }
 
 .containerA .btn {
@@ -273,3 +273,7 @@ h6{
     }
 }
 
+.carousel .carousel-control-next-icon, 
+.carousel .carousel-control-prev-icon {
+    background-color: red;
+}

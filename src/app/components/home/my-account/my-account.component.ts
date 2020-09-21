@@ -27,14 +27,18 @@ export class MyAccountComponent implements OnInit {
   email: string;
   country: string;
   businessName : string;
-
+  user: string;
   faUserCircle=faUserCircle;
+  taxNumber: string;
+  businessNumber: string;
+  phoneNumber: string;
 
   ngOnInit(): void {
     this.language = this.accountService.userLanguage;
     console.log('this.language:' + this.language);
     if (environment && environment.oData) {
       this.name = this.userDataSetService.userDataSetValue.Kunnrx;
+      this.user = this.userDataSetService.userDataSetValue.Name1 + ' ' + this.userDataSetService.userDataSetValue.Name2;
       this.address = this.userDataSetService.userDataSetValue.Stras;
       this.region = this.userDataSetService.userDataSetValue.Regio;
       this.city = this.userDataSetService.userDataSetValue.Ort01;
@@ -43,6 +47,9 @@ export class MyAccountComponent implements OnInit {
       this.country = this.userDataSetService.userDataSetValue.Land1;
       this.language = this.userDataSetService.userDataSetValue.Langu;
       this.businessName = this.userDataSetService.userDataSetValue.Kunnrx;
+      this.taxNumber = this.userDataSetService.userDataSetValue.Stcd1;
+      this.businessNumber = this.userDataSetService.userDataSetValue.Stcd2;
+      this.phoneNumber = this.userDataSetService.userDataSetValue.Telf1;
     } else {
       this.name = 'Test';
       this.address =' Via La Torre 14/H';

@@ -43,6 +43,7 @@ import { ShipToSetComponent } from './ship-to-set/ship-to-set.component';
 import { ConfirmOrderComponent } from './confirm-order/confirm-order.component';
 import { SaveOrderComponent } from './save-order/save-order.component';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { CarouselModule, WavesModule } from 'angular-bootstrap-md'
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -75,7 +76,9 @@ export function createTranslateLoader(http: HttpClient) {
                 deps: [HttpClient]
             }
           }),
-        NgxSpinnerModule
+        NgxSpinnerModule,
+        CarouselModule,
+        WavesModule 
     ],
     declarations: [
         MainComponent,
