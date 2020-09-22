@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { MainComponent } from './main.component';
 import { HomeRoutingModule } from './home-routing.module';
 import { BarComponent } from './bar/bar.component';
@@ -105,6 +105,7 @@ export function createTranslateLoader(http: HttpClient) {
         ShipToSetComponent,
         ConfirmOrderComponent,
         SaveOrderComponent
-    ]
+    ],
+    providers: [DatePipe]
 })
 export class HomeModule { }
