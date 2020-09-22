@@ -14,12 +14,12 @@ a {
     margin-top: 10%;
 }
 
-/* @media all and (max-width: 768px) {
+@media all and (max-width: 768px) {
     .col {
         min-width: 100%;
     }
 }
- */
+
 .form-row {
     margin-bottom: 1rem;
 }
@@ -171,7 +171,7 @@ p{
 }
 
 /* IPHONE */
-@media all and (max-device-width: 481px) {
+@media all and (min-device-width: 330px) and (max-device-width: 420px) {
     .last_footer_column {
         padding-left: 5%;
     }
@@ -182,7 +182,7 @@ p{
 
     .form-column-confirm {
         margin-top: 2%;
-        width: 72%;
+        width: 73%;
     }
 
     img.img-logo-horizontal {
@@ -195,15 +195,29 @@ p{
     }
 }
 
+@media all and (max-device-width: 320px) {
+    .form-column-confirm {
+        margin-top: 2%;
+        width: 95%;
+    }
+}
+
+@media all and (min-device-width: 420px) and (max-device-width: 550px) {
+    .form-column-confirm {
+        margin-top: 2%;
+        width: 48%;
+    }
+}
+
 /* IPAD */
-@media all and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation: portrait) {
+@media all and (min-device-width: 550px) and (max-device-width: 1024px) and (orientation: portrait) {
     .last_footer_column {
         padding-left: 15%;
     }
 
     .form-column-confirm {
         margin-top: 2%;
-        width: 48%;
+        width: 35%;
     }
 
     .text-right {
