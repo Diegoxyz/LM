@@ -183,6 +183,7 @@ p{
     .form-column-confirm {
         margin-top: 2%;
         width: 73%;
+        margin-left: 20%;
     }
 
     img.img-logo-horizontal {
@@ -205,6 +206,7 @@ p{
 @media all and (min-device-width: 420px) and (max-device-width: 550px) {
     .form-column-confirm {
         margin-top: 2%;
+        margin-left: 20%;
         width: 48%;
     }
 }
@@ -217,6 +219,7 @@ p{
 
     .form-column-confirm {
         margin-top: 2%;
+        margin-left: 60%;
         width: 35%;
     }
 
