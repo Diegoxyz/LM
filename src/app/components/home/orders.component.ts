@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import * as moment from 'moment';
 import { ExcelService } from '@app/services/excel.service';
+import { DatePipe } from '@angular/common';
 
 class ShippedOrder {
   erdatFrom: string;
@@ -140,7 +141,7 @@ export class NgbdSortableHeader {
 
     constructor(private fb: FormBuilder, private ordersService : OrdersService,
       private translateService : TranslateService, private spinner: NgxSpinnerService,
-      private excelService : ExcelService) { }
+      private excelService : ExcelService, public datepipe: DatePipe) { }
 
     ngOnInit(): void {
 
@@ -419,19 +420,35 @@ export class NgbdSortableHeader {
     exportAsXLSX():void {
       const orders : XSLXOrder[] = [];
       this.allItems.forEach(a => {
+        let qtyNumber = new Number(a.qty);
+        let qty = '0';
+        if (Number.isInteger(qtyNumber.valueOf())) {
+          qty = qtyNumber.toString();
+        } else {
+          qty = a.qty.replace('.',',');
+        }
+        let i = qty.lastIndexOf(',00');
+        if (i > -1) {
+          const quantities = qty.split(',');
+          qty = quantities[0];
+        }
+        let totale = a.netwr.replace('.',',');
+        let prUnitario = a.netpr.replace('.',',');
+        let prTotale = a.totalRow.replace('.',',');
+        let date =this.datepipe.transform(a.erdat, 'dd/MM/yyyy');
         const order = {
           NumOrdine: a.vbeln,
           Pos: a.posnr,
-          Data: a.erdat,
-          Totale: a.netwr,
+          Data: date,
+          Totale: totale,
           Currency: a.waerk,
           Destinazione : a.name1 + ' ' + a.ort01 + ' ' + a.pstlz + ' ' + a.stras + ' ' + a.land1,
           PartNumber: a.matnr,
           Prodotto: a.maktx,
-          Qtà: a.qty,
+          Qtà: qty,
           UM: a.meins,
-          PrUnitario : a.netpr,
-          PrTotale : a.totalRow,
+          PrUnitario : prUnitario,
+          PrTotale : prTotale,
           Stato : a.stateDesc
         };
         orders.push(order);
