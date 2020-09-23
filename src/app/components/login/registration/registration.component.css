@@ -170,6 +170,11 @@ p{
     padding-left: 0%;
 }
 
+@media all and (max-device-width: 1199px) {
+    .form-column-confirm {
+        width: 100%;
+    }
+}
 /* IPHONE */
 @media all and (min-device-width: 330px) and (max-device-width: 420px) {
     .last_footer_column {
@@ -182,8 +187,8 @@ p{
 
     .form-column-confirm {
         margin-top: 2%;
-        width: 73%;
-        margin-left: 20%;
+        width: 100%;
+        margin-left: 0%;
     }
 
     img.img-logo-horizontal {
@@ -193,6 +198,21 @@ p{
 
     .form-column-back-to-login {
         margin-top: 1%;
+    }
+
+    #btn-cancel{
+        width: 110px;
+        margin-top: 0%;
+        margin-right: 0%;
+        margin-left: 0%;
+        float: left;
+    }
+
+    #btn-submit{
+        width: 110px;
+        margin-top: 0%;
+        margin-right: 0%;
+        float: right;
     }
 }
 
@@ -234,6 +254,21 @@ p{
 
     .form-column-back-to-login {
         margin-top: 1%;
+    }
+
+    #btn-cancel{
+        width: 110px;
+        margin-top: 0%;
+        margin-right: 9%;
+        margin-left: 1%;
+        float: left;
+    }
+
+    #btn-submit{
+        width: 110px;
+        margin-top: 0%;
+        margin-right: 0%;
+        float: right;
     }
 }
 
