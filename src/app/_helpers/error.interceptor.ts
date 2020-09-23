@@ -7,11 +7,13 @@ import { ODataSettingsService } from './oDataSettings.service';
 import { environment } from '@environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Router } from '@angular/router';
 
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-    constructor(private accountService: AccountService, private translateService : TranslateService, private spinner: NgxSpinnerService) {
+    constructor(private accountService: AccountService, private translateService : TranslateService, private spinner: NgxSpinnerService,
+        private router: Router) {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -31,6 +33,15 @@ export class ErrorInterceptor implements HttpInterceptor {
                         }*/
                         this.accountService.checkSession().subscribe(sess => {
                             console.log('error interceptor sess:' + sess);
+                            if (sess && sess.body && sess.body.d && sess.body.d.SessionValid && sess.body.d.SessionValid === 'X') {
+                                console.log('sessione ancora valida');
+                            } else {
+                                this.router.navigate(['/account/login'], {
+                                    queryParams: {
+                                        'sessionEnded': 'true'
+                                    }
+                                });
+                            }
                         });
                     }
                 }

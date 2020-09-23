@@ -461,37 +461,45 @@ export class ProspectiveCardComponent implements OnInit, OnDestroy {
                 }
             })
             console.log('code:' + code + ',q:' + q);
-            this.accountService.fetchToken().subscribe(
-                response1 => {
-                    if (response1.headers) {
-                        const csrftoken : string = response1.headers.get('X-CSRF-Token');
-                        if (csrftoken) {
-                            if (q === 0) {
-                                this.carrelloService.deleteFromCarrello(csrftoken, code).subscribe(d => {
-                                    console.log('delete went fine');
-                                    this.manageProducts.changeProduct(productToBeAdded,q);
-                                },
-                                error => {
-                                    console.log('error delete:' + error);
-                                });
-                            } else {
-                                const carrello : Carrello = new Carrello();
-                                carrello.Matnr = code;
-                                carrello.Menge = '' + q;
-                                carrello.Meins = item.meins;
-                                this.carrelloService.updateCart(csrftoken, carrello).subscribe(d => {
-                                    console.log('update went fine');
-                                    this.manageProducts.changeProduct(productToBeAdded,q);
-                                },
-                                error => {
-                                    console.log('error update:' + error);
-                                })
+            this.accountService.checkSession().subscribe(resp => {
+                if (resp && resp.body && resp.body.d && resp.body.d.SessionValid && resp.body.d.SessionValid === 'X') {
+                    this.accountService.fetchToken().subscribe(
+                        response1 => {
+                            if (response1.headers) {
+                                const csrftoken : string = response1.headers.get('X-CSRF-Token');
+                                if (csrftoken) {
+                                    if (q === 0) {
+                                        this.carrelloService.deleteFromCarrello(csrftoken, code).subscribe(d => {
+                                            console.log('delete went fine');
+                                            this.manageProducts.changeProduct(productToBeAdded,q);
+                                        },
+                                        error => {
+                                            console.log('error delete:' + error);
+                                        });
+                                    } else {
+                                        const carrello : Carrello = new Carrello();
+                                        carrello.Matnr = code;
+                                        carrello.Menge = '' + q;
+                                        carrello.Meins = item.meins;
+                                        this.carrelloService.updateCart(csrftoken, carrello).subscribe(d => {
+                                            console.log('update went fine');
+                                            this.manageProducts.changeProduct(productToBeAdded,q);
+                                        },
+                                        error => {
+                                            console.log('error update:' + error);
+                                        })
+                                    }
+                                    
+                                }
                             }
-                            
-                        }
-                    }
-                })
-            ;
+                        })
+                    ;
+                } else {
+                    console.log('catalogue session invalid');
+                    this.accountService.logout();
+                    this.router.navigate(['/account/login', {sessionEnded : 'sessionEnded'}]);
+                  }
+            });
         }
     }
 

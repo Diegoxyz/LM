@@ -16,6 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Materiale } from '@app/models/OData/MacchineSet/macchineset.entity';
+import { Router } from '@angular/router';
 
 @Component({selector: 'app-product-catalogue-card',
 templateUrl: './product-card-catalogue.component.html',
@@ -71,7 +72,7 @@ export class ProductCardCatalogueComponent implements OnInit {
         private accountService: AccountService, private carrelloService : CarrelloService, 
         private binDataMatnrSetService: BinDataMatnrSetService, public sanitizer: DomSanitizer,
         private catalogueService : CatalogueService, private translateService : TranslateService,
-        private modalService: NgbModal, private renderer: Renderer2
+        private modalService: NgbModal, private renderer: Renderer2, private router: Router
         ) {
     }
     
@@ -308,39 +309,49 @@ export class ProductCardCatalogueComponent implements OnInit {
             return;
         }
         if (environment && environment.oData) {
-            this.accountService.fetchToken().subscribe(
-                response1 => {
-                    if (response1.headers) {
-                        const csrftoken : string = response1.headers.get('X-CSRF-Token');
-                        if (csrftoken) {
-                            if (q === 0) {
-                                this.carrelloService.deleteFromCarrello(csrftoken, this.item.code).subscribe(d => {
-                                    console.log('delete went fine - q:' + q);
-                                    this.manageProducts.changeProduct(this.item,q);
-                                    this.quantity = q;
-                                },
-                                error => {
-                                    console.log('error delete:' + error);
-                                });
-                            } else {
-                                const carrello : Carrello = new Carrello();
-                                carrello.Matnr = this.item.code;
-                                carrello.Menge = '' + q;
-                                carrello.Meins = this.item.meins;
-                                this.carrelloService.updateCart(csrftoken, carrello).subscribe(d => {
-                                    console.log('update went fine - q:' + q);
-                                    this.manageProducts.changeProduct(this.item,q);
-                                    this.quantity = q;
-                                },
-                                error => {
-                                    console.log('error update:' + error);
-                                })
+            this.accountService.checkSession().subscribe(resp => {
+                if (resp && resp.body && resp.body.d && resp.body.d.SessionValid && resp.body.d.SessionValid === 'X') {
+                    this.accountService.fetchToken().subscribe(
+                        response1 => {
+                            if (response1.headers) {
+                                const csrftoken : string = response1.headers.get('X-CSRF-Token');
+                                if (csrftoken) {
+                                    if (q === 0) {
+                                        this.carrelloService.deleteFromCarrello(csrftoken, this.item.code).subscribe(d => {
+                                            console.log('delete went fine - q:' + q);
+                                            this.manageProducts.changeProduct(this.item,q);
+                                            this.quantity = q;
+                                        },
+                                        error => {
+                                            console.log('error delete:' + error);
+                                        });
+                                    } else {
+                                        const carrello : Carrello = new Carrello();
+                                        carrello.Matnr = this.item.code;
+                                        carrello.Menge = '' + q;
+                                        carrello.Meins = this.item.meins;
+                                        this.carrelloService.updateCart(csrftoken, carrello).subscribe(d => {
+                                            console.log('update went fine - q:' + q);
+                                            this.manageProducts.changeProduct(this.item,q);
+                                            this.quantity = q;
+                                        },
+                                        error => {
+                                            console.log('error update:' + error);
+                                        })
+                                    }
+                                    
+                                }
                             }
-                            
-                        }
-                    }
-                })
-            ;
+                        })
+                    ;
+                }  else {
+                    console.log('catalogue session invalid');
+                    this.accountService.logout();
+                    this.router.navigate(['/account/login', {sessionEnded : 'sessionEnded'}]);
+                  }
+            }
+
+            );            
         } else {
             this.manageProducts.changeProduct(this.item,q);
             this.quantity = q;
