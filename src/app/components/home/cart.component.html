@@ -56,6 +56,11 @@
                     <span>&nbsp;</span>   <!-- ERROR -->
                 </div>
             </th>
+            <th> <!-- info -->
+                <div class="h-100 description_column">
+                    <span>&nbsp;</span>
+                </div>
+            </th>
             <th>
                 <div class="h-100 description_column">
                     <span>&nbsp;</span>
@@ -107,6 +112,17 @@
                         <i *ngIf="order.error !== undefined" class="fa fa-exclamation-triangle" style="color: #dc3545;"></i>
                         <i *ngIf="order.error === undefined" class="fa fa-check" style="color: #2196F3;"></i><br />
                         <span>{{ order.error }}</span>
+                    </div>
+                </td>
+                <td>
+                    <div  class="delete-column" style="width: 100px; text-align: right;">
+                        <button type="button" style="background-color: 
+                                transparent; border: none 1px #dc3545;
+                                padding-top: 2px; padding-bottom: 1px;
+                                padding-left: 5%; padding-right: 7px;" (click)="openModal(template, order.product.code)">
+                                <fa-icon id="btn-icon" [icon]="faInfoCircle" size="1x">
+                                </fa-icon>
+                        </button>
                     </div>
                 </td>
                 <td>
@@ -193,6 +209,159 @@
                     <button class="btn btn-primary" (click)="goToShipToSet()" [disabled]="orders.length === 0 || haveOrdersErrors()">{{ 'goToDeliveryAddr' | translate }}</button> <!-- Go to delivery address -->
                 </div>
 </div>
+<ng-template #template let-modal>
+    <div class="">
+        <div class="modal-header">
+            <h4 class="modal-title">{{ itemDetail.code }}-{{ itemDetail.description }}</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-8">
+                    <mdb-carousel [animation]="'slide'" [isControls]="true" [interval]="'0'" *ngIf="!displayNoImageDetail">
+                        <mdb-carousel-item *ngIf="firstSrcDetail">
+                            <img class="d-block w-100" src="{{ firstSrcDetail }}" alt="First picutre">
+                        </mdb-carousel-item>
+                        <mdb-carousel-item *ngIf="secondSrcDetail">
+                            <img class="d-block w-100" src="{{ secondSrcDetail }}" alt="Second picture">
+                        </mdb-carousel-item>
+                        <mdb-carousel-item *ngIf="thirdSrcDetail">
+                            <img class="d-block w-100" src="{{ thirdSrcDetail }}" alt="Third picture">
+                        </mdb-carousel-item>
+                        <mdb-carousel-item *ngIf="fourthSrcDetail">
+                            <img class="d-block w-100" src="{{ fourthSrcDetail }}" alt="Second fourth">
+                        </mdb-carousel-item>
+                        <mdb-carousel-item *ngIf="fifthSrcDetail">
+                            <img class="d-block w-100" src="{{ fifthSrcDetail }}" alt="Third picture">
+                        </mdb-carousel-item>
+                    </mdb-carousel>
+                    <img *ngIf="displayNoImageDetail" class="img-fluid card-img-top" src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
+                </div>
+
+                <div class="col-4">
+                    <div class="row">
+                        <div class="col-right" style="text-align: left;">
+                            <h6 style="text-align: left;">{{ itemDetail.code }}</h6>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-right" style="text-align: left; width: 100%;">
+                            <h6 style="text-align: left;">{{ itemDetail.description }}</h6>
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="itemDetail.prodhx">
+                        <div class="col-right" style="text-align: left;">
+                            <h6 style="text-align: left;">{{'itemDetail.category' | translate }}:</h6>
+                        </div>
+                        <div class="col-left" style="text-align: left;">
+                            <h6 style="text-align: left;">{{ itemDetail.prodhx }} </h6>
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="itemDetail.kdmat">
+                        <div class="col-right" style="text-align: left;">
+                            <h6 style="text-align: left;">{{ 'itemDetail.customerCode' | translate }}:</h6>
+                        </div>
+                        <div class="col-left" style="text-align: left;">
+                            <h6 style="text-align: left;">{{ itemDetail.kdmat }}</h6>
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="itemDetail.price">
+                        <div class="col-right" style="text-align: left;">
+                            <h6 style="text-align: left;">{{ 'itemDetail.price' | translate }}:</h6>
+                        </div>
+                        <div class="col-left" style="text-align: left;">
+                            <h6 style="text-align: left;">{{ getPrice(itemDetail.price) }}&nbsp;{{itemDetail.currency}}</h6>
+                        </div>
+                    </div>
+
+                    <div class="row"> 
+                        <div class="col-right" style="text-align: left;">
+                            <h6 style="text-align: left;">{{ 'itemDetail.stock' | translate}}:</h6>
+                        </div>
+                        <div class="col-left" style="text-align: left;">
+                            <h6 style="text-align: left;">
+                                <fa-icon id="circle-red"
+                                    *ngIf="itemDetail.stockIndicator === undefined || itemDetail.stockIndicator === '' || itemDetail.stockIndicator === '3'"
+                                    [icon]="faCircle"></fa-icon>
+                                <fa-icon id="circle-yellow" *ngIf="itemDetail.stockIndicator === '2'" [icon]="faCircle">
+                                </fa-icon>
+                                <fa-icon id="circle-green" *ngIf="itemDetail.stockIndicator === '1'" [icon]="faCircle">
+                                </fa-icon>
+                            </h6>
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="itemDetail.minQuantity">
+                        <div class="col-right" style="text-align: left;">
+                            <h6 style="text-align: left;">{{ 'itemDetail.minDeliveryQty' | translate }}:</h6>
+                        </div>
+                        <div class="col-left" style="text-align: left;">
+                            <h6 style="text-align: left;">{{ itemDetail.minQuantity }}</h6>
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="itemDetail.maxQuantity">
+                        <div class="col-right" style="text-align: left;">
+                            <h6 style="text-align: left;">{{ 'itemDetail.maxDeliveryQty' | translate }}:</h6>
+                        </div>
+                        <div class="col-left" style="text-align: left;">
+                            <h6 style="text-align: left;">{{ itemDetail.maxQuantity }}</h6>
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="itemDetail.noteCliente">
+                        <div class="col-right" style="text-align: left;">
+                            <h6 style="text-align: left;">{{ 'itemDetail.customerNote' | translate }}:</h6>
+                        </div>
+                        <div class="col-left" style="text-align: left;">
+                            <h6 style="text-align: left;">{{ itemDetail.noteCliente }}</h6>
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="itemDetail.documentazione">
+                        <div class="col-right" style="text-align: left;">
+                            <h6 style="text-align: left;">{{ 'itemDetail.documentation' | translate }}:</h6>
+                        </div>
+                        <div class="col-left" style="text-align: left;">
+                            <h6 style="text-align: left;">
+                                <a *ngIf="itemDetail.documentazione && itemDetail.documentazione !== ''"
+                                    [href]="getUrl()" target="_blank">
+                                    <i class="fa fa-file" aria-hidden="true" style="color: #dc3545;"></i>
+                                </a>
+                            </h6>
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="itemDetail.noteGenerali">
+                        <div class="col-right" style="text-align: left;">
+                            <h6 style="text-align: left;">{{ 'itemDetail.generalNote' | translate }}:</h6>
+                        </div>
+                        <div class="col-left" style="text-align: left;">
+                            <h6 style="text-align: left;">{{ itemDetail.noteGenerali }}</h6>
+                        </div>
+                    </div>
+
+
+                    <div class="row" *ngIf="itemDetail.matNrSub">
+                        <div class="col-right" style="text-align: left;">
+                            <h6 style="text-align: left;">{{ 'itemDetail.substituteMaterialNum' | translate }}:</h6>
+                        </div>
+                        <div class="col-left" style="text-align: left;">
+                            <h6 style="text-align: left;">{{ itemDetail.matNrSub }} <span *ngIf="itemDetail.maktxSub">-</span>
+                                {{ itemDetail.maktxSub }}</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
 <div>
     <app-footer></app-footer>
 </div>
