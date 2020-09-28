@@ -545,12 +545,17 @@ export class ProspectiveCardComponent implements OnInit, OnDestroy {
         }
     }
 
+    hightlightedElements : any[] = [];
     onScroll(event,padre) {
         let id : string;
+        let fillUp = false;
         if (padre) {
             if (padre.children) {
                 if (padre.children.length >= 2) {
                     id = padre.children[2].innerHTML;
+                    if (padre.children[2].tagName === 'text') {
+                        fillUp = true;
+                    }
                 }
             }
         }
@@ -559,6 +564,15 @@ export class ProspectiveCardComponent implements OnInit, OnDestroy {
         }
         this.renderer.setStyle(event.parentElement, 'fill', 'lightgrey');
         this.previousParentElement = event.parentElement;
+
+        if (!fillUp) {
+            let j : number;
+            for (j = 0; j < this.hightlightedElements.length; j++) {
+                const he = this.hightlightedElements[j];
+                this.renderer.removeStyle(he, 'background-color');
+            }
+        }
+
         if (id) {
             const strA = 'A';
             const strB = 'B';
@@ -571,6 +585,7 @@ export class ProspectiveCardComponent implements OnInit, OnDestroy {
             const id1 = strA.concat('' + pos);
             const id2 = strB.concat('' + pos);
             // let el = document.getElementById(id);
+
             if (this.scrollDiv.nativeElement.children) {
                 let i;
                 let item;
@@ -583,7 +598,7 @@ export class ProspectiveCardComponent implements OnInit, OnDestroy {
                         item = el;
                     }
                 }
-                if (item && item.children && item.children.length >= 2) {
+                if (fillUp && item && item.children && item.children.length >= 2) {
                     item.scrollIntoView();
                 }
                 if (pos < 1) {
@@ -613,16 +628,21 @@ export class ProspectiveCardComponent implements OnInit, OnDestroy {
                 }
             }
             let i;
-            for (i = 0; i < this.scrollDiv.nativeElement.children.length; i++) {
-                const el = this.scrollDiv.nativeElement.children[i];
-                if (el && el.firstChild && (el.firstChild.id === elementId1 || el.firstChild.id === elementId2)) {
-                    this.renderer.setStyle(el, 'background-color', 'lightgrey');
+            if (fillUp) {
+                this.hightlightedElements = [];
+                for (i = 0; i < this.scrollDiv.nativeElement.children.length; i++) {
+                    const el = this.scrollDiv.nativeElement.children[i];
+                    if (el && el.firstChild && (el.firstChild.id === elementId1 || el.firstChild.id === elementId2)) {
+                        this.hightlightedElements.push(el);
+                        this.renderer.setStyle(el, 'background-color', 'lightgrey');
+                    }
                 }
-            }
-            for (i = 0; i < this.scrollDiv2.nativeElement.children.length; i++) {
-                const el = this.scrollDiv2.nativeElement.children[i];
-                if (el && el.firstChild && (el.firstChild.id === elementId1 || el.firstChild.id === elementId2)) {
-                    this.renderer.setStyle(el, 'background-color', 'lightgrey');
+                for (i = 0; i < this.scrollDiv2.nativeElement.children.length; i++) {
+                    const el = this.scrollDiv2.nativeElement.children[i];
+                    if (el && el.firstChild && (el.firstChild.id === elementId1 || el.firstChild.id === elementId2)) {
+                        this.hightlightedElements.push(el);
+                        this.renderer.setStyle(el, 'background-color', 'lightgrey');
+                    }
                 }
             }
             /*if (el) {
