@@ -91,6 +91,7 @@
                         <fa-icon id="circle-green" *ngIf="item.stockIndicator === '1'" [icon]="faCircle"></fa-icon></h6>
                     </div>
                 </div>
+                <notifier-container></notifier-container>
                 <form [formGroup]="addProductForm">
                 <div class="row align-items-center no-gutters justify-content-between">
                     <div class="col">
@@ -109,16 +110,18 @@
                             <!-- + -->
                             <i class="fa fa-arrow-circle-up fa-lg" aria-hidden="true"></i>
                         </button>
+                        <span style="margin-left: 5%;">&nbsp;</span>
                         <button type="button" style="background-color: 
                                 transparent; border: none 1px #dc3545;
-                                padding-top: 2px;padding-bottom: 1px;padding-left: 5%;" (click)="addProduct()">
+                                padding-top: 2px;padding-bottom: 1px;padding-left: 1px;" (click)="addProduct()">
                                 <fa-icon id="btn-icon" [icon]="faShoppingCart" size="1x">
                                 </fa-icon>
                         </button>
+                        <span style="margin-left: 5%;">&nbsp;</span>
                         <button type="button" style="background-color: 
                                 transparent; border: none 1px #dc3545;
                                 padding-top: 2px; padding-bottom: 1px;
-                                padding-left: 5%; padding-right: 7px;" (click)="openModal(template)">
+                                padding-left: 7px; padding-right: 7px;" (click)="openModal(template)">
                                 <fa-icon id="btn-icon" [icon]="faInfoCircle" size="1x">
                                 </fa-icon>
                         </button>

@@ -147,6 +147,9 @@
     "login":"login",
     "previousPage":"Previous",
     "nextPage":"Next",
-    "successfullySentOrder":"You will receive an email shortly, with the summary of your request."
+    "successfullySentOrder":"You will receive an email shortly, with the summary of your request.",
+    "addedProduct":"Product updated successfully",
+    "deletedProduct":"Product removed successfully",
+    "operationError":"Error when executing the update"
     
 }

@@ -147,7 +147,10 @@
     "login":"login",
     "previousPage":"Pagina precedente",
     "nextPage":"Pagina successiva",
-    "successfullySentOrder":"A breve riceverai per email una notifica con il materiale richiesto"
+    "successfullySentOrder":"A breve riceverai per email una notifica con il materiale richiesto",
+    "addedProduct":"Prodotto aggiornato con successo",
+    "deletedProduct":"Prodotto rimosso con successo",
+    "operationError":"Errore durante la modifica"
     
 
 }

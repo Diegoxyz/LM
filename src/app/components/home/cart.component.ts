@@ -24,6 +24,7 @@ import { BinDataMatnrSetService } from '@app/models/OData/BinDataMatnrSet/bindat
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 import { Materiale } from '@app/models/OData/MacchineSet/macchineset.entity';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
     selector: 'app-cart',
@@ -76,13 +77,15 @@ export class CartComponent implements OnInit, OnDestroy {
     thumbnail: any = '';
     svgThumbnail: any = '';
 
+    private readonly notifier: NotifierService;
+
     constructor(private accountService: AccountService, private cartService: CartService, private modalService: BsModalService,
         private modalServiceInfo: NgbModal,
         private router: Router, private manageProducts: ManageProducts, private carrelloService: CarrelloService,
         private userDataSetService: UserDataSetService, private catalogueService: CatalogueService, private spinner: NgxSpinnerService,
         private translateService: TranslateService, private productsService: ProductsService, 
-        private binDataMatnrSetService: BinDataMatnrSetService, public sanitizer: DomSanitizer) {
-
+        private binDataMatnrSetService: BinDataMatnrSetService, public sanitizer: DomSanitizer, private notifierService: NotifierService) {
+            this.notifier = notifierService;
     }
     ngOnInit(): void {
         const user: User = this.accountService.userValue;
@@ -760,9 +763,15 @@ export class CartComponent implements OnInit, OnDestroy {
                                         console.log('update - productCode:' + productCode + ',totalePrice:' + this.totalPrice);
                                         this.strTotalPrice = this.totalPrice.toFixed(2);
                                         this.newOrderEmitter.emit(order);
+                                        const msg = this.translateService.instant('addedProduct');
+                                        this.notifier.hideOldest();
+                                        this.notifier.notify('info', msg);
                                     },
                                         error => {
                                             console.log('error update:' + error);
+                                            const msg = this.translateService.instant('operationError');
+                                            this.notifier.hideOldest();
+                                            this.notifier.notify('error', msg);
                                         })
                                 }
 
@@ -782,6 +791,9 @@ export class CartComponent implements OnInit, OnDestroy {
                         });
                         console.log('delete - totalePrice:' + this.totalPrice);
                         this.strTotalPrice = this.totalPrice.toFixed(2);
+                        const msg = this.translateService.instant('addedProduct');
+                        this.notifier.hideOldest();
+                        this.notifier.notify('info', msg);
                     }
                 } else {
                     let order = new Order();

@@ -17,6 +17,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Materiale } from '@app/models/OData/MacchineSet/macchineset.entity';
 import { Router } from '@angular/router';
+import { NotifierService } from 'angular-notifier';
 
 @Component({selector: 'app-product-catalogue-card',
 templateUrl: './product-card-catalogue.component.html',
@@ -72,13 +73,15 @@ export class ProductCardCatalogueComponent implements OnInit {
         private accountService: AccountService, private carrelloService : CarrelloService, 
         private binDataMatnrSetService: BinDataMatnrSetService, public sanitizer: DomSanitizer,
         private catalogueService : CatalogueService, private translateService : TranslateService,
-        private modalService: NgbModal, private renderer: Renderer2, private router: Router
+        private modalService: NgbModal, private renderer: Renderer2, private router: Router,
+        private notifierService: NotifierService
         ) {
+            this.notifier = notifierService;
     }
     
     public addProductForm: FormGroup;
     
-    
+    private readonly notifier: NotifierService;
 
     ngOnInit(): void {
         if (this.item.emptyItem) {
@@ -321,9 +324,15 @@ export class ProductCardCatalogueComponent implements OnInit {
                                             console.log('delete went fine - q:' + q);
                                             this.manageProducts.changeProduct(this.item,q);
                                             this.quantity = q;
+                                            const msg = this.translateService.instant('deletedProduct');
+                                            this.notifier.hideOldest();
+                                            this.notifier.notify('info', msg);
                                         },
                                         error => {
                                             console.log('error delete:' + error);
+                                            const msg = this.translateService.instant('operationError');
+                                            this.notifier.hideOldest();
+                                            this.notifier.notify('error', msg);
                                         });
                                     } else {
                                         const carrello : Carrello = new Carrello();
@@ -334,9 +343,15 @@ export class ProductCardCatalogueComponent implements OnInit {
                                             console.log('update went fine - q:' + q);
                                             this.manageProducts.changeProduct(this.item,q);
                                             this.quantity = q;
+                                            const msg = this.translateService.instant('addedProduct');
+                                            this.notifier.hideOldest();
+                                            this.notifier.notify('info', msg);
                                         },
                                         error => {
                                             console.log('error update:' + error);
+                                            const msg = this.translateService.instant('operationError');
+                                            this.notifier.hideOldest();
+                                            this.notifier.notify('error', msg);
                                         })
                                     }
                                     
@@ -355,6 +370,8 @@ export class ProductCardCatalogueComponent implements OnInit {
         } else {
             this.manageProducts.changeProduct(this.item,q);
             this.quantity = q;
+            this.notifier.hideOldest();
+            this.notifier.notify('info', 'You are awesome! I mean it!');
         }
     }
 
@@ -462,18 +479,11 @@ export class ProductCardCatalogueComponent implements OnInit {
                                         const fileName = resp.body.d.Filename && resp.body.d.Filename.substring(resp.body.d.Filename.lastIndexOf('.') + 1);
                                         if (fileName && (fileName.toLowerCase() === 'jpg' || fileName.toLowerCase() === 'png' || fileName.toLowerCase() === 'jpeg') ) {
                                             console.log('loading image with filename:' + fileName);
-                                            let objectURL = 'data:image/'+fileName+';base64,' + resp.body.d.BinDoc;
-                                            this.thumbnail = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-                                            let itemFamily = this.item.family;
-                                            if (itemFamily === undefined || itemFamily === undefined) {
-                                                itemFamily = '';
-                                            }
                                             const src : SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/'+fileName+';base64,' + resp.body.d.BinDoc);
                                             this.firstSrcDetail = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL,src);
                                             this.displayNoImageDetail = false;
                                         } else if (fileName && fileName.toLowerCase() === 'svg') {
-                                            this.svgThumbnail= resp.body.d.BinDoc;
-                                            const src : SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ this.svgThumbnail);
+                                            const src : SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ resp.body.d.BinDoc);
                                             this.firstSrcDetail = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL,src);
                                             this.displayNoImageDetail = false;
                                         } else {
@@ -499,8 +509,7 @@ export class ProductCardCatalogueComponent implements OnInit {
                                             console.log('secondSrcDetail:' + this.secondSrcDetail);
                                             this.displayNoImageDetail = false;
                                         } else if (fileName && fileName.toLowerCase() === 'svg') {
-                                            this.svgThumbnail= resp.body.d.BinDoc;
-                                            const src : SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ this.svgThumbnail);
+                                            const src : SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ resp.body.d.BinDoc);
                                             this.secondSrcDetail = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL,src);
                                             this.displayNoImageDetail = false;
                                         }                      
@@ -517,18 +526,11 @@ export class ProductCardCatalogueComponent implements OnInit {
                                         const fileName = resp.body.d.Filename && resp.body.d.Filename.substring(resp.body.d.Filename.lastIndexOf('.') + 1);
                                         if (fileName && (fileName.toLowerCase() === 'jpg' || fileName.toLowerCase() === 'png' || fileName.toLowerCase() === 'jpeg')) {
                                             console.log('loading image with filename:' + fileName);
-                                            let objectURL = 'data:image/'+fileName+';base64,' + resp.body.d.BinDoc;
-                                            this.thumbnail = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-                                            let itemFamily = this.item.family;
-                                            if (itemFamily === undefined || itemFamily === undefined) {
-                                                itemFamily = '';
-                                            }
                                             const src : SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/'+fileName+';base64,' + resp.body.d.BinDoc);
                                             this.thirdSrcDetail = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL,src);
                                             this.displayNoImageDetail = false;
                                         } else if (fileName && fileName.toLowerCase() === 'svg') {
-                                            this.svgThumbnail= resp.body.d.BinDoc;
-                                            const src : SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ this.svgThumbnail);
+                                            const src : SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ resp.body.d.BinDoc);
                                             this.thirdSrcDetail = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL,src);
                                             this.displayNoImageDetail = false;
                                         }
@@ -546,18 +548,11 @@ export class ProductCardCatalogueComponent implements OnInit {
                                         const fileName = resp.body.d.Filename && resp.body.d.Filename.substring(resp.body.d.Filename.lastIndexOf('.') + 1);
                                         if (fileName && (fileName.toLowerCase() === 'jpg' || fileName.toLowerCase() === 'png' || fileName.toLowerCase() === 'jpeg')) {
                                             console.log('loading image with filename:' + fileName);
-                                            let objectURL = 'data:image/'+fileName+';base64,' + resp.body.d.BinDoc;
-                                            this.thumbnail = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-                                            let itemFamily = this.item.family;
-                                            if (itemFamily === undefined || itemFamily === undefined) {
-                                                itemFamily = '';
-                                            }
                                             const src : SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/'+fileName+';base64,' + resp.body.d.BinDoc);
                                             this.fourthSrcDetail = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL,src);
                                             this.displayNoImageDetail = false;
                                         } else if (fileName && fileName.toLowerCase() === 'svg') {
-                                            this.svgThumbnail= resp.body.d.BinDoc;
-                                            const src : SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ this.svgThumbnail);
+                                            const src : SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ resp.body.d.BinDoc);
                                             this.fourthSrcDetail = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL,src);
                                             this.displayNoImageDetail = false;
                                         }                        
@@ -575,17 +570,11 @@ export class ProductCardCatalogueComponent implements OnInit {
                                         if (fileName && (fileName.toLowerCase() === 'jpg' || fileName.toLowerCase() === 'png' || fileName.toLowerCase() === 'jpeg')) {
                                             console.log('loading image with filename:' + fileName);
                                             let objectURL = 'data:image/'+fileName+';base64,' + resp.body.d.BinDoc;
-                                            this.thumbnail = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-                                            let itemFamily = this.item.family;
-                                            if (itemFamily === undefined || itemFamily === undefined) {
-                                                itemFamily = '';
-                                            }
                                             const src : SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/'+fileName+';base64,' + resp.body.d.BinDoc);
                                             this.fifthSrcDetail = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL,src);
                                             this.displayNoImageDetail = false;
                                         } else if (fileName && fileName.toLowerCase() === 'svg') {
-                                            this.svgThumbnail= resp.body.d.BinDoc;
-                                            const src : SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ this.svgThumbnail);
+                                            const src : SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64, '+ resp.body.d.BinDoc);
                                             this.fifthSrcDetail = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL,src);
                                             this.displayNoImageDetail = false;
                                         }                       

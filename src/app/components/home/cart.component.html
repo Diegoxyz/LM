@@ -28,6 +28,7 @@
     
 </div>
 <div class="scroll" style="margin-top: 2%;">
+    <notifier-container></notifier-container>
     <div *ngIf="orders.length > 0">
     <table class="table headers-list-orders align-items-center justify-content-center">
         <thead>
@@ -54,11 +55,6 @@
             <th>
                 <div class="h-100">
                     <span>&nbsp;</span>   <!-- ERROR -->
-                </div>
-            </th>
-            <th> <!-- info -->
-                <div class="h-100 description_column">
-                    <span>&nbsp;</span>
                 </div>
             </th>
             <th>
@@ -115,18 +111,15 @@
                     </div>
                 </td>
                 <td>
-                    <div  class="delete-column" style="width: 100px; text-align: right;">
+                    <div  class="delete-column" style="width: 110px; text-align: center; margin-left: 20%;">
                         <button type="button" style="background-color: 
                                 transparent; border: none 1px #dc3545;
                                 padding-top: 2px; padding-bottom: 1px;
-                                padding-left: 5%; padding-right: 7px;" (click)="openModal(template, order.product.code)">
+                                padding-left: 2px; padding-right: 2px;" (click)="openModal(template, order.product.code)">
                                 <fa-icon id="btn-icon" [icon]="faInfoCircle" size="1x">
                                 </fa-icon>
                         </button>
-                    </div>
-                </td>
-                <td>
-                    <div  class="delete-column" style="width: 100px; text-align: right;">
+                        <span style="margin-left: 20%;">&nbsp;</span>
                         <button (click)="onDeleteOrder(order.product.code)" style="background-color: transparent;">
                             <fa-icon [icon]="faTrash" 
                                 size="1x">

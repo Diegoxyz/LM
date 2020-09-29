@@ -43,11 +43,53 @@ import { ShipToSetComponent } from './ship-to-set/ship-to-set.component';
 import { ConfirmOrderComponent } from './confirm-order/confirm-order.component';
 import { SaveOrderComponent } from './save-order/save-order.component';
 import { NgxSpinnerModule } from "ngx-spinner";
-import { CarouselModule, WavesModule } from 'angular-bootstrap-md'
+import { CarouselModule, WavesModule } from 'angular-bootstrap-md';
+import { NotifierModule, NotifierOptions } from "angular-notifier";
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http);
 }
+
+const notifierDefaultOptions: NotifierOptions = {
+    position: {
+        horizontal: {
+            position: "right",
+            distance: 12
+        },
+        vertical: {
+            position: "top",
+            distance: 12,
+            gap: 10
+        }
+    },
+    theme: "material",
+    behaviour: {
+        autoHide: 1000,
+        onClick: false,
+        onMouseover: "pauseAutoHide",
+        showDismissButton: true,
+        stacking: 4
+    },
+    animations: {
+        enabled: true,
+        show: {
+            preset: "slide",
+            speed: 300,
+            easing: "ease"
+        },
+        hide: {
+            preset: "fade",
+            speed: 300,
+            easing: "ease",
+            offset: 50
+        },
+        shift: {
+            speed: 300,
+            easing: "ease"
+        },
+        overlap: 150
+    }
+};
 
 @NgModule({
     imports: [
@@ -78,7 +120,8 @@ export function createTranslateLoader(http: HttpClient) {
           }),
         NgxSpinnerModule,
         CarouselModule,
-        WavesModule 
+        WavesModule,
+        NotifierModule.withConfig(notifierDefaultOptions)
     ],
     declarations: [
         MainComponent,

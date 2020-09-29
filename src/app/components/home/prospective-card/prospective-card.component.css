@@ -387,7 +387,7 @@ padding-right: 4px;
   }
 }
 /* IPAD */
-@media all and (min-device-width: 481px) and (max-device-width: 1024px) {
+@media all and (min-device-width: 668px) and (max-device-width: 1024px) {
   .priceRow {
     padding-left: 0%;
   }
