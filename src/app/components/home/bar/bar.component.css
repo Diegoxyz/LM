@@ -6,7 +6,7 @@
 
 .nav-link{
     text-transform: uppercase;
-    font-size: 1.2em;
+    font-size: 1em;
 }
 
 #nav-link-cart{
@@ -14,6 +14,10 @@
 }
 
 img.img-logo-horizontal {
+    width: 10rem;
+}
+
+img.img-logo-horizontal-mobile {
     width: 4.3rem;
 }
 
@@ -73,6 +77,7 @@ ul.nav li a {
 .search {
     background-color: transparent;
     border-color: transparent;
+    width: 150px;
 }
 
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -185,10 +190,82 @@ input:focus {
     .search-class {
         margin-right: 50%;
     }
+
+    .search {
+        width: 150px;
+    }
 }
 
-@media all and (min-device-width: 501px) and (max-device-width: 1024px) and (orientation: landscape){
+@media all and (min-device-width: 540px) and (max-device-width: 720px) and (orientation: landscape){
+    .search-class {
+        margin-right: 40%;
+    }
+
+    .search {
+        width: 110px;
+    }
+}
+
+@media all and (min-device-width: 721px) and (max-device-width: 1024px) and (orientation: landscape){
+    .search-class {
+        margin-right: 45%;
+    }
+
+    .search {
+        width: 150px;
+    }
+}
+
+@media all and (max-device-width: 360px) and (orientation: landscape) {
+    .search {
+        width: 120px;
+    }
+}
+
+@media all and (max-device-width: 320px) and (orientation: portrait) {
+    .search {
+        width: 90px;
+    }
+}
+
+@media all and (min-device-width: 321px) and (max-device-width: 360px) and (orientation: portrait) {
+    .search {
+        width: 120px;
+    }
+}
+
+@media all and (min-device-width: 321px) and (max-device-width: 812px) and (orientation: portrait) {
+    .search {
+        width: 120px;
+    }
+}
+
+@media all and (min-device-width: 501px) and (max-device-width: 1024px) and (orientation: portrait){
+    .search-class {
+        margin-right: 40%;
+    }
+
+    .search {
+        width: 100px;
+    }
+}
+
+@media all and (min-device-width: 767px) and (max-device-width: 1023px) and (orientation: portrait){
     .search-class {
         margin-right: 50%;
+    }
+
+    .search {
+        width: 120px;
+    }
+}
+
+@media all and (min-device-width: 1023px) and (max-device-width: 1024px) and (orientation: portrait){
+    .search-class {
+        margin-right: 60%;
+    }
+
+    .search {
+        width: 150px;
     }
 }

@@ -150,6 +150,7 @@
     "successfullySentOrder":"You will receive an email shortly, with the summary of your request.",
     "addedProduct":"Product updated successfully",
     "deletedProduct":"Product removed successfully",
-    "operationError":"Error when executing the update"
+    "operationError":"Error when executing the update",
+    "globalWebsite":"Global Website"
     
 }

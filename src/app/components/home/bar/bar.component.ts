@@ -256,6 +256,11 @@ export class BarComponent implements OnInit, OnDestroy {
     this.displayMobileMenu(true);
   }
 
+  goToGlobalWebsite() {
+    this.router.navigateByUrl('http://global.lamarzocco.com');
+    this.displayMobileMenu(true);
+  }
+
   onTextChange(value)
   {
     this.searchKey = value;
