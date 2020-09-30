@@ -577,8 +577,7 @@ export class ProspectiveCardComponent implements OnInit, OnDestroy {
         if (this.previousParentElement) {
             this.renderer.removeStyle(this.previousParentElement, 'fill');
         }
-        this.renderer.setStyle(event.parentElement, 'fill', 'lightgrey');
-        this.previousParentElement = event.parentElement;
+        
 
         if (!fillUp) {
             let j : number;
@@ -586,6 +585,9 @@ export class ProspectiveCardComponent implements OnInit, OnDestroy {
                 const he = this.hightlightedElements[j];
                 this.renderer.removeStyle(he, 'background-color');
             }
+        } else {
+            this.renderer.setStyle(event.parentElement, 'fill', 'lightgrey');
+            this.previousParentElement = event.parentElement;
         }
 
         if (id) {

@@ -516,7 +516,8 @@ export class CartComponent implements OnInit, OnDestroy {
                             this.spinner.hide();
                             return;
                         }
-                        const matrn: string = '' + row.CodiceProdotto ? ('' + row.CodiceProdotto).toUpperCase() : null;
+                        const strCodiceProdotto : string = '' + row.CodiceProdotto;
+                        const matrn: string = strCodiceProdotto ? strCodiceProdotto.toUpperCase() : null;
                         const order: Order = new Order();
                         const newProduct: Product = new Product(matrn, '', 0, 'EUR', false, '', '', '', '');
                         order.product = newProduct;
@@ -526,13 +527,14 @@ export class CartComponent implements OnInit, OnDestroy {
                         let orderToBeDeleted = undefined;
                         for (i = 0; i < this.orders.length; i++) {
                             const o = this.orders[i];
-                            if (o.product.code === row.CodiceProdotto) {
+                            console.log('comparing: o.product.code:' + o.product.code + ' to ' + '' + strCodiceProdotto + ";o.product.code === row.CodiceProdotto:" + (o.product.code === strCodiceProdotto));
+                            if (strCodiceProdotto && o.product.code === strCodiceProdotto.toUpperCase()) {
                                 position = i;
                                 orderToBeDeleted = o;
                             }
                         }
                         if (position > -1 && orderToBeDeleted) {
-                            console.log('deleting order:' + row.CodiceProdotto);
+                            console.log('deleting order:' + strCodiceProdotto);
                             this.deleteOrder(orderToBeDeleted);
                         }
                         if (environment && environment.oData) {

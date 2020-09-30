@@ -11,7 +11,7 @@
                 <img id="genericPic{{item.code}}{{item.family}}" style="display: none;">
                 <img *ngIf="displayNoImage" class="img-fluid card-img-top" src="assets/img/items/No_Image_available.png" sizes="(max-width: 260px) 100vw, 260px" width="260" height="260">
                 <div class="card-body">
-                    <h6 class="card-title">{{ item.description }}</h6>
+                    <h6 class="card-title" style="color: black;">{{ item.description }}</h6>
                     <h6 id="code-card-title-id"><!--({{ item.code }})-->&nbsp;</h6>
                 </div>
             </a>
